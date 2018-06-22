@@ -12,13 +12,12 @@
   <!-- ===== Parent Maven Projet ===== -->
   <parent>
     <artifactId>library-ws</artifactId>
-    <groupId>fr.brucella.projets</groupId>
+    <groupId>fr.brucella.projects</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
   <!-- ===== Maven Informations ===== -->
   <artifactId>library-ws-technical</artifactId>
-  <packaging>war</packaging>
 
   <!-- ===== General Informations ===== -->
   <name>${projectName} - Technical</name>
@@ -31,6 +30,12 @@
     <!-- ===== Modules ===== -->
 
     <!-- ===== Third party libraries ===== -->
+    <!-- Apache commons logging -->
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+    </dependency>
+
     <!-- Apache Log4j 2 -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
