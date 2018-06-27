@@ -1,11 +1,11 @@
-package fr.brucella.projects.services.bookservices;
+package fr.brucella.projects.libraryws.services.books;
 
 import fr.brucella.projects.libraryws.entity.books.Book;
 import fr.brucella.projects.libraryws.entity.books.BookStock;
 import fr.brucella.projects.libraryws.entity.books.Borrowing;
 import fr.brucella.projects.libraryws.entity.users.User;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import org.apache.commons.logging.Log;
@@ -67,7 +67,7 @@ public class BooksManagement {
    * @return the list of number of borrowings for each book.
    */
   @WebMethod
-  public List<Map<Book,Integer>> nbBorrowingByBooks() {
+  public List<HashMap<Book,Integer>> nbBorrowingByBooks() {
     return null;
   }
 }

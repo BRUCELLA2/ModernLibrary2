@@ -33,6 +33,14 @@
       <artifactId>${project.parent.artifactId}-technical</artifactId>
     </dependency>
 
+    <!-- ===== Third party libraries ===== -->
+
+    <!-- Spring JDBC -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>

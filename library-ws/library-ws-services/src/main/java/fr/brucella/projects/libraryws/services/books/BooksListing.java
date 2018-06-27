@@ -1,9 +1,7 @@
-package fr.brucella.projects.services.bookservices;
+package fr.brucella.projects.libraryws.services.books;
 
 import fr.brucella.projects.libraryws.entity.books.Book;
 import fr.brucella.projects.libraryws.entity.searchCriteria.BooksSearchingClientCriteria;
-import fr.brucella.projects.libraryws.entity.users.User;
-import java.util.ArrayList;
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;

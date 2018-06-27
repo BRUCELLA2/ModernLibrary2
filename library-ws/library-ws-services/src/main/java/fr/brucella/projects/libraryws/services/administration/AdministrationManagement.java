@@ -1,4 +1,4 @@
-package fr.brucella.projects.services.administrationservices;
+package fr.brucella.projects.libraryws.services.administration;
 
 import fr.brucella.projects.libraryws.entity.books.Author;
 import fr.brucella.projects.libraryws.entity.books.Book;

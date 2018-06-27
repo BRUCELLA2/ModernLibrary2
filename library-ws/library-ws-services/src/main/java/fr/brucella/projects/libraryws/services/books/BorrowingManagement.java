@@ -1,4 +1,4 @@
-package fr.brucella.projects.services.bookservices;
+package fr.brucella.projects.libraryws.services.books;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

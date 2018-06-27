@@ -1,4 +1,4 @@
-package fr.brucella.projects.services.authentificationservices;
+package fr.brucella.projects.libraryws.services.authentification;
 
 import fr.brucella.projects.libraryws.entity.users.Role;
 import fr.brucella.projects.libraryws.entity.users.User;
@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author BRUCELLA2
  */
-@WebService(serviceName = "AuthentificationManagement")
+@WebService(serviceName = "AuthentificationManagementService")
 public class AuthentificationManagement {
 
   /**
