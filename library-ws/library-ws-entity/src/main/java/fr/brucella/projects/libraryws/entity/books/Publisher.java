@@ -1,10 +1,10 @@
 package fr.brucella.projects.libraryws.entity.books;
 
 /**
- * Represents a Book.
+ * Represents a publisher.
  *
  * @author BRUCELLA2
  */
-public class Book {
+public class Publisher {
 
 }
