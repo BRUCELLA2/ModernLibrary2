@@ -5,14 +5,16 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-  <context:annotation-config />
+  <context:annotation-config/>
   <context:component-scan
-    base-package="fr.brucella.projects.libraryws" />
+    base-package="fr.brucella.projects.libraryws"/>
 
   <!-- Spring context files import -->
   <import
-    resource="classpath:/fr/brucella/projects/libraryws/services/servicesContext.xml" />
+    resource="classpath:/fr/brucella/projects/libraryws/services/servicesContext.xml"/>
   <import
-    resource="classpath*:/fr/brucella/projects/libraryws/services/daoContext.xml" />
+    resource="classpath*:/fr/brucella/projects/libraryws/dao/daoContext.xml"/>
+  <import
+    resource="classpath*:/fr/brucella/projects/libraryws/entity/entityContext.xml"/>
 
 </beans>

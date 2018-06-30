@@ -34,82 +34,113 @@
   <!-- DEPENDENCY MANAGEMENT -->
   <!-- =============================================================== -->
   <dependencyManagement>
-  <dependencies>
+    <dependencies>
 
-    <!-- ===== Modules ===== -->
-    <dependency>
-      <groupId>fr.brucella.projects</groupId>
-      <artifactId>library-ws-business</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
+      <!-- ===== Modules ===== -->
+      <dependency>
+        <groupId>fr.brucella.projects</groupId>
+        <artifactId>library-ws-business</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
 
-    <dependency>
-      <groupId>fr.brucella.projects</groupId>
-      <artifactId>library-ws-dao</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
+      <dependency>
+        <groupId>fr.brucella.projects</groupId>
+        <artifactId>library-ws-dao</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
 
-    <dependency>
-      <groupId>fr.brucella.projects</groupId>
-      <artifactId>library-ws-entity</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
+      <dependency>
+        <groupId>fr.brucella.projects</groupId>
+        <artifactId>library-ws-entity</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
 
-    <dependency>
-      <groupId>fr.brucella.projects</groupId>
-      <artifactId>library-ws-services</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
+      <dependency>
+        <groupId>fr.brucella.projects</groupId>
+        <artifactId>library-ws-services</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
 
-    <dependency>
-      <groupId>fr.brucella.projects</groupId>
-      <artifactId>library-ws-technical</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
+      <dependency>
+        <groupId>fr.brucella.projects</groupId>
+        <artifactId>library-ws-technical</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
 
-    <!-- ===== Third party libraries ===== -->
+      <!-- ===== Third party libraries ===== -->
 
-    <!-- Apache commons logging -->
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.2</version>
-    </dependency>
+      <!-- Apache commons logging -->
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.2</version>
+      </dependency>
 
-    <!-- Apache Log4j 2 -->
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-bom</artifactId>
-      <version>2.11.0</version>
-      <type>pom</type>
-      <scope>import</scope>
-    </dependency>
+      <!-- Apache Log4j 2 -->
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-bom</artifactId>
+        <version>2.11.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
 
-    <!-- Apache Commons Lang -->
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>3.6</version>
-    </dependency>
+      <!-- Apache Commons Lang -->
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.6</version>
+      </dependency>
 
-    <!-- Spring Framework -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-framework-bom</artifactId>
-      <version>${spring.version}</version>
-      <type>pom</type>
-      <scope>import</scope>
-    </dependency>
+      <!-- Spring Framework -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-framework-bom</artifactId>
+        <version>${spring.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
 
-    <!-- JDBC PostgreSQL Drivers -->
-    <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>42.2.2</version>
-      <scope>runtime</scope>
-    </dependency>
+      <!-- JDBC PostgreSQL Drivers -->
+      <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.2.2</version>
+        <scope>runtime</scope>
+      </dependency>
 
-  </dependencies>
+      <!-- Validation API JSR 380 -->
+      <dependency>
+        <groupId>javax.validation</groupId>
+        <artifactId>validation-api</artifactId>
+        <version>2.0.1.Final</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.hibernate.validator</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>6.0.9.Final</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.hibernate.validator</groupId>
+        <artifactId>hibernate-validator-annotation-processor</artifactId>
+        <version>6.0.9.Final</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.el</groupId>
+        <artifactId>javax.el-api</artifactId>
+        <version>3.0.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.glassfish.web</groupId>
+        <artifactId>javax.el</artifactId>
+        <version>2.2.6</version>
+      </dependency>
+
+    </dependencies>
   </dependencyManagement>
   <!-- =============================================================== -->
   <!-- Build -->

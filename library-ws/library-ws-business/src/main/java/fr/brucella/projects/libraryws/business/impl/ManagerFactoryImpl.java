@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ManagerFactoryImpl implements ManagerFactory {
 
-  @Autowired
-  private BooksBorrowedListingManager booksBorrowedListingManager;
+  @Autowired private BooksBorrowedListingManager booksBorrowedListingManager;
 
   @Override
   public BooksBorrowedListingManager getBooksBorrowedListingManager() {
@@ -17,7 +16,8 @@ public class ManagerFactoryImpl implements ManagerFactory {
   }
 
   @Override
-  public void setBooksBorrowedListingManager(BooksBorrowedListingManager booksBorrowedListingManager) {
+  public void setBooksBorrowedListingManager(
+      BooksBorrowedListingManager booksBorrowedListingManager) {
     this.booksBorrowedListingManager = booksBorrowedListingManager;
   }
 }

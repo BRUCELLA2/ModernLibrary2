@@ -7,11 +7,9 @@ import org.springframework.stereotype.Component;
  * The Data Access Object Factory.
  *
  * @author BRUCELLA2
- *
  */
 @Component
 public class DaoFactoryImpl implements DaoFactory {
-
 
   // ===== Getters =====
 

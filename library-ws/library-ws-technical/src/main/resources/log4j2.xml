@@ -6,30 +6,30 @@
   <Appenders>
     <Console name="STDOUT">
       <PatternLayout
-        pattern="%highlight{%-5level} [%t] %c : %m%n" />
+        pattern="%highlight{%-5level} [%t] %c : %m%n"/>
     </Console>
     <File name="global"
       fileName="${sys:catalina.home}/logs/global.log" append="true">
       <PatternLayout
-        pattern="%highlight{%-5level} [%t] %c : %m%n" />
+        pattern="%highlight{%-5level} [%t] %c : %m%n"/>
     </File>
     <File name="libraryws"
       fileName="${sys:catalina.home}/logs/libraryws.log" append="true">
       <PatternLayout
-        pattern="%highlight{%-5level} [%t] %c : %m%n" />
+        pattern="%highlight{%-5level} [%t] %c : %m%n"/>
     </File>
   </Appenders>
 
   <Loggers>
     <Logger name="fr.brucella.projects.libraryws" level="debug"
       additivity="false">
-      <AppenderRef ref="STDOUT" />
-      <AppenderRef ref="libraryws" />
+      <AppenderRef ref="STDOUT"/>
+      <AppenderRef ref="libraryws"/>
     </Logger>
 
     <Root level="debug">
-      <AppenderRef ref="STDOUT" />
-      <AppenderRef ref="global" />
+      <AppenderRef ref="STDOUT"/>
+      <AppenderRef ref="global"/>
     </Root>
   </Loggers>
 </Configuration>

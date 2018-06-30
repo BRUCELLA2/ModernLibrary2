@@ -1,0 +1,93 @@
+package fr.brucella.projects.libraryws.entity.books.model;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+/**
+ * Represents an Author.
+ *
+ * @author BRUCELLA2
+ */
+public class Author {
+
+  /** Id of the author. */
+  private Integer authorId;
+
+  /** First name of the author. Can't be empty. */
+  @NotEmpty(message = "{author.firstName.empty}")
+  @Size(min = 1, max = 50, message = "{author.firstName.size}")
+  private String firstName;
+
+  /** Last name of the author. Can't be empty. */
+  @NotEmpty(message = "{author.lastName.empty}")
+  @Size(min = 1, max = 50, message = "{author.lastName.size}")
+  private String lastName;
+
+  // ===== Getters and Setters =====
+
+  /**
+   * Give the id of the author.
+   *
+   * @return the id of the author.
+   */
+  public Integer getAuthorId() {
+    return authorId;
+  }
+
+  /**
+   * Set the id of the author.
+   *
+   * @param authorId the id of the author.
+   */
+  public void setAuthorId(Integer authorId) {
+    this.authorId = authorId;
+  }
+
+  /**
+   * Give the first name of the author.
+   *
+   * @return the first name of the author.
+   */
+  public String getFirstName() {
+    return firstName;
+  }
+
+  /**
+   * Set the first name of the author.
+   *
+   * @param firstName the first name of the author.
+   */
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  /**
+   * Give the last name of the author.
+   *
+   * @return the last name of the author.
+   */
+  public String getLastName() {
+    return lastName;
+  }
+
+  /**
+   * Set the last name of the author.
+   *
+   * @param lastName the last name of the author.
+   */
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  // ===== Methods =====
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("authorId", authorId)
+        .append("firstName", firstName)
+        .append("lastName", lastName)
+        .toString();
+  }
+}

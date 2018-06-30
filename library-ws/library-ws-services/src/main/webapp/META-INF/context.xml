@@ -11,5 +11,5 @@
     removeAbandonedTimeout="60" removeAbandonedOnBorrow="true"
     logAbandoned="true" minEvictableIdleTimeMillis="10000"
     timeBetweenEvictionRunsMillis="30000" validationQuery="SELECT 1"
-    testWhileIdle="true" testOnBorrow="true" />
+    testWhileIdle="true" testOnBorrow="true"/>
 </Context>

@@ -1,7 +1,7 @@
-package fr.brucella.projects.libraryws.services.authentification;
+package fr.brucella.projects.libraryws.services;
 
-import fr.brucella.projects.libraryws.entity.users.Role;
-import fr.brucella.projects.libraryws.entity.users.User;
+import fr.brucella.projects.libraryws.entity.users.model.Role;
+import fr.brucella.projects.libraryws.entity.users.model.User;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import org.apache.commons.logging.Log;
@@ -12,21 +12,19 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author BRUCELLA2
  */
-@WebService(serviceName = "AuthentificationManagementService")
-public class AuthentificationManagement {
+@WebService(serviceName = "AuthentificationService")
+public class AuthentificationService {
 
-  /**
-   * Authentification Management logger.
-   */
-  private static final Log LOG = LogFactory.getLog(AuthentificationManagement.class);
-
+  /** Authentification Management logger. */
+  private static final Log LOG = LogFactory.getLog(AuthentificationService.class);
 
   /**
    * Check if login and password match and return the user corresponding to this login.
    *
    * @param login login of the user.
    * @param password password of the user.
-   * @return the user corresponding to this login if login and password match. Return null otherwise.
+   * @return the user corresponding to this login if login and password match. Return null
+   *     otherwise.
    */
   @WebMethod
   public User login(String login, String password) {
@@ -53,7 +51,7 @@ public class AuthentificationManagement {
    * @return id of the new user added.
    */
   @WebMethod
-  public Integer addUser(User user, String password){
+  public Integer addUser(User user, String password) {
     return null;
   }
 

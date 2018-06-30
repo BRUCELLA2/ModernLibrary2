@@ -19,8 +19,7 @@ public abstract class AbstractDao {
    * @see #getJdbcTemplate()
    * @see #setJdbcTemplate(JdbcTemplate)
    */
-  @Autowired
-  private JdbcTemplate jdbcTemplate;
+  @Autowired private JdbcTemplate jdbcTemplate;
 
   /**
    * jdbc template with named parameter template.
@@ -28,9 +27,7 @@ public abstract class AbstractDao {
    * @see #getNamedJdbcTemplate()
    * @see #setNamedJdbcTemplate(NamedParameterJdbcTemplate)
    */
-  @Autowired
-  private NamedParameterJdbcTemplate namedJdbcTemplate;
-
+  @Autowired private NamedParameterJdbcTemplate namedJdbcTemplate;
 
   // ----- Getters -----
 
@@ -38,7 +35,6 @@ public abstract class AbstractDao {
    * Get the JdbcTemplate.
    *
    * @return the JdbcTemplate
-   *
    * @see #jdbcTemplate
    * @see #setJdbcTemplate(JdbcTemplate)
    */
@@ -50,7 +46,6 @@ public abstract class AbstractDao {
    * Get the NamedJdbcTemplate.
    *
    * @return the NamedJdbcTemplate
-   *
    * @see #namedJdbcTemplate
    * @see #setNamedJdbcTemplate(NamedParameterJdbcTemplate)
    */
@@ -58,14 +53,12 @@ public abstract class AbstractDao {
     return this.namedJdbcTemplate;
   }
 
-
   // ----- Setters -----
 
   /**
    * Set the JdbcTemplate.
    *
    * @param jdbcTemplate the JdbcTemplate.
-   *
    * @see #jdbcTemplate
    * @see #getJdbcTemplate()
    */
@@ -77,7 +70,6 @@ public abstract class AbstractDao {
    * Set the NamedJdbcTemplate.
    *
    * @param namedJdbcTemplate the NamedJdbcTemplate.
-   *
    * @see #namedJdbcTemplate
    * @see #getNamedJdbcTemplate()
    */

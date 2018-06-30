@@ -8,12 +8,12 @@
 
   <bean id="jdbcTemplate"
     class="org.springframework.jdbc.core.JdbcTemplate">
-    <property name="dataSource" ref="dataSourceModernLibrary" />
+    <property name="dataSource" ref="dataSourceModernLibrary"/>
   </bean>
 
   <bean id="namedJdbcTemplate"
     class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-    <constructor-arg ref="dataSourceModernLibrary" />
+    <constructor-arg ref="dataSourceModernLibrary"/>
   </bean>
 
 </beans>

@@ -1,31 +1,26 @@
-package fr.brucella.projects.libraryws.services.administration;
+package fr.brucella.projects.libraryws.services;
 
-import fr.brucella.projects.libraryws.entity.books.Author;
-import fr.brucella.projects.libraryws.entity.books.Book;
-import fr.brucella.projects.libraryws.entity.books.Genre;
-import fr.brucella.projects.libraryws.entity.books.Publisher;
-import fr.brucella.projects.libraryws.entity.users.Role;
+import fr.brucella.projects.libraryws.entity.books.model.Author;
+import fr.brucella.projects.libraryws.entity.books.model.Book;
+import fr.brucella.projects.libraryws.entity.books.model.Genre;
+import fr.brucella.projects.libraryws.entity.books.model.Publisher;
+import fr.brucella.projects.libraryws.entity.users.model.Role;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Administration Management Web Service.
- * Allow to add and modify various elements of the Modern Library (Book, Author, Genre, Publisher, UserRole).
+ * Administration Management Web Service. Allow to add and modify various elements of the Modern
+ * Library (Book, Author, Genre, Publisher, UserRole).
  *
  * @author BRUCELLA2
  */
-@WebService(serviceName = "AdministrationManagement")
-public class AdministrationManagement {
+@WebService(serviceName = "AdministrationService")
+public class AdministrationService {
 
-
-  /**
-   * Administration Management logger.
-   */
-  private static final Log LOG = LogFactory.getLog(AdministrationManagement.class);
-
-
+  /** Administration Management logger. */
+  private static final Log LOG = LogFactory.getLog(AdministrationService.class);
 
   /**
    * Add a book.
