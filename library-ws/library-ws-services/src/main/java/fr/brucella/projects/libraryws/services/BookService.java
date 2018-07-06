@@ -3,8 +3,9 @@ package fr.brucella.projects.libraryws.services;
 import fr.brucella.projects.libraryws.business.contracts.ManagerFactory;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStock;
 import fr.brucella.projects.libraryws.entity.books.dto.Borrowing;
+import fr.brucella.projects.libraryws.entity.books.model.Author;
 import fr.brucella.projects.libraryws.entity.books.model.Book;
-import fr.brucella.projects.libraryws.entity.searchCriteria.dto.BooksSearchingClientCriteria;
+import fr.brucella.projects.libraryws.entity.searchcriteria.dto.BooksSearchingClientCriteria;
 import fr.brucella.projects.libraryws.entity.users.model.User;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.jws.WebService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 /**
@@ -21,6 +23,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
  * @author BRUCELLA2
  */
 @WebService(serviceName = "BookService")
+@Component
 public class BookService extends SpringBeanAutowiringSupport {
 
   /** Book Service Logger */
@@ -51,7 +54,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return the list of books currently borrowed by the user.
    */
   @WebMethod
-  public List<Book> currentlyBorrowForUser(User userId) {
+  public List<Book> currentlyBorrowForUser(final User userId) {
     return null;
   }
 
@@ -72,17 +75,25 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return the list of currently borrowed books which have an expired deadline for the user.
    */
   @WebMethod
-  public List<Book> currentlyDeadLineExpiredForUser(User userId) {
+  public List<Book> currentlyDeadLineExpiredForUser(final User userId) {
     return null;
   }
 
-  /*
+
+  /**
+   * TODO Delete this method when implementation of somes services is ok.
+   *
+   * Test method. With this webmethod we can check if spring injection, database configuration, tomcat configuration
+   * and webservice system are all functional.
+   *
+   * @return the author with id = 1
+   */
   @WebMethod
-  public String testInjection() {
-    String test = managerFactory.getBooksBorrowedListingManager().test();
-    //String test = "test";
+  public Author testInjection() {
+    LOG.error("MANAGER : " + managerFactory.toString());
+    Author test = managerFactory.getBooksBorrowedListingManager().test();
     return test;
-  }*/
+  }
 
   // ===== Books Listing
 
@@ -103,7 +114,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return the list of books that meet the searching criteria.
    */
   @WebMethod
-  public List<Book> booksSearchedList(BooksSearchingClientCriteria booksSearchingClientCriteria) {
+  public List<Book> booksSearchedList(final BooksSearchingClientCriteria booksSearchingClientCriteria) {
     return null;
   }
 
@@ -169,7 +180,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return id of the borrowing.
    */
   @WebMethod
-  public Integer bookBorrow(Integer bookId, Integer userId) {
+  public Integer bookBorrow(final Integer bookId, final Integer userId) {
     return null;
   }
 
@@ -181,7 +192,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return true if extend success. false if extend fail.
    */
   @WebMethod
-  public Boolean extendBorrowing(Integer bookId, Integer userId) {
+  public Boolean extendBorrowing(final Integer bookId, final Integer userId) {
     return null;
   }
 
@@ -193,7 +204,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return true if the borrowing return if a success. False otherwise.
    */
   @WebMethod
-  public Boolean borrowingReturn(Integer bookId, Integer userId) {
+  public Boolean borrowingReturn(final Integer bookId, final Integer userId) {
     return null;
   }
 
@@ -205,7 +216,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @param bookId id of the book.
    * @return the book details.
    */
-  public Book bookDetails(Integer bookId) {
+  public Book bookDetails(final Integer bookId) {
     return null;
   }
 }

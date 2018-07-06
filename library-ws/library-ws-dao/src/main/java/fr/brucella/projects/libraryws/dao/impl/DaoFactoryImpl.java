@@ -1,6 +1,8 @@
 package fr.brucella.projects.libraryws.dao.impl;
 
 import fr.brucella.projects.libraryws.dao.contracts.dao.DaoFactory;
+import fr.brucella.projects.libraryws.dao.contracts.dao.books.AuthorDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,8 +13,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class DaoFactoryImpl implements DaoFactory {
 
-  // ===== Getters =====
+  /**
+   * Author Data Access Object.
+   */
+  @Autowired
+  private AuthorDao authorDao;
 
-  // ===== Setters ====
+
+  // ===== Getters and Setters =====
+
+
+  @Override
+  public AuthorDao getAuthorDao() {
+    return this.authorDao;
+  }
+
+  @Override
+  public void setAuthorDao(AuthorDao authorDao) {
+    this.authorDao = authorDao;
+  }
+
 
 }

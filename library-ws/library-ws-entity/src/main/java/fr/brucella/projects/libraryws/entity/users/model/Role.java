@@ -35,7 +35,7 @@ public class Role {
    *
    * @param roleId role id of the role.
    */
-  public void setRoleId(Integer roleId) {
+  public void setRoleId(final Integer roleId) {
     this.roleId = roleId;
   }
 
@@ -53,12 +53,17 @@ public class Role {
    *
    * @param roleName the name of the role.
    */
-  public void setRoleName(String roleName) {
+  public void setRoleName(final String roleName) {
     this.roleName = roleName;
   }
 
   // ===== Methods =====
 
+  /**
+   * a string representation of the Role object.
+   *
+   * @return a string representation of the Role object.
+   */
   @Override
   public String toString() {
     return new ToStringBuilder(this)

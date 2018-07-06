@@ -1,5 +1,6 @@
 package fr.brucella.projects.libraryws.services;
 
+import fr.brucella.projects.libraryws.entity.LocalDateAdapter;
 import fr.brucella.projects.libraryws.entity.books.model.Author;
 import fr.brucella.projects.libraryws.entity.books.model.Book;
 import fr.brucella.projects.libraryws.entity.books.model.Genre;
@@ -7,6 +8,7 @@ import fr.brucella.projects.libraryws.entity.books.model.Publisher;
 import fr.brucella.projects.libraryws.entity.users.model.Role;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -29,7 +31,7 @@ public class AdministrationService {
    * @return id of the new book added.
    */
   @WebMethod
-  public Integer addBook(Book book) {
+  public Integer addBook(final Book book) {
     return null;
   }
 
@@ -40,7 +42,7 @@ public class AdministrationService {
    * @return id of the new author added.
    */
   @WebMethod
-  public Integer addAuthor(Author author) {
+  public Integer addAuthor(final Author author) {
     return null;
   }
 
@@ -51,7 +53,7 @@ public class AdministrationService {
    * @return id of the new genre added.
    */
   @WebMethod
-  public Integer addGenre(Genre genre) {
+  public Integer addGenre(final Genre genre) {
     return null;
   }
 
@@ -62,7 +64,7 @@ public class AdministrationService {
    * @return id of the new publisher added.
    */
   @WebMethod
-  public Integer addPublisher(Publisher publisher) {
+  public Integer addPublisher(final Publisher publisher) {
     return null;
   }
 
@@ -73,7 +75,7 @@ public class AdministrationService {
    * @return id of the role.
    */
   @WebMethod
-  public Integer addRole(Role role) {
+  public Integer addRole(final Role role) {
     return null;
   }
 
@@ -84,7 +86,7 @@ public class AdministrationService {
    * @return true if modification is a success, false otherwise.
    */
   @WebMethod
-  public Boolean modifyBook(Book book) {
+  public Boolean modifyBook(final Book book) {
     return null;
   }
 
@@ -95,7 +97,7 @@ public class AdministrationService {
    * @return true if modification is a success, false otherwise.
    */
   @WebMethod
-  public Boolean modifyAuthor(Author author) {
+  public Boolean modifyAuthor(final Author author) {
     return null;
   }
 
@@ -106,7 +108,7 @@ public class AdministrationService {
    * @return true if modification is a success, false otherwise.
    */
   @WebMethod
-  public Boolean modifyGenre(Genre genre) {
+  public Boolean modifyGenre(final Genre genre) {
     return null;
   }
 
@@ -117,7 +119,7 @@ public class AdministrationService {
    * @return true if modification is a success, false otherwise.
    */
   @WebMethod
-  public Boolean modifyPublisher(Publisher publisher) {
+  public Boolean modifyPublisher(final Publisher publisher) {
     return null;
   }
 
@@ -128,7 +130,7 @@ public class AdministrationService {
    * @return true if modification is a success, false otherwise.
    */
   @WebMethod
-  public Boolean modifyRole(Role role) {
+  public Boolean modifyRole(final Role role) {
     return null;
   }
 }

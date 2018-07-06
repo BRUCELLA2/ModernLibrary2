@@ -53,7 +53,7 @@ public class Address {
    *
    * @param addressId the id of the address.
    */
-  public void setAddressId(Integer addressId) {
+  public void setAddressId(final Integer addressId) {
     this.addressId = addressId;
   }
 
@@ -71,7 +71,7 @@ public class Address {
    *
    * @param line1 the first line of the address.
    */
-  public void setLine1(String line1) {
+  public void setLine1(final String line1) {
     this.line1 = line1;
   }
 
@@ -89,7 +89,7 @@ public class Address {
    *
    * @param line2 the second line of the address.
    */
-  public void setLine2(String line2) {
+  public void setLine2(final String line2) {
     this.line2 = line2;
   }
 
@@ -107,7 +107,7 @@ public class Address {
    *
    * @param line3 the third line of the address.
    */
-  public void setLine3(String line3) {
+  public void setLine3(final String line3) {
     this.line3 = line3;
   }
 
@@ -125,7 +125,7 @@ public class Address {
    *
    * @param city the city of the address.
    */
-  public void setCity(String city) {
+  public void setCity(final String city) {
     this.city = city;
   }
 
@@ -143,12 +143,17 @@ public class Address {
    *
    * @param zipCode the zip code of the city.
    */
-  public void setZipCode(String zipCode) {
+  public void setZipCode(final String zipCode) {
     this.zipCode = zipCode;
   }
 
   // ===== Methods =====
 
+  /**
+   * a string representation of the Address object.
+   *
+   * @return a string representation of the Address object.
+   */
   @Override
   public String toString() {
     return new ToStringBuilder(this)

@@ -1,9 +1,13 @@
 package fr.brucella.projects.libraryws.entity.books.model;
 
-import java.time.LocalDateTime;
+import fr.brucella.projects.libraryws.entity.LocalDateAdapter;
+import java.time.LocalDate;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -32,8 +36,8 @@ public class Book {
   private String ean13;
 
   /** Publishing date of the book. Can't be null. */
-  @NotNull(message = "{book.publishingDate.null")
-  private LocalDateTime publishingDate;
+  @NotNull(message = "{book.publishingDate.null}")
+  private LocalDate publishingDate;
 
   /** Resume of the book. Can't be empty. */
   @NotEmpty(message = "{book.resume.empty}")
@@ -64,7 +68,7 @@ public class Book {
    *
    * @param bookId the book id.
    */
-  public void setBookId(Integer bookId) {
+  public void setBookId(final Integer bookId) {
     this.bookId = bookId;
   }
 
@@ -82,7 +86,7 @@ public class Book {
    *
    * @param title the title of the book.
    */
-  public void setTitle(String title) {
+  public void setTitle(final String title) {
     this.title = title;
   }
 
@@ -100,7 +104,7 @@ public class Book {
    *
    * @param isbn13 the ISBN13 of the book.
    */
-  public void setIsbn13(String isbn13) {
+  public void setIsbn13(final String isbn13) {
     this.isbn13 = isbn13;
   }
 
@@ -118,7 +122,7 @@ public class Book {
    *
    * @param ean13 the EAN13 of the book.
    */
-  public void setEan13(String ean13) {
+  public void setEan13(final String ean13) {
     this.ean13 = ean13;
   }
 
@@ -127,7 +131,7 @@ public class Book {
    *
    * @return the publishing date of the book.
    */
-  public LocalDateTime getPublishingDate() {
+  public LocalDate getPublishingDate() {
     return publishingDate;
   }
 
@@ -136,7 +140,7 @@ public class Book {
    *
    * @param publishingDate the publishing date of the book.
    */
-  public void setPublishingDate(LocalDateTime publishingDate) {
+  public void setPublishingDate(final LocalDate publishingDate) {
     this.publishingDate = publishingDate;
   }
 
@@ -154,7 +158,7 @@ public class Book {
    *
    * @param resume the resume of the book.
    */
-  public void setResume(String resume) {
+  public void setResume(final String resume) {
     this.resume = resume;
   }
 
@@ -172,7 +176,7 @@ public class Book {
    *
    * @param genreId the genre id of the book.
    */
-  public void setGenreId(Integer genreId) {
+  public void setGenreId(final Integer genreId) {
     this.genreId = genreId;
   }
 
@@ -190,12 +194,17 @@ public class Book {
    *
    * @param publisherId the publisher id of the book.
    */
-  public void setPublisherId(Integer publisherId) {
+  public void setPublisherId(final Integer publisherId) {
     this.publisherId = publisherId;
   }
 
   // ===== Methods =====
 
+  /**
+   * a string representation of the Book object.
+   *
+   * @return a string representation of the Book object.
+   */
   @Override
   public String toString() {
     return new ToStringBuilder(this)

@@ -40,7 +40,7 @@ public class Author {
    *
    * @param authorId the id of the author.
    */
-  public void setAuthorId(Integer authorId) {
+  public void setAuthorId(final Integer authorId) {
     this.authorId = authorId;
   }
 
@@ -58,7 +58,7 @@ public class Author {
    *
    * @param firstName the first name of the author.
    */
-  public void setFirstName(String firstName) {
+  public void setFirstName(final String firstName) {
     this.firstName = firstName;
   }
 
@@ -76,12 +76,17 @@ public class Author {
    *
    * @param lastName the last name of the author.
    */
-  public void setLastName(String lastName) {
+  public void setLastName(final String lastName) {
     this.lastName = lastName;
   }
 
   // ===== Methods =====
 
+  /**
+   * a string representation of the Author object.
+   *
+   * @return a string representation of the Author object.
+   */
   @Override
   public String toString() {
     return new ToStringBuilder(this)

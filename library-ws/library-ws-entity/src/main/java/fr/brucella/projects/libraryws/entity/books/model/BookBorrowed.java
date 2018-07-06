@@ -59,7 +59,7 @@ public class BookBorrowed {
    *
    * @param userId the id of the user.
    */
-  public void setUserId(Integer userId) {
+  public void setUserId(final Integer userId) {
     this.userId = userId;
   }
 
@@ -77,7 +77,7 @@ public class BookBorrowed {
    *
    * @param bookId the id of the book.
    */
-  public void setBookId(Integer bookId) {
+  public void setBookId(final Integer bookId) {
     this.bookId = bookId;
   }
 
@@ -95,7 +95,7 @@ public class BookBorrowed {
    *
    * @param endDate the end date of the borrowing.
    */
-  public void setEndDate(LocalDateTime endDate) {
+  public void setEndDate(final LocalDateTime endDate) {
     this.endDate = endDate;
   }
 
@@ -113,7 +113,7 @@ public class BookBorrowed {
    *
    * @param borrowDate the borrowing date.
    */
-  public void setBorrowDate(LocalDateTime borrowDate) {
+  public void setBorrowDate(final LocalDateTime borrowDate) {
     this.borrowDate = borrowDate;
   }
 
@@ -131,7 +131,7 @@ public class BookBorrowed {
    *
    * @param extension true if the borrowing has been extented, false otherwise.
    */
-  public void setExtension(Boolean extension) {
+  public void setExtension(final Boolean extension) {
     this.extension = extension;
   }
 
@@ -149,7 +149,7 @@ public class BookBorrowed {
    *
    * @param nbReminder the number of reminded send to the user.
    */
-  public void setNbReminder(Integer nbReminder) {
+  public void setNbReminder(final Integer nbReminder) {
     this.nbReminder = nbReminder;
   }
 
@@ -167,7 +167,7 @@ public class BookBorrowed {
    *
    * @param returned true if the book has been returned and false otherwise.
    */
-  public void setReturned(Boolean returned) {
+  public void setReturned(final Boolean returned) {
     this.returned = returned;
   }
 
@@ -185,12 +185,17 @@ public class BookBorrowed {
    *
    * @param lastReminder the date of the last reminder send to the user for this borrowing.
    */
-  public void setLastReminder(LocalDateTime lastReminder) {
+  public void setLastReminder(final LocalDateTime lastReminder) {
     this.lastReminder = lastReminder;
   }
 
   // ===== Methods =====
 
+  /**
+   * a string representation of the BookBorrowed object.
+   *
+   * @return a string representation of the BookBorrowed object.
+   */
   @Override
   public String toString() {
     return new ToStringBuilder(this)

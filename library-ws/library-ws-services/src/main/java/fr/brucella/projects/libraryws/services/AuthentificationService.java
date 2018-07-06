@@ -27,7 +27,7 @@ public class AuthentificationService {
    *     otherwise.
    */
   @WebMethod
-  public User login(String login, String password) {
+  public User login(final String login, final String password) {
     return null;
   }
 
@@ -39,7 +39,7 @@ public class AuthentificationService {
    * @return true if password is correct and modification is done without problem, false otherwise.
    */
   @WebMethod
-  public Boolean modifyUser(User user, String password) {
+  public Boolean modifyUser(final User user, final String password) {
     return null;
   }
 
@@ -51,7 +51,7 @@ public class AuthentificationService {
    * @return id of the new user added.
    */
   @WebMethod
-  public Integer addUser(User user, String password) {
+  public Integer addUser(final User user, final String password) {
     return null;
   }
 
@@ -63,7 +63,7 @@ public class AuthentificationService {
    * @return true if add is success, false otherwise.
    */
   @WebMethod
-  public Boolean addRoleToUser(Integer userId, Role role) {
+  public Boolean addRoleToUser(final Integer userId, final Role role) {
     return null;
   }
 }

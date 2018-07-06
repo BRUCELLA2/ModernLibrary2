@@ -37,7 +37,7 @@ public class Stock {
    *
    * @param stockId the id of the stock.
    */
-  public void setStockId(Integer stockId) {
+  public void setStockId(final Integer stockId) {
     this.stockId = stockId;
   }
 
@@ -55,7 +55,7 @@ public class Stock {
    *
    * @param bookId the id of the book.
    */
-  public void setBookId(Integer bookId) {
+  public void setBookId(final Integer bookId) {
     this.bookId = bookId;
   }
 
@@ -73,7 +73,7 @@ public class Stock {
    *
    * @param amountAvailable the amount of the book available.
    */
-  public void setAmountAvailable(Integer amountAvailable) {
+  public void setAmountAvailable(final Integer amountAvailable) {
     this.amountAvailable = amountAvailable;
   }
 
@@ -91,12 +91,17 @@ public class Stock {
    *
    * @param amount
    */
-  public void setAmount(Integer amount) {
+  public void setAmount(final Integer amount) {
     this.amount = amount;
   }
 
   // ===== Methods =====
 
+  /**
+   * a string representation of the Stock object.
+   *
+   * @return a string representation of the Stock object.
+   */
   @Override
   public String toString() {
     return new ToStringBuilder(this)

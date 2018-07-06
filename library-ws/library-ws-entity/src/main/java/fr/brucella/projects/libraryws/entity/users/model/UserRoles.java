@@ -34,7 +34,7 @@ public class UserRoles {
    *
    * @param userId the user id.
    */
-  public void setUserId(Integer userId) {
+  public void setUserId(final Integer userId) {
     this.userId = userId;
   }
 
@@ -52,12 +52,17 @@ public class UserRoles {
    *
    * @param roleId the role id.
    */
-  public void setRoleId(Integer roleId) {
+  public void setRoleId(final Integer roleId) {
     this.roleId = roleId;
   }
 
   // ===== Methods =====
 
+  /**
+   * a string representation of the UserRoles object.
+   *
+   * @return a string representation of the UserRoles object.
+   */
   @Override
   public String toString() {
     return new ToStringBuilder(this).append("userId", userId).append("roleId", roleId).toString();

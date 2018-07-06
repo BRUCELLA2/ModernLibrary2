@@ -35,7 +35,7 @@ public class Publisher {
    *
    * @param publisherId the publisher id.
    */
-  public void setPublisherId(Integer publisherId) {
+  public void setPublisherId(final Integer publisherId) {
     this.publisherId = publisherId;
   }
 
@@ -53,12 +53,17 @@ public class Publisher {
    *
    * @param name the name of the publisher.
    */
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
   // ===== Methods =====
 
+  /**
+   * a string representation of the Publisher object.
+   *
+   * @return a string representation of the Publisher object.
+   */
   @Override
   public String toString() {
     return new ToStringBuilder(this)

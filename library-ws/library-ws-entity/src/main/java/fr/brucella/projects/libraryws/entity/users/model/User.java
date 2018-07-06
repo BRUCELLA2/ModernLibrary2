@@ -56,7 +56,7 @@ public class User {
    *
    * @param userId id of the user.
    */
-  public void setUserId(Integer userId) {
+  public void setUserId(final Integer userId) {
     this.userId = userId;
   }
 
@@ -74,7 +74,7 @@ public class User {
    *
    * @param login the login of the user.
    */
-  public void setLogin(String login) {
+  public void setLogin(final String login) {
     this.login = login;
   }
 
@@ -92,7 +92,7 @@ public class User {
    *
    * @param password the password of the user.
    */
-  public void setPassword(String password) {
+  public void setPassword(final String password) {
     this.password = password;
   }
 
@@ -110,7 +110,7 @@ public class User {
    *
    * @param email the email of the user.
    */
-  public void setEmail(String email) {
+  public void setEmail(final String email) {
     this.email = email;
   }
 
@@ -128,7 +128,7 @@ public class User {
    *
    * @param phone the phone of the user.
    */
-  public void setPhone(String phone) {
+  public void setPhone(final String phone) {
     this.phone = phone;
   }
 
@@ -146,12 +146,17 @@ public class User {
    *
    * @param addressId the address id of the user.
    */
-  public void setAddressId(Integer addressId) {
+  public void setAddressId(final Integer addressId) {
     this.addressId = addressId;
   }
 
   // ===== Methods =====
 
+  /**
+   * a string representation of the User object.
+   *
+   * @return a string representation of the User object.
+   */
   @Override
   public String toString() {
     return new ToStringBuilder(this)

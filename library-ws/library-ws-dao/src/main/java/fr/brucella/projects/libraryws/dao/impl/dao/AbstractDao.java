@@ -1,5 +1,6 @@
 package fr.brucella.projects.libraryws.dao.impl.dao;
 
+import java.util.ResourceBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -29,6 +30,12 @@ public abstract class AbstractDao {
    */
   @Autowired private NamedParameterJdbcTemplate namedJdbcTemplate;
 
+  /**
+   * ResourceBundle messages
+   */
+  protected ResourceBundle messages = ResourceBundle.getBundle("fr/brucella/projects/libraryws/dao/messagesDao");
+
+
   // ----- Getters -----
 
   /**
@@ -52,6 +59,7 @@ public abstract class AbstractDao {
   public NamedParameterJdbcTemplate getNamedJdbcTemplate() {
     return this.namedJdbcTemplate;
   }
+
 
   // ----- Setters -----
 

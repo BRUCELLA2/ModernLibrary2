@@ -35,7 +35,7 @@ public class Genre {
    *
    * @param genreId
    */
-  public void setGenreId(Integer genreId) {
+  public void setGenreId(final Integer genreId) {
     this.genreId = genreId;
   }
 
@@ -53,12 +53,17 @@ public class Genre {
    *
    * @param name the name of the genre.
    */
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
   // ===== Methods =====
 
+  /**
+   * a string representation of the Genre object.
+   *
+   * @return a string representation of the Genre object.
+   */
   @Override
   public String toString() {
     return new ToStringBuilder(this).append("genreId", genreId).append("name", name).toString();

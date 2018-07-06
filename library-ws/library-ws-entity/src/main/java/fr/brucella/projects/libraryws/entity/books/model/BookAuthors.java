@@ -34,7 +34,7 @@ public class BookAuthors {
    *
    * @param bookId the id of the book.
    */
-  public void setBookId(Integer bookId) {
+  public void setBookId(final Integer bookId) {
     this.bookId = bookId;
   }
 
@@ -52,12 +52,17 @@ public class BookAuthors {
    *
    * @param authorId the id of the author.
    */
-  public void setAuthorId(Integer authorId) {
+  public void setAuthorId(final Integer authorId) {
     this.authorId = authorId;
   }
 
   // ===== Methods =====
 
+  /**
+   * a string representation of the BookAuthors object.
+   *
+   * @return a string representation of the BookAuthors object.
+   */
   @Override
   public String toString() {
     return new ToStringBuilder(this)

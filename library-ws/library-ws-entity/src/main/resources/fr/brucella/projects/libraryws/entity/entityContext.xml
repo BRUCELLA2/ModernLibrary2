@@ -6,11 +6,11 @@
             http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
   <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-    <property name="validationMessageSource" ref="messageSource"/>
+    <property name="validationMessageSource" ref="messageSourceEntity"/>
   </bean>
 
-  <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-    <property name="basename" value="fr.brucella.projects.libraryws.entity.messages"/>
+  <bean id="messageSourceEntity" class="org.springframework.context.support.ResourceBundleMessageSource">
+    <property name="basename" value="fr.brucella.projects.libraryws.entity.messagesEntity"/>
   </bean>
 
 </beans>

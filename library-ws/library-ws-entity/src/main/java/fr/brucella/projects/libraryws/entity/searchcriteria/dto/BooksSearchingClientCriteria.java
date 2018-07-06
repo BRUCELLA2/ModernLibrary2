@@ -1,4 +1,4 @@
-package fr.brucella.projects.libraryws.entity.searchCriteria.dto;
+package fr.brucella.projects.libraryws.entity.searchcriteria.dto;
 
 /**
  * Represents the book searching criteria used by client users.
