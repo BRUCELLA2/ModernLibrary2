@@ -2,8 +2,8 @@ package fr.brucella.projects.libraryws.business.impl.managers;
 
 import fr.brucella.projects.libraryws.dao.contracts.dao.DaoFactory;
 import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
 import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,11 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 public abstract class AbstractManager {
 
-  /**
-   * The Data Access Object Factory.
-   */
-  @Autowired
-  private DaoFactory daoFactory;
+  /** The Data Access Object Factory. */
+  @Autowired private DaoFactory daoFactory;
 
   /**
    * Give the DAO Factory.

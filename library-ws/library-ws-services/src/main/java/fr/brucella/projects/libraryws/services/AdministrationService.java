@@ -1,6 +1,5 @@
 package fr.brucella.projects.libraryws.services;
 
-import fr.brucella.projects.libraryws.entity.LocalDateAdapter;
 import fr.brucella.projects.libraryws.entity.books.model.Author;
 import fr.brucella.projects.libraryws.entity.books.model.Book;
 import fr.brucella.projects.libraryws.entity.books.model.Genre;
@@ -8,7 +7,6 @@ import fr.brucella.projects.libraryws.entity.books.model.Publisher;
 import fr.brucella.projects.libraryws.entity.users.model.Role;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

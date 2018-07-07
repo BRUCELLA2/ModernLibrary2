@@ -1,12 +1,11 @@
 package fr.brucella.projects.libraryws.dao.impl.dao.books;
 
-import fr.brucella.projects.libraryws.dao.contracts.dao.books.AuthorDao;
+import fr.brucella.projects.libraryws.dao.contracts.dao.books.StockDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
-import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.AuthorRM;
-import fr.brucella.projects.libraryws.entity.books.model.Author;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.StockRM;
+import fr.brucella.projects.libraryws.entity.books.model.Stock;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
-import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
@@ -24,39 +23,39 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 /**
- * Author Data Access Object.
+ * Stock Data Access Object.
  *
  * @author BRUCELLA2
  */
 @Component
-public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
+public class StockDaoImpl extends AbstractDao implements StockDao {
 
-  /** Author DAO logger. */
-  private static final Log LOG = LogFactory.getLog(AuthorDaoImpl.class);
+  /** Stock DAO logger. */
+  private static final Log LOG = LogFactory.getLog(StockDaoImpl.class);
 
   /** sql string used in database request. */
   private String sql;
 
   /** {@inheritDoc} */
   @Override
-  public Author getAuthor(final Integer authorId) throws TechnicalException, NotFoundException {
+  public Stock getStock(final Integer stockId) throws TechnicalException, NotFoundException {
 
-    sql = "SELECT * FROM author WHERE author_id = :authorId";
+    sql = "SELECT * FROM stock WHERE stock_id = :stockId";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-    parameterSource.addValue("authorId", authorId);
+    parameterSource.addValue("stockId", stockId);
 
-    final RowMapper<Author> rowMapper = new AuthorRM();
+    final RowMapper<Stock> rowMapper = new StockRM();
 
     try {
       return this.getNamedJdbcTemplate().queryForObject(sql, parameterSource, rowMapper);
     } catch (EmptyResultDataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("authorId = " + authorId);
+        LOG.debug("stockId = " + stockId);
       }
       LOG.error(exception.getMessage());
-      throw new NotFoundException(messages.getString("authorDao.getAuthor.notFound"), exception);
+      throw new NotFoundException(messages.getString("stockDao.getStock.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"));
@@ -66,7 +65,7 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug(("authorId = " + authorId));
+        LOG.debug(("stockId = " + stockId));
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -75,71 +74,65 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
 
   /** {@inheritDoc} */
   @Override
-  public List<Author> getBookAuthors(final Integer bookId)
-      throws TechnicalException, NotFoundException {
+  public Stock getStockForBook(final Integer bookId) throws TechnicalException, NotFoundException {
 
-    sql =
-        "SELECT * FROM author INNER JOIN book_authors ON author.author_id = book_authors.author_id WHERE book_authors.book_id = :bookId";
+    sql = "SELECT * FROM stock WHERE book_id = :bookId";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
     parameterSource.addValue("bookId", bookId);
 
-    final RowMapper<Author> rowMapper = new AuthorRM();
+    final RowMapper<Stock> rowMapper = new StockRM();
 
     try {
-      final List<Author> bookAuthors =
-          this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
-      if (bookAuthors.isEmpty()) {
-        if (LOG.isDebugEnabled()) {
-          LOG.debug("SQL : " + sql);
-          LOG.debug("bookId = " + bookId);
-        }
-        throw new NotFoundException(messages.getString("authorDao.getBookAuthors.notFound"));
-      } else {
-        return bookAuthors;
-      }
-    } catch (PermissionDeniedDataAccessException exception) {
-      LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
-    } catch (DataAccessResourceFailureException exception) {
-      LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
-    } catch (DataAccessException exception) {
+      return this.getNamedJdbcTemplate().queryForObject(sql, parameterSource, rowMapper);
+    } catch (EmptyResultDataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("bookId = " + bookId);
       }
       LOG.error(exception.getMessage());
+      throw new NotFoundException(messages.getString("stockDao.getStockForBook.notFound"), exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"));
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error((exception.getMessage()));
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug(("bookId = " + bookId));
+      }
+      LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void updateAuthor(final Author author) throws TechnicalException, NotFoundException {
+  public void updateStock(final Stock stock) throws TechnicalException, NotFoundException {
 
-    sql =
-        "UPDATE author SET first_name = :firstName, last_name = :lastName WHERE author_id = :authorId";
+    sql = "UPDATE stock SET book_id = :bookId, amount_available = :amountAvailable, amount = :amount WHERE stock_id = :stockId";
 
-    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(author);
+    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(stock);
 
     try {
       final int result = this.getNamedJdbcTemplate().update(sql, parameterSource);
       if (result == 0) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
-          LOG.debug("Author = " + author.toString());
+          LOG.debug("Stock = " + stock.toString());
         }
-        throw new NotFoundException(messages.getString("authorDao.updateAuthor.notFound"));
+        throw new NotFoundException(messages.getString("stockDao.updateStock.notFound"));
       }
     } catch (DataIntegrityViolationException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Author : " + author.toString());
+        LOG.debug("Stock : " + stock.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(
-          messages.getString("authorDao.updateAuthor.integrityViolation"), exception);
+          messages.getString("stockDao.updateStock.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"), exception);
@@ -149,7 +142,7 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("author = " + author.toString());
+        LOG.debug("Stock = " + stock.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -158,35 +151,34 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
 
   /** {@inheritDoc} */
   @Override
-  public int insertAuthor(final Author author) throws TechnicalException {
+  public int insertStock(final Stock stock) throws TechnicalException {
 
-    sql =
-        "INSERT INTO author (author_id, first_name, last_name) VALUES (DEFAULT, :firstName, :lastName)";
+    sql = "INSERT INTO stock (stock_id, book_id, amount_available, amount) VALUES (DEFAULT, :bookId, :amountAvailable, :amount)";
 
     final KeyHolder keyHolder = new GeneratedKeyHolder();
-    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(author);
+    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(stock);
 
     try {
       this.getNamedJdbcTemplate()
-          .update(sql, parameterSource, keyHolder, new String[] {"author_id"});
+          .update(sql, parameterSource, keyHolder, new String[] {"stock_id"});
       return keyHolder.getKey().intValue();
 
     } catch (DuplicateKeyException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Author : " + author.toString());
+        LOG.debug("Stock : " + stock.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(
-          messages.getString("authorDao.insertAuthor.duplicate"), exception);
+          messages.getString("stockDao.insertStock.duplicate"), exception);
     } catch (DataIntegrityViolationException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Author : " + author.toString());
+        LOG.debug("Stock : " + stock.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(
-          messages.getString("authorDao.insertAuthor.integrityViolation"), exception);
+          messages.getString("stockDao.insertStock.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"), exception);
@@ -196,7 +188,7 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("author = " + author.toString());
+        LOG.debug("Stock = " + stock.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -205,21 +197,21 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
 
   /** {@inheritDoc} */
   @Override
-  public void deleteAuthor(final Integer authorId) throws TechnicalException, NotFoundException {
+  public void deleteStock(final Integer stockId) throws TechnicalException, NotFoundException {
 
-    sql = "DELETE FROM author WHERE author_id = :authorId";
+    sql = "DELETE FROM stock WHERE stock_id = :stockId";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-    parameterSource.addValue("authorId", authorId);
+    parameterSource.addValue("stockId", stockId);
 
     try {
       final int result = this.getNamedJdbcTemplate().update(sql, parameterSource);
       if (result == 0) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
-          LOG.debug("authorID = " + authorId);
+          LOG.debug("stockId = " + stockId);
         }
-        throw new NotFoundException(messages.getString("authorDao.deleteAuthor.notFound"));
+        throw new NotFoundException(messages.getString("stockDao.deleteStock.notFound"));
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
@@ -230,7 +222,7 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("authorId = " + authorId);
+        LOG.debug("stockId = " + stockId);
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);

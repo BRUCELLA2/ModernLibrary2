@@ -1,6 +1,5 @@
 @XmlJavaTypeAdapters({
-    @XmlJavaTypeAdapter(type=LocalDate.class,
-        value=LocalDateAdapter.class),
+  @XmlJavaTypeAdapter(type = LocalDate.class, value = LocalDateAdapter.class),
 })
 package fr.brucella.projects.libraryws.entity;
 

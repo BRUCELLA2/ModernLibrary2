@@ -30,11 +30,9 @@ public abstract class AbstractDao {
    */
   @Autowired private NamedParameterJdbcTemplate namedJdbcTemplate;
 
-  /**
-   * ResourceBundle messages
-   */
-  protected ResourceBundle messages = ResourceBundle.getBundle("fr/brucella/projects/libraryws/dao/messagesDao");
-
+  /** ResourceBundle messages */
+  protected ResourceBundle messages =
+      ResourceBundle.getBundle("fr/brucella/projects/libraryws/dao/messagesDao");
 
   // ----- Getters -----
 
@@ -59,7 +57,6 @@ public abstract class AbstractDao {
   public NamedParameterJdbcTemplate getNamedJdbcTemplate() {
     return this.namedJdbcTemplate;
   }
-
 
   // ----- Setters -----
 

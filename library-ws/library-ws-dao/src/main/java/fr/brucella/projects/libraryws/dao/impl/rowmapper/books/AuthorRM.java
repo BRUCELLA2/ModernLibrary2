@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 public class AuthorRM implements RowMapper<Author> {
 
   @Override
-  public Author mapRow(final ResultSet resultSet, final int i) throws SQLException {
+  public Author mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 
     final Author author = new Author();
 

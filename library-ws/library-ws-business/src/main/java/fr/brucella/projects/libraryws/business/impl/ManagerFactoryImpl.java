@@ -13,24 +13,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class ManagerFactoryImpl implements ManagerFactory {
 
-  /**
-   * Books Borrowed Listing Manager
-   */
+  /** Books Borrowed Listing Manager */
   @Autowired private BooksBorrowedListingManager booksBorrowedListingManager;
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public BooksBorrowedListingManager getBooksBorrowedListingManager() {
     return this.booksBorrowedListingManager;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
-  public void setBooksBorrowedListingManager(final BooksBorrowedListingManager booksBorrowedListingManager) {
+  public void setBooksBorrowedListingManager(
+      final BooksBorrowedListingManager booksBorrowedListingManager) {
     this.booksBorrowedListingManager = booksBorrowedListingManager;
   }
 }

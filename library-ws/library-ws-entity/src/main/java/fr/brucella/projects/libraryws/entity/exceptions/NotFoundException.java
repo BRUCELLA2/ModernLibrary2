@@ -7,9 +7,7 @@ package fr.brucella.projects.libraryws.entity.exceptions;
  */
 public class NotFoundException extends Exception {
 
-  /**
-   * Serial ID.
-   */
+  /** Serial ID. */
   private static final long serialVersionUID = 1L;
 
   /**

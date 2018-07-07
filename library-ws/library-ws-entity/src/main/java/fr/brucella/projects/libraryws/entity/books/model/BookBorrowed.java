@@ -1,6 +1,6 @@
 package fr.brucella.projects.libraryws.entity.books.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -21,11 +21,11 @@ public class BookBorrowed {
 
   /** End date of borrowing. Can't be null. */
   @NotNull(message = "{bookBorrowed.endDate.null}")
-  private LocalDateTime endDate;
+  private LocalDate endDate;
 
   /** Date of borrow. Can't be null. */
   @NotNull(message = "{bookBorrowed.borrowDate.null}")
-  private LocalDateTime borrowDate;
+  private LocalDate borrowDate;
 
   /** Indicate if the borrowing has been extended. Can't be null. */
   @NotNull(message = "{bookBorrowed.extension.null}")
@@ -41,7 +41,7 @@ public class BookBorrowed {
 
   /** Date of the last reminder. Can't be null. */
   @NotNull(message = "{bookBorrowed.lastReminder.null}")
-  private LocalDateTime lastReminder;
+  private LocalDate lastReminder;
 
   // ===== Getters and Setters =====
 
@@ -86,7 +86,7 @@ public class BookBorrowed {
    *
    * @return the end date of the borrowing.
    */
-  public LocalDateTime getEndDate() {
+  public LocalDate getEndDate() {
     return endDate;
   }
 
@@ -95,7 +95,7 @@ public class BookBorrowed {
    *
    * @param endDate the end date of the borrowing.
    */
-  public void setEndDate(final LocalDateTime endDate) {
+  public void setEndDate(final LocalDate endDate) {
     this.endDate = endDate;
   }
 
@@ -104,7 +104,7 @@ public class BookBorrowed {
    *
    * @return the borrowing date.
    */
-  public LocalDateTime getBorrowDate() {
+  public LocalDate getBorrowDate() {
     return borrowDate;
   }
 
@@ -113,7 +113,7 @@ public class BookBorrowed {
    *
    * @param borrowDate the borrowing date.
    */
-  public void setBorrowDate(final LocalDateTime borrowDate) {
+  public void setBorrowDate(final LocalDate borrowDate) {
     this.borrowDate = borrowDate;
   }
 
@@ -176,7 +176,7 @@ public class BookBorrowed {
    *
    * @return the date of the last reminded send to the user for this borrowing.
    */
-  public LocalDateTime getLastReminder() {
+  public LocalDate getLastReminder() {
     return lastReminder;
   }
 
@@ -185,7 +185,7 @@ public class BookBorrowed {
    *
    * @param lastReminder the date of the last reminder send to the user for this borrowing.
    */
-  public void setLastReminder(final LocalDateTime lastReminder) {
+  public void setLastReminder(final LocalDate lastReminder) {
     this.lastReminder = lastReminder;
   }
 

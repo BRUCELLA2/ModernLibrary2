@@ -3,27 +3,27 @@ CREATE SEQUENCE public.role_role_id_seq;
 
 CREATE TABLE public.role (
                 role_id INTEGER NOT NULL DEFAULT nextval('public.role_role_id_seq'),
-                role VARCHAR(25) NOT NULL,
+                role_name VARCHAR(25) NOT NULL,
                 CONSTRAINT role_pk PRIMARY KEY (role_id)
 );
 
 
 ALTER SEQUENCE public.role_role_id_seq OWNED BY public.role.role_id;
 
-CREATE SEQUENCE public.adress_adress_id_seq;
+CREATE SEQUENCE public.address_address_id_seq;
 
-CREATE TABLE public.adress (
-                adress_id INTEGER NOT NULL DEFAULT nextval('public.adress_adress_id_seq'),
+CREATE TABLE public.address (
+                address_id INTEGER NOT NULL DEFAULT nextval('public.address_address_id_seq'),
                 line1 VARCHAR(200) NOT NULL,
                 line2 VARCHAR(200),
                 line3 VARCHAR(200),
                 city VARCHAR(100) NOT NULL,
                 zip_code VARCHAR(5) NOT NULL,
-                CONSTRAINT adress_pk PRIMARY KEY (adress_id)
+                CONSTRAINT address_pk PRIMARY KEY (address_id)
 );
 
 
-ALTER SEQUENCE public.adress_adress_id_seq OWNED BY public.adress.adress_id;
+ALTER SEQUENCE public.address_address_id_seq OWNED BY public.address.address_id;
 
 CREATE SEQUENCE public.users_user_id_seq;
 
@@ -32,8 +32,8 @@ CREATE TABLE public.users (
                 password VARCHAR(100) NOT NULL,
                 email VARCHAR(100) NOT NULL,
                 login VARCHAR(30) NOT NULL,
-                phone VARCHAR(20),
-                adress_id INTEGER NOT NULL,
+                phone VARCHAR(10),
+                address_id INTEGER NOT NULL,
                 CONSTRAINT users_pk PRIMARY KEY (user_id)
 );
 
@@ -88,7 +88,7 @@ CREATE TABLE public.book (
                 title VARCHAR(150) NOT NULL,
                 ISBN13 VARCHAR(17) NOT NULL,
                 EAN13 VARCHAR(13) NOT NULL,
-                publishing_date TIMESTAMP NOT NULL,
+                publishing_date DATE NOT NULL,
                 resume VARCHAR(5000) NOT NULL,
                 genre_id INTEGER NOT NULL,
                 publisher_id INTEGER NOT NULL,
@@ -101,12 +101,12 @@ ALTER SEQUENCE public.book_book_id_seq OWNED BY public.book.book_id;
 CREATE TABLE public.book_borrowed (
                 user_id INTEGER NOT NULL,
                 book_id INTEGER NOT NULL,
-                end_date TIMESTAMP NOT NULL,
-                borrow_date TIMESTAMP NOT NULL,
+                end_date DATE NOT NULL,
+                borrow_date DATE NOT NULL,
                 extension BOOLEAN DEFAULT false NOT NULL,
                 nb_reminder INTEGER DEFAULT 0 NOT NULL,
-                returned VARCHAR DEFAULT false NOT NULL,
-                last_reminder TIMESTAMP,
+                returned BOOLEAN NOT NULL,
+                last_reminder DATE,
                 CONSTRAINT book_borrowed_pk PRIMARY KEY (user_id, book_id)
 );
 
@@ -139,8 +139,8 @@ ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE public.users ADD CONSTRAINT adress_user_fk
-FOREIGN KEY (adress_id)
-REFERENCES public.adress (adress_id)
+FOREIGN KEY (address_id)
+REFERENCES public.address (address_id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;

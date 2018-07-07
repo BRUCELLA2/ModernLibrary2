@@ -5,11 +5,9 @@ package fr.brucella.projects.libraryws.entity.exceptions;
  *
  * @author BRUCELLA2
  */
-public class TechnicalException  extends Exception {
+public class TechnicalException extends Exception {
 
-  /**
-   * Serial ID.
-   */
+  /** Serial ID. */
   private static final long serialVersionUID = 1L;
 
   /**

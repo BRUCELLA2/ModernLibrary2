@@ -79,12 +79,11 @@ public class BookService extends SpringBeanAutowiringSupport {
     return null;
   }
 
-
   /**
    * TODO Delete this method when implementation of somes services is ok.
    *
-   * Test method. With this webmethod we can check if spring injection, database configuration, tomcat configuration
-   * and webservice system are all functional.
+   * <p>Test method. With this webmethod we can check if spring injection, database configuration,
+   * tomcat configuration and webservice system are all functional.
    *
    * @return the author with id = 1
    */
@@ -114,7 +113,8 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return the list of books that meet the searching criteria.
    */
   @WebMethod
-  public List<Book> booksSearchedList(final BooksSearchingClientCriteria booksSearchingClientCriteria) {
+  public List<Book> booksSearchedList(
+      final BooksSearchingClientCriteria booksSearchingClientCriteria) {
     return null;
   }
 

@@ -7,9 +7,7 @@ package fr.brucella.projects.libraryws.entity.exceptions;
  */
 public class FunctionalException extends Exception {
 
-  /**
-   * Serial ID.
-   */
+  /** Serial ID. */
   private static final long serialVersionUID = 1L;
 
   /**

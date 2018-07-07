@@ -2,8 +2,6 @@ package fr.brucella.projects.libraryws.business.impl.managers.books;
 
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksBorrowedListingManager;
 import fr.brucella.projects.libraryws.business.impl.managers.AbstractManager;
-import fr.brucella.projects.libraryws.dao.contracts.dao.books.AuthorDao;
-import fr.brucella.projects.libraryws.dao.impl.dao.books.AuthorDaoImpl;
 import fr.brucella.projects.libraryws.entity.books.model.Author;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
@@ -17,7 +15,8 @@ import org.springframework.stereotype.Component;
  * @author BRUCELLA2
  */
 @Component
-public class BooksBorrowedListingManagerImpl extends AbstractManager implements BooksBorrowedListingManager  {
+public class BooksBorrowedListingManagerImpl extends AbstractManager
+    implements BooksBorrowedListingManager {
 
   private static final Log LOG = LogFactory.getLog(BooksBorrowedListingManagerImpl.class);
 
