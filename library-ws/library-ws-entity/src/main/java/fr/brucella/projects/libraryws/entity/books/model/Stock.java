@@ -95,6 +95,11 @@ public class Stock {
     this.amount = amount;
   }
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public Stock() {}
+
   // ===== Methods =====
 
   /**

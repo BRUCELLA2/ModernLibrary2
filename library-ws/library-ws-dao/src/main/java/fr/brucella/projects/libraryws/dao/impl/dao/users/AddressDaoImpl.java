@@ -1,11 +1,11 @@
-package fr.brucella.projects.libraryws.dao.impl.dao.books;
+package fr.brucella.projects.libraryws.dao.impl.dao.users;
 
-import fr.brucella.projects.libraryws.dao.contracts.dao.books.GenreDao;
+import fr.brucella.projects.libraryws.dao.contracts.dao.users.AddressDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
-import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.GenreRM;
-import fr.brucella.projects.libraryws.entity.books.model.Genre;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.AddressRM;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import fr.brucella.projects.libraryws.entity.users.model.Address;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
@@ -23,49 +23,53 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 /**
- * Genre Data Access Object.
+ * Address Data Access Object.
  *
  * @author BRUCELLA2
  */
 @Component
-public class GenreDaoImpl extends AbstractDao implements GenreDao {
+public class AddressDaoImpl extends AbstractDao implements AddressDao {
 
-  /** Genre DAO logger */
-  private static final Log LOG = LogFactory.getLog(GenreDaoImpl.class);
+  /** Address DAO logger. */
+  private static final Log LOG = LogFactory.getLog(AddressDaoImpl.class);
+
+  // ===== Constructor =====
 
   /** Default Constructor */
-  public GenreDaoImpl() {}
+  public AddressDaoImpl() {}
+
+  // ===== Methods =====
 
   /** {@inheritDoc} */
   @Override
-  public Genre getGenre(final Integer genreId) throws TechnicalException, NotFoundException {
+  public Address getAddress(final Integer addressId) throws TechnicalException, NotFoundException {
 
-    sql = "SELECT * FROM genre WHERE genre_id = :genreId";
+    sql = "SELECT * FROM address WHERE address_id = :addressId";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-    parameterSource.addValue("genreId", genreId);
+    parameterSource.addValue("addressId", addressId);
 
-    final RowMapper<Genre> rowMapper = new GenreRM();
+    final RowMapper<Address> rowMapper = new AddressRM();
 
     try {
       return this.getNamedJdbcTemplate().queryForObject(sql, parameterSource, rowMapper);
     } catch (EmptyResultDataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("genreId = " + genreId);
+        LOG.debug("addressId = " + addressId);
       }
       LOG.error(exception.getMessage());
-      throw new NotFoundException(messages.getString("genreDao.getGenre.notFound"), exception);
+      throw new NotFoundException(messages.getString("addressDao.getAddress.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"), exception);
     } catch (DataAccessResourceFailureException exception) {
-      LOG.error(exception.getMessage());
+      LOG.error((exception.getMessage()));
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("genreId = " + genreId);
+        LOG.debug(("addressId = " + addressId));
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -74,29 +78,30 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
 
   /** {@inheritDoc} */
   @Override
-  public void updateGenre(final Genre genre) throws TechnicalException, NotFoundException {
+  public void updateAddress(final Address address) throws TechnicalException, NotFoundException {
 
-    sql = "UPDATE genre SET name = :name WHERE genre_id = :genreId";
+    sql =
+        "UPDATE address SET line1 = :line1, line2 = :line2, line3 = :line3, city = :city, zip_code = :zipCode WHERE address_id = addressId";
 
-    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(genre);
+    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(address);
 
     try {
       final int result = this.getNamedJdbcTemplate().update(sql, parameterSource);
       if (result == 0) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
-          LOG.debug("Genre = " + genre.toString());
+          LOG.debug("address = " + address.toString());
         }
-        throw new NotFoundException(messages.getString("genreDao.updateGenre.notFound"));
+        throw new NotFoundException(messages.getString("addressDao.updateAddress.notFound"));
       }
     } catch (DataIntegrityViolationException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Genre : " + genre.toString());
+        LOG.debug("address : " + address.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(
-          messages.getString("genreDao.updateGenre.integrityViolation"), exception);
+          messages.getString("addressDao.updateAddress.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"), exception);
@@ -106,7 +111,7 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Genre = " + genre.toString());
+        LOG.debug("address = " + address.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -115,32 +120,35 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
 
   /** {@inheritDoc} */
   @Override
-  public int insertGenre(final Genre genre) throws TechnicalException {
+  public int insertAddress(final Address address) throws TechnicalException {
 
-    sql = "INSERT INTO genre (genre_id, name) VALUES (DEFAULT, :name)";
+    sql =
+        "INSERT INTO address (address_id, line1, line2, line3, city, zip_code) VALUES (DEFAULT, :line1, :line2, :line3, :city, :zipCode)";
 
     final KeyHolder keyHolder = new GeneratedKeyHolder();
-    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(genre);
+    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(address);
 
     try {
       this.getNamedJdbcTemplate()
-          .update(sql, parameterSource, keyHolder, new String[] {"genre_id"});
+          .update(sql, parameterSource, keyHolder, new String[] {"address_id"});
       return keyHolder.getKey().intValue();
+
     } catch (DuplicateKeyException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Genre : " + genre.toString());
-      }
-      LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("genreDao.insertGenre.duplicate"), exception);
-    } catch (DataIntegrityViolationException exception) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql);
-        LOG.debug("Genre : " + genre.toString());
+        LOG.debug("address : " + address.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(
-          messages.getString("genreDao.insertGenre.integrityViolation"), exception);
+          messages.getString("addressDao.insertAddress.duplicate"), exception);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("address : " + address.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(
+          messages.getString("addressDao.insertAddress.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"), exception);
@@ -150,7 +158,7 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Genre = " + genre.toString());
+        LOG.debug("address = " + address.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -159,21 +167,21 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
 
   /** {@inheritDoc} */
   @Override
-  public void deleteGenre(final Integer genreId) throws TechnicalException, NotFoundException {
+  public void deleteAddress(final Integer addressId) throws TechnicalException, NotFoundException {
 
-    sql = "DELETE FROM genre WHERE genre_id = :genreId";
+    sql = "DELETE FROM address WHERE address_id = :addressId";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-    parameterSource.addValue("genreId", genreId);
+    parameterSource.addValue("addressId", addressId);
 
     try {
       final int result = this.getNamedJdbcTemplate().update(sql, parameterSource);
       if (result == 0) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
-          LOG.debug("genreId = " + genreId);
+          LOG.debug("addressId = " + addressId);
         }
-        throw new NotFoundException(messages.getString("genreDao.deleteGenre.notFound"));
+        throw new NotFoundException(messages.getString("addressDao.deleteAddress.notFound"));
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
@@ -184,7 +192,7 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("genreId = " + genreId);
+        LOG.debug("addressId = " + addressId);
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);

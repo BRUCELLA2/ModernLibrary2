@@ -6,6 +6,8 @@ import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 
 /**
  * Interface for Author Data Access Object.
+ *
+ * @author BRUCELLA2
  */
 public interface PublisherDao {
 

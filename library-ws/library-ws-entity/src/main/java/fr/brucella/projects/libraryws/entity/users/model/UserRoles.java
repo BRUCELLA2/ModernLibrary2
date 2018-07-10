@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Represents the association between an user and a role.
+ * TODO To delete if not useful Represents the association between an user and a role.
  *
  * @author BRUCELLA2
  */
@@ -55,6 +55,11 @@ public class UserRoles {
   public void setRoleId(final Integer roleId) {
     this.roleId = roleId;
   }
+
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public UserRoles() {}
 
   // ===== Methods =====
 

@@ -80,6 +80,11 @@ public class Author {
     this.lastName = lastName;
   }
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public Author() {}
+
   // ===== Methods =====
 
   /**

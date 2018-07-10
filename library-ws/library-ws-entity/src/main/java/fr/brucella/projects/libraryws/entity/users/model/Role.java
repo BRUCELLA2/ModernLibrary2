@@ -57,6 +57,11 @@ public class Role {
     this.roleName = roleName;
   }
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public Role() {}
+
   // ===== Methods =====
 
   /**

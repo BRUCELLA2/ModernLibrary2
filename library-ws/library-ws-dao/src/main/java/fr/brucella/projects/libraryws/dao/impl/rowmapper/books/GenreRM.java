@@ -6,12 +6,16 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
 /**
- * This class allow to map row of ResultSet to an Genre object.
+ * This class allow to map row of ResultSet to a Genre object.
  *
  * @author BRUCELLA2
  */
 public class GenreRM implements RowMapper<Genre> {
 
+  /** Default Constructor */
+  public GenreRM() {}
+
+  /** {@inheritDoc} */
   @Override
   public Genre mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 

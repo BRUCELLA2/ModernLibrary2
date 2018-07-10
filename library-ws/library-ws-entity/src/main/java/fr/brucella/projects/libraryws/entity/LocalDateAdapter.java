@@ -8,6 +8,13 @@ public class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
 
   private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public LocalDateAdapter() {}
+
+  // ===== Methods =====
+
   @Override
   public LocalDate unmarshal(String date) throws Exception {
 

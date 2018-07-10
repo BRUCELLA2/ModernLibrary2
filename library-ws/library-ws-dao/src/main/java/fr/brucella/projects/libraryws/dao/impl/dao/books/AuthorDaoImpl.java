@@ -34,8 +34,12 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
   /** Author DAO logger. */
   private static final Log LOG = LogFactory.getLog(AuthorDaoImpl.class);
 
-  /** sql string used in database request. */
-  private String sql;
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public AuthorDaoImpl() {}
+
+  // ===== Methods =====
 
   /** {@inheritDoc} */
   @Override
@@ -59,14 +63,14 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
       throw new NotFoundException(messages.getString("authorDao.getAuthor.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"));
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error((exception.getMessage()));
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug(("authorId = " + authorId));
+        LOG.debug("authorId = " + authorId);
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -87,16 +91,16 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
     final RowMapper<Author> rowMapper = new AuthorRM();
 
     try {
-      final List<Author> bookAuthors =
+      final List<Author> authorsList =
           this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
-      if (bookAuthors.isEmpty()) {
+      if (authorsList.isEmpty()) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
           LOG.debug("bookId = " + bookId);
         }
         throw new NotFoundException(messages.getString("authorDao.getBookAuthors.notFound"));
       } else {
-        return bookAuthors;
+        return authorsList;
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());

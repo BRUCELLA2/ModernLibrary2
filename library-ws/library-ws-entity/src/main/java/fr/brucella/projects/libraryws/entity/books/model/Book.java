@@ -194,6 +194,11 @@ public class Book {
     this.publisherId = publisherId;
   }
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public Book() {}
+
   // ===== Methods =====
 
   /**

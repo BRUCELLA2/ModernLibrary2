@@ -31,8 +31,8 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
   /** BookBorrowed Data Access Object. */
   private static final Log LOG = LogFactory.getLog(BookBorrowedDaoImpl.class);
 
-  /** sql string used in database request. */
-  private String sql;
+  /** Default Constructor */
+  public BookBorrowedDaoImpl() {}
 
   /** {@inheritDoc} */
   @Override
@@ -59,9 +59,9 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
           messages.getString("bookBorrowedDao.getBookBorrowed.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"));
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
     } catch (DataAccessResourceFailureException exception) {
-      LOG.error((exception.getMessage()));
+      LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {

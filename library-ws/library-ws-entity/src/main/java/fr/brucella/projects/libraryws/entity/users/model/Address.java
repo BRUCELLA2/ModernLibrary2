@@ -147,6 +147,11 @@ public class Address {
     this.zipCode = zipCode;
   }
 
+  // ===== Constructors =====
+
+  /** Default Constructor */
+  public Address() {}
+
   // ===== Methods =====
 
   /**

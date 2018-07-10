@@ -56,6 +56,11 @@ public class BookAuthors {
     this.authorId = authorId;
   }
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public BookAuthors() {}
+
   // ===== Methods =====
 
   /**

@@ -33,8 +33,8 @@ public class StockDaoImpl extends AbstractDao implements StockDao {
   /** Stock DAO logger. */
   private static final Log LOG = LogFactory.getLog(StockDaoImpl.class);
 
-  /** sql string used in database request. */
-  private String sql;
+  /** Default Constructor */
+  public StockDaoImpl() {}
 
   /** {@inheritDoc} */
   @Override
@@ -58,9 +58,9 @@ public class StockDaoImpl extends AbstractDao implements StockDao {
       throw new NotFoundException(messages.getString("stockDao.getStock.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"));
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
     } catch (DataAccessResourceFailureException exception) {
-      LOG.error((exception.getMessage()));
+      LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
@@ -91,7 +91,8 @@ public class StockDaoImpl extends AbstractDao implements StockDao {
         LOG.debug("bookId = " + bookId);
       }
       LOG.error(exception.getMessage());
-      throw new NotFoundException(messages.getString("stockDao.getStockForBook.notFound"), exception);
+      throw new NotFoundException(
+          messages.getString("stockDao.getStockForBook.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"));
@@ -112,7 +113,8 @@ public class StockDaoImpl extends AbstractDao implements StockDao {
   @Override
   public void updateStock(final Stock stock) throws TechnicalException, NotFoundException {
 
-    sql = "UPDATE stock SET book_id = :bookId, amount_available = :amountAvailable, amount = :amount WHERE stock_id = :stockId";
+    sql =
+        "UPDATE stock SET book_id = :bookId, amount_available = :amountAvailable, amount = :amount WHERE stock_id = :stockId";
 
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(stock);
 
@@ -153,7 +155,8 @@ public class StockDaoImpl extends AbstractDao implements StockDao {
   @Override
   public int insertStock(final Stock stock) throws TechnicalException {
 
-    sql = "INSERT INTO stock (stock_id, book_id, amount_available, amount) VALUES (DEFAULT, :bookId, :amountAvailable, :amount)";
+    sql =
+        "INSERT INTO stock (stock_id, book_id, amount_available, amount) VALUES (DEFAULT, :bookId, :amountAvailable, :amount)";
 
     final KeyHolder keyHolder = new GeneratedKeyHolder();
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(stock);
@@ -169,8 +172,7 @@ public class StockDaoImpl extends AbstractDao implements StockDao {
         LOG.debug("Stock : " + stock.toString());
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(
-          messages.getString("stockDao.insertStock.duplicate"), exception);
+      throw new TechnicalException(messages.getString("stockDao.insertStock.duplicate"), exception);
     } catch (DataIntegrityViolationException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);

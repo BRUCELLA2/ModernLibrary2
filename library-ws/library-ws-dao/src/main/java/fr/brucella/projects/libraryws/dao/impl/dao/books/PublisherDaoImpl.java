@@ -33,12 +33,13 @@ public class PublisherDaoImpl extends AbstractDao implements PublisherDao {
   /** Author DAO logger. */
   private static final Log LOG = LogFactory.getLog(PublisherDaoImpl.class);
 
-  /** sql string used in database request. */
-  private String sql;
+  /** Default Constructor */
+  public PublisherDaoImpl() {}
 
   /** {@inheritDoc} */
   @Override
-  public Publisher getPublisher(final Integer publisherId) throws TechnicalException, NotFoundException {
+  public Publisher getPublisher(final Integer publisherId)
+      throws TechnicalException, NotFoundException {
 
     sql = "SELECT * FROM publisher WHERE publisher_id = publisherId";
 
@@ -55,12 +56,13 @@ public class PublisherDaoImpl extends AbstractDao implements PublisherDao {
         LOG.debug("publisherId = " + publisherId);
       }
       LOG.error(exception.getMessage());
-      throw new NotFoundException(messages.getString("publisherDao.getPublisher.notFound"), exception);
+      throw new NotFoundException(
+          messages.getString("publisherDao.getPublisher.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"));
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
     } catch (DataAccessResourceFailureException exception) {
-      LOG.error((exception.getMessage()));
+      LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
@@ -74,7 +76,8 @@ public class PublisherDaoImpl extends AbstractDao implements PublisherDao {
 
   /** {@inheritDoc} */
   @Override
-  public void updatePublisher(final Publisher publisher) throws TechnicalException, NotFoundException {
+  public void updatePublisher(final Publisher publisher)
+      throws TechnicalException, NotFoundException {
 
     sql = "UPDATE publisher SET name = :name WHERE publisher_id = publisherId";
 
@@ -123,7 +126,8 @@ public class PublisherDaoImpl extends AbstractDao implements PublisherDao {
     final KeyHolder keyHolder = new GeneratedKeyHolder();
 
     try {
-      this.getNamedJdbcTemplate().update(sql, parameterSource, keyHolder, new String[] {"publisher_id"});
+      this.getNamedJdbcTemplate()
+          .update(sql, parameterSource, keyHolder, new String[] {"publisher_id"});
       return keyHolder.getKey().intValue();
     } catch (DuplicateKeyException exception) {
       if (LOG.isDebugEnabled()) {
@@ -159,7 +163,8 @@ public class PublisherDaoImpl extends AbstractDao implements PublisherDao {
 
   /** {@inheritDoc} */
   @Override
-  public void deletePublisher(final Integer publisherId) throws TechnicalException, NotFoundException {
+  public void deletePublisher(final Integer publisherId)
+      throws TechnicalException, NotFoundException {
 
     sql = "DELETE FROM publisher WHERE publisher_id = :publisherId";
 

@@ -57,6 +57,11 @@ public class Publisher {
     this.name = name;
   }
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public Publisher() {}
+
   // ===== Methods =====
 
   /**

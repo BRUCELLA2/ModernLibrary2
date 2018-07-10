@@ -1,11 +1,12 @@
-package fr.brucella.projects.libraryws.dao.impl.dao.books;
+package fr.brucella.projects.libraryws.dao.impl.dao.users;
 
-import fr.brucella.projects.libraryws.dao.contracts.dao.books.GenreDao;
+import fr.brucella.projects.libraryws.dao.contracts.dao.users.RoleDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
-import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.GenreRM;
-import fr.brucella.projects.libraryws.entity.books.model.Genre;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.RoleRM;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import fr.brucella.projects.libraryws.entity.users.model.Role;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
@@ -23,39 +24,83 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 /**
- * Genre Data Access Object.
+ * Role Data Access Object.
  *
  * @author BRUCELLA2
  */
 @Component
-public class GenreDaoImpl extends AbstractDao implements GenreDao {
+public class RoleDaoImpl extends AbstractDao implements RoleDao {
 
-  /** Genre DAO logger */
-  private static final Log LOG = LogFactory.getLog(GenreDaoImpl.class);
+  /** Author DAO logger. */
+  private static final Log LOG = LogFactory.getLog(RoleDaoImpl.class);
+
+  // ===== Constructor =====
 
   /** Default Constructor */
-  public GenreDaoImpl() {}
+  public RoleDaoImpl() {}
+
+  // ===== Methods =====
 
   /** {@inheritDoc} */
   @Override
-  public Genre getGenre(final Integer genreId) throws TechnicalException, NotFoundException {
+  public Role getRole(Integer roleId) throws TechnicalException, NotFoundException {
 
-    sql = "SELECT * FROM genre WHERE genre_id = :genreId";
+    sql = "SELECT * FROM role WHERE role_id = :roleId";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-    parameterSource.addValue("genreId", genreId);
+    parameterSource.addValue("roleId", roleId);
 
-    final RowMapper<Genre> rowMapper = new GenreRM();
+    final RowMapper<Role> rowMapper = new RoleRM();
 
     try {
       return this.getNamedJdbcTemplate().queryForObject(sql, parameterSource, rowMapper);
     } catch (EmptyResultDataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("genreId = " + genreId);
+        LOG.debug("roleId = " + roleId);
       }
       LOG.error(exception.getMessage());
-      throw new NotFoundException(messages.getString("genreDao.getGenre.notFound"), exception);
+      throw new NotFoundException(messages.getString("roleDao.getRole.notFound"), exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error((exception.getMessage()));
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("roleId = " + roleId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<Role> getRolesForUser(Integer userId) throws TechnicalException, NotFoundException {
+
+    sql =
+        "SELECT * FROM role INNER JOIN user_roles ON role.role_id = user_roles.role_id WHERE user_roles.user_id = :userId";
+
+    final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+    parameterSource.addValue("userId", userId);
+
+    final RowMapper<Role> rowMapper = new RoleRM();
+
+    try {
+      final List<Role> rolesList =
+          this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
+      if (rolesList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("bookId = " + userId);
+        }
+        throw new NotFoundException(messages.getString("roleDao.getRolesForUser.notFound"));
+      } else {
+        return rolesList;
+      }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"), exception);
@@ -65,7 +110,7 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("genreId = " + genreId);
+        LOG.debug("bookId = " + userId);
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -74,29 +119,29 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
 
   /** {@inheritDoc} */
   @Override
-  public void updateGenre(final Genre genre) throws TechnicalException, NotFoundException {
+  public void updateRole(Role role) throws TechnicalException, NotFoundException {
 
-    sql = "UPDATE genre SET name = :name WHERE genre_id = :genreId";
+    sql = "UPDATE role SET role_name = :roleName WHERE role_id = :roleId";
 
-    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(genre);
+    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(role);
 
     try {
       final int result = this.getNamedJdbcTemplate().update(sql, parameterSource);
       if (result == 0) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
-          LOG.debug("Genre = " + genre.toString());
+          LOG.debug("role = " + role.toString());
         }
-        throw new NotFoundException(messages.getString("genreDao.updateGenre.notFound"));
+        throw new NotFoundException(messages.getString("roleDao.updateRole.notFound"));
       }
     } catch (DataIntegrityViolationException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Genre : " + genre.toString());
+        LOG.debug("role : " + role.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(
-          messages.getString("genreDao.updateGenre.integrityViolation"), exception);
+          messages.getString("roleDao.updateRole.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"), exception);
@@ -106,7 +151,7 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Genre = " + genre.toString());
+        LOG.debug("role = " + role.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -115,32 +160,32 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
 
   /** {@inheritDoc} */
   @Override
-  public int insertGenre(final Genre genre) throws TechnicalException {
+  public int insertRole(Role role) throws TechnicalException {
 
-    sql = "INSERT INTO genre (genre_id, name) VALUES (DEFAULT, :name)";
+    sql = "INSERT INTO role (role_id, role_name) VALUES (DEFAULT, :roleId, :roleName)";
 
     final KeyHolder keyHolder = new GeneratedKeyHolder();
-    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(genre);
+    final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(role);
 
     try {
-      this.getNamedJdbcTemplate()
-          .update(sql, parameterSource, keyHolder, new String[] {"genre_id"});
+      this.getNamedJdbcTemplate().update(sql, parameterSource, keyHolder, new String[] {"role_id"});
       return keyHolder.getKey().intValue();
+
     } catch (DuplicateKeyException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Genre : " + genre.toString());
+        LOG.debug("role : " + role.toString());
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("genreDao.insertGenre.duplicate"), exception);
+      throw new TechnicalException(messages.getString("roleDao.insertRole.duplicate"), exception);
     } catch (DataIntegrityViolationException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Genre : " + genre.toString());
+        LOG.debug("role : " + role.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(
-          messages.getString("genreDao.insertGenre.integrityViolation"), exception);
+          messages.getString("roleDao.insertRole.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"), exception);
@@ -150,7 +195,7 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("Genre = " + genre.toString());
+        LOG.debug("role = " + role.toString());
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -159,21 +204,21 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
 
   /** {@inheritDoc} */
   @Override
-  public void deleteGenre(final Integer genreId) throws TechnicalException, NotFoundException {
+  public void deleteRole(Integer roleId) throws TechnicalException, NotFoundException {
 
-    sql = "DELETE FROM genre WHERE genre_id = :genreId";
+    sql = "DELETE FROM role WHERE role_id = :roleId";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-    parameterSource.addValue("genreId", genreId);
+    parameterSource.addValue("roleId", roleId);
 
     try {
       final int result = this.getNamedJdbcTemplate().update(sql, parameterSource);
       if (result == 0) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
-          LOG.debug("genreId = " + genreId);
+          LOG.debug("roleId = " + roleId);
         }
-        throw new NotFoundException(messages.getString("genreDao.deleteGenre.notFound"));
+        throw new NotFoundException(messages.getString("roleDao.deleteRole.notFound"));
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
@@ -184,7 +229,7 @@ public class GenreDaoImpl extends AbstractDao implements GenreDao {
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("genreId = " + genreId);
+        LOG.debug("roleId = " + roleId);
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);

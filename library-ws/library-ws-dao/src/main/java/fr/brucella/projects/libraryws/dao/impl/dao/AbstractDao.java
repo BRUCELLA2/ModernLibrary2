@@ -14,6 +14,9 @@ import org.springframework.stereotype.Component;
 @Component
 public abstract class AbstractDao {
 
+  /** sql string used in database request. */
+  protected transient String sql;
+
   /**
    * jdbc template.
    *

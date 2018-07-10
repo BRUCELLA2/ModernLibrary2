@@ -12,6 +12,10 @@ import org.springframework.jdbc.core.RowMapper;
  */
 public class BookRM implements RowMapper<Book> {
 
+  /** Default Constructor */
+  public BookRM() {}
+
+  /** {@inheritDoc} */
   @Override
   public Book mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 

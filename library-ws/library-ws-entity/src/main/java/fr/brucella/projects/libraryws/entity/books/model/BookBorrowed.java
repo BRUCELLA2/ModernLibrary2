@@ -189,6 +189,11 @@ public class BookBorrowed {
     this.lastReminder = lastReminder;
   }
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public BookBorrowed() {}
+
   // ===== Methods =====
 
   /**

@@ -57,6 +57,11 @@ public class Genre {
     this.name = name;
   }
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public Genre() {}
+
   // ===== Methods =====
 
   /**

@@ -6,6 +6,9 @@ import fr.brucella.projects.libraryws.dao.contracts.dao.books.BookDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.GenreDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.PublisherDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.StockDao;
+import fr.brucella.projects.libraryws.dao.contracts.dao.users.AddressDao;
+import fr.brucella.projects.libraryws.dao.contracts.dao.users.RoleDao;
+import fr.brucella.projects.libraryws.dao.contracts.dao.users.UserDao;
 
 /**
  * Interface for the Data Access Object Factory.
@@ -58,6 +61,26 @@ public interface DaoFactory {
    */
   StockDao getStockDao();
 
+  /**
+   * Give the Address Data Access Object.
+   *
+   * @return the Address Data Access Object.
+   */
+  AddressDao getAddressDao();
+
+  /**
+   * Give the Role Data Access Object.
+   *
+   * @return the Role Data Access Object.
+   */
+  RoleDao getRoleDao();
+
+  /**
+   * Give the User Data Access Object.
+   *
+   * @return the User Data Access Object.
+   */
+  UserDao getUserDao();
 
   // ===== Setters =====
 
@@ -102,4 +125,25 @@ public interface DaoFactory {
    * @param stockDao the Stock Data Access Object.
    */
   void setStockDao(final StockDao stockDao);
+
+  /**
+   * Set the Address Data Access Object.
+   *
+   * @param addressDao the Address Data Access Object.
+   */
+  void setAddressDao(final AddressDao addressDao);
+
+  /**
+   * Set the Role Data Access Object.
+   *
+   * @param roleDao the Role Data Access Object.
+   */
+  void setRoleDao(final RoleDao roleDao);
+
+  /**
+   * Set the User Data Access Object.
+   *
+   * @param userDao the User Data Access Object.
+   */
+  void setUserDao(final UserDao userDao);
 }

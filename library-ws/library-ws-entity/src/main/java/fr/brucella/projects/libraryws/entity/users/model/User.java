@@ -150,6 +150,11 @@ public class User {
     this.addressId = addressId;
   }
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public User() {}
+
   // ===== Methods =====
 
   /**

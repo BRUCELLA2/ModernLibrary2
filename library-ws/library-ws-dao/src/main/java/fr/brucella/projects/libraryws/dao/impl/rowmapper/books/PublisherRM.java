@@ -12,6 +12,10 @@ import org.springframework.jdbc.core.RowMapper;
  */
 public class PublisherRM implements RowMapper<Publisher> {
 
+  /** Default Constructor. */
+  public PublisherRM() {}
+
+  /** {@inheritDoc} */
   @Override
   public Publisher mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 

@@ -12,6 +12,10 @@ import org.springframework.jdbc.core.RowMapper;
  */
 public class StockRM implements RowMapper<Stock> {
 
+  /** Default Constructor */
+  public StockRM() {}
+
+  /** {@inheritDoc} */
   @Override
   public Stock mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 
