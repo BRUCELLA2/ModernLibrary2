@@ -6,6 +6,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * Authentification Management Service.
@@ -13,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
  * @author BRUCELLA2
  */
 @WebService(serviceName = "AuthentificationService")
+@Component
 public class AuthentificationService {
 
   /** Authentification Management logger. */

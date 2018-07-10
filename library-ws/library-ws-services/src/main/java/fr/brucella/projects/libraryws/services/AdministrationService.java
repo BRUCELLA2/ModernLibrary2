@@ -9,6 +9,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * Administration Management Web Service. Allow to add and modify various elements of the Modern
@@ -17,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
  * @author BRUCELLA2
  */
 @WebService(serviceName = "AdministrationService")
+@Component
 public class AdministrationService {
 
   /** Administration Management logger. */
