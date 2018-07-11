@@ -1,4 +1,4 @@
-package fr.brucella.projects.libraryws.dao.impl.rowmapper.books;
+package fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model;
 
 import fr.brucella.projects.libraryws.entity.books.model.Book;
 import java.sql.ResultSet;

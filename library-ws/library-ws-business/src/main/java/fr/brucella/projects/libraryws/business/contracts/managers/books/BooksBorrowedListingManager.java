@@ -1,6 +1,10 @@
 package fr.brucella.projects.libraryws.business.contracts.managers.books;
 
-import fr.brucella.projects.libraryws.entity.books.model.Author;
+import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
+import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
+import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import java.util.List;
 
 /**
  * Interface for Books Borrowed Listing Manager.
@@ -10,12 +14,21 @@ import fr.brucella.projects.libraryws.entity.books.model.Author;
 public interface BooksBorrowedListingManager {
 
   /**
-   * TODO Delete this method when implementation of somes services is ok.
+   * Provides the list of currently borrows with login of the user and title of the book.
    *
-   * <p>Test method. With this webmethod we can check if spring injection, database configuration,
-   * tomcat configuration and webservice system are all functional.
-   *
-   * @return the author with id = 1
+   * @return the list of currently borrows with login of the user and title of the book.
+   * @throws TechnicalException - wraps technical exception caused during data access.
    */
-  Author test();
+  List<BorrowDto> currentlyBooksBorrow() throws TechnicalException;
+
+  /**
+   * Provides the list of informations about currently borrows by the user.
+   *
+   * @param userId id of the user.
+   * @return the list of informations about currently borrows by the user.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the user is null.
+   */
+  List<UserCurrentlyBorrowDto> userCurrentlyBorrow(final Integer userId)
+      throws TechnicalException, FunctionalException;
 }

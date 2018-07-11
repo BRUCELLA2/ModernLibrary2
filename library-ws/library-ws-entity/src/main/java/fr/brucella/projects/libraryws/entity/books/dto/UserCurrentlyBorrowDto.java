@@ -1,21 +1,22 @@
-package fr.brucella.projects.libraryws.entity.books.model;
+package fr.brucella.projects.libraryws.entity.books.dto;
 
 import fr.brucella.projects.libraryws.entity.LocalDateAdapter;
 import java.time.LocalDate;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Represents the information related to a book borrowing.
+ * Represents a User Currently Borrow Data Transfert Object. This object contain the data about a
+ * borrow for a specific user. Includes some informations on the borrowing and on the book.
  *
  * @author BRUCELLA2
  */
-public class BookBorrowed {
+public class UserCurrentlyBorrowDto {
 
-  /** id of the user. Can't be null. */
-  @NotNull(message = "{bookBorrowed.userId.null}")
-  private Integer userId;
+  // ===== BookBorrowed data =====
 
   /** id of the book. Can't be null. */
   @NotNull(message = "{bookBorrowed.bookId.null}")
@@ -33,37 +34,14 @@ public class BookBorrowed {
   @NotNull(message = "{bookBorrowed.extension.null}")
   private Boolean extension;
 
-  /** Nb of reminder send to user for a book not returned at time. Can't be null */
-  @NotNull(message = "{bookBorrowed.nbReminder.null}")
-  private Integer nbReminder;
+  // ===== Book data =====
 
-  /** Indicate if the book has been returned. Can't be null. */
-  @NotNull(message = "{bookBorrowed.returned.null}")
-  private Boolean returned;
-
-  /** Date of the last reminder. Can't be null. */
-  @NotNull(message = "{bookBorrowed.lastReminder.null}")
-  private LocalDate lastReminder;
+  /** Title of the book. Can't be empty. */
+  @NotEmpty(message = "{book.title.empty}")
+  @Size(min = 1, max = 150, message = "{book.title.size}")
+  private String title;
 
   // ===== Getters and Setters =====
-
-  /**
-   * Give the id of the user.
-   *
-   * @return the id of the user.
-   */
-  public Integer getUserId() {
-    return userId;
-  }
-
-  /**
-   * Return the id of the user.
-   *
-   * @param userId the id of the user.
-   */
-  public void setUserId(final Integer userId) {
-    this.userId = userId;
-  }
 
   /**
    * Give the id of the book.
@@ -140,64 +118,27 @@ public class BookBorrowed {
   }
 
   /**
-   * Give the number of reminder send to the user for this book.
+   * Give the title of the book.
    *
-   * @return the number of reminded send to the user.
+   * @return the title of the book.
    */
-  public Integer getNbReminder() {
-    return nbReminder;
+  public String getTitle() {
+    return title;
   }
 
   /**
-   * Set the number of reminder send to the user for this book.
+   * Set the title of the book.
    *
-   * @param nbReminder the number of reminded send to the user.
+   * @param title the title of the book.
    */
-  public void setNbReminder(final Integer nbReminder) {
-    this.nbReminder = nbReminder;
-  }
-
-  /**
-   * Indicate if the book has been returned.
-   *
-   * @return true if the book has been returned, false otherwise.
-   */
-  public Boolean getReturned() {
-    return returned;
-  }
-
-  /**
-   * Set the returned status of the book borrowed.
-   *
-   * @param returned true if the book has been returned and false otherwise.
-   */
-  public void setReturned(final Boolean returned) {
-    this.returned = returned;
-  }
-
-  /**
-   * Give the date of the last reminded send to the user for this borrowing.
-   *
-   * @return the date of the last reminded send to the user for this borrowing.
-   */
-  @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
-  public LocalDate getLastReminder() {
-    return lastReminder;
-  }
-
-  /**
-   * Set the date of the last reminded send to the user for this borrowing.
-   *
-   * @param lastReminder the date of the last reminder send to the user for this borrowing.
-   */
-  public void setLastReminder(final LocalDate lastReminder) {
-    this.lastReminder = lastReminder;
+  public void setTitle(final String title) {
+    this.title = title;
   }
 
   // ===== Constructor =====
 
   /** Default Constructor */
-  public BookBorrowed() {}
+  public UserCurrentlyBorrowDto() {}
 
   // ===== Methods =====
 
@@ -209,14 +150,11 @@ public class BookBorrowed {
   @Override
   public String toString() {
     return new ToStringBuilder(this)
-        .append("userId", userId)
         .append("bookId", bookId)
         .append("endDate", endDate)
         .append("borrowDate", borrowDate)
         .append("extension", extension)
-        .append("nbReminder", nbReminder)
-        .append("returned", returned)
-        .append("lastReminder", lastReminder)
+        .append("title", title)
         .toString();
   }
 }

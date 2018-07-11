@@ -1,8 +1,11 @@
 package fr.brucella.projects.libraryws.dao.contracts.dao.books;
 
+import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
 import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import java.util.List;
 
 /**
  * Interface for bookBorrowed Data Access Object.
@@ -22,6 +25,30 @@ public interface BookBorrowedDao {
    *     author is not found.
    */
   BookBorrowed getBookBorrowed(final Integer userId, final Integer bookId)
+      throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the list of borrow with for each borrow the login of the user and the title of the book.
+   *
+   * @param currently true if need only currently borrow.
+   * @return A list of Borrow Data Transfert Object.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and the
+   *     author is not found.
+   */
+  List<BorrowDto> getBorrowListWithUserLoginAndTitle(final Boolean currently)
+      throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the list of informations about currently borrows by the user.
+   *
+   * @param userId id of the user.
+   * @return the list of informations about currently borrows by the user.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and the
+   *     author is not found.
+   */
+  List<UserCurrentlyBorrowDto> getUserCurrentlyBorrows(final Integer userId)
       throws TechnicalException, NotFoundException;
 
   /**

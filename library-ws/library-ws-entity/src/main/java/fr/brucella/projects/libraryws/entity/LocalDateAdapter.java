@@ -6,12 +6,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
 
-  private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-
-  // ===== Constructor =====
-
-  /** Default Constructor */
-  public LocalDateAdapter() {}
+  private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
   // ===== Methods =====
 

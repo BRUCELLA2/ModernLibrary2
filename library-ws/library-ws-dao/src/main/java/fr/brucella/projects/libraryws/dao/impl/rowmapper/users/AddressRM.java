@@ -24,8 +24,16 @@ public class AddressRM implements RowMapper<Address> {
     address.setAddressId(resultSet.getInt("address_id"));
     address.setCity(resultSet.getString("city"));
     address.setLine1(resultSet.getString("line1"));
-    address.setLine2(resultSet.getString("line2"));
-    address.setLine3(resultSet.getString("line3"));
+    if (resultSet.getString("line2") == null) {
+      address.setLine2(null);
+    } else {
+      address.setLine2(resultSet.getString("line2"));
+    }
+    if (resultSet.getString("line3") == null) {
+      address.setLine3(null);
+    } else {
+      address.setLine3(resultSet.getString("line3"));
+    }
     address.setZipCode(resultSet.getString("zip_code"));
 
     return address;

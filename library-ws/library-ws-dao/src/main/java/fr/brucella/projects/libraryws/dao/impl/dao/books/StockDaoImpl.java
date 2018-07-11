@@ -2,7 +2,7 @@ package fr.brucella.projects.libraryws.dao.impl.dao.books;
 
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.StockDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
-import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.StockRM;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model.StockRM;
 import fr.brucella.projects.libraryws.entity.books.model.Stock;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;

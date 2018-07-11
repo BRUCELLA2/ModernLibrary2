@@ -2,9 +2,13 @@ package fr.brucella.projects.libraryws.services;
 
 import fr.brucella.projects.libraryws.business.contracts.ManagerFactory;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStock;
-import fr.brucella.projects.libraryws.entity.books.dto.Borrowing;
-import fr.brucella.projects.libraryws.entity.books.model.Author;
+import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
 import fr.brucella.projects.libraryws.entity.books.model.Book;
+import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
+import fr.brucella.projects.libraryws.entity.exceptions.LibraryWsException;
+import fr.brucella.projects.libraryws.entity.exceptions.LibraryWsFault;
+import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.searchcriteria.dto.BooksSearchingClientCriteria;
 import fr.brucella.projects.libraryws.entity.users.model.User;
 import java.util.HashMap;
@@ -38,13 +42,22 @@ public class BookService extends SpringBeanAutowiringSupport {
   // ===== Books borrowed
 
   /**
-   * Provides the list of books currently borrowed.
+   * Provides the list of currently borrows with login of the user and title of the book.
    *
-   * @return the list of books currently borrowed.
+   * @return the list of currently borrows with login of the user and title of the book.
    */
   @WebMethod
-  public List<Book> currentlyBooksBorrowedList() {
-    return null;
+  public List<BorrowDto> currentlyBooksBorrowedList() throws LibraryWsException {
+
+    try {
+
+      return this.managerFactory.getBooksBorrowedListingManager().currentlyBooksBorrow();
+
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          "Problème technique", new LibraryWsFault("Server", exception.getMessage()));
+    }
   }
 
   /**
@@ -54,8 +67,20 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return the list of books currently borrowed by the user.
    */
   @WebMethod
-  public List<Book> currentlyBorrowForUser(final User userId) {
-    return null;
+  public List<UserCurrentlyBorrowDto> currentlyBorrowForUser(final Integer userId)
+      throws LibraryWsException {
+
+    try {
+      return this.managerFactory.getBooksBorrowedListingManager().userCurrentlyBorrow(userId);
+    } catch (FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          "Erreur Fonctionnelle", new LibraryWsFault("Client", exception.getMessage()));
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          "Problème technique", new LibraryWsFault("Server", exception.getMessage()));
+    }
   }
 
   /**
@@ -77,21 +102,6 @@ public class BookService extends SpringBeanAutowiringSupport {
   @WebMethod
   public List<Book> currentlyDeadLineExpiredForUser(final User userId) {
     return null;
-  }
-
-  /**
-   * TODO Delete this method when implementation of somes services is ok.
-   *
-   * <p>Test method. With this webmethod we can check if spring injection, database configuration,
-   * tomcat configuration and webservice system are all functional.
-   *
-   * @return the author with id = 1
-   */
-  @WebMethod
-  public Author testInjection() {
-    LOG.error("MANAGER : " + managerFactory.toString());
-    Author test = managerFactory.getBooksBorrowedListingManager().test();
-    return test;
   }
 
   // ===== Books Listing
@@ -156,7 +166,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return the list of all borrow past and present.
    */
   @WebMethod
-  public List<Borrowing> borrowingHistoryList() {
+  public List<BorrowDto> borrowingHistoryList() {
     return null;
   }
 

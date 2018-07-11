@@ -1,6 +1,7 @@
 package fr.brucella.projects.libraryws.business.impl.managers;
 
 import fr.brucella.projects.libraryws.dao.contracts.dao.DaoFactory;
+import java.util.ResourceBundle;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -17,6 +18,10 @@ public abstract class AbstractManager {
 
   /** The Data Access Object Factory. */
   @Autowired private DaoFactory daoFactory;
+
+  /** ResourceBundle messages */
+  protected ResourceBundle messages =
+      ResourceBundle.getBundle("fr/brucella/projects/libraryws/business/messagesManager");
 
   /**
    * Give the DAO Factory.

@@ -2,9 +2,13 @@ package fr.brucella.projects.libraryws.business.impl.managers.books;
 
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksBorrowedListingManager;
 import fr.brucella.projects.libraryws.business.impl.managers.AbstractManager;
-import fr.brucella.projects.libraryws.entity.books.model.Author;
+import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
+import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
@@ -18,23 +22,45 @@ import org.springframework.stereotype.Component;
 public class BooksBorrowedListingManagerImpl extends AbstractManager
     implements BooksBorrowedListingManager {
 
+  /** Books Borrowed Listing Manager logger */
   private static final Log LOG = LogFactory.getLog(BooksBorrowedListingManagerImpl.class);
 
+  /** {@inheritDoc} */
   @Override
-  public Author test() {
+  public List<BorrowDto> currentlyBooksBorrow() throws TechnicalException {
+    try {
+      return this.getDaoFactory().getBookBorrowedDao().getBorrowListWithUserLoginAndTitle(true);
+
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug(exception.getMessage());
+      }
+      List<BorrowDto> borrowDtoList = new ArrayList<>();
+      return borrowDtoList;
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<UserCurrentlyBorrowDto> userCurrentlyBorrow(Integer userId)
+      throws TechnicalException, FunctionalException {
+
+    if (userId == null || userId == 0) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("user id = " + userId);
+      }
+      throw new FunctionalException(
+          messages.getString("booksBorrowedListingManager.userCurrentlyBorrow.userIdNull"));
+    }
 
     try {
-      LOG.error("daofactory : " + this.getDaoFactory().toString());
-      LOG.error("AUTHORDAO : " + this.getDaoFactory().getAuthorDao().toString());
-      return this.getDaoFactory().getAuthorDao().getAuthor(1);
-    } catch (TechnicalException e) {
-      LOG.error("TECHN EXCEP");
-      e.printStackTrace();
-      return null;
-    } catch (NotFoundException e) {
-      e.printStackTrace();
-      LOG.error("NOT FOUND EXCEP");
-      return null;
+      return this.getDaoFactory().getBookBorrowedDao().getUserCurrentlyBorrows(userId);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug(exception.getMessage());
+      }
+      List<UserCurrentlyBorrowDto> userCurrentlyBorrowDtoList = new ArrayList<>();
+      return userCurrentlyBorrowDtoList;
     }
   }
 }

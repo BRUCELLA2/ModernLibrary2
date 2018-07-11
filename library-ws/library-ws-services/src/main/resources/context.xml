@@ -19,20 +19,20 @@
   <!-- Book Service -->
   <jaxws:server
     serviceClass="fr.brucella.projects.libraryws.services.BookService" address="/bookService"
-    serviceBean="#bookService" />
+    serviceBean="#bookService"/>
   <bean id="bookService" class="fr.brucella.projects.libraryws.services.BookService"/>
 
   <!-- Authentification Service -->
   <jaxws:server
     serviceClass="fr.brucella.projects.libraryws.services.AuthentificationService" address="/authentificationService"
-    serviceBean="#authentificationService" />
+    serviceBean="#authentificationService"/>
   <bean id="authentificationService" class="fr.brucella.projects.libraryws.services.AuthentificationService"/>
 
   <!-- Administration Service -->
   <jaxws:server
     serviceClass="fr.brucella.projects.libraryws.services.AdministrationService" address="/administrationService"
-    serviceBean="#administrationService" />
-  <bean id="administrationService" class="fr.brucella.projects.libraryws.services.AdministrationService" />
+    serviceBean="#administrationService"/>
+  <bean id="administrationService" class="fr.brucella.projects.libraryws.services.AdministrationService"/>
 
   <!-- Spring context files import -->
   <import

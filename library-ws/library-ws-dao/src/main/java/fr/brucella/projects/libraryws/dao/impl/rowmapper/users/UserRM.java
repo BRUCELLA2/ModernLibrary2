@@ -25,7 +25,11 @@ public class UserRM implements RowMapper<User> {
     user.setEmail(resultSet.getString("email"));
     user.setLogin(resultSet.getString("login"));
     user.setPassword(resultSet.getString("password"));
-    user.setPhone(resultSet.getString("phone"));
+    if (resultSet.getString("phone") == null) {
+      user.setPhone(null);
+    } else {
+      user.setPhone(resultSet.getString("phone"));
+    }
     user.setUserId(resultSet.getInt("user_id"));
 
     return user;
