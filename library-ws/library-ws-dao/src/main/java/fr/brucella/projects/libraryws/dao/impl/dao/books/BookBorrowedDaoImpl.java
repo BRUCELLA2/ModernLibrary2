@@ -3,9 +3,11 @@ package fr.brucella.projects.libraryws.dao.impl.dao.books;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.BookBorrowedDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.dto.BorrowDtoRM;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.dto.CurrentlyBorrowExpiredDtoRM;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.dto.UserCurrentlyBorrowDtoRM;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model.BookBorrowedRM;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.dto.CurrentlyBorrowExpiredDto;
 import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
 import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
@@ -125,7 +127,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
       throws TechnicalException, NotFoundException {
 
     sql =
-        "SELECT book_borrowed.book_id, book_borrowed.borrow_date, book_borrowed.end_date, book_borrowed.extension, book.title FROM book_borrowed INNER JOIN book ON book_borrowed.book_id = book.book_id WHERE book_borrowed.user_id = :userId";
+        "SELECT book_borrowed.user_id, book_borrowed.book_id, book_borrowed.borrow_date, book_borrowed.end_date, book_borrowed.extension, book.title FROM book_borrowed INNER JOIN book ON book_borrowed.book_id = book.book_id WHERE book_borrowed.user_id = :userId";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
     parameterSource.addValue("userId", userId);
@@ -151,14 +153,82 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql);
-        ;
-        LOG.debug("userId = " + userId);
-      }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<CurrentlyBorrowExpiredDto> getBorrowExpired() throws TechnicalException, NotFoundException {
+
+    sql = "SELECT book_borrowed.user_id, book_borrowed.book_id, book_borrowed.end_date, book_borrowed.borrow_date, book_borrowed.last_reminder, book_borrowed.nb_reminder, book.title, users.login, users.email "
+        + "FROM book_borrowed "
+        + "INNER JOIN book ON book_borrowed.book_id = book.book_id "
+        + "INNER JOIN users ON users.user_id = book_borrowed.user_id "
+        + "WHERE book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE";
+
+    final RowMapper<CurrentlyBorrowExpiredDto> rowMapper = new CurrentlyBorrowExpiredDtoRM();
+
+    try {
+      final List<CurrentlyBorrowExpiredDto> currentlyBorrowExpiredDtoList = this.getJdbcTemplate().query(sql, rowMapper);
+      if (currentlyBorrowExpiredDtoList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+        }
+        throw new NotFoundException(
+            messages.getString("bookBorrowedDao.getBorrowExpired.notFound"));
+      } else {
+        return currentlyBorrowExpiredDtoList;
+      }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<UserCurrentlyBorrowDto> getUserBorrowsExpired(Integer userId)
+      throws TechnicalException, NotFoundException {
+
+    sql =
+        "SELECT book_borrowed.user_id, book_borrowed.book_id, book_borrowed.borrow_date, book_borrowed.end_date, book_borrowed.extension, book.title FROM book_borrowed INNER JOIN book ON book_borrowed.book_id = book.book_id WHERE book_borrowed.user_id = :userId AND book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE";
+
+    final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+    parameterSource.addValue("userId", userId);
+
+    final RowMapper<UserCurrentlyBorrowDto> rowMapper = new UserCurrentlyBorrowDtoRM();
+
+    try {
+      final List<UserCurrentlyBorrowDto> userCurrentlyBorrowDtoList =
+          this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
+      if (userCurrentlyBorrowDtoList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+        }
+        throw new NotFoundException(
+            messages.getString("bookBorrowedDao.getUserBorrowsExpired.notFound"));
+      } else {
+        return userCurrentlyBorrowDtoList;
+      }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+
   }
 
   /** {@inheritDoc} */

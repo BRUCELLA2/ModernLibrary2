@@ -1,6 +1,7 @@
 package fr.brucella.projects.libraryws.dao.contracts.dao.books;
 
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.dto.CurrentlyBorrowExpiredDto;
 import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
 import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
@@ -22,7 +23,7 @@ public interface BookBorrowedDao {
    * @return the bookBorrowed with the user id and book id specified.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   *     book borrowed is not found.
    */
   BookBorrowed getBookBorrowed(final Integer userId, final Integer bookId)
       throws TechnicalException, NotFoundException;
@@ -33,8 +34,7 @@ public interface BookBorrowedDao {
    * @param currently true if need only currently borrow.
    * @return A list of Borrow Data Transfert Object.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrow is found.
    */
   List<BorrowDto> getBorrowListWithUserLoginAndTitle(final Boolean currently)
       throws TechnicalException, NotFoundException;
@@ -45,11 +45,29 @@ public interface BookBorrowedDao {
    * @param userId id of the user.
    * @return the list of informations about currently borrows by the user.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrows is found.
    */
   List<UserCurrentlyBorrowDto> getUserCurrentlyBorrows(final Integer userId)
       throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the list of informations about borrow expired, book borrowed and user who make the borrow.
+   *
+   * @return the list of informations about borrow expired, book borrowed and user who make the borrow.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrow is found.
+   */
+  List<CurrentlyBorrowExpiredDto> getBorrowExpired() throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the list of informations avout currently borrow expired for the user.
+   *
+   * @param userId id of the user.
+   * @return the list of informations avout currently borrow expired for the user.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrows is found.
+   */
+  List<UserCurrentlyBorrowDto> getUserBorrowsExpired(final Integer userId) throws TechnicalException, NotFoundException;
 
   /**
    * Update an existing bookBorrowed in the datastore.
@@ -57,7 +75,7 @@ public interface BookBorrowedDao {
    * @param bookBorrowed bookBorrowed with the updated informations to save in datastore.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   *     bookBorrowed is not found.
    */
   void updateBookBorrowed(final BookBorrowed bookBorrowed)
       throws TechnicalException, NotFoundException;
@@ -77,7 +95,7 @@ public interface BookBorrowedDao {
    * @param bookId id of the book borrowed by the user.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   *     bookBorrowed is not found.
    */
   void deleteBookBorrowed(final Integer userId, final Integer bookId)
       throws TechnicalException, NotFoundException;

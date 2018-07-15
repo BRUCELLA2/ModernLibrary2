@@ -32,6 +32,7 @@ public class AdministrationService {
    */
   @WebMethod
   public Integer addBook(final Book book) {
+    // TODO implementation
     return null;
   }
 
@@ -43,6 +44,7 @@ public class AdministrationService {
    */
   @WebMethod
   public Integer addAuthor(final Author author) {
+    // TODO implementation
     return null;
   }
 
@@ -54,6 +56,7 @@ public class AdministrationService {
    */
   @WebMethod
   public Integer addGenre(final Genre genre) {
+    // TODO implementation
     return null;
   }
 
@@ -65,6 +68,7 @@ public class AdministrationService {
    */
   @WebMethod
   public Integer addPublisher(final Publisher publisher) {
+    // TODO implementation
     return null;
   }
 
@@ -76,6 +80,7 @@ public class AdministrationService {
    */
   @WebMethod
   public Integer addRole(final Role role) {
+    // TODO implementation
     return null;
   }
 
@@ -87,6 +92,7 @@ public class AdministrationService {
    */
   @WebMethod
   public Boolean modifyBook(final Book book) {
+    // TODO implementation
     return null;
   }
 
@@ -98,6 +104,7 @@ public class AdministrationService {
    */
   @WebMethod
   public Boolean modifyAuthor(final Author author) {
+    // TODO implementation
     return null;
   }
 
@@ -109,6 +116,7 @@ public class AdministrationService {
    */
   @WebMethod
   public Boolean modifyGenre(final Genre genre) {
+    // TODO implementation
     return null;
   }
 
@@ -120,6 +128,7 @@ public class AdministrationService {
    */
   @WebMethod
   public Boolean modifyPublisher(final Publisher publisher) {
+    // TODO implementation
     return null;
   }
 
@@ -131,6 +140,7 @@ public class AdministrationService {
    */
   @WebMethod
   public Boolean modifyRole(final Role role) {
+    // TODO implementation
     return null;
   }
 }

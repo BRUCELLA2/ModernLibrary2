@@ -30,6 +30,7 @@ public class AuthentificationService {
    */
   @WebMethod
   public User login(final String login, final String password) {
+    // TODO implementation
     return null;
   }
 
@@ -42,6 +43,7 @@ public class AuthentificationService {
    */
   @WebMethod
   public Boolean modifyUser(final User user, final String password) {
+    // TODO implementation
     return null;
   }
 
@@ -54,6 +56,7 @@ public class AuthentificationService {
    */
   @WebMethod
   public Integer addUser(final User user, final String password) {
+    // TODO implementation
     return null;
   }
 
@@ -66,6 +69,7 @@ public class AuthentificationService {
    */
   @WebMethod
   public Boolean addRoleToUser(final Integer userId, final Role role) {
+    // TODO implementation
     return null;
   }
 }

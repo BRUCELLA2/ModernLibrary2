@@ -18,6 +18,10 @@ public class UserCurrentlyBorrowDto {
 
   // ===== BookBorrowed data =====
 
+  /** id of the user. Can't be null. */
+  @NotNull(message = "{bookBorrowed.userId.null}")
+  private Integer userId;
+
   /** id of the book. Can't be null. */
   @NotNull(message = "{bookBorrowed.bookId.null}")
   private Integer bookId;
@@ -42,6 +46,24 @@ public class UserCurrentlyBorrowDto {
   private String title;
 
   // ===== Getters and Setters =====
+
+  /**
+   * Give the id of the user.
+   *
+   * @return the id of the user.
+   */
+  public Integer getUserId() {
+    return userId;
+  }
+
+  /**
+   * Return the id of the user.
+   *
+   * @param userId the id of the user.
+   */
+  public void setUserId(final Integer userId) {
+    this.userId = userId;
+  }
 
   /**
    * Give the id of the book.

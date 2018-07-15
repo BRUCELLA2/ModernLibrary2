@@ -3,6 +3,7 @@ package fr.brucella.projects.libraryws.entity.books.dto;
 import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Represents a Borrow Data Transfert Object. Includes some informations on book (title) and on user
@@ -65,5 +66,14 @@ public class BorrowDto extends BookBorrowed {
    */
   public void setLogin(final String login) {
     this.login = login;
+  }
+
+
+  // ===== Methods =====
+
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("title", title).append("login", login).toString();
   }
 }

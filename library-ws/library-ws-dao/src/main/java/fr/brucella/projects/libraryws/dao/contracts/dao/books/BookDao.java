@@ -1,8 +1,11 @@
 package fr.brucella.projects.libraryws.dao.contracts.dao.books;
 
+import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.model.Book;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import fr.brucella.projects.libraryws.entity.searchcriteria.dto.BooksSearchClientCriteriaDto;
+import java.util.List;
 
 /**
  * Interface for Book Data Access Object.
@@ -21,6 +24,25 @@ public interface BookDao {
    *     author is not found.
    */
   Book getBook(final Integer bookId) throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the list of book detailed from the datastore.
+   *
+   * @return the list of book detailed from the datastore.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no book is found.
+   */
+  List<BookDetailsDto> getBookDetailsList() throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the list of book detailed corresponding to the search criteria from the datastore.
+   *
+   * @param booksSearchClientCriteriaDto the search criteria
+   * @return the list of book detailed corresponding to the search criteria from the datastore.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no book is found.
+   */
+  List<BookDetailsDto> getSearchBookDetailsList(BooksSearchClientCriteriaDto booksSearchClientCriteriaDto) throws TechnicalException, NotFoundException;
 
   /**
    * Update an existing book in the datastore.
