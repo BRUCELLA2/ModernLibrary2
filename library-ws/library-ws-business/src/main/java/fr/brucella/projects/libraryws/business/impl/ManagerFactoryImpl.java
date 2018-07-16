@@ -3,6 +3,7 @@ package fr.brucella.projects.libraryws.business.impl;
 import fr.brucella.projects.libraryws.business.contracts.ManagerFactory;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksBorrowedListingManager;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksListingManager;
+import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksManagementManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,11 @@ public class ManagerFactoryImpl implements ManagerFactory {
    * Books Listing Manager
    */
   @Autowired private BooksListingManager booksListingManager;
+
+  /**
+   * Books Listing Manager
+   */
+  @Autowired private BooksManagementManager booksManagementManager;
 
   /** {@inheritDoc} */
   @Override
@@ -45,5 +51,17 @@ public class ManagerFactoryImpl implements ManagerFactory {
   @Override
   public void setBooksListingManager(final BooksListingManager booksListingManager) {
     this.booksListingManager = booksListingManager;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public BooksManagementManager getBooksManagementManager() {
+    return booksManagementManager;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setBooksManagementManager(final BooksManagementManager booksManagementManager) {
+    this.booksManagementManager = booksManagementManager;
   }
 }

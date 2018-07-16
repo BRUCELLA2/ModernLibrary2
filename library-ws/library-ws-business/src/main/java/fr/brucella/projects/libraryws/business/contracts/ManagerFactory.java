@@ -2,6 +2,7 @@ package fr.brucella.projects.libraryws.business.contracts;
 
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksBorrowedListingManager;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksListingManager;
+import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksManagementManager;
 
 /**
  * Interface for Manager Factory. Manager Factory allow to get and set business managers.
@@ -37,4 +38,18 @@ public interface ManagerFactory {
    * @param booksListingManager the Books Listing Manager.
    */
   void setBooksListingManager(final BooksListingManager booksListingManager);
+
+  /**
+   * Get the Books Management Manager.
+   *
+   * @return the Books Management Manager.
+   */
+  BooksManagementManager getBooksManagementManager();
+
+  /**
+   * Set the Books Management Manager.
+   *
+   * @param booksManagementManager the Books Management Manager.
+   */
+  void setBooksManagementManager(final BooksManagementManager booksManagementManager);
 }

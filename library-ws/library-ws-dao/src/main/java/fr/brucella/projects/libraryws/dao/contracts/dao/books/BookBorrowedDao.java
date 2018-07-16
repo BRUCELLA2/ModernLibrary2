@@ -1,5 +1,6 @@
 package fr.brucella.projects.libraryws.dao.contracts.dao.books;
 
+import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
 import fr.brucella.projects.libraryws.entity.books.dto.CurrentlyBorrowExpiredDto;
 import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
@@ -60,14 +61,32 @@ public interface BookBorrowedDao {
   List<CurrentlyBorrowExpiredDto> getBorrowExpired() throws TechnicalException, NotFoundException;
 
   /**
-   * Give the list of informations avout currently borrow expired for the user.
+   * Give the list of informations about currently borrow expired for the user.
    *
    * @param userId id of the user.
-   * @return the list of informations avout currently borrow expired for the user.
+   * @return the list of informations about currently borrow expired for the user.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and no borrows is found.
    */
   List<UserCurrentlyBorrowDto> getUserBorrowsExpired(final Integer userId) throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the list of borrows pas and present.
+   *
+   * @return the list of borrows pas and present.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrows is found.
+   */
+  List<BorrowDto> getAllBorrows() throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the list of number of borrowings for each book (with some informations about the book).
+   *
+   * @return the list of number of borrowings for each book (with some informations about the book).
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrows is found.
+   */
+  List<BookBorrowsCountDto> countBorrowsByBook() throws TechnicalException, NotFoundException;
 
   /**
    * Update an existing bookBorrowed in the datastore.

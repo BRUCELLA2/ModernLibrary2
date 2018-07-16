@@ -18,7 +18,7 @@ public class CurrentlyBorrowExpiredDtoRM implements RowMapper<CurrentlyBorrowExp
 
 
   @Override
-  public CurrentlyBorrowExpiredDto mapRow(ResultSet resultSet, int i) throws SQLException {
+  public CurrentlyBorrowExpiredDto mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 
     final CurrentlyBorrowExpiredDto currentlyBorrowExpiredDto = new CurrentlyBorrowExpiredDto();
 

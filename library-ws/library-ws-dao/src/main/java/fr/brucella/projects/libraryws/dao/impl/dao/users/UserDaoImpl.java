@@ -6,6 +6,7 @@ import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.UserRM;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.users.model.User;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
@@ -66,10 +67,36 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       LOG.error((exception.getMessage()));
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql);
-        LOG.debug("userId = " + userId);
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<User> getUserWithBorrowsExpired() throws TechnicalException, NotFoundException {
+
+    sql = "SELECT * FROM users INNER JOIN book_borrowed ON users.user_id = book_borrowed.user_id WHERE book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE";
+
+    final RowMapper<User> rowMapper = new UserRM();
+
+    try {
+      final List<User> usersList = this.getNamedJdbcTemplate().query(sql, rowMapper);
+      if (usersList.isEmpty()) {
+        if(LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+        }
+        throw new NotFoundException(messages.getString("UserDao.getUserWithBorrowsExpired.notFound"));
+      } else {
+        return usersList;
       }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error((exception.getMessage()));
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
@@ -108,10 +135,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql);
-        LOG.debug("user = " + user.toString());
-      }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
@@ -153,10 +176,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql);
-        LOG.debug("user = " + user.toString());
-      }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }

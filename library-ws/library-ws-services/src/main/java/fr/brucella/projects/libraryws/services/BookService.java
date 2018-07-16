@@ -1,8 +1,9 @@
 package fr.brucella.projects.libraryws.services;
 
 import fr.brucella.projects.libraryws.business.contracts.ManagerFactory;
+import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
-import fr.brucella.projects.libraryws.entity.books.dto.BookStock;
+import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
 import fr.brucella.projects.libraryws.entity.books.dto.CurrentlyBorrowExpiredDto;
 import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
@@ -177,7 +178,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * Provides the list of books which can be borrowed.
    *
    * @return the list of books which can be borrowed.
-   * @throws LibraryWsException Throw this exception if there is a technical problem.
+   * @throws LibraryWsException Throw this exception if there is a technical problem.cu
    */
   @WebMethod
   public List<BookDetailsDto> availableBooksList() throws LibraryWsException {
@@ -199,9 +200,14 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return the list of users with currently borrow and deadline expired.
    */
   @WebMethod
-  public List<User> currentlyDeadlineExpiredUsers() {
-    // TODO implementation
-    return null;
+  public List<User> currentlyDeadlineExpiredUsers() throws LibraryWsException {
+
+    try {
+      return this.managerFactory.getBooksManagementManager().getUsersDeadlineExpired();
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+    }
   }
 
   /**
@@ -210,20 +216,30 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return the list of stocks for each book.
    */
   @WebMethod
-  public List<BookStock> bookStocksList() {
-    // TODO implementation
-    return null;
+  public List<BookStockDto> bookStocksList() throws LibraryWsException {
+
+    try {
+      return this.managerFactory.getBooksManagementManager().getStocksList();
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+    }
   }
 
   /**
    * Provides the list of all borrow past and present.
    *
-   * @return the list of all borrow past and present.
+   * @return the borrows history sorted by date of borrow.
    */
   @WebMethod
-  public List<BorrowDto> borrowingHistoryList() {
-    // TODO implementation
-    return null;
+  public List<BorrowDto> borrowingHistoryList() throws LibraryWsException {
+
+    try {
+      return this.managerFactory.getBooksManagementManager().getBorrowsHistory();
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+    }
   }
 
   /**
@@ -232,9 +248,14 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @return the list of number of borrowings for each book.
    */
   @WebMethod
-  public List<HashMap<Book, Integer>> nbBorrowingByBooks() {
-    // TODO implementation
-    return null;
+  public List<BookBorrowsCountDto> nbBorrowingByBooks() throws LibraryWsException {
+
+    try {
+      return this.managerFactory.getBooksManagementManager().getNbBorrowsByBooks();
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+    }
   }
 
   // ===== Borrowings Management

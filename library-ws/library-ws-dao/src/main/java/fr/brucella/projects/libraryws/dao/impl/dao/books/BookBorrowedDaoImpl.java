@@ -2,10 +2,12 @@ package fr.brucella.projects.libraryws.dao.impl.dao.books;
 
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.BookBorrowedDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.dto.BookBorrowsCountDtoRM;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.dto.BorrowDtoRM;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.dto.CurrentlyBorrowExpiredDtoRM;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.dto.UserCurrentlyBorrowDtoRM;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model.BookBorrowedRM;
+import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
 import fr.brucella.projects.libraryws.entity.books.dto.CurrentlyBorrowExpiredDto;
 import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
@@ -91,6 +93,8 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
     if (currently) {
       sql = sql + " WHERE book_borrowed.returned = false";
     }
+
+    sql = sql + " ORDER BY book_borrowed.borrow_date DESC";
 
     final RowMapper<BorrowDto> rowMapper = new BorrowDtoRM();
 
@@ -229,6 +233,44 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
 
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<BorrowDto> getAllBorrows() throws TechnicalException, NotFoundException {
+
+    return this.getBorrowListWithUserLoginAndTitle(false);
+
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<BookBorrowsCountDto> countBorrowsByBook() throws TechnicalException, NotFoundException {
+
+    sql = "SELECT book.book_id, book.title, COUNT (book.book_id) as nb_borrows FROM book_borrowed INNER JOIN book ON book.book_id = book_borrowed.book_id GROUP BY book.book_id";
+
+    final RowMapper<BookBorrowsCountDto> rowMapper = new BookBorrowsCountDtoRM();
+
+    try {
+      List<BookBorrowsCountDto> bookBorrowsCountDtoList = this.getJdbcTemplate().query(sql, rowMapper);
+      if(bookBorrowsCountDtoList.isEmpty()) {
+        if(LOG.isDebugEnabled()){
+          LOG.debug("SQL : " + sql);
+        }
+        throw new NotFoundException(messages.getString("bookBorrowedDao.countBorrowsByBook.notFound"));
+      } else {
+        return bookBorrowsCountDtoList;
+      }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
   }
 
   /** {@inheritDoc} */

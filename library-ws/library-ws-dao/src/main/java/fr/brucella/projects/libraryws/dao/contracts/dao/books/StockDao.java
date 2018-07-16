@@ -1,8 +1,10 @@
 package fr.brucella.projects.libraryws.dao.contracts.dao.books;
 
+import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.model.Stock;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import java.util.List;
 
 /**
  * Interface for Stock Data Access Object.
@@ -18,7 +20,7 @@ public interface StockDao {
    * @return the stock with the specified id.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   *     stock is not found.
    */
   Stock getStock(final Integer stockId) throws TechnicalException, NotFoundException;
 
@@ -29,9 +31,18 @@ public interface StockDao {
    * @return the stock with the book id specified.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   *     stock is not found.
    */
   Stock getStockForBook(final Integer bookId) throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the list of stocks for each book (include title of the book).
+   *
+   * @return the list of stocks for each book (include title of the book).
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no stock is found.
+   */
+  List<BookStockDto> getBookStockList() throws TechnicalException, NotFoundException;
 
   /**
    * Update an existing stock in the datastore.
@@ -39,7 +50,7 @@ public interface StockDao {
    * @param stock the stock with the updated informations to save in datastore.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   *     stock is not found.
    */
   void updateStock(final Stock stock) throws TechnicalException, NotFoundException;
 
@@ -58,7 +69,7 @@ public interface StockDao {
    * @param stockId id of the stock.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   *     stock is not found.
    */
   void deleteStock(final Integer stockId) throws TechnicalException, NotFoundException;
 }

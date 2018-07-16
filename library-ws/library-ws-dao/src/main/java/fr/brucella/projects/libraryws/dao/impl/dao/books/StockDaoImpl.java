@@ -2,10 +2,13 @@ package fr.brucella.projects.libraryws.dao.impl.dao.books;
 
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.StockDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.dto.BookStockDtoRM;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model.StockRM;
+import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.model.Stock;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
@@ -100,10 +103,35 @@ public class StockDaoImpl extends AbstractDao implements StockDao {
       LOG.error((exception.getMessage()));
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql);
-        LOG.debug(("bookId = " + bookId));
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
+  @Override
+  public List<BookStockDto> getBookStockList() throws TechnicalException, NotFoundException {
+
+    sql = "SELECT stock.stock_id, stock.book_id, stock.amount_available, stock.amount, book.title FROM stock INNER JOIN book ON book.book_id = stock.book_id";
+
+    final RowMapper<BookStockDto> rowMapper = new BookStockDtoRM();
+
+    try {
+      List<BookStockDto> bookStockDtoList = this.getJdbcTemplate().query(sql, rowMapper);
+      if(bookStockDtoList.isEmpty()){
+        if(LOG.isDebugEnabled()){
+          LOG.debug("SQL : " + sql);
+        }
+        throw new NotFoundException(messages.getString("stockDao.getBookStockList.notFound"));
+      } else {
+        return bookStockDtoList;
       }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"));
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error((exception.getMessage()));
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
