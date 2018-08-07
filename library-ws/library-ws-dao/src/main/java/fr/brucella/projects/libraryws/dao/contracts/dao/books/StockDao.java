@@ -40,7 +40,8 @@ public interface StockDao {
    *
    * @return the list of stocks for each book (include title of the book).
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and no stock is found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     stock is found.
    */
   List<BookStockDto> getBookStockList() throws TechnicalException, NotFoundException;
 

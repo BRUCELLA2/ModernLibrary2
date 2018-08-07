@@ -164,18 +164,21 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
 
   /** {@inheritDoc} */
   @Override
-  public List<CurrentlyBorrowExpiredDto> getBorrowExpired() throws TechnicalException, NotFoundException {
+  public List<CurrentlyBorrowExpiredDto> getBorrowExpired()
+      throws TechnicalException, NotFoundException {
 
-    sql = "SELECT book_borrowed.user_id, book_borrowed.book_id, book_borrowed.end_date, book_borrowed.borrow_date, book_borrowed.last_reminder, book_borrowed.nb_reminder, book.title, users.login, users.email "
-        + "FROM book_borrowed "
-        + "INNER JOIN book ON book_borrowed.book_id = book.book_id "
-        + "INNER JOIN users ON users.user_id = book_borrowed.user_id "
-        + "WHERE book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE";
+    sql =
+        "SELECT book_borrowed.user_id, book_borrowed.book_id, book_borrowed.end_date, book_borrowed.borrow_date, book_borrowed.last_reminder, book_borrowed.nb_reminder, book.title, users.login, users.email "
+            + "FROM book_borrowed "
+            + "INNER JOIN book ON book_borrowed.book_id = book.book_id "
+            + "INNER JOIN users ON users.user_id = book_borrowed.user_id "
+            + "WHERE book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE";
 
     final RowMapper<CurrentlyBorrowExpiredDto> rowMapper = new CurrentlyBorrowExpiredDtoRM();
 
     try {
-      final List<CurrentlyBorrowExpiredDto> currentlyBorrowExpiredDtoList = this.getJdbcTemplate().query(sql, rowMapper);
+      final List<CurrentlyBorrowExpiredDto> currentlyBorrowExpiredDtoList =
+          this.getJdbcTemplate().query(sql, rowMapper);
       if (currentlyBorrowExpiredDtoList.isEmpty()) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
@@ -232,7 +235,6 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
-
   }
 
   /** {@inheritDoc} */
@@ -240,24 +242,27 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
   public List<BorrowDto> getAllBorrows() throws TechnicalException, NotFoundException {
 
     return this.getBorrowListWithUserLoginAndTitle(false);
-
   }
 
   /** {@inheritDoc} */
   @Override
-  public List<BookBorrowsCountDto> countBorrowsByBook() throws TechnicalException, NotFoundException {
+  public List<BookBorrowsCountDto> countBorrowsByBook()
+      throws TechnicalException, NotFoundException {
 
-    sql = "SELECT book.book_id, book.title, COUNT (book.book_id) as nb_borrows FROM book_borrowed INNER JOIN book ON book.book_id = book_borrowed.book_id GROUP BY book.book_id";
+    sql =
+        "SELECT book.book_id, book.title, COUNT (book.book_id) as nb_borrows FROM book_borrowed INNER JOIN book ON book.book_id = book_borrowed.book_id GROUP BY book.book_id";
 
     final RowMapper<BookBorrowsCountDto> rowMapper = new BookBorrowsCountDtoRM();
 
     try {
-      List<BookBorrowsCountDto> bookBorrowsCountDtoList = this.getJdbcTemplate().query(sql, rowMapper);
-      if(bookBorrowsCountDtoList.isEmpty()) {
-        if(LOG.isDebugEnabled()){
+      List<BookBorrowsCountDto> bookBorrowsCountDtoList =
+          this.getJdbcTemplate().query(sql, rowMapper);
+      if (bookBorrowsCountDtoList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
         }
-        throw new NotFoundException(messages.getString("bookBorrowedDao.countBorrowsByBook.notFound"));
+        throw new NotFoundException(
+            messages.getString("bookBorrowedDao.countBorrowsByBook.notFound"));
       } else {
         return bookBorrowsCountDtoList;
       }

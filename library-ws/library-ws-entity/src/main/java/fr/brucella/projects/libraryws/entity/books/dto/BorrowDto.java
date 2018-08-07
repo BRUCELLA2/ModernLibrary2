@@ -68,9 +68,7 @@ public class BorrowDto extends BookBorrowed {
     this.login = login;
   }
 
-
   // ===== Methods =====
-
 
   @Override
   public String toString() {

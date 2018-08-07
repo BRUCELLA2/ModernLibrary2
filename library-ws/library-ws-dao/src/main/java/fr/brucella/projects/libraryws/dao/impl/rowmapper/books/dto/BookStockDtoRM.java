@@ -13,9 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 public class BookStockDtoRM implements RowMapper<BookStockDto> {
 
   /** Default Constructor */
-  public BookStockDtoRM() {
-  }
-
+  public BookStockDtoRM() {}
 
   @Override
   public BookStockDto mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {

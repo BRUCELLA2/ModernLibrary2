@@ -27,7 +27,6 @@ public class BooksListingManagerImpl extends AbstractManager implements BooksLis
   /** Books Listing Manager logger */
   private static final Log LOG = LogFactory.getLog(BooksListingManagerImpl.class);
 
-
   /** {@inheritDoc} */
   @Override
   public List<BookDetailsDto> getAllBooks() throws TechnicalException {
@@ -40,42 +39,45 @@ public class BooksListingManagerImpl extends AbstractManager implements BooksLis
       }
       return new ArrayList<>();
     }
-
   }
-
 
   /** {@inheritDoc} */
   @Override
-  public List<BookDetailsDto> getSearchBooks(BooksSearchClientCriteriaDto booksSearchClientCriteriaDto)
+  public List<BookDetailsDto> getSearchBooks(
+      BooksSearchClientCriteriaDto booksSearchClientCriteriaDto)
       throws TechnicalException, FunctionalException {
 
     if (booksSearchClientCriteriaDto == null) {
-      if(LOG.isDebugEnabled()) {
+      if (LOG.isDebugEnabled()) {
         LOG.debug("booksSearchClientCriteriaDto is NULL");
       }
       return this.getAllBooks();
     }
 
-    final Set<ConstraintViolation<BooksSearchClientCriteriaDto>> violations = this.getConstraintValidator().validate(booksSearchClientCriteriaDto);
-    if(!violations.isEmpty()) {
-      if(LOG.isDebugEnabled()) {
+    final Set<ConstraintViolation<BooksSearchClientCriteriaDto>> violations =
+        this.getConstraintValidator().validate(booksSearchClientCriteriaDto);
+    if (!violations.isEmpty()) {
+      if (LOG.isDebugEnabled()) {
         for (final ConstraintViolation<BooksSearchClientCriteriaDto> violation : violations) {
           LOG.debug(violation.getMessage());
         }
         LOG.debug("Book Search Client Criteria DTO = " + booksSearchClientCriteriaDto.toString());
       }
-      throw new FunctionalException(messages.getString("booksListingManager.getSearchBooks.integrityViolation"), new ConstraintViolationException(violations));
+      throw new FunctionalException(
+          messages.getString("booksListingManager.getSearchBooks.integrityViolation"),
+          new ConstraintViolationException(violations));
     }
 
     try {
-      return this.getDaoFactory().getBookDao().getSearchBookDetailsList(booksSearchClientCriteriaDto);
+      return this.getDaoFactory()
+          .getBookDao()
+          .getSearchBookDetailsList(booksSearchClientCriteriaDto);
     } catch (NotFoundException exception) {
-      if(LOG.isDebugEnabled()) {
+      if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
       return new ArrayList<>();
     }
-
   }
 
   @Override
@@ -93,6 +95,4 @@ public class BooksListingManagerImpl extends AbstractManager implements BooksLis
       return new ArrayList<>();
     }
   }
-
-
 }

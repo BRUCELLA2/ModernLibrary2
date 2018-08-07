@@ -34,9 +34,11 @@ public interface BooksBorrowedListingManager {
       throws TechnicalException, FunctionalException;
 
   /**
-   * Provides the list of informations about currently borrowed books which have an expired deadline and the user who borrow the book.
+   * Provides the list of informations about currently borrowed books which have an expired deadline
+   * and the user who borrow the book.
    *
-   * @return the list of informations about currently borrowed books which have an expired deadline and the user who borrow the book.
+   * @return the list of informations about currently borrowed books which have an expired deadline
+   *     and the user who borrow the book.
    * @throws TechnicalException - wraps technical exception caused during data access.
    */
   List<CurrentlyBorrowExpiredDto> currentlyBorrowExpired() throws TechnicalException;
@@ -49,5 +51,6 @@ public interface BooksBorrowedListingManager {
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws FunctionalException - This exception is throw if the id of the user is null.
    */
-  List<UserCurrentlyBorrowDto> userCurrentlyBorrowExpired(final Integer userId) throws TechnicalException, FunctionalException;
+  List<UserCurrentlyBorrowDto> userCurrentlyBorrowExpired(final Integer userId)
+      throws TechnicalException, FunctionalException;
 }

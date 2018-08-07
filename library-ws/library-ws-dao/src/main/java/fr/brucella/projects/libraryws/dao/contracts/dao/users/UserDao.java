@@ -28,7 +28,8 @@ public interface UserDao {
    *
    * @return the list of users with a borrows not returned expired.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and the user is not found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and the
+   *     user is not found.
    */
   List<User> getUserWithBorrowsExpired() throws TechnicalException, NotFoundException;
 

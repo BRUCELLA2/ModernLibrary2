@@ -14,7 +14,6 @@ import fr.brucella.projects.libraryws.entity.exceptions.LibraryWsFault;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.searchcriteria.dto.BooksSearchClientCriteriaDto;
 import fr.brucella.projects.libraryws.entity.users.model.User;
-import java.util.HashMap;
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -69,7 +68,8 @@ public class BookService extends SpringBeanAutowiringSupport {
    *
    * @param userId id of the user.
    * @return the list of books currently borrowed by the user.
-   * @throws LibraryWsException Throw this exception if there is a technical problem or a null userId.
+   * @throws LibraryWsException Throw this exception if there is a technical problem or a null
+   *     userId.
    */
   @WebMethod
   public List<UserCurrentlyBorrowDto> currentlyBorrowForUser(final Integer userId)
@@ -101,9 +101,9 @@ public class BookService extends SpringBeanAutowiringSupport {
       return this.managerFactory.getBooksBorrowedListingManager().currentlyBorrowExpired();
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
-      throw new LibraryWsException("Problème technique", new LibraryWsFault("Server", exception.getMessage()));
+      throw new LibraryWsException(
+          "Problème technique", new LibraryWsFault("Server", exception.getMessage()));
     }
-
   }
 
   /**
@@ -119,11 +119,13 @@ public class BookService extends SpringBeanAutowiringSupport {
       throws LibraryWsException {
 
     try {
-      return this.managerFactory.getBooksBorrowedListingManager().userCurrentlyBorrowExpired(userId);
+      return this.managerFactory
+          .getBooksBorrowedListingManager()
+          .userCurrentlyBorrowExpired(userId);
     } catch (FunctionalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Erreur Fonctionnelle",new LibraryWsFault("soap:Client", exception.getMessage()));
+          "Erreur Fonctionnelle", new LibraryWsFault("soap:Client", exception.getMessage()));
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
@@ -146,7 +148,8 @@ public class BookService extends SpringBeanAutowiringSupport {
       return this.managerFactory.getBooksListingManager().getAllBooks();
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
-      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+      throw new LibraryWsException(
+          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
     }
   }
 
@@ -155,18 +158,21 @@ public class BookService extends SpringBeanAutowiringSupport {
    *
    * @param booksSearchClientCriteriaDto the book searching client criteria.
    * @return the list of books that meet the searching criteria.
-   * @throws LibraryWsException Throw this exception if there is a technical problem or if the search criteria are null.
+   * @throws LibraryWsException Throw this exception if there is a technical problem or if the
+   *     search criteria are null.
    */
   @WebMethod
   public List<BookDetailsDto> booksSearchedList(
       final BooksSearchClientCriteriaDto booksSearchClientCriteriaDto) throws LibraryWsException {
 
     try {
-      return this.managerFactory.getBooksListingManager().getSearchBooks(booksSearchClientCriteriaDto);
+      return this.managerFactory
+          .getBooksListingManager()
+          .getSearchBooks(booksSearchClientCriteriaDto);
     } catch (FunctionalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Erreur Fonctionnelle",new LibraryWsFault("soap:Client", exception.getMessage()));
+          "Erreur Fonctionnelle", new LibraryWsFault("soap:Client", exception.getMessage()));
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
@@ -206,7 +212,8 @@ public class BookService extends SpringBeanAutowiringSupport {
       return this.managerFactory.getBooksManagementManager().getUsersDeadlineExpired();
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
-      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+      throw new LibraryWsException(
+          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
     }
   }
 
@@ -222,7 +229,8 @@ public class BookService extends SpringBeanAutowiringSupport {
       return this.managerFactory.getBooksManagementManager().getStocksList();
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
-      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+      throw new LibraryWsException(
+          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
     }
   }
 
@@ -238,7 +246,8 @@ public class BookService extends SpringBeanAutowiringSupport {
       return this.managerFactory.getBooksManagementManager().getBorrowsHistory();
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
-      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+      throw new LibraryWsException(
+          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
     }
   }
 
@@ -254,7 +263,8 @@ public class BookService extends SpringBeanAutowiringSupport {
       return this.managerFactory.getBooksManagementManager().getNbBorrowsByBooks();
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
-      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+      throw new LibraryWsException(
+          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
     }
   }
 

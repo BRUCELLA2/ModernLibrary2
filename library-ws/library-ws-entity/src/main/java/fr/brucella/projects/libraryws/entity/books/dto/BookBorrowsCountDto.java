@@ -5,8 +5,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Represents the number of borrows for a book.
- * Includes some informations about the book (title, id).
+ * Represents the number of borrows for a book. Includes some informations about the book (title,
+ * id).
  *
  * @author BRUCELLA2
  */
@@ -25,12 +25,10 @@ public class BookBorrowsCountDto {
   @NotNull(message = "{bookBorrowsCountDto.nbBorrow.null}")
   private Integer nbBorrows;
 
-
   // ===== Constructor =====
 
   /** Defaut Constructor */
-  public BookBorrowsCountDto() {
-  }
+  public BookBorrowsCountDto() {}
 
   // ===== Getters and Setters =====
 

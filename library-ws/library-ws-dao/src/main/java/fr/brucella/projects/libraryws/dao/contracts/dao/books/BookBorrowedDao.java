@@ -35,7 +35,8 @@ public interface BookBorrowedDao {
    * @param currently true if need only currently borrow.
    * @return A list of Borrow Data Transfert Object.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrow is found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     borrow is found.
    */
   List<BorrowDto> getBorrowListWithUserLoginAndTitle(final Boolean currently)
       throws TechnicalException, NotFoundException;
@@ -46,7 +47,8 @@ public interface BookBorrowedDao {
    * @param userId id of the user.
    * @return the list of informations about currently borrows by the user.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrows is found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     borrows is found.
    */
   List<UserCurrentlyBorrowDto> getUserCurrentlyBorrows(final Integer userId)
       throws TechnicalException, NotFoundException;
@@ -54,9 +56,11 @@ public interface BookBorrowedDao {
   /**
    * Give the list of informations about borrow expired, book borrowed and user who make the borrow.
    *
-   * @return the list of informations about borrow expired, book borrowed and user who make the borrow.
+   * @return the list of informations about borrow expired, book borrowed and user who make the
+   *     borrow.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrow is found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     borrow is found.
    */
   List<CurrentlyBorrowExpiredDto> getBorrowExpired() throws TechnicalException, NotFoundException;
 
@@ -66,16 +70,19 @@ public interface BookBorrowedDao {
    * @param userId id of the user.
    * @return the list of informations about currently borrow expired for the user.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrows is found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     borrows is found.
    */
-  List<UserCurrentlyBorrowDto> getUserBorrowsExpired(final Integer userId) throws TechnicalException, NotFoundException;
+  List<UserCurrentlyBorrowDto> getUserBorrowsExpired(final Integer userId)
+      throws TechnicalException, NotFoundException;
 
   /**
    * Give the list of borrows pas and present.
    *
    * @return the list of borrows pas and present.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrows is found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     borrows is found.
    */
   List<BorrowDto> getAllBorrows() throws TechnicalException, NotFoundException;
 
@@ -84,7 +91,8 @@ public interface BookBorrowedDao {
    *
    * @return the list of number of borrowings for each book (with some informations about the book).
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and no borrows is found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     borrows is found.
    */
   List<BookBorrowsCountDto> countBorrowsByBook() throws TechnicalException, NotFoundException;
 

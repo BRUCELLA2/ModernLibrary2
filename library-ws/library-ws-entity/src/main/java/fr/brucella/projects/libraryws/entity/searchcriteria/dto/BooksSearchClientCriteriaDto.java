@@ -1,6 +1,5 @@
 package fr.brucella.projects.libraryws.entity.searchcriteria.dto;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -31,16 +30,13 @@ public class BooksSearchClientCriteriaDto {
   @Size(min = 0, max = 50, message = "{author.lastName.size}")
   private String authorLastName;
 
-  /**
-   * Indicate if the book need to be available for a borrow.
-   */
+  /** Indicate if the book need to be available for a borrow. */
   private Boolean bookAvailable;
 
   // ===== Constructor =====
 
   /** Defaut Constructor */
-  public BooksSearchClientCriteriaDto() {
-  }
+  public BooksSearchClientCriteriaDto() {}
 
   // ===== Getters and Setters =====
 
@@ -152,13 +148,17 @@ public class BooksSearchClientCriteriaDto {
     this.bookAvailable = bookAvailable;
   }
 
-// ===== Methods =====
-
+  // ===== Methods =====
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("title", title).append("genreName", genreName)
-        .append("publisherName", publisherName).append("ean13", ean13).append("authorLastName", authorLastName)
-        .append("bookAvailable", bookAvailable).toString();
+    return new ToStringBuilder(this)
+        .append("title", title)
+        .append("genreName", genreName)
+        .append("publisherName", publisherName)
+        .append("ean13", ean13)
+        .append("authorLastName", authorLastName)
+        .append("bookAvailable", bookAvailable)
+        .toString();
   }
 }

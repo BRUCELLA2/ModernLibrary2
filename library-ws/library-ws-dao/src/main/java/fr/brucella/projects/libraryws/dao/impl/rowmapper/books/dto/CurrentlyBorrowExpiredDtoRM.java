@@ -13,12 +13,11 @@ import org.springframework.jdbc.core.RowMapper;
 public class CurrentlyBorrowExpiredDtoRM implements RowMapper<CurrentlyBorrowExpiredDto> {
 
   /** Default Constructor */
-  public CurrentlyBorrowExpiredDtoRM() {
-  }
-
+  public CurrentlyBorrowExpiredDtoRM() {}
 
   @Override
-  public CurrentlyBorrowExpiredDto mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
+  public CurrentlyBorrowExpiredDto mapRow(final ResultSet resultSet, final int rowNum)
+      throws SQLException {
 
     final CurrentlyBorrowExpiredDto currentlyBorrowExpiredDto = new CurrentlyBorrowExpiredDto();
 

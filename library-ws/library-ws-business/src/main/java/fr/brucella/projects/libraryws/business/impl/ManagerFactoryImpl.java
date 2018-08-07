@@ -18,14 +18,10 @@ public class ManagerFactoryImpl implements ManagerFactory {
   /** Books Borrowed Listing Manager */
   @Autowired private BooksBorrowedListingManager booksBorrowedListingManager;
 
-  /**
-   * Books Listing Manager
-   */
+  /** Books Listing Manager */
   @Autowired private BooksListingManager booksListingManager;
 
-  /**
-   * Books Listing Manager
-   */
+  /** Books Listing Manager */
   @Autowired private BooksManagementManager booksManagementManager;
 
   /** {@inheritDoc} */

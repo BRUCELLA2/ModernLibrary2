@@ -111,14 +111,15 @@ public class StockDaoImpl extends AbstractDao implements StockDao {
   @Override
   public List<BookStockDto> getBookStockList() throws TechnicalException, NotFoundException {
 
-    sql = "SELECT stock.stock_id, stock.book_id, stock.amount_available, stock.amount, book.title FROM stock INNER JOIN book ON book.book_id = stock.book_id";
+    sql =
+        "SELECT stock.stock_id, stock.book_id, stock.amount_available, stock.amount, book.title FROM stock INNER JOIN book ON book.book_id = stock.book_id";
 
     final RowMapper<BookStockDto> rowMapper = new BookStockDtoRM();
 
     try {
       List<BookStockDto> bookStockDtoList = this.getJdbcTemplate().query(sql, rowMapper);
-      if(bookStockDtoList.isEmpty()){
-        if(LOG.isDebugEnabled()){
+      if (bookStockDtoList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
         }
         throw new NotFoundException(messages.getString("stockDao.getBookStockList.notFound"));

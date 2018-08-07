@@ -77,7 +77,8 @@ INSERT INTO public.book_borrowed(
 		(1, 2, '2018-08-01', '2018-07-01', true, 0, false, null),
 		(1, 1, '2018-01-15', '2017-10-03', false, 2, true, '2018-01-10'),
 		(2, 3, '2018-08-15', '2018-07-10', false, 0, false, null),
-		(3, 1, '2018-09-04', '2018-07-11', true, 0, false, null);
+		(3, 1, '2018-09-04', '2018-07-11', true, 0, false, null),
+		(3, 2, '2018-07-04', '2018-06-11', true, 1, false, '2018-07-01');
 
 /* INSERT INTO stock TABLE */
 INSERT INTO public.stock(stock_id, book_id, amount_available, amount)

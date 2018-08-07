@@ -6,17 +6,16 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
 /**
- * This class allow to map row of ResultSet to an BookDetailsDto object.
- * The list of authors of the BookDetailsDto is set to null.
- * An update of the BookDetailsDto is necessary after row mapping to set the list of authors.
+ * This class allow to map row of ResultSet to an BookDetailsDto object. The list of authors of the
+ * BookDetailsDto is set to null. An update of the BookDetailsDto is necessary after row mapping to
+ * set the list of authors.
  *
  * @author BRUCELLA2
  */
 public class BookDetailsDtoRM implements RowMapper<BookDetailsDto> {
 
   /** Default Constructor */
-  public BookDetailsDtoRM() {
-  }
+  public BookDetailsDtoRM() {}
 
   @Override
   public BookDetailsDto mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {

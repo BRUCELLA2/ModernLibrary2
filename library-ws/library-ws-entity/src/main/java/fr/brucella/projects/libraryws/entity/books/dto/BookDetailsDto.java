@@ -8,8 +8,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Represents a BookDetails Data Transfert Object.
- * Includes all the informations about the book.
+ * Represents a BookDetails Data Transfert Object. Includes all the informations about the book.
  * Includes author, genre and publisher informations.
  */
 public class BookDetailsDto extends Book {
@@ -26,7 +25,6 @@ public class BookDetailsDto extends Book {
 
   @NotEmpty(message = "{bookDetailsDto.authors.empty")
   private List<Author> authors;
-
 
   // ===== Constructor =====
 
@@ -91,13 +89,14 @@ public class BookDetailsDto extends Book {
     this.authors = authors;
   }
 
-
   // ===== Methods =====
-
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("publisherName", publisherName).append("genreName", genreName)
-        .append("authors", authors).toString();
+    return new ToStringBuilder(this)
+        .append("publisherName", publisherName)
+        .append("genreName", genreName)
+        .append("authors", authors)
+        .toString();
   }
 }

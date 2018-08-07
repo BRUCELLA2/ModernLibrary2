@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Represents a Currently Borrow Expired Data Transfert Object.
- * This object contain the data about a borrow expired and not returned.
- * Includes some informations on the borrowing, the book and the user who borrow the book.
+ * Represents a Currently Borrow Expired Data Transfert Object. This object contain the data about a
+ * borrow expired and not returned. Includes some informations on the borrowing, the book and the
+ * user who borrow the book.
  */
 public class CurrentlyBorrowExpiredDto {
 
@@ -58,7 +58,6 @@ public class CurrentlyBorrowExpiredDto {
   @Size(max = 100, message = "{user.email.size}")
   @Email(message = "{user.email.format}")
   private String email;
-
 
   // ===== Getters and Setters =====
 
@@ -227,13 +226,10 @@ public class CurrentlyBorrowExpiredDto {
     this.login = login;
   }
 
-
   // ===== Constructor =====
 
   /** Default Constructor */
-  public CurrentlyBorrowExpiredDto() {
-  }
-
+  public CurrentlyBorrowExpiredDto() {}
 
   // ===== Methods =====
 

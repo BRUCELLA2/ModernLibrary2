@@ -23,7 +23,8 @@ public interface ManagerFactory {
    *
    * @param booksBorrowedListingManager the Books Borrowed Listing Manager.
    */
-  void setBooksBorrowedListingManager(final BooksBorrowedListingManager booksBorrowedListingManager);
+  void setBooksBorrowedListingManager(
+      final BooksBorrowedListingManager booksBorrowedListingManager);
 
   /**
    * Get the Books Listing Manager.

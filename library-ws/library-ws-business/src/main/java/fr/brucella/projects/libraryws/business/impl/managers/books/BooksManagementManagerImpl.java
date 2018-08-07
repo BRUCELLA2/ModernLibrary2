@@ -32,7 +32,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     try {
       return this.getDaoFactory().getUserDao().getUserWithBorrowsExpired();
     } catch (NotFoundException exception) {
-      if(LOG.isDebugEnabled()) {
+      if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
       return new ArrayList<>();
@@ -58,7 +58,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     try {
       return this.getDaoFactory().getBookBorrowedDao().getAllBorrows();
     } catch (NotFoundException exception) {
-      if(LOG.isDebugEnabled()) {
+      if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
       return new ArrayList<>();
@@ -71,7 +71,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     try {
       return this.getDaoFactory().getBookBorrowedDao().countBorrowsByBook();
     } catch (NotFoundException exception) {
-      if(LOG.isDebugEnabled()) {
+      if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
       return new ArrayList<>();

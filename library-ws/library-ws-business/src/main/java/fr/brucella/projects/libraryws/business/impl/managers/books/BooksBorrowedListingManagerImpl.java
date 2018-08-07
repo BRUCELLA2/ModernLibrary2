@@ -50,8 +50,7 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
       if (LOG.isDebugEnabled()) {
         LOG.debug("user id = " + userId);
       }
-      throw new FunctionalException(
-          messages.getString("booksBorrowedListingManager.userIdNull"));
+      throw new FunctionalException(messages.getString("booksBorrowedListingManager.userIdNull"));
     }
 
     try {
@@ -71,7 +70,7 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
     try {
       return this.getDaoFactory().getBookBorrowedDao().getBorrowExpired();
     } catch (NotFoundException exception) {
-      if(LOG.isDebugEnabled()) {
+      if (LOG.isDebugEnabled()) {
         LOG.debug((exception.getMessage()));
       }
       return new ArrayList<>();
@@ -83,12 +82,11 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
   public List<UserCurrentlyBorrowDto> userCurrentlyBorrowExpired(Integer userId)
       throws TechnicalException, FunctionalException {
 
-    if(userId == null || userId == 0) {
+    if (userId == null || userId == 0) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("user id = " + userId);
       }
-      throw new FunctionalException(
-          messages.getString("booksBorrowedListingManager.userIdNull"));
+      throw new FunctionalException(messages.getString("booksBorrowedListingManager.userIdNull"));
     }
 
     try {
@@ -100,6 +98,4 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
       return new ArrayList<>();
     }
   }
-
-
 }

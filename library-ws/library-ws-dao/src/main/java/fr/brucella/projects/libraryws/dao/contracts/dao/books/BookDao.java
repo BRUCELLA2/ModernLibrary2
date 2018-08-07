@@ -30,7 +30,8 @@ public interface BookDao {
    *
    * @return the list of book detailed from the datastore.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and no book is found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     book is found.
    */
   List<BookDetailsDto> getBookDetailsList() throws TechnicalException, NotFoundException;
 
@@ -40,9 +41,12 @@ public interface BookDao {
    * @param booksSearchClientCriteriaDto the search criteria
    * @return the list of book detailed corresponding to the search criteria from the datastore.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and no book is found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     book is found.
    */
-  List<BookDetailsDto> getSearchBookDetailsList(BooksSearchClientCriteriaDto booksSearchClientCriteriaDto) throws TechnicalException, NotFoundException;
+  List<BookDetailsDto> getSearchBookDetailsList(
+      BooksSearchClientCriteriaDto booksSearchClientCriteriaDto)
+      throws TechnicalException, NotFoundException;
 
   /**
    * Update an existing book in the datastore.

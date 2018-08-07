@@ -6,8 +6,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Represents the stock for a book.
- * Includes the title of the book.
+ * Represents the stock for a book. Includes the title of the book.
  *
  * @author BRUCELLA2
  */
@@ -18,7 +17,6 @@ public class BookStockDto extends Stock {
   @NotEmpty(message = "{book.title.empty}")
   @Size(min = 1, max = 150, message = "{book.title.size}")
   private String title;
-
 
   // ===== Getters and Setters =====
 
@@ -40,12 +38,10 @@ public class BookStockDto extends Stock {
     this.title = title;
   }
 
-
   // ===== Constructor =====
 
   /** Default Constructor */
-  public BookStockDto() {
-  }
+  public BookStockDto() {}
 
   // ===== Methods =====
 

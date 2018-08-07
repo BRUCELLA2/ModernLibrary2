@@ -13,7 +13,6 @@ import java.util.List;
  */
 public interface BooksListingManager {
 
-
   /**
    * Provides the list of all books detailed.
    *
@@ -29,7 +28,8 @@ public interface BooksListingManager {
    * @param booksSearchClientCriteriaDto the searching criteria.
    * @return the list of books detailed corresponding to the search criteria
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the data of booksSearchClientCriteriaDto are not valid.
+   * @throws FunctionalException - This exception is throw if the data of
+   *     booksSearchClientCriteriaDto are not valid.
    */
   List<BookDetailsDto> getSearchBooks(BooksSearchClientCriteriaDto booksSearchClientCriteriaDto)
       throws TechnicalException, FunctionalException;

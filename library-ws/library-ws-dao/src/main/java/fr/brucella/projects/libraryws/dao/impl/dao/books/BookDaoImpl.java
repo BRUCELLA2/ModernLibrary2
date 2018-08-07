@@ -84,7 +84,8 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
   @Override
   public List<BookDetailsDto> getBookDetailsList() throws TechnicalException, NotFoundException {
 
-    sql = "SELECT book.book_id, book.title, book.isbn13, book.ean13, book.publishing_date, book.resume, book.genre_id, book.publisher_id, publisher.name as publisher_name, genre.name as genre_name FROM book INNER JOIN publisher ON publisher.publisher_id = book.publisher_id INNER JOIN genre ON genre.genre_id = book.genre_id";
+    sql =
+        "SELECT book.book_id, book.title, book.isbn13, book.ean13, book.publishing_date, book.resume, book.genre_id, book.publisher_id, publisher.name as publisher_name, genre.name as genre_name FROM book INNER JOIN publisher ON publisher.publisher_id = book.publisher_id INNER JOIN genre ON genre.genre_id = book.genre_id";
 
     final RowMapper<BookDetailsDto> bookDetailsDtoRowMapper = new BookDetailsDtoRM();
 
@@ -109,8 +110,9 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
 
-    for(BookDetailsDto bookDetails : bookDetailsDtoList) {
-      sql = "SELECT * from author INNER JOIN book_authors ON author.author_id = book_authors.author_id WHERE book_authors.book_id = :book_id";
+    for (BookDetailsDto bookDetails : bookDetailsDtoList) {
+      sql =
+          "SELECT * from author INNER JOIN book_authors ON author.author_id = book_authors.author_id WHERE book_authors.book_id = :book_id";
 
       final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
       parameterSource.addValue("book_id", bookDetails.getBookId());
@@ -118,7 +120,8 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       final RowMapper<Author> authorRowMapper = new AuthorRM();
 
       try {
-        List<Author> authorList = getNamedJdbcTemplate().query(sql, parameterSource, authorRowMapper);
+        List<Author> authorList =
+            getNamedJdbcTemplate().query(sql, parameterSource, authorRowMapper);
         if (authorList.isEmpty()) {
           authorList = new ArrayList<>();
         }
@@ -136,54 +139,58 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
     }
 
     return bookDetailsDtoList;
-
   }
 
   /** {@inheritDoc} */
   @Override
-  public List<BookDetailsDto> getSearchBookDetailsList(BooksSearchClientCriteriaDto booksSearchClientCriteriaDto)
+  public List<BookDetailsDto> getSearchBookDetailsList(
+      BooksSearchClientCriteriaDto booksSearchClientCriteriaDto)
       throws TechnicalException, NotFoundException {
 
     LOG.debug("SEARCH : " + booksSearchClientCriteriaDto.toString());
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 
-    sql =  "SELECT book.book_id, book.title, book.isbn13, book.ean13, book.publishing_date, book.resume, book.genre_id, book.publisher_id, publisher.name as publisher_name, genre.name as genre_name FROM book INNER JOIN publisher ON publisher.publisher_id = book.publisher_id INNER JOIN genre ON genre.genre_id = book.genre_id INNER JOIN stock ON book.book_id = stock.book_id";
+    sql =
+        "SELECT book.book_id, book.title, book.isbn13, book.ean13, book.publishing_date, book.resume, book.genre_id, book.publisher_id, publisher.name as publisher_name, genre.name as genre_name FROM book INNER JOIN publisher ON publisher.publisher_id = book.publisher_id INNER JOIN genre ON genre.genre_id = book.genre_id INNER JOIN stock ON book.book_id = stock.book_id";
 
     if (booksSearchClientCriteriaDto != null) {
 
-      if(!StringUtils.isEmpty(booksSearchClientCriteriaDto.getAuthorLastName())) {
-        sql = sql + " INNER JOIN book_authors ON book_authors.book_id = book.book_id INNER JOIN author ON author.author_id = book_authors.author_id WHERE UPPER(author.last_name) LIKE UPPER(:lastName)";
+      if (!StringUtils.isEmpty(booksSearchClientCriteriaDto.getAuthorLastName())) {
+        sql =
+            sql
+                + " INNER JOIN book_authors ON book_authors.book_id = book.book_id INNER JOIN author ON author.author_id = book_authors.author_id WHERE UPPER(author.last_name) LIKE UPPER(:lastName)";
         String lastName = "%" + booksSearchClientCriteriaDto.getAuthorLastName() + "%";
         parameterSource.addValue("lastName", lastName);
       } else {
         sql = sql + " WHERE 1=1";
       }
 
-      if(!StringUtils.isEmpty(booksSearchClientCriteriaDto.getTitle())) {
+      if (!StringUtils.isEmpty(booksSearchClientCriteriaDto.getTitle())) {
         sql = sql + " AND UPPER(book.title) LIKE UPPER(:title)";
         String title = "%" + booksSearchClientCriteriaDto.getTitle() + "%";
         parameterSource.addValue("title", title);
       }
 
-      if(!StringUtils.isEmpty(booksSearchClientCriteriaDto.getEan13())) {
+      if (!StringUtils.isEmpty(booksSearchClientCriteriaDto.getEan13())) {
         sql = sql + " AND book.ean13 = :ean13";
         parameterSource.addValue("ean13", booksSearchClientCriteriaDto.getEan13());
       }
 
-      if(!StringUtils.isEmpty(booksSearchClientCriteriaDto.getGenreName())) {
+      if (!StringUtils.isEmpty(booksSearchClientCriteriaDto.getGenreName())) {
         sql = sql + " AND UPPER(genre.name) LIKE UPPER(:genreName)";
         String genreName = "%" + booksSearchClientCriteriaDto.getGenreName() + "%";
         parameterSource.addValue("genreName", genreName);
       }
 
-      if(!StringUtils.isEmpty(booksSearchClientCriteriaDto.getPublisherName())) {
+      if (!StringUtils.isEmpty(booksSearchClientCriteriaDto.getPublisherName())) {
         sql = sql + " AND UPPER(publisher.name) LIKE UPPER(:publisherName)";
         String publisherName = "%" + booksSearchClientCriteriaDto.getPublisherName() + "%";
         parameterSource.addValue("publisherName", publisherName);
       }
 
-      if(booksSearchClientCriteriaDto.getBookAvailable() != null && booksSearchClientCriteriaDto.getBookAvailable() == true) {
+      if (booksSearchClientCriteriaDto.getBookAvailable() != null
+          && booksSearchClientCriteriaDto.getBookAvailable() == true) {
         sql = sql + " AND stock.amount_available > 0";
       }
     }
@@ -199,7 +206,8 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       }
       bookDetailsDtoList = this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
       if (bookDetailsDtoList.isEmpty()) {
-        throw new NotFoundException(messages.getString("bookDao.getSearchBookDetailsList.notFound"));
+        throw new NotFoundException(
+            messages.getString("bookDao.getSearchBookDetailsList.notFound"));
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
@@ -212,8 +220,9 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
 
-    for(BookDetailsDto bookDetails : bookDetailsDtoList) {
-      sql = "SELECT * from author INNER JOIN book_authors ON author.author_id = book_authors.author_id WHERE book_authors.book_id = :book_id";
+    for (BookDetailsDto bookDetails : bookDetailsDtoList) {
+      sql =
+          "SELECT * from author INNER JOIN book_authors ON author.author_id = book_authors.author_id WHERE book_authors.book_id = :book_id";
 
       final MapSqlParameterSource parameterSourceAuthor = new MapSqlParameterSource();
       parameterSourceAuthor.addValue("book_id", bookDetails.getBookId());
@@ -224,7 +233,8 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL author: " + sql);
         }
-        List<Author> authorList = getNamedJdbcTemplate().query(sql, parameterSourceAuthor, authorRowMapper);
+        List<Author> authorList =
+            getNamedJdbcTemplate().query(sql, parameterSourceAuthor, authorRowMapper);
         if (authorList.isEmpty()) {
           authorList = new ArrayList<>();
         }

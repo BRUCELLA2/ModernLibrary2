@@ -76,17 +76,19 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
   @Override
   public List<User> getUserWithBorrowsExpired() throws TechnicalException, NotFoundException {
 
-    sql = "SELECT * FROM users INNER JOIN book_borrowed ON users.user_id = book_borrowed.user_id WHERE book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE";
+    sql =
+        "SELECT * FROM users INNER JOIN book_borrowed ON users.user_id = book_borrowed.user_id WHERE book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE";
 
     final RowMapper<User> rowMapper = new UserRM();
 
     try {
       final List<User> usersList = this.getNamedJdbcTemplate().query(sql, rowMapper);
       if (usersList.isEmpty()) {
-        if(LOG.isDebugEnabled()) {
+        if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
         }
-        throw new NotFoundException(messages.getString("UserDao.getUserWithBorrowsExpired.notFound"));
+        throw new NotFoundException(
+            messages.getString("UserDao.getUserWithBorrowsExpired.notFound"));
       } else {
         return usersList;
       }
