@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+
+  <!-- =============================================================== -->
+  <!-- Informations du projet -->
+  <!-- =============================================================== -->
+  <groupId>fr.brucella.projects</groupId>
+  <artifactId>library-clients</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <!-- =============================================================== -->
+  <!-- GENERAL INFORMATIONS -->
+  <!-- =============================================================== -->
+  <name>Library Clients</name>
+  <url></url>
+
+  <!-- =============================================================== -->
+  <!-- PROPERTIES -->
+  <!-- =============================================================== -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <log4j.version>2.11.0</log4j.version>
+    <struts.version>2.5.16</struts.version>
+    <cxf.version>3.2.5</cxf.version>
+  </properties>
+
+  <!-- =============================================================== -->
+  <!-- DEPENDENCY MANAGEMENT -->
+  <!-- =============================================================== -->
+  <dependencies>
+
+    <!-- ===== Third party libraries ===== -->
+    <!-- Apache commons logging -->
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.2</version>
+    </dependency>
+
+    <!-- Apache Log4j 2 -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-bom</artifactId>
+      <version>2.11.0</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+
+    <!-- Apache Commons Lang -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.6</version>
+    </dependency>
+
+    <!-- Framework Apache Struts -->
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-core</artifactId>
+      <version>${struts.version}</version>
+    </dependency>
+
+  </dependencies>
+
+
+  <!-- =============================================================== -->
+  <!-- Build -->
+  <!-- =============================================================== -->
+  <build>
+    <finalName>library-clients-webapp</finalName>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <!-- Packaging JAR -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+
+        <!-- Sources Java Compilation -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
+          <configuration>
+            <showDeprecation>true</showDeprecation>
+            <showWarnings>true</showWarnings>
+          </configuration>
+        </plugin>
+
+        <!-- Packaging WAR -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.0.0</version>
+          <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+          </configuration>
+        </plugin>
+
+        <!-- Assemblage -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
