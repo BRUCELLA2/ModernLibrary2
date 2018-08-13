@@ -20,6 +20,14 @@
       <result>/jsp/index.jsp</result>
     </action>
 
+    <!-- "All Books" Action -->
+    <action name="all_books"
+      class="fr.brucella.projects.libraryclients.webapp.actions.BooksListingAction"
+      method="getAllBook">
+      <result name="error">/jsp/error.jsp</result>
+      <result name="success">/jsp/index.jsp</result>
+    </action>
+
   </package>
 
 </struts>

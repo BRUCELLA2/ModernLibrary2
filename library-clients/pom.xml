@@ -50,7 +50,6 @@
       <artifactId>log4j-bom</artifactId>
       <version>2.11.0</version>
       <type>pom</type>
-      <scope>import</scope>
     </dependency>
 
     <!-- Apache Commons Lang -->
@@ -66,6 +65,44 @@
       <artifactId>struts2-core</artifactId>
       <version>${struts.version}</version>
     </dependency>
+
+    <!-- CXF -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-databinding-jaxb</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+
+    <!--
+
+    <dependency>
+      <groupId>fr.brucella.projects.wsclient</groupId>
+      <artifactId>bookServiceClient</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/src/main/resources/generated-sources/bookServiceClient.jar</systemPath>
+    </dependency>
+
+    <dependency>
+      <groupId>fr.brucella.projects.wsclient</groupId>
+      <artifactId>authentificationServiceCLient</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/src/main/resources/generated-sources/authentificationServiceClient.jar</systemPath>
+    </dependency>
+    -->
 
   </dependencies>
 
