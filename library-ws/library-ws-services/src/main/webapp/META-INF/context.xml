@@ -3,7 +3,7 @@
   <Resource name="jdbc/DB_MODERN_LIBRARY" auth="Container"
     type="javax.sql.DataSource"
 
-    url="jdbc:postgresql://modernlibrary_database:5436/modernlibrary"
+    url="jdbc:postgresql://localhost:5436/modernlibrary"
     driverClassName="org.postgresql.Driver" username="adm_modernlibrary"
     password="adm_modernlibrary" defaultAutoCommit="true"
     defaultTransactionIsolation="READ_COMMITTED" initialSize="1"

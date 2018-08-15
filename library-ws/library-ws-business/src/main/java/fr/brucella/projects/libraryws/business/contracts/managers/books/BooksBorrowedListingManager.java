@@ -53,4 +53,15 @@ public interface BooksBorrowedListingManager {
    */
   List<UserCurrentlyBorrowDto> userCurrentlyBorrowExpired(final Integer userId)
       throws TechnicalException, FunctionalException;
+
+  /**
+   * Make a book borrowed with the bookId and the userID and add the book borrowed in the datastore.
+   *
+   * @param bookId id of the book.
+   * @param userId id of the user.
+   * @return the id of the book borrowed.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   */
+  Integer userBorrowBook(final Integer bookId, final Integer userId) throws TechnicalException;
+
 }

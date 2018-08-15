@@ -21,6 +21,7 @@ public class CurrentlyBorrowExpiredDtoRM implements RowMapper<CurrentlyBorrowExp
 
     final CurrentlyBorrowExpiredDto currentlyBorrowExpiredDto = new CurrentlyBorrowExpiredDto();
 
+    currentlyBorrowExpiredDto.setBookBorrowedId(resultSet.getInt("book_borrowed_id"));
     currentlyBorrowExpiredDto.setBookId(resultSet.getInt("book_id"));
     currentlyBorrowExpiredDto.setBorrowDate(resultSet.getDate("borrow_date").toLocalDate());
     currentlyBorrowExpiredDto.setEmail(resultSet.getString("email"));

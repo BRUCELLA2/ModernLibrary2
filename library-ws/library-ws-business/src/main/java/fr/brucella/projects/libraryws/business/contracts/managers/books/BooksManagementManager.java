@@ -3,6 +3,7 @@ package fr.brucella.projects.libraryws.business.contracts.managers.books;
 import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.users.model.User;
 import java.util.List;
@@ -45,4 +46,28 @@ public interface BooksManagementManager {
    * @throws TechnicalException - wraps technical exception caused during data access.
    */
   List<BookBorrowsCountDto> getNbBorrowsByBooks() throws TechnicalException;
+
+  /**
+   * Add the borrow of the book with the book id for the user with the user id.
+   *
+   * @param bookId id of the book.
+   * @param userId id of the user who borrow the book.
+   * @return the id of the BookBorrowed.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the user or the id of the book are not valid.
+   */
+  Integer bookBorrowing(final Integer bookId, final Integer userId) throws TechnicalException, FunctionalException;
+
+  /**
+   * Extends a book borrowing.
+   *
+   * @param bookBorrowedId id of the bookBorrowed
+   * @return true if extend success. throw exception if extend fail.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the bookBorrowed is not valid.
+   *                               This exception is throw if the bookBorrowed is not found.
+   *                               This exception is throw if the book is already returned,
+   *                               if end date of borrow is passed and if the bookBorrowed is already extended
+   */
+  Boolean extendBorrow(final Integer bookBorrowedId) throws TechnicalException, FunctionalException;
 }

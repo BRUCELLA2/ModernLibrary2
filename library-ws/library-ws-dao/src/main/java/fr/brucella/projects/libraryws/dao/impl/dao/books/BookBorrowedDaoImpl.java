@@ -27,6 +27,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -45,14 +47,13 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
 
   /** {@inheritDoc} */
   @Override
-  public BookBorrowed getBookBorrowed(final Integer userId, final Integer bookId)
+  public BookBorrowed getBookBorrowed(final Integer bookBorrowedId)
       throws TechnicalException, NotFoundException {
 
-    sql = "SELECT * FROM book_borrowed WHERE user_id = :userId AND book_id = :bookId";
+    sql = "SELECT * FROM book_borrowed WHERE book_borrowed_id = :bookBorrowedId";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-    parameterSource.addValue("userId", userId);
-    parameterSource.addValue("bookId", bookId);
+    parameterSource.addValue("bookBorrowedId", bookBorrowedId);
 
     final RowMapper<BookBorrowed> rowMapper = new BookBorrowedRM();
 
@@ -61,7 +62,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
     } catch (EmptyResultDataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("userId = " + userId + " -- " + "bookId = " + bookId);
+        LOG.debug("bookBorrowedId = " + bookBorrowedId);
       }
       LOG.error(exception.getMessage());
       throw new NotFoundException(
@@ -75,7 +76,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("userId = " + userId + " -- " + "bookId = " + bookId);
+        LOG.debug("bookBorrowedId = " + bookBorrowedId);
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -88,7 +89,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
       throws TechnicalException, NotFoundException {
 
     sql =
-        "SELECT book_borrowed.user_id, book_borrowed.book_id, book_borrowed.end_date, book_borrowed.borrow_date, book_borrowed.extension, book_borrowed.nb_reminder, book_borrowed.returned, book_borrowed.last_reminder, book.title, users.login FROM book_borrowed INNER JOIN book ON book.book_id = book_borrowed.book_id INNER JOIN users ON users.user_id = book_borrowed.user_id";
+        "SELECT book_borrowed.book_borrowed_id, book_borrowed.user_id, book_borrowed.book_id, book_borrowed.end_date, book_borrowed.borrow_date, book_borrowed.extension, book_borrowed.nb_reminder, book_borrowed.returned, book_borrowed.last_reminder, book.title, users.login FROM book_borrowed INNER JOIN book ON book.book_id = book_borrowed.book_id INNER JOIN users ON users.user_id = book_borrowed.user_id";
 
     if (currently) {
       sql = sql + " WHERE book_borrowed.returned = false";
@@ -131,7 +132,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
       throws TechnicalException, NotFoundException {
 
     sql =
-        "SELECT book_borrowed.user_id, book_borrowed.book_id, book_borrowed.borrow_date, book_borrowed.end_date, book_borrowed.extension, book.title FROM book_borrowed INNER JOIN book ON book_borrowed.book_id = book.book_id WHERE book_borrowed.user_id = :userId";
+        "SELECT book_borrowed.book_borrowed_id, book_borrowed.user_id, book_borrowed.book_id, book_borrowed.borrow_date, book_borrowed.end_date, book_borrowed.extension, book.title FROM book_borrowed INNER JOIN book ON book_borrowed.book_id = book.book_id WHERE book_borrowed.user_id = :userId";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
     parameterSource.addValue("userId", userId);
@@ -168,7 +169,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
       throws TechnicalException, NotFoundException {
 
     sql =
-        "SELECT book_borrowed.user_id, book_borrowed.book_id, book_borrowed.end_date, book_borrowed.borrow_date, book_borrowed.last_reminder, book_borrowed.nb_reminder, book.title, users.login, users.email "
+        "SELECT book_borrowed.book_borrowed_id, book_borrowed.user_id, book_borrowed.book_id, book_borrowed.end_date, book_borrowed.borrow_date, book_borrowed.last_reminder, book_borrowed.nb_reminder, book.title, users.login, users.email "
             + "FROM book_borrowed "
             + "INNER JOIN book ON book_borrowed.book_id = book.book_id "
             + "INNER JOIN users ON users.user_id = book_borrowed.user_id "
@@ -206,7 +207,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
       throws TechnicalException, NotFoundException {
 
     sql =
-        "SELECT book_borrowed.user_id, book_borrowed.book_id, book_borrowed.borrow_date, book_borrowed.end_date, book_borrowed.extension, book.title FROM book_borrowed INNER JOIN book ON book_borrowed.book_id = book.book_id WHERE book_borrowed.user_id = :userId AND book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE";
+        "SELECT book_borrowed.book_borrowed_id, book_borrowed.user_id, book_borrowed.book_id, book_borrowed.borrow_date, book_borrowed.end_date, book_borrowed.extension, book.title FROM book_borrowed INNER JOIN book ON book_borrowed.book_id = book.book_id WHERE book_borrowed.user_id = :userId AND book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
     parameterSource.addValue("userId", userId);
@@ -284,7 +285,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
       throws TechnicalException, NotFoundException {
 
     sql =
-        "UPDATE book_borrowed SET end_date = :endDate, borrow_date = :borrowDate, extension = :extension, nb_reminder = :nbReminder, returned = :returned, last_reminder = :lastReminder WHERE user_id = :userId AND book_id = :bookId";
+        "UPDATE book_borrowed SET end_date = :endDate, borrow_date = :borrowDate, extension = :extension, nb_reminder = :nbReminder, returned = :returned, last_reminder = :lastReminder WHERE book_borrowed_id = :bookBorrowedId";
 
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(bookBorrowed);
 
@@ -324,17 +325,18 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
 
   /** {@inheritDoc} */
   @Override
-  public void insertBookBorrowed(final BookBorrowed bookBorrowed) throws TechnicalException {
+  public Integer insertBookBorrowed(final BookBorrowed bookBorrowed) throws TechnicalException {
 
     sql =
-        "INSERT INTO book_borrowed (user_id, book_id, end_date, borrow_date, extension, nb_reminder, returned, last_reminder) VALUES (userId, bookId, endDate, borrowDate, extension, nbReminder, returned, lastReminder)";
+        "INSERT INTO book_borrowed (book_borrowed_id, user_id, book_id, end_date, borrow_date, extension, nb_reminder, returned, last_reminder) VALUES (DEFAULT, :userId, :bookId, :endDate, :borrowDate, :extension, :nbReminder, :returned, :lastReminder)";
 
+    final KeyHolder keyHolder = new GeneratedKeyHolder();
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(bookBorrowed);
 
     try {
 
-      this.getNamedJdbcTemplate().update(sql, parameterSource);
-
+      this.getNamedJdbcTemplate().update(sql, parameterSource, keyHolder, new String[]{"book_borrowed_id"});
+      return keyHolder.getKey().intValue();
     } catch (DuplicateKeyException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
@@ -369,21 +371,20 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
 
   /** {@inheritDoc} */
   @Override
-  public void deleteBookBorrowed(final Integer userId, final Integer bookId)
+  public void deleteBookBorrowed(final Integer bookBorrowedId)
       throws TechnicalException, NotFoundException {
 
-    sql = "DELETE FROM book_borrowed WHERE user_id = :userId, book_id = :bookId";
+    sql = "DELETE FROM book_borrowed WHERE book_borrowed_id = :bookBorrowedId";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-    parameterSource.addValue("userId", userId);
-    parameterSource.addValue("bookId", bookId);
+    parameterSource.addValue("bookBorrowedId", bookBorrowedId);
 
     try {
       final int result = this.getNamedJdbcTemplate().update(sql, parameterSource);
       if (result == 0) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
-          LOG.debug("userId = " + userId + " -- " + "bookId = " + bookId);
+          LOG.debug("bookBorrowedId = " + bookBorrowedId);
         }
         throw new NotFoundException(
             messages.getString("bookBorrowedDao.deleteBookBorrowed.notFound"));
@@ -397,7 +398,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("userId = " + userId + " -- " + "bookId = " + bookId);
+        LOG.debug("bookBorrowedId = " + bookBorrowedId);
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);

@@ -2,9 +2,6 @@ package fr.brucella.projects.libraryclients.webapp.actions;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
-import generated.authentificationserviceclient.AuthentificationService;
-import generated.authentificationserviceclient.AuthentificationService_Service;
-import generated.authentificationserviceclient.User;
 import generated.bookserviceclient.BookDetailsDto;
 import generated.bookserviceclient.BookService;
 import generated.bookserviceclient.BookService_Service;
@@ -39,16 +36,4 @@ public class BooksListingAction extends ActionSupport {
     return Action.SUCCESS;
   }
 
-  public String login(){
-
-    AuthentificationService_Service authentificationService = new AuthentificationService_Service();
-
-    AuthentificationService authentificationServicePort = authentificationService.getAuthentificationServicePort();
-    User user;
-    user = authentificationServicePort.login("fred", "fredpass");
-
-    System.out.println(user.getEmail());
-
-    return Action.SUCCESS;
-  }
 }

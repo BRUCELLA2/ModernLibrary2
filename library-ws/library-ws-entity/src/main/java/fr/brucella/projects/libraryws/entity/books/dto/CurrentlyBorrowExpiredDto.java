@@ -17,6 +17,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class CurrentlyBorrowExpiredDto {
 
   // ===== BookBorrowed data =====
+  /** id of the book borrowed. Can't be null. */
+  @NotNull(message = "{bookBorrowed.bookBorrowedId.null}")
+  private Integer bookBorrowedId;
+
   /** id of the user. Can't be null. */
   @NotNull(message = "{bookBorrowed.userId.null}")
   private Integer userId;
@@ -60,6 +64,24 @@ public class CurrentlyBorrowExpiredDto {
   private String email;
 
   // ===== Getters and Setters =====
+
+  /**
+   * Give the id of the book borrowed.
+   *
+   * @return the id of the book borrowed.
+   */
+  public Integer getBookBorrowedId() {
+    return bookBorrowedId;
+  }
+
+  /**
+   * Set the id of the book borrowed.
+   *
+   * @param bookBorrowedId the id of the book borrowed.
+   */
+  public void setBookBorrowedId(final Integer bookBorrowedId) {
+    this.bookBorrowedId = bookBorrowedId;
+  }
 
   /**
    * Give the id of the user.
@@ -252,4 +274,5 @@ public class CurrentlyBorrowExpiredDto {
         .append("email", email)
         .toString();
   }
+
 }

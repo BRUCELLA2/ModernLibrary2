@@ -21,6 +21,7 @@ public class UserCurrentlyBorrowDtoRM implements RowMapper<UserCurrentlyBorrowDt
 
     final UserCurrentlyBorrowDto userCurrentlyBorrowDto = new UserCurrentlyBorrowDto();
 
+    userCurrentlyBorrowDto.setBookBorrowedId(resultSet.getInt("book_borrowed_id"));
     userCurrentlyBorrowDto.setUserId(resultSet.getInt("user_id"));
     userCurrentlyBorrowDto.setBookId(resultSet.getInt("book_id"));
     userCurrentlyBorrowDto.setBorrowDate(resultSet.getDate("borrow_date").toLocalDate());

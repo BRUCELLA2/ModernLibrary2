@@ -17,16 +17,15 @@ import java.util.List;
 public interface BookBorrowedDao {
 
   /**
-   * Give the bookBorrowed with the specified user id and book id from the datastore.
+   * Give the bookBorrowed with the specified id from the datastore.
    *
-   * @param userId id of the user who borrow the book.
-   * @param bookId id of the book borrowed by the user.
+   * @param bookBorrowedId id of the book borrowed.
    * @return the bookBorrowed with the user id and book id specified.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
    *     book borrowed is not found.
    */
-  BookBorrowed getBookBorrowed(final Integer userId, final Integer bookId)
+  BookBorrowed getBookBorrowed(final Integer bookBorrowedId)
       throws TechnicalException, NotFoundException;
 
   /**
@@ -111,19 +110,19 @@ public interface BookBorrowedDao {
    * Insert a new bookBorrowed in the datastore.
    *
    * @param bookBorrowed the bookBorrowed to insert in datastore.
+   * @return the id of the new book Borrowed added.
    * @throws TechnicalException - wraps technical exception caused during data access.
    */
-  void insertBookBorrowed(final BookBorrowed bookBorrowed) throws TechnicalException;
+  Integer insertBookBorrowed(final BookBorrowed bookBorrowed) throws TechnicalException;
 
   /**
-   * Delete the bookBorrowed with the specified user id and book id in the datastore.
+   * Delete the bookBorrowed with the specified id in the datastore.
    *
-   * @param userId id of the user who borrow the book.
-   * @param bookId id of the book borrowed by the user.
+   * @param bookBorrowedId id of the book borrowed.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
    *     bookBorrowed is not found.
    */
-  void deleteBookBorrowed(final Integer userId, final Integer bookId)
+  void deleteBookBorrowed(final Integer bookBorrowedId)
       throws TechnicalException, NotFoundException;
 }

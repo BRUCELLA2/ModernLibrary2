@@ -98,18 +98,23 @@ CREATE TABLE public.book (
 
 ALTER SEQUENCE public.book_book_id_seq OWNED BY public.book.book_id;
 
+CREATE SEQUENCE public.book_borrowed_book_borrowed_id_seq;
+
 CREATE TABLE public.book_borrowed (
-                user_id INTEGER NOT NULL,
+                book_borrowed_id INTEGER NOT NULL DEFAULT nextval('public.book_borrowed_book_borrowed_id_seq'),
                 book_id INTEGER NOT NULL,
+                user_id INTEGER NOT NULL,
                 end_date DATE NOT NULL,
                 borrow_date DATE NOT NULL,
                 extension BOOLEAN DEFAULT false NOT NULL,
                 nb_reminder INTEGER DEFAULT 0 NOT NULL,
                 returned BOOLEAN NOT NULL,
                 last_reminder DATE,
-                CONSTRAINT book_borrowed_pk PRIMARY KEY (user_id, book_id)
+                CONSTRAINT book_borrowed_pk PRIMARY KEY (book_borrowed_id)
 );
 
+
+ALTER SEQUENCE public.book_borrowed_book_borrowed_id_seq OWNED BY public.book_borrowed.book_borrowed_id;
 
 CREATE TABLE public.book_authors (
                 book_id INTEGER NOT NULL,

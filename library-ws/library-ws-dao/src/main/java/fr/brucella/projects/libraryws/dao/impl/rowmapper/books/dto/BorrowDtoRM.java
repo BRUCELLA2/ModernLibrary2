@@ -21,6 +21,7 @@ public class BorrowDtoRM implements RowMapper<BorrowDto> {
 
     final BorrowDto borrowDto = new BorrowDto();
 
+    borrowDto.setBookBorrowedId(resultSet.getInt("book_borrowed_id"));
     borrowDto.setBorrowDate(resultSet.getDate("borrow_date").toLocalDate());
     borrowDto.setTitle(resultSet.getString("title"));
     borrowDto.setBookId(resultSet.getInt("book_id"));

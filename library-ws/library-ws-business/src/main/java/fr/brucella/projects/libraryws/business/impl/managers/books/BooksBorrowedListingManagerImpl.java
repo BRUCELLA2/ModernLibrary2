@@ -98,4 +98,11 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
       return new ArrayList<>();
     }
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public Integer userBorrowBook(Integer bookId, Integer userId) throws TechnicalException {
+    // TODO implementation
+    return null;
+  }
 }

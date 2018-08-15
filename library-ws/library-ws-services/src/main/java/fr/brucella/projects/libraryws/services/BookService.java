@@ -184,7 +184,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * Provides the list of books which can be borrowed.
    *
    * @return the list of books which can be borrowed.
-   * @throws LibraryWsException Throw this exception if there is a technical problem.cu
+   * @throws LibraryWsException Throw this exception if there is a technical problem.
    */
   @WebMethod
   public List<BookDetailsDto> availableBooksList() throws LibraryWsException {
@@ -204,6 +204,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * Provides the list of users with currently borrow and deadline expired.
    *
    * @return the list of users with currently borrow and deadline expired.
+   * @throws LibraryWsException Throw this exception if there is a technical problem.
    */
   @WebMethod
   public List<User> currentlyDeadlineExpiredUsers() throws LibraryWsException {
@@ -221,6 +222,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * Provides the list of stocks for each book.
    *
    * @return the list of stocks for each book.
+   * @throws LibraryWsException Throw this exception if there is a technical problem.
    */
   @WebMethod
   public List<BookStockDto> bookStocksList() throws LibraryWsException {
@@ -238,6 +240,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * Provides the list of all borrow past and present.
    *
    * @return the borrows history sorted by date of borrow.
+   * @throws LibraryWsException Throw this exception if there is a technical problem.
    */
   @WebMethod
   public List<BorrowDto> borrowingHistoryList() throws LibraryWsException {
@@ -255,6 +258,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * Provides the list of number of borrowings for each book.
    *
    * @return the list of number of borrowings for each book.
+   * @throws LibraryWsException Throw this exception if there is a technical problem.
    */
   @WebMethod
   public List<BookBorrowsCountDto> nbBorrowingByBooks() throws LibraryWsException {
@@ -276,24 +280,61 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @param bookId id of the book borrowed.
    * @param userId id of the user who borrow the book.
    * @return id of the borrowing.
+   * @throws LibraryWsException Throw this exception if there is a technical or functional problem
    */
   @WebMethod
-  public Integer bookBorrow(final Integer bookId, final Integer userId) {
-    // TODO implementation
-    return null;
+  public Integer bookBorrow(final Integer bookId, final Integer userId) throws LibraryWsException {
+    // TODO put message in message bundle if possible
+
+    if(bookId == null || userId == null) {
+      LOG.error("bookId = " + bookId);
+      LOG.error("userId = " + userId);
+      throw new LibraryWsException("Paramètre(s) incorrect(s). L'identifiant du livre et de l'utilisateur ne peuvent être vides", new LibraryWsFault("soap:Client", "Paramètre(s) incorrect(s). L'identifiant du livre et de l'utilisateur ne peuvent être vides"));
+    }
+
+    try {
+      return this.managerFactory.getBooksManagementManager().bookBorrowing(bookId, userId);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+    } catch (FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(exception.getMessage(), new LibraryWsFault("soap:Client", exception.getMessage()));
+    }
   }
 
   /**
    * Extends a book borrowing.
    *
-   * @param bookId id of the book borrowed.
-   * @param userId id of the user who borrow the book.
-   * @return true if extend success. false if extend fail.
+   * @param bookBorrowedId id of the bookBorrowed.
+   * @return true if extend success. Throw exception if not.
+   * @throws LibraryWsException Throw this exception if there is a technical.
+   *                            Throw this exception if there is a functional problem :
+   *                            - if the id of the bookBorrowed is not valid
+   *                            - if the bookBorrowed is not found
+   *                            - if the book is already returned
+   *                            - if end date of borrow is passed
+   *                            - if the bookBorrowed is already extended
    */
   @WebMethod
-  public Boolean extendBorrowing(final Integer bookId, final Integer userId) {
-    // TODO implementation
-    return null;
+  public Boolean extendBorrowing(final Integer bookBorrowedId) throws LibraryWsException {
+
+
+    if(bookBorrowedId == null) {
+      LOG.error("bookBorrowedId = " + bookBorrowedId);
+      throw new LibraryWsException("Paramètre incorrect. L'identifiant de l'emprunt ne peut être vide.", new LibraryWsFault("soap:Client", "Paramètre incorrect. L'identifiant de l'emprunt ne peut être vide."));
+    }
+
+    try {
+      return this.managerFactory.getBooksManagementManager().extendBorrow(bookBorrowedId);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+    } catch (FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(exception.getMessage(), new LibraryWsFault("soap:Client", exception.getMessage()));
+    }
+
   }
 
   /**

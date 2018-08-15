@@ -71,14 +71,13 @@ INSERT INTO public.user_roles(role_id, user_id)
 		(2, 1);
 
 /* INSERT INTO book_borrowed TABLE */ 
-INSERT INTO public.book_borrowed(
-	user_id, book_id, end_date, borrow_date, extension, nb_reminder, returned, last_reminder)
+INSERT INTO public.book_borrowed(book_borrowed_id, user_id, book_id, end_date, borrow_date, extension, nb_reminder, returned, last_reminder)
 	VALUES 
-		(1, 2, '2018-08-01', '2018-07-01', true, 0, false, null),
-		(1, 1, '2018-01-15', '2017-10-03', false, 2, true, '2018-01-10'),
-		(2, 3, '2018-08-15', '2018-07-10', false, 0, false, null),
-		(3, 1, '2018-09-04', '2018-07-11', true, 0, false, null),
-		(3, 2, '2018-07-04', '2018-06-11', true, 1, false, '2018-07-01');
+		(DEFAULT, 1, 2, '2018-08-01', '2018-07-01', true, 0, false, null),
+		(DEFAULT, 1, 1, '2018-01-15', '2017-10-03', false, 2, true, '2018-01-10'),
+		(DEFAULT, 2, 3, '2018-08-15', '2018-07-10', false, 0, false, null),
+		(DEFAULT, 3, 1, '2018-09-04', '2018-07-11', true, 0, false, null),
+		(DEFAULT, 3, 2, '2018-07-04', '2018-06-11', true, 1, false, '2018-07-01');
 
 /* INSERT INTO stock TABLE */
 INSERT INTO public.stock(stock_id, book_id, amount_available, amount)
