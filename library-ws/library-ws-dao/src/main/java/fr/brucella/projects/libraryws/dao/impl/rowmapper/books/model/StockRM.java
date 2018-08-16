@@ -17,7 +17,7 @@ public class StockRM implements RowMapper<Stock> {
 
   /** {@inheritDoc} */
   @Override
-  public Stock mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+  public Stock mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 
     final Stock stock = new Stock();
 

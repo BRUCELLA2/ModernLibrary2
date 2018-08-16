@@ -50,7 +50,6 @@ public class UserCurrentlyBorrowDto {
 
   // ===== Getters and Setters =====
 
-
   /**
    * Give the id of the book borrowed.
    *

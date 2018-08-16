@@ -17,7 +17,7 @@ public class AddressRM implements RowMapper<Address> {
 
   /** {@inheritDoc} */
   @Override
-  public Address mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+  public Address mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 
     final Address address = new Address();
 

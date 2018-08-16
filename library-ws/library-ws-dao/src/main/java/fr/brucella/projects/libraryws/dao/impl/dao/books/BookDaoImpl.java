@@ -42,7 +42,9 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
   private static final Log LOG = LogFactory.getLog(BookDaoImpl.class);
 
   /** Default Constructor */
-  public BookDaoImpl() {}
+  public BookDaoImpl() {
+    super();
+  }
 
   /** {@inheritDoc} */
   @Override
@@ -71,13 +73,76 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql);
-        LOG.debug(("bookId = " + bookId));
-      }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public BookDetailsDto getBookDetails(Integer bookId)
+      throws NotFoundException, TechnicalException {
+
+    sql =
+        "SELECT book.book_id, book.title, book.isbn13, book.ean13, book.publishing_date, book.resume, book.genre_id, book.publisher_id, publisher.name as publisher_name, genre.name as genre_name FROM book INNER JOIN publisher ON publisher.publisher_id = book.publisher_id INNER JOIN genre ON genre.genre_id = book.genre_id WHERE book.book_id = :bookId";
+
+    final MapSqlParameterSource parameterSourceBook = new MapSqlParameterSource();
+    parameterSourceBook.addValue("bookId", bookId);
+
+    final RowMapper<BookDetailsDto> bookDetailsDtoRowMapper = new BookDetailsDtoRM();
+    BookDetailsDto bookDetails;
+
+    try {
+      bookDetails =
+          this.getNamedJdbcTemplate()
+              .queryForObject(sql, parameterSourceBook, bookDetailsDtoRowMapper);
+    } catch (EmptyResultDataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("bookId = " + bookId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(messages.getString("bookDao.getBookDetails.notFound"), exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+
+    // Get authors informations
+
+    sql =
+        "SELECT * from author INNER JOIN book_authors ON author.author_id = book_authors.author_id WHERE book_authors.book_id = :book_id";
+
+    final MapSqlParameterSource parameterSourceAuthors = new MapSqlParameterSource();
+    parameterSourceAuthors.addValue("book_id", bookId);
+
+    final RowMapper<Author> authorRowMapper = new AuthorRM();
+
+    try {
+      List<Author> authorsList =
+          getNamedJdbcTemplate().query(sql, parameterSourceAuthors, authorRowMapper);
+      if (authorsList.isEmpty()) {
+        authorsList = new ArrayList<>();
+      }
+      bookDetails.setAuthors(authorsList);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+
+    return bookDetails;
   }
 
   /** {@inheritDoc} */
@@ -144,10 +209,12 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
   /** {@inheritDoc} */
   @Override
   public List<BookDetailsDto> getSearchBookDetailsList(
-      BooksSearchClientCriteriaDto booksSearchClientCriteriaDto)
+      final BooksSearchClientCriteriaDto booksSearchClientCriteriaDto)
       throws TechnicalException, NotFoundException {
 
-    LOG.debug("SEARCH : " + booksSearchClientCriteriaDto.toString());
+    if(LOG.isDebugEnabled()) {
+      LOG.debug("SEARCH : " + booksSearchClientCriteriaDto.toString());
+    }
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 
@@ -160,7 +227,7 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
         sql =
             sql
                 + " INNER JOIN book_authors ON book_authors.book_id = book.book_id INNER JOIN author ON author.author_id = book_authors.author_id WHERE UPPER(author.last_name) LIKE UPPER(:lastName)";
-        String lastName = "%" + booksSearchClientCriteriaDto.getAuthorLastName() + "%";
+        final String lastName = "%" + booksSearchClientCriteriaDto.getAuthorLastName() + "%";
         parameterSource.addValue("lastName", lastName);
       } else {
         sql = sql + " WHERE 1=1";
@@ -168,7 +235,7 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
 
       if (!StringUtils.isEmpty(booksSearchClientCriteriaDto.getTitle())) {
         sql = sql + " AND UPPER(book.title) LIKE UPPER(:title)";
-        String title = "%" + booksSearchClientCriteriaDto.getTitle() + "%";
+        final String title = "%" + booksSearchClientCriteriaDto.getTitle() + "%";
         parameterSource.addValue("title", title);
       }
 
@@ -179,13 +246,13 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
 
       if (!StringUtils.isEmpty(booksSearchClientCriteriaDto.getGenreName())) {
         sql = sql + " AND UPPER(genre.name) LIKE UPPER(:genreName)";
-        String genreName = "%" + booksSearchClientCriteriaDto.getGenreName() + "%";
+        final String genreName = "%" + booksSearchClientCriteriaDto.getGenreName() + "%";
         parameterSource.addValue("genreName", genreName);
       }
 
       if (!StringUtils.isEmpty(booksSearchClientCriteriaDto.getPublisherName())) {
         sql = sql + " AND UPPER(publisher.name) LIKE UPPER(:publisherName)";
-        String publisherName = "%" + booksSearchClientCriteriaDto.getPublisherName() + "%";
+        final String publisherName = "%" + booksSearchClientCriteriaDto.getPublisherName() + "%";
         parameterSource.addValue("publisherName", publisherName);
       }
 

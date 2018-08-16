@@ -15,6 +15,7 @@ public class CurrentlyBorrowExpiredDtoRM implements RowMapper<CurrentlyBorrowExp
   /** Default Constructor */
   public CurrentlyBorrowExpiredDtoRM() {}
 
+  /** {@inheritDoc} */
   @Override
   public CurrentlyBorrowExpiredDto mapRow(final ResultSet resultSet, final int rowNum)
       throws SQLException {

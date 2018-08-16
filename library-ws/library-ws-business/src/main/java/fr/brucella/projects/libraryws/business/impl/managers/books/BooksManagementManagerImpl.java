@@ -3,6 +3,7 @@ package fr.brucella.projects.libraryws.business.impl.managers.books;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksManagementManager;
 import fr.brucella.projects.libraryws.business.impl.managers.AbstractManager;
 import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
+import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
 import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
@@ -28,7 +29,13 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
   /** Books Borrowed Listing Manager logger */
   private static final Log LOG = LogFactory.getLog(BooksManagementManagerImpl.class);
 
+  /** Number of days for a borrow or an extension of a borrow. */
   private static final Integer NB_DAYS_BORROW = 15;
+
+  /** Default Constructor */
+  public BooksManagementManagerImpl() {
+    super();
+  }
 
   /** {@inheritDoc} */
   @Override
@@ -86,16 +93,19 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
 
   /** {@inheritDoc} */
   @Override
-  public Integer bookBorrowing(Integer bookId, Integer userId) throws TechnicalException, FunctionalException {
+  public Integer bookBorrowing(final Integer bookId, final Integer userId)
+      throws TechnicalException, FunctionalException {
 
     // TODO if user have an active borrow for this book, a new borrow should not be possible.
-    if(bookId == null || userId == null) {
+
+    if (bookId == null || userId == null) {
       LOG.error("bookId = " + bookId);
       LOG.error("userId = " + userId);
-      throw new FunctionalException(messages.getString("booksManagementManager.bookBorrowing.userOrBookNull"));
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.bookBorrowing.userOrBookNull"));
     }
 
-    BookBorrowed bookBorrowed = new BookBorrowed();
+    final BookBorrowed bookBorrowed = new BookBorrowed();
     bookBorrowed.setBookId(bookId);
     bookBorrowed.setUserId(userId);
     bookBorrowed.setBorrowDate(LocalDate.now());
@@ -109,13 +119,15 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
 
   /** {@inheritDoc} */
   @Override
-  public Boolean extendBorrow(Integer bookBorrowedId) throws TechnicalException, FunctionalException {
+  public Boolean extendBorrow(final Integer bookBorrowedId)
+      throws TechnicalException, FunctionalException {
 
     // TODO add transaction management
 
-    if(bookBorrowedId == null) {
+    if (bookBorrowedId == null) {
       LOG.error("bookBorrowedId = " + bookBorrowedId);
-      throw new FunctionalException(messages.getString("booksManagementManager.extendBorrow.idNull"));
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.extendBorrow.idNull"));
     }
 
     final BookBorrowed bookBorrowed;
@@ -123,40 +135,100 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     try {
       bookBorrowed = this.getDaoFactory().getBookBorrowedDao().getBookBorrowed(bookBorrowedId);
     } catch (NotFoundException exception) {
-      LOG.error(messages.getString("booksManagementManager.extendBorrow.notFound"));
-      throw new FunctionalException(messages.getString("booksManagementManager.extendBorrow.notFound"));
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
     }
 
     if (bookBorrowed.getExtension()) {
       LOG.error(messages.getString("booksManagementManager.extendBorrow.extensionTrue"));
-      throw new FunctionalException(messages.getString("booksManagementManager.extendBorrow.extensionTrue"));
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.extendBorrow.extensionTrue"));
     }
 
-    if(bookBorrowed.getReturned()) {
+    if (bookBorrowed.getReturned()) {
       LOG.error(messages.getString("booksManagementManager.extendBorrow.returned"));
-      throw new FunctionalException(messages.getString("booksManagementManager.extendBorrow.returned"));
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.extendBorrow.returned"));
     }
 
-    if (bookBorrowed.getEndDate().isBefore(LocalDate.now())){
+    if (bookBorrowed.getEndDate().isBefore(LocalDate.now())) {
       LOG.error(messages.getString("booksManagementManager.extendBorrow.endPassed"));
-      throw new FunctionalException(messages.getString("booksManagementManager.extendBorrow.endPassed"));
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.extendBorrow.endPassed"));
     }
 
-    BookBorrowed bookBorrowedupgraded = bookBorrowed;
-    bookBorrowedupgraded.setEndDate(bookBorrowedupgraded.getEndDate().plusDays(NB_DAYS_BORROW));
-    bookBorrowedupgraded.setNbReminder(0);
-    bookBorrowedupgraded.setExtension(true);
-    bookBorrowedupgraded.setLastReminder(null);
+    final BookBorrowed bookBorrowedUpdated = bookBorrowed;
+    bookBorrowedUpdated.setEndDate(bookBorrowedUpdated.getEndDate().plusDays(NB_DAYS_BORROW));
+    bookBorrowedUpdated.setNbReminder(0);
+    bookBorrowedUpdated.setExtension(true);
+    bookBorrowedUpdated.setLastReminder(null);
 
     try {
-      this.getDaoFactory().getBookBorrowedDao().updateBookBorrowed(bookBorrowedupgraded);
+      this.getDaoFactory().getBookBorrowedDao().updateBookBorrowed(bookBorrowedUpdated);
     } catch (NotFoundException exception) {
-      LOG.error(messages.getString("booksManagementManager.extendBorrow.notFound"));
-      throw new FunctionalException(messages.getString("booksManagementManager.extendBorrow.notFound"));
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
     }
 
     return true;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public Boolean returnBorrow(final Integer bookBorrowedId)
+      throws TechnicalException, FunctionalException {
+    // TODO add transaction management
 
+    if (bookBorrowedId == null) {
+      LOG.error("bookBorrowedId = " + bookBorrowedId);
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.returnBorrow.idNull"));
+    }
+
+    final BookBorrowed bookBorrowed;
+
+    try {
+      bookBorrowed = this.getDaoFactory().getBookBorrowedDao().getBookBorrowed(bookBorrowedId);
+    } catch (NotFoundException exception) {
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
+    }
+
+    if (bookBorrowed.getReturned()) {
+      LOG.error(messages.getString("booksManagementManager.returnBorrow.returned"));
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.returnBorrow.returned"));
+    }
+
+    BookBorrowed bookBorrowedUpdated = bookBorrowed;
+    bookBorrowed.setReturned(true);
+
+    try {
+      this.getDaoFactory().getBookBorrowedDao().updateBookBorrowed(bookBorrowedUpdated);
+    } catch (NotFoundException exception) {
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage());
+    }
+
+    return true;
+  }
+
+  /** {@inheritDoc} * */
+  @Override
+  public BookDetailsDto getBookWithDetails(final Integer bookId)
+      throws TechnicalException, FunctionalException {
+
+    if (bookId == null) {
+      LOG.error("bookId = " + bookId);
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.getBookWithDetails.idNull"));
+    }
+
+    try {
+      return this.getDaoFactory().getBookDao().getBookDetails(bookId);
+    } catch (NotFoundException exception) {
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
+    }
+  }
 }

@@ -36,13 +36,15 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
   // ===== Constructor =====
   /** Default Constructor */
-  public UserDaoImpl() {}
+  public UserDaoImpl() {
+    super();
+  }
 
   // ===== Methods =====
 
   /** {@inheritDoc} */
   @Override
-  public User getUser(Integer userId) throws TechnicalException, NotFoundException {
+  public User getUser(final Integer userId) throws TechnicalException, NotFoundException {
 
     sql = "SELECT * FROM users WHERE user_id = :userId";
 
@@ -64,7 +66,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"), exception);
     } catch (DataAccessResourceFailureException exception) {
-      LOG.error((exception.getMessage()));
+      LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
@@ -96,7 +98,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("permissionDenied"), exception);
     } catch (DataAccessResourceFailureException exception) {
-      LOG.error((exception.getMessage()));
+      LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
@@ -106,7 +108,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
   /** {@inheritDoc} */
   @Override
-  public void updateUser(User user) throws TechnicalException, NotFoundException {
+  public void updateUser(final User user) throws TechnicalException, NotFoundException {
 
     sql =
         "UPDATE users SET password = :password, email = :email, login = :login, phone = :phone, address_id = addressId WHERE user_id = :userId";
@@ -144,7 +146,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
   /** {@inheritDoc} */
   @Override
-  public int insertUser(User user) throws TechnicalException {
+  public int insertUser(final User user) throws TechnicalException {
 
     sql =
         "INSERT INTO users (user_id, password, email, login, phone, address_id) VALUES (DEFAULT, :password, :email, :login, :phone, :addressId)";
@@ -185,7 +187,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
   /** {@inheritDoc} */
   @Override
-  public void deleteUser(Integer userId) throws TechnicalException, NotFoundException {
+  public void deleteUser(final Integer userId) throws TechnicalException, NotFoundException {
 
     sql = "DELETE FROM users WHERE user_id = :userId";
 

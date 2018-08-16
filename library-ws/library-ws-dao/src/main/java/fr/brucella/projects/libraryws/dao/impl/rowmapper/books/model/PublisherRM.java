@@ -17,7 +17,7 @@ public class PublisherRM implements RowMapper<Publisher> {
 
   /** {@inheritDoc} */
   @Override
-  public Publisher mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+  public Publisher mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 
     final Publisher publisher = new Publisher();
 

@@ -7,7 +7,6 @@ import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
 import fr.brucella.projects.libraryws.entity.books.dto.CurrentlyBorrowExpiredDto;
 import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
-import fr.brucella.projects.libraryws.entity.books.model.Book;
 import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
 import fr.brucella.projects.libraryws.entity.exceptions.LibraryWsException;
 import fr.brucella.projects.libraryws.entity.exceptions.LibraryWsFault;
@@ -35,6 +34,18 @@ public class BookService extends SpringBeanAutowiringSupport {
   /** Book Service Logger */
   private static final Log LOG = LogFactory.getLog(BookService.class);
 
+  /** String message give to user for technical problem in LibraryWsException */
+  private static final String TECH_ERROR = "Problème technique";
+
+  /** String message give to user for functional problem in LibraryWsException */
+  private static final String FUNC_ERROR = "Erreur fonctionnelle";
+
+  /** Fault Code for server fault */
+  private static final String SERVER = "soap:Server";
+
+  /** Fault Code for client fault */
+  private static final String CLIENT = "soap:Client";
+
   // ----- Manager
   /** The Manager Factory Manager Factory allow to get and set business managers. */
   @Autowired private ManagerFactory managerFactory;
@@ -59,7 +70,7 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Problème technique", new LibraryWsFault("Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     }
   }
 
@@ -80,11 +91,11 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (FunctionalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Erreur Fonctionnelle", new LibraryWsFault("Client", exception.getMessage()));
+          FUNC_ERROR, exception, new LibraryWsFault("Client", exception.getMessage()));
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Problème technique", new LibraryWsFault("Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault("Server", exception.getMessage()));
     }
   }
 
@@ -102,7 +113,7 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Problème technique", new LibraryWsFault("Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault("Server", exception.getMessage()));
     }
   }
 
@@ -125,11 +136,11 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (FunctionalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Erreur Fonctionnelle", new LibraryWsFault("soap:Client", exception.getMessage()));
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     }
   }
 
@@ -149,7 +160,7 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     }
   }
 
@@ -172,11 +183,11 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (FunctionalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Erreur Fonctionnelle", new LibraryWsFault("soap:Client", exception.getMessage()));
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     }
   }
 
@@ -194,7 +205,7 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     }
   }
 
@@ -214,7 +225,7 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     }
   }
 
@@ -232,7 +243,7 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     }
   }
 
@@ -250,7 +261,7 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     }
   }
 
@@ -268,7 +279,7 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          "Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     }
   }
 
@@ -286,20 +297,26 @@ public class BookService extends SpringBeanAutowiringSupport {
   public Integer bookBorrow(final Integer bookId, final Integer userId) throws LibraryWsException {
     // TODO put message in message bundle if possible
 
-    if(bookId == null || userId == null) {
+    if (bookId == null || userId == null) {
       LOG.error("bookId = " + bookId);
       LOG.error("userId = " + userId);
-      throw new LibraryWsException("Paramètre(s) incorrect(s). L'identifiant du livre et de l'utilisateur ne peuvent être vides", new LibraryWsFault("soap:Client", "Paramètre(s) incorrect(s). L'identifiant du livre et de l'utilisateur ne peuvent être vides"));
+      throw new LibraryWsException(
+          "Paramètre(s) incorrect(s). L'identifiant du livre et de l'utilisateur ne peuvent être vides",
+          new LibraryWsFault(
+              CLIENT,
+              "Paramètre(s) incorrect(s). L'identifiant du livre et de l'utilisateur ne peuvent être vides"));
     }
 
     try {
       return this.managerFactory.getBooksManagementManager().bookBorrowing(bookId, userId);
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
-      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     } catch (FunctionalException exception) {
       LOG.error(exception.getMessage());
-      throw new LibraryWsException(exception.getMessage(), new LibraryWsFault("soap:Client", exception.getMessage()));
+      throw new LibraryWsException(
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
     }
   }
 
@@ -308,46 +325,66 @@ public class BookService extends SpringBeanAutowiringSupport {
    *
    * @param bookBorrowedId id of the bookBorrowed.
    * @return true if extend success. Throw exception if not.
-   * @throws LibraryWsException Throw this exception if there is a technical.
-   *                            Throw this exception if there is a functional problem :
-   *                            - if the id of the bookBorrowed is not valid
-   *                            - if the bookBorrowed is not found
-   *                            - if the book is already returned
-   *                            - if end date of borrow is passed
-   *                            - if the bookBorrowed is already extended
+   * @throws LibraryWsException Throw this exception if there is a technical. Throw this exception
+   *     if there is a functional problem : - if the id of the bookBorrowed is not valid - if the
+   *     bookBorrowed is not found - if the book is already returned - if end date of borrow is
+   *     passed - if the bookBorrowed is already extended
    */
   @WebMethod
   public Boolean extendBorrowing(final Integer bookBorrowedId) throws LibraryWsException {
 
-
-    if(bookBorrowedId == null) {
+    if (bookBorrowedId == null) {
       LOG.error("bookBorrowedId = " + bookBorrowedId);
-      throw new LibraryWsException("Paramètre incorrect. L'identifiant de l'emprunt ne peut être vide.", new LibraryWsFault("soap:Client", "Paramètre incorrect. L'identifiant de l'emprunt ne peut être vide."));
+      throw new LibraryWsException(
+          "Paramètre incorrect. L'identifiant de l'emprunt ne peut être vide.",
+          new LibraryWsFault(
+              CLIENT, "Paramètre incorrect. L'identifiant de l'emprunt ne peut être vide."));
     }
 
     try {
       return this.managerFactory.getBooksManagementManager().extendBorrow(bookBorrowedId);
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
-      throw new LibraryWsException("Problème technique", new LibraryWsFault("soap:Server", exception.getMessage()));
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     } catch (FunctionalException exception) {
       LOG.error(exception.getMessage());
-      throw new LibraryWsException(exception.getMessage(), new LibraryWsFault("soap:Client", exception.getMessage()));
+      throw new LibraryWsException(
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
     }
-
   }
 
   /**
-   * Finished a book borrowing.
+   * Finished a book borrowing (Tag the bookBorrowed as return).
    *
-   * @param bookId id of the book borrowed.
-   * @param userId id of the user who borrowed the book.
-   * @return true if the borrowing return if a success. False otherwise.
+   * @param bookBorrowedId id of the bookBorrowed.
+   * @return true if the borrowing return if a success. Throw exception if not.
+   * @throws LibraryWsException Throw this exception if there is a technical. Throw this exception
+   *     if there is a functional problem : - if the id of the bookBorrowed is not valid - if the
+   *     bookBorrowed is not found - if the book is already returned
    */
   @WebMethod
-  public Boolean borrowingReturn(final Integer bookId, final Integer userId) {
-    // TODO implementation
-    return null;
+  public Boolean borrowingReturn(final Integer bookBorrowedId) throws LibraryWsException {
+
+    if (bookBorrowedId == null) {
+      LOG.error("bookBorrowedId = " + bookBorrowedId);
+      throw new LibraryWsException(
+          "Paramètre incorrect. L'identifiant de l'emprunt ne peut être vide.",
+          new LibraryWsFault(
+              CLIENT, "Paramètre incorrect. L'identifiant de l'emprunt ne peut être vide."));
+    }
+
+    try {
+      return this.managerFactory.getBooksManagementManager().returnBorrow(bookBorrowedId);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
+    } catch (FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
+    }
   }
 
   // ===== Book Details
@@ -356,10 +393,32 @@ public class BookService extends SpringBeanAutowiringSupport {
    * Return the book details.
    *
    * @param bookId id of the book.
-   * @return the book details.
+   * @return the book details DTO.
+   * @throws LibraryWsException Throw this exception if there is a technical Throw this exception if
+   *     there is a functional problem : - if the id of the book is not valid - if the book is not
+   *     found
    */
-  public Book bookDetails(final Integer bookId) {
-    // TODO implementation
-    return null;
+  public BookDetailsDto bookDetails(final Integer bookId) throws LibraryWsException {
+
+    if (bookId == null) {
+      LOG.error("bookId = " + bookId);
+      throw new LibraryWsException(
+          "Paramètre incorrect. L'identifiant du livre ne peut être vide.",
+          new LibraryWsFault(
+              CLIENT, "Paramètre incorrect. L'identifiant du livre ne peut être vide."));
+    }
+
+    try {
+      return this.managerFactory.getBooksManagementManager().getBookWithDetails(bookId);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
+    } catch (FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      LibraryWsException ex = new LibraryWsException(FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
+      LOG.error(ex.toString());
+      throw ex;
+    }
   }
 }

@@ -17,7 +17,7 @@ public class BookBorrowedRM implements RowMapper<BookBorrowed> {
 
   /** {@inheritDoc} */
   @Override
-  public BookBorrowed mapRow(final ResultSet resultSet, int rowNum) throws SQLException {
+  public BookBorrowed mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 
     final BookBorrowed bookBorrowed = new BookBorrowed();
 
@@ -26,7 +26,7 @@ public class BookBorrowedRM implements RowMapper<BookBorrowed> {
     bookBorrowed.setBorrowDate(resultSet.getDate("borrow_date").toLocalDate());
     bookBorrowed.setEndDate(resultSet.getDate("end_date").toLocalDate());
     bookBorrowed.setExtension(resultSet.getBoolean("extension"));
-    if(resultSet.getDate("last_reminder") == null) {
+    if (resultSet.getDate("last_reminder") == null) {
       bookBorrowed.setLastReminder(null);
     } else {
       bookBorrowed.setLastReminder(resultSet.getDate("last_reminder").toLocalDate());

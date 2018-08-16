@@ -21,9 +21,20 @@ public interface BookDao {
    * @return the book with the specified id.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   *     book is not found.
    */
   Book getBook(final Integer bookId) throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the book detailed from the datastore.
+   *
+   * @param bookId id of the book.
+   * @return the book detailed with the specified id.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and the
+   *     book is not found.
+   */
+  BookDetailsDto getBookDetails(final Integer bookId) throws TechnicalException, NotFoundException;
 
   /**
    * Give the list of book detailed from the datastore.

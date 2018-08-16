@@ -62,9 +62,9 @@ public class LibraryWsFault {
    * Full Constructor.
    *
    * @param faultCode the fault code.
-   * @param faultString the fautl message.
+   * @param faultString the fault message.
    */
-  public LibraryWsFault(String faultCode, String faultString) {
+  public LibraryWsFault(final String faultCode, final String faultString) {
     this.faultCode = faultCode;
     this.faultString = faultString;
   }

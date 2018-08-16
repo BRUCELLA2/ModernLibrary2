@@ -26,18 +26,22 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
   /** Books Borrowed Listing Manager logger */
   private static final Log LOG = LogFactory.getLog(BooksBorrowedListingManagerImpl.class);
 
+  /** Default Constructor */
+  public BooksBorrowedListingManagerImpl() {
+    super();
+  }
+
   /** {@inheritDoc} */
   @Override
   public List<BorrowDto> currentlyBooksBorrow() throws TechnicalException {
+
     try {
       return this.getDaoFactory().getBookBorrowedDao().getBorrowListWithUserLoginAndTitle(true);
-
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      List<BorrowDto> borrowDtoList = new ArrayList<>();
-      return borrowDtoList;
+      return new ArrayList<>();
     }
   }
 
@@ -59,8 +63,7 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      List<UserCurrentlyBorrowDto> userCurrentlyBorrowDtoList = new ArrayList<>();
-      return userCurrentlyBorrowDtoList;
+      return new ArrayList<>();
     }
   }
 
@@ -71,7 +74,7 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
       return this.getDaoFactory().getBookBorrowedDao().getBorrowExpired();
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug((exception.getMessage()));
+        LOG.debug(exception.getMessage());
       }
       return new ArrayList<>();
     }
@@ -79,7 +82,7 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
 
   /** {@inheritDoc} */
   @Override
-  public List<UserCurrentlyBorrowDto> userCurrentlyBorrowExpired(Integer userId)
+  public List<UserCurrentlyBorrowDto> userCurrentlyBorrowExpired(final Integer userId)
       throws TechnicalException, FunctionalException {
 
     if (userId == null || userId == 0) {
@@ -97,12 +100,5 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
       }
       return new ArrayList<>();
     }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public Integer userBorrowBook(Integer bookId, Integer userId) throws TechnicalException {
-    // TODO implementation
-    return null;
   }
 }

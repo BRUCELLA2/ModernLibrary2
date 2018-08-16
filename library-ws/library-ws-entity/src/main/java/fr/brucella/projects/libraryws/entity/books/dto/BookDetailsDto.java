@@ -49,7 +49,7 @@ public class BookDetailsDto extends Book {
    *
    * @param publisherName the name of the publisher.
    */
-  public void setPublisherName(String publisherName) {
+  public void setPublisherName(final String publisherName) {
     this.publisherName = publisherName;
   }
 
@@ -67,7 +67,7 @@ public class BookDetailsDto extends Book {
    *
    * @param genreName name of the genre.
    */
-  public void setGenreName(String genreName) {
+  public void setGenreName(final String genreName) {
     this.genreName = genreName;
   }
 
@@ -85,7 +85,7 @@ public class BookDetailsDto extends Book {
    *
    * @param authors the list of authors.
    */
-  public void setAuthors(List<Author> authors) {
+  public void setAuthors(final List<Author> authors) {
     this.authors = authors;
   }
 

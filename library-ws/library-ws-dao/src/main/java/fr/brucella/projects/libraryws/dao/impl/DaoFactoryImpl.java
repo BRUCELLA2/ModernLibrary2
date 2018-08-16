@@ -147,19 +147,19 @@ public class DaoFactoryImpl implements DaoFactory {
 
   /** {@inheritDoc} */
   @Override
-  public void setAddressDao(AddressDao addressDao) {
+  public void setAddressDao(final AddressDao addressDao) {
     this.addressDao = addressDao;
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setRoleDao(RoleDao roleDao) {
+  public void setRoleDao(final RoleDao roleDao) {
     this.roleDao = roleDao;
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setUserDao(UserDao userDao) {
+  public void setUserDao(final UserDao userDao) {
     this.userDao = userDao;
   }
 }

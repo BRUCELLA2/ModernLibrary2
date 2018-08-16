@@ -2,7 +2,6 @@
 <Context path="/">
   <Resource name="jdbc/DB_MODERN_LIBRARY" auth="Container"
     type="javax.sql.DataSource"
-
     url="jdbc:postgresql://localhost:5436/modernlibrary"
     driverClassName="org.postgresql.Driver" username="adm_modernlibrary"
     password="adm_modernlibrary" defaultAutoCommit="true"
@@ -11,5 +10,5 @@
     removeAbandonedTimeout="60" removeAbandonedOnBorrow="true"
     logAbandoned="true" minEvictableIdleTimeMillis="10000"
     timeBetweenEvictionRunsMillis="30000" validationQuery="SELECT 1"
-    testWhileIdle="true" testOnBorrow="true"/>
+    testWhileIdle="true" testOnBorrow="true" />
 </Context>

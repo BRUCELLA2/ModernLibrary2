@@ -43,7 +43,9 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
   private static final Log LOG = LogFactory.getLog(BookBorrowedDaoImpl.class);
 
   /** Default Constructor */
-  public BookBorrowedDaoImpl() {}
+  public BookBorrowedDaoImpl() {
+    super();
+  }
 
   /** {@inheritDoc} */
   @Override
@@ -85,7 +87,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
 
   /** {@inheritDoc} */
   @Override
-  public List<BorrowDto> getBorrowListWithUserLoginAndTitle(Boolean currently)
+  public List<BorrowDto> getBorrowListWithUserLoginAndTitle(final Boolean currently)
       throws TechnicalException, NotFoundException {
 
     sql =
@@ -119,7 +121,6 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        ;
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
@@ -128,7 +129,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
 
   /** {@inheritDoc} */
   @Override
-  public List<UserCurrentlyBorrowDto> getUserCurrentlyBorrows(Integer userId)
+  public List<UserCurrentlyBorrowDto> getUserCurrentlyBorrows(final Integer userId)
       throws TechnicalException, NotFoundException {
 
     sql =
@@ -203,7 +204,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
 
   /** {@inheritDoc} */
   @Override
-  public List<UserCurrentlyBorrowDto> getUserBorrowsExpired(Integer userId)
+  public List<UserCurrentlyBorrowDto> getUserBorrowsExpired(final Integer userId)
       throws TechnicalException, NotFoundException {
 
     sql =
@@ -256,7 +257,7 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
     final RowMapper<BookBorrowsCountDto> rowMapper = new BookBorrowsCountDtoRM();
 
     try {
-      List<BookBorrowsCountDto> bookBorrowsCountDtoList =
+      final List<BookBorrowsCountDto> bookBorrowsCountDtoList =
           this.getJdbcTemplate().query(sql, rowMapper);
       if (bookBorrowsCountDtoList.isEmpty()) {
         if (LOG.isDebugEnabled()) {
@@ -335,7 +336,8 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
 
     try {
 
-      this.getNamedJdbcTemplate().update(sql, parameterSource, keyHolder, new String[]{"book_borrowed_id"});
+      this.getNamedJdbcTemplate()
+          .update(sql, parameterSource, keyHolder, new String[] {"book_borrowed_id"});
       return keyHolder.getKey().intValue();
     } catch (DuplicateKeyException exception) {
       if (LOG.isDebugEnabled()) {

@@ -1,6 +1,7 @@
 package fr.brucella.projects.libraryws.business.contracts.managers.books;
 
 import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
+import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
 import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
@@ -54,20 +55,46 @@ public interface BooksManagementManager {
    * @param userId id of the user who borrow the book.
    * @return the id of the BookBorrowed.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the id of the user or the id of the book are not valid.
+   * @throws FunctionalException - This exception is throw if the id of the user or the id of the
+   *     book are not valid.
    */
-  Integer bookBorrowing(final Integer bookId, final Integer userId) throws TechnicalException, FunctionalException;
+  Integer bookBorrowing(final Integer bookId, final Integer userId)
+      throws TechnicalException, FunctionalException;
 
   /**
    * Extends a book borrowing.
    *
-   * @param bookBorrowedId id of the bookBorrowed
-   * @return true if extend success. throw exception if extend fail.
+   * @param bookBorrowedId id of the bookBorrowed.
+   * @return true if extend success. Throw exception if extend fail.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the id of the bookBorrowed is not valid.
-   *                               This exception is throw if the bookBorrowed is not found.
-   *                               This exception is throw if the book is already returned,
-   *                               if end date of borrow is passed and if the bookBorrowed is already extended
+   * @throws FunctionalException - This exception is throw if the id of the bookBorrowed is not
+   *     valid. This exception is throw if the bookBorrowed is not found. This exception is throw if
+   *     the book is already returned, if end date of borrow is passed and if the bookBorrowed is
+   *     already extended
    */
   Boolean extendBorrow(final Integer bookBorrowedId) throws TechnicalException, FunctionalException;
+
+  /**
+   * Tag the bookBorrowed as return.
+   *
+   * @param bookBorrowedId id of the bookBorrowed.
+   * @return true if return success. Throw exception if return fail.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the bookBorrowed is not
+   *     valid. This exception is throw if the bookBorrowed is not found. This exception is throw if
+   *     the book is already returned.
+   */
+  Boolean returnBorrow(final Integer bookBorrowedId) throws TechnicalException, FunctionalException;
+
+  /**
+   * Provides the book details.
+   *
+   * @param bookId id of the book
+   * @return the book with details (BookDetailsDTO)
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the book is not valid. This
+   *     exception is throw if the book is not found.
+   */
+  BookDetailsDto getBookWithDetails(final Integer bookId)
+      throws TechnicalException, FunctionalException;
 }

@@ -11,13 +11,13 @@ public class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
   // ===== Methods =====
 
   @Override
-  public LocalDate unmarshal(String date) throws Exception {
+  public LocalDate unmarshal(String date) {
 
     return LocalDate.parse(date, formatter);
   }
 
   @Override
-  public String marshal(LocalDate date) throws Exception {
+  public String marshal(LocalDate date) {
 
     return formatter.format(date);
   }
