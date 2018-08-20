@@ -1,5 +1,6 @@
 package fr.brucella.projects.libraryws.business.contracts;
 
+import fr.brucella.projects.libraryws.business.contracts.managers.authentification.AuthentificationManager;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksBorrowedListingManager;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksListingManager;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksManagementManager;
@@ -10,6 +11,20 @@ import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksMan
  * @author BRUCELLA2
  */
 public interface ManagerFactory {
+
+  /**
+   * Get the Authentification Manager.
+   *
+   * @return the Authentification Manager.
+   */
+  AuthentificationManager getAuthentificationManager();
+
+  /**
+   * Set the Authentification Manager.
+   *
+   * @param authentificationManager the Authentification Manager.
+   */
+  void setAuthentificationManager(final AuthentificationManager authentificationManager);
 
   /**
    * Get the Books Borrowed Listing Manager.

@@ -2,6 +2,7 @@ package fr.brucella.projects.libraryws.dao.contracts.dao.users;
 
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import fr.brucella.projects.libraryws.entity.users.dto.FullUserDto;
 import fr.brucella.projects.libraryws.entity.users.model.User;
 import java.util.List;
 
@@ -22,6 +23,17 @@ public interface UserDao {
    *     user is not found.
    */
   User getUser(final Integer userId) throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the full user dto with the specified login from the datastore.
+   *
+   * @param login login of the user.
+   * @return the full user dto with the specified login.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and the
+   *     user is not found.
+   */
+  FullUserDto getUserByLogin(final String login) throws TechnicalException, NotFoundException;
 
   /**
    * Give the list of users with a borrows not returned expired.

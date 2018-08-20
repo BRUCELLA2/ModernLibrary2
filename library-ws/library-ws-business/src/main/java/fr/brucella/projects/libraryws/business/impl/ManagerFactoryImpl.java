@@ -1,6 +1,7 @@
 package fr.brucella.projects.libraryws.business.impl;
 
 import fr.brucella.projects.libraryws.business.contracts.ManagerFactory;
+import fr.brucella.projects.libraryws.business.contracts.managers.authentification.AuthentificationManager;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksBorrowedListingManager;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksListingManager;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksManagementManager;
@@ -15,6 +16,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ManagerFactoryImpl implements ManagerFactory {
 
+  /** Authentification Manager */
+  @Autowired private AuthentificationManager authentificationManager;
+
   /** Books Borrowed Listing Manager */
   @Autowired private BooksBorrowedListingManager booksBorrowedListingManager;
 
@@ -23,6 +27,18 @@ public class ManagerFactoryImpl implements ManagerFactory {
 
   /** Books Listing Manager */
   @Autowired private BooksManagementManager booksManagementManager;
+
+  /** {@inheritDoc} */
+  @Override
+  public AuthentificationManager getAuthentificationManager() {
+    return authentificationManager;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setAuthentificationManager(final AuthentificationManager authentificationManager) {
+    this.authentificationManager = authentificationManager;
+  }
 
   /** {@inheritDoc} */
   @Override

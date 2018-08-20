@@ -2,7 +2,7 @@ package fr.brucella.projects.libraryws.dao.impl.dao.users;
 
 import fr.brucella.projects.libraryws.dao.contracts.dao.users.AddressDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
-import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.AddressRM;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.model.AddressRM;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.users.model.Address;
@@ -81,7 +81,7 @@ public class AddressDaoImpl extends AbstractDao implements AddressDao {
   public void updateAddress(final Address address) throws TechnicalException, NotFoundException {
 
     sql =
-        "UPDATE address SET line1 = :line1, line2 = :line2, line3 = :line3, city = :city, zip_code = :zipCode WHERE address_id = addressId";
+        "UPDATE address SET line1 = :line1, line2 = :line2, line3 = :line3, city = :city, zip_code = :zipCode WHERE address_id = :addressId";
 
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(address);
 

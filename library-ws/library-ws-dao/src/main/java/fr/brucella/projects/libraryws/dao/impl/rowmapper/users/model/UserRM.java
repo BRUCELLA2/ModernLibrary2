@@ -1,4 +1,4 @@
-package fr.brucella.projects.libraryws.dao.impl.rowmapper.users;
+package fr.brucella.projects.libraryws.dao.impl.rowmapper.users.model;
 
 import fr.brucella.projects.libraryws.entity.users.model.User;
 import java.sql.ResultSet;

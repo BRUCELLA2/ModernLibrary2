@@ -54,6 +54,15 @@ public interface RoleDao {
   int insertRole(final Role role) throws TechnicalException;
 
   /**
+   * Insert a new user role in the datastore.
+   *
+   * @param userId id of the user.
+   * @param roleId id of the role.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   */
+  void insertUserRole(final Integer userId, final Integer roleId) throws TechnicalException;
+
+  /**
    * Delete the role with the specified id in the datastore.
    *
    * @param roleId id of the role.

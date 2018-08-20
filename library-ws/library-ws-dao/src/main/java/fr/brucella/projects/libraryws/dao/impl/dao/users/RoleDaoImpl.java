@@ -2,7 +2,7 @@ package fr.brucella.projects.libraryws.dao.impl.dao.users;
 
 import fr.brucella.projects.libraryws.dao.contracts.dao.users.RoleDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
-import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.RoleRM;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.model.RoleRM;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.users.model.Role;
@@ -70,10 +70,6 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql);
-        LOG.debug("roleId = " + roleId);
-      }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
@@ -81,7 +77,8 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
 
   /** {@inheritDoc} */
   @Override
-  public List<Role> getRolesForUser(final Integer userId) throws TechnicalException, NotFoundException {
+  public List<Role> getRolesForUser(final Integer userId)
+      throws TechnicalException, NotFoundException {
 
     sql =
         "SELECT * FROM role INNER JOIN user_roles ON role.role_id = user_roles.role_id WHERE user_roles.user_id = :userId";
@@ -110,10 +107,6 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql);
-        LOG.debug("bookId = " + userId);
-      }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
@@ -151,10 +144,6 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("SQL : " + sql);
-        LOG.debug("role = " + role.toString());
-      }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
@@ -195,10 +184,48 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
     } catch (DataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void insertUserRole(final Integer userId, final Integer roleId) throws TechnicalException {
+
+    sql = "INSERT INTO user_roles(role_id, user_id) VALUES (:roleId, :userId)";
+
+    final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+    parameterSource.addValue("roleId", roleId);
+    parameterSource.addValue("userId", userId);
+
+    try {
+      this.getNamedJdbcTemplate().update(sql, parameterSource);
+    } catch (DuplicateKeyException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
-        LOG.debug("role = " + role.toString());
+        LOG.debug("roleId : " + roleId);
+        LOG.debug("userId : " + userId);
       }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(
+          messages.getString("roleDao.insertUserRole.duplicate"), exception);
+    } catch (DataIntegrityViolationException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("roleId : " + roleId);
+        LOG.debug("userId : " + userId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(
+          messages.getString("roleDao.insertUserRole.integrityViolation"), exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }

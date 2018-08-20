@@ -91,11 +91,11 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (FunctionalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          FUNC_ERROR, exception, new LibraryWsFault("Client", exception.getMessage()));
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          TECH_ERROR, exception, new LibraryWsFault("Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     }
   }
 
@@ -113,7 +113,7 @@ public class BookService extends SpringBeanAutowiringSupport {
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
-          TECH_ERROR, exception, new LibraryWsFault("Server", exception.getMessage()));
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     }
   }
 
@@ -416,7 +416,9 @@ public class BookService extends SpringBeanAutowiringSupport {
           TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     } catch (FunctionalException exception) {
       LOG.error(exception.getMessage());
-      LibraryWsException ex = new LibraryWsException(FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
+      LibraryWsException ex =
+          new LibraryWsException(
+              FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
       LOG.error(ex.toString());
       throw ex;
     }

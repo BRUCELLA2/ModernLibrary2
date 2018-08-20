@@ -10,6 +10,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * Represents a BookDetails Data Transfert Object. Includes all the informations about the book.
  * Includes author, genre and publisher informations.
+ *
+ * @author BRUCELLA2
  */
 public class BookDetailsDto extends Book {
 
@@ -23,6 +25,7 @@ public class BookDetailsDto extends Book {
   @Size(min = 1, max = 50, message = "{genre.name.size}")
   private String genreName;
 
+  /** List of authors who write the book */
   @NotEmpty(message = "{bookDetailsDto.authors.empty")
   private List<Author> authors;
 

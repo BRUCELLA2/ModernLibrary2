@@ -117,10 +117,10 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
     // Get authors informations
 
     sql =
-        "SELECT * from author INNER JOIN book_authors ON author.author_id = book_authors.author_id WHERE book_authors.book_id = :book_id";
+        "SELECT * from author INNER JOIN book_authors ON author.author_id = book_authors.author_id WHERE book_authors.book_id = :bookId";
 
     final MapSqlParameterSource parameterSourceAuthors = new MapSqlParameterSource();
-    parameterSourceAuthors.addValue("book_id", bookId);
+    parameterSourceAuthors.addValue("bookId", bookId);
 
     final RowMapper<Author> authorRowMapper = new AuthorRM();
 
@@ -212,7 +212,7 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       final BooksSearchClientCriteriaDto booksSearchClientCriteriaDto)
       throws TechnicalException, NotFoundException {
 
-    if(LOG.isDebugEnabled()) {
+    if (LOG.isDebugEnabled()) {
       LOG.debug("SEARCH : " + booksSearchClientCriteriaDto.toString());
     }
 

@@ -17,7 +17,8 @@ public class UserCurrentlyBorrowDtoRM implements RowMapper<UserCurrentlyBorrowDt
 
   /** {@inheritDoc} */
   @Override
-  public UserCurrentlyBorrowDto mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
+  public UserCurrentlyBorrowDto mapRow(final ResultSet resultSet, final int rowNum)
+      throws SQLException {
 
     final UserCurrentlyBorrowDto userCurrentlyBorrowDto = new UserCurrentlyBorrowDto();
 

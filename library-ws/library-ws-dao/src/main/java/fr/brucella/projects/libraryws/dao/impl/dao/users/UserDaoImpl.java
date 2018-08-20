@@ -2,10 +2,15 @@ package fr.brucella.projects.libraryws.dao.impl.dao.users;
 
 import fr.brucella.projects.libraryws.dao.contracts.dao.users.UserDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
-import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.UserRM;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.dto.FullUserDtoRM;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.model.RoleRM;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.model.UserRM;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import fr.brucella.projects.libraryws.entity.users.dto.FullUserDto;
+import fr.brucella.projects.libraryws.entity.users.model.Role;
 import fr.brucella.projects.libraryws.entity.users.model.User;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -74,6 +79,71 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
   }
 
+  @Override
+  public FullUserDto getUserByLogin(final String login)
+      throws TechnicalException, NotFoundException {
+
+    sql =
+        "SELECT users.user_id, users.password, users.email, users.login, users.phone, users.address_id, address.city, address.line1, address.line2, address.line3, address.zip_code FROM users INNER JOIN address ON users.address_id = address.address_id WHERE users.login = :login";
+
+    final MapSqlParameterSource userParameterSource = new MapSqlParameterSource();
+    userParameterSource.addValue("login", login);
+
+    final RowMapper<FullUserDto> fullUserDtoRowMapper = new FullUserDtoRM();
+    FullUserDto fullUserDto;
+
+    try {
+      fullUserDto =
+          this.getNamedJdbcTemplate()
+              .queryForObject(sql, userParameterSource, fullUserDtoRowMapper);
+    } catch (EmptyResultDataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("login = " + login);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(messages.getString("UserDao.getUserByLogin.notFound"), exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+
+    // Get roles informations
+
+    sql =
+        "SELECT * from user_roles INNER JOIN users ON user_roles.user_id = users.user_id INNER JOIN role ON user_roles.role_id = role.role_id WHERE users.user_id = :userId";
+
+    final MapSqlParameterSource rolesParameterSource = new MapSqlParameterSource();
+    rolesParameterSource.addValue("userId", fullUserDto.getUserId());
+
+    final RowMapper<Role> roleRowMapper = new RoleRM();
+
+    try {
+      List<Role> rolesList = getNamedJdbcTemplate().query(sql, rolesParameterSource, roleRowMapper);
+      if (rolesList.isEmpty()) {
+        rolesList = new ArrayList<>();
+      }
+      fullUserDto.setRoles(rolesList);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+
+    return fullUserDto;
+  }
+
   /** {@inheritDoc} */
   @Override
   public List<User> getUserWithBorrowsExpired() throws TechnicalException, NotFoundException {
@@ -111,7 +181,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
   public void updateUser(final User user) throws TechnicalException, NotFoundException {
 
     sql =
-        "UPDATE users SET password = :password, email = :email, login = :login, phone = :phone, address_id = addressId WHERE user_id = :userId";
+        "UPDATE users SET password = :password, email = :email, login = :login, phone = :phone, address_id = :addressId WHERE user_id = :userId";
 
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
 
