@@ -20,10 +20,28 @@
       <result>/jsp/index.jsp</result>
     </action>
 
+    <!-- "search_books" Action -->
+    <action name="search_books"
+      class="fr.brucella.projects.libraryclients.webapp.actions.BooksListingAction"
+      method="SearchBooks">
+      <result name="success">/jsp/booksListing/booksListing.jsp</result>
+      <result name="input">/jsp/booksListing/booksListing.jsp</result>
+      <result name="error">/jsp/error.jsp</result>
+    </action>
+
+
     <!-- "All Books" Action -->
     <action name="all_books"
       class="fr.brucella.projects.libraryclients.webapp.actions.BooksListingAction"
       method="getAllBook">
+      <result name="error">/jsp/error.jsp</result>
+      <result name="success">/jsp/index.jsp</result>
+    </action>
+
+    <!-- "Login" Action -->
+    <action name="login"
+      class="fr.brucella.projects.libraryclients.webapp.actions.BooksListingAction"
+      method="login">
       <result name="error">/jsp/error.jsp</result>
       <result name="success">/jsp/index.jsp</result>
     </action>

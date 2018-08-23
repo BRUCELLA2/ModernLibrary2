@@ -1,4 +1,3 @@
-
 package generated.bookserviceclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Classe Java pour stock complex type.
- * 
+ *
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * 
+ *
  * <pre>
  * &lt;complexType name="stock">
  *   &lt;complexContent>
@@ -26,120 +25,91 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "stock", propOrder = {
-    "amount",
-    "amountAvailable",
-    "bookId",
-    "stockId"
-})
-@XmlSeeAlso({
-    BookStockDto.class
-})
+@XmlType(name = "stock", propOrder = {"amount", "amountAvailable", "bookId", "stockId"})
+@XmlSeeAlso({BookStockDto.class})
 public class Stock {
 
-    protected Integer amount;
-    protected Integer amountAvailable;
-    protected Integer bookId;
-    protected Integer stockId;
+  protected Integer amount;
+  protected Integer amountAvailable;
+  protected Integer bookId;
+  protected Integer stockId;
 
-    /**
-     * Obtient la valeur de la propriété amount.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getAmount() {
-        return amount;
-    }
+  /**
+   * Obtient la valeur de la propriété amount.
+   *
+   * @return possible object is {@link Integer }
+   */
+  public Integer getAmount() {
+    return amount;
+  }
 
-    /**
-     * Définit la valeur de la propriété amount.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setAmount(Integer value) {
-        this.amount = value;
-    }
+  /**
+   * Définit la valeur de la propriété amount.
+   *
+   * @param value
+   *     allowed object is {@link Integer }
+   */
+  public void setAmount(Integer value) {
+    this.amount = value;
+  }
 
-    /**
-     * Obtient la valeur de la propriété amountAvailable.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getAmountAvailable() {
-        return amountAvailable;
-    }
+  /**
+   * Obtient la valeur de la propriété amountAvailable.
+   *
+   * @return possible object is {@link Integer }
+   */
+  public Integer getAmountAvailable() {
+    return amountAvailable;
+  }
 
-    /**
-     * Définit la valeur de la propriété amountAvailable.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setAmountAvailable(Integer value) {
-        this.amountAvailable = value;
-    }
+  /**
+   * Définit la valeur de la propriété amountAvailable.
+   *
+   * @param value
+   *     allowed object is {@link Integer }
+   */
+  public void setAmountAvailable(Integer value) {
+    this.amountAvailable = value;
+  }
 
-    /**
-     * Obtient la valeur de la propriété bookId.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getBookId() {
-        return bookId;
-    }
+  /**
+   * Obtient la valeur de la propriété bookId.
+   *
+   * @return possible object is {@link Integer }
+   */
+  public Integer getBookId() {
+    return bookId;
+  }
 
-    /**
-     * Définit la valeur de la propriété bookId.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setBookId(Integer value) {
-        this.bookId = value;
-    }
+  /**
+   * Définit la valeur de la propriété bookId.
+   *
+   * @param value
+   *     allowed object is {@link Integer }
+   */
+  public void setBookId(Integer value) {
+    this.bookId = value;
+  }
 
-    /**
-     * Obtient la valeur de la propriété stockId.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getStockId() {
-        return stockId;
-    }
+  /**
+   * Obtient la valeur de la propriété stockId.
+   *
+   * @return possible object is {@link Integer }
+   */
+  public Integer getStockId() {
+    return stockId;
+  }
 
-    /**
-     * Définit la valeur de la propriété stockId.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setStockId(Integer value) {
-        this.stockId = value;
-    }
+  /**
+   * Définit la valeur de la propriété stockId.
+   *
+   * @param value
+   *     allowed object is {@link Integer }
+   */
+  public void setStockId(Integer value) {
+    this.stockId = value;
+  }
 
 }
