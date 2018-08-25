@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!doctype html>
@@ -11,7 +12,7 @@
     <link rel="stylesheet" href="/library-clients/boostrap/css/bootstrap.css">
     <!-- <link rel="stylesheet" type="text/css" href="/library-clients/include/css/library-clients.css"> -->
 
-    <title>Accueil - Bibliothèque Bradbury</title>
+    <title>Connexion - Bibliothèque Bradbury</title>
 </head>
 
 <body>
@@ -37,21 +38,31 @@
     </nav>
 </div>
 
-<div class="container" style="margin-top:30px">
-    <div class="card mb-4">
-        <div class="card-header text-white bg-secondary"><h4>Bienvenue sur le site de la bibliothèque Bradbury</h4>
-        </div>
+<div class="container" style="margin-top: 30px">
+    <div class="card mb-4 w-25 mx-auto">
+        <div class="card-header text-white bg-secondary"><h4 class="text-center">Connexion</h4></div>
         <div class="card-body">
-            <p class="card-text">Pour pouvoir accéder au fonctionnalité du site, il est nécessaire de vous
-                connecter.</p>
-            <p class="card-text">Si vous n'êtes pas encore inscrit, n'attendez-pas, inscrivez-vous !</p>
-            <p class="card-text">Après vous être connecté, vous pourrez voir les livres à emprunter et voir le détail
-                des livres
-                que vous avez emprunter. Vous pourrez également depuis l'application prolonger la durée de votre
-                emrpunt.</p>
+
+            <form method="post" action="login">
+                <div class="form-group mr-sm-2">
+                    <label for="userLogin" class="mr-sm-2">Identifiant : </label>
+                    <input type="text" class="form-control is-invalid mb-2 mr-sm-2" id="userLogin" name="userLogin">
+                    <div class="invalid-feedback"><s:fielderror fieldName="userLogin"/></div>
+                </div>
+                <div class="form-group mr-sm-2">
+                    <label for="userPass" class="mr-sm-2">Mot de passe : </label>
+                    <input type="password" class="form-control is-invalid" id="userPass" name="userPass">
+                    <div class="invalid-feedback"><s:fielderror fieldName="userPass"/></div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Connexion</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
 
 <%@include file="/include/jsp/footer.jsp" %>
 
@@ -67,4 +78,5 @@
         integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
         crossorigin="anonymous"></script>
 </body>
-</html>
+
+</body>

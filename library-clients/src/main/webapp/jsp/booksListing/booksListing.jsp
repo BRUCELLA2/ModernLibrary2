@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card mb-4">
         <div class="card-header text-white bg-secondary"><h4 class="text-center">Liste des livres recherchés</h4></div>
         <div class="card-body">
             <div class="table-responsive">
@@ -110,7 +110,7 @@
                             <td>
                                 <ul>
                                     <s:iterator value="authors">
-                                        <li><s:property value="firstName"/> <s:property value="lastName"/></li>
+                                        <li><s:property value="lastName"/>, <s:property value="firstName"/></li>
                                     </s:iterator>
                                 </ul>
                             </td>
@@ -126,6 +126,8 @@
 
 </div>
 
+<%@include file="/include/jsp/footer.jsp" %>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -138,4 +140,5 @@
         integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
         crossorigin="anonymous"></script>
 </body>
+
 </html>

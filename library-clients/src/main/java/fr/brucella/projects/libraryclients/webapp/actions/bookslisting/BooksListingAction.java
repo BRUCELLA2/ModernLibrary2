@@ -1,4 +1,4 @@
-package fr.brucella.projects.libraryclients.webapp.actions;
+package fr.brucella.projects.libraryclients.webapp.actions.bookslisting;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
