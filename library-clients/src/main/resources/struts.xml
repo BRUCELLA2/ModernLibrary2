@@ -7,12 +7,26 @@
 
   <package name="default" extends="struts-default">
 
+    <!-- Interceptors -->
+    <interceptors>
+      <interceptor name="loginInterceptor"
+        class="fr.brucella.projects.libraryclients.webapp.interceptor.LoginInterceptor" />
+      <interceptor-stack name="loginStack">
+        <interceptor-ref name="loginInterceptor"/>
+        <interceptor-ref name="defaultStack"/>
+      </interceptor-stack>
+    </interceptors>
+
+    <!-- Default Interceptor -->
+    <default-interceptor-ref name="loginStack"/>
+
     <!-- Default Action -->
     <default-action-ref name="index"/>
 
-    <!-- Overall Results -->
+    <!-- Global Results -->
     <global-results>
       <result name="error">/jsp/error.jsp</result>
+      <result name="index">/jsp/index.jsp</result>
     </global-results>
 
     <!-- "Index" Action -->
@@ -31,7 +45,7 @@
 
     <!-- "Login" Action -->
     <action name="login"
-      class="fr.brucella.projects.libraryclients.webapp.actions.users.userAction"
+      class="fr.brucella.projects.libraryclients.webapp.actions.users.UserAction"
       method="doLogin">
       <result name="success">/jsp/index.jsp</result>
       <result name="input">/jsp/users/login.jsp</result>
@@ -40,7 +54,7 @@
 
     <!-- "Logout" Action -->
     <action name="logout"
-      class="fr.brucella.projects.libraryclients.webapp.actions.users.userAction"
+      class="fr.brucella.projects.libraryclients.webapp.actions.users.UserAction"
       method="doLogout">
       <result name="success">/jsp/index.jsp</result>
       <result name="error">/jsp/error.jsp</result>

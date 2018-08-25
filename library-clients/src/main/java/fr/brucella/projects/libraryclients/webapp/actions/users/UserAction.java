@@ -15,13 +15,13 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 
-public class userAction extends ActionSupport implements SessionAware, ServletRequestAware {
+public class UserAction extends ActionSupport implements SessionAware, ServletRequestAware {
 
   // ----- Logger
   /**
    * User Action logger
    */
-  private static final Log LOG = LogFactory.getLog(userAction.class);
+  private static final Log LOG = LogFactory.getLog(UserAction.class);
 
   // ----- Input
   /**
