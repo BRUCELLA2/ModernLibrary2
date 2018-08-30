@@ -24,38 +24,38 @@ public class BooksListingAction extends ActionSupport {
   // ----- Input
 
   /**
-   * Last name of the author. Can be empty. Max size = 50
+   * Last name of the author. Can be empty. Max size = 50.
    */
   private String authorLastName;
 
   /**
-   * String indicating if the book need to be available for a borrow. "true" or "false"
+   * String indicating if the book need to be available for a borrow. "true" or "false".
    */
   private String bookAvailable;
 
   /**
-   * ean13 of the book. Can be empty. Max size = 13. If not empty, size need to be 13
+   * ean13 of the book. Can be empty. Max size = 13. If not empty, size need to be 13.
    */
   private String ean13;
 
   /**
-   * Name of the genre. Can be empty. Max size = 50
+   * Name of the genre. Can be empty. Max size = 50.
    */
   private String genreName;
 
   /**
-   * Name of the publisher. Can be empty. Max size = 100
+   * Name of the publisher. Can be empty. Max size = 100.
    */
   private String publisherName;
 
   /**
-   * Title of the book. Can be empty. Max size = 150
+   * Title of the book. Can be empty. Max size = 150.
    */
   private String title;
 
   // ----- Output
   /**
-   * A list of BookDetailsDto
+   * A list of BookDetailsDto.
    */
   private List<BookDetailsDto> booksList;
 
@@ -200,7 +200,7 @@ public class BooksListingAction extends ActionSupport {
 
   // ===== Methods =====
 
-  public String SearchBooks() {
+  public String searchBooks() {
 
     BooksSearchClientCriteriaDto booksSearchClientCriteriaDto = new BooksSearchClientCriteriaDto();
     if (StringUtils.isAllEmpty(this.authorLastName, this.bookAvailable, this.ean13, this.genreName, this.publisherName,
@@ -235,45 +235,5 @@ public class BooksListingAction extends ActionSupport {
 
     return Action.SUCCESS;
   }
-
-/**
- public String getAllBook() {
-
- BookService_Service bookservice = new BookService_Service();
-
- BookService bookServicePort = bookservice.getBookServicePort();
-
- List<BookDetailsDto> books = new ArrayList<>();
- try {
- books = bookServicePort.allBooks();
- } catch (generated.bookserviceclient.LibraryWsException e) {
- e.printStackTrace();
- }
- for (BookDetailsDto book : books) {
- System.out.println(book.getTitle());
- }
-
- return Action.SUCCESS;
- }
-
- public String login(){
-
- AuthentificationService_Service authentificationService = new AuthentificationService_Service();
- AuthentificationService authentificationServicePort = authentificationService.getAuthentificationServicePort();
-
- FullUserDto user;
- try{
- user = authentificationServicePort.login("fred", "fred");
- } catch (generated.authentificationserviceclient.LibraryWsException exception){
- exception.printStackTrace();
- return Action.ERROR;
- }
-
- System.out.println(user.getUserId());
-
- return Action.SUCCESS;
-
- }
- */
 
 }

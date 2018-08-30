@@ -30,7 +30,10 @@
                 <s:a class="nav-link" action="search_books">Recherche</s:a>
             </li>
             <li class="nav-item">
-                <s:a class="nav-link" action="myBorrows">Mes emprunts</s:a>
+                <s:a class="nav-link" action="myBorrows">Mes emprunts en cours</s:a>
+            </li>
+            <li class="nav-item">
+                <s:a class="nav-link" action="history">Historique</s:a>
             </li>
         </ul>
         <%@include file="/include/jsp/navbar_right.jsp" %>

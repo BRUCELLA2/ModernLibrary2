@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/library-clients/boostrap/css/bootstrap.css">
     <!-- <link rel="stylesheet" type="text/css" href="/library-clients/include/css/library-clients.css"> -->
 
-    <title>Enregistrement - Bibliothèque Bradbury</title>
+    <title>Modification du compte - Bibliothèque Bradbury</title>
 </head>
 
 <body>
@@ -43,19 +43,10 @@
 
 <div class="container" style="margin-top: 30px">
     <div class="card mb-4 w-75 mx-auto">
-        <div class="card-header text-white bg-secondary"><h4 class="text-center">Enregistrement</h4></div>
+        <div class="card-header text-white bg-secondary"><h4 class="text-center">Modification du compte : <s:property value="#session.userLog.login"/></h4></div>
         <div class="card-body">
 
-            <form method="post" action="register">
-
-                <div class="form-group row">
-                    <div class="col-sm-6">
-                        <label for="userLogin" class="mr-sm-2">Identifiant : </label>
-                        <input type="text" class="form-control is-invalid mb-2 mr-sm-2" id="userLogin" name="userLogin"
-                                value='<s:property value="userLogin"/>' maxlength="30">
-                        <div class="invalid-feedback"><s:fielderror fieldName="userLogin"/></div>
-                    </div>
-                </div>
+            <form method="post" action="userModification">
 
                 <div class="form-group row">
                     <div class="col-sm-6">
@@ -130,7 +121,7 @@
 
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary">S'enregistrer</button>
+                    <button type="submit" class="btn btn-primary">Valider les modifications</button>
                 </div>
 
             </form>

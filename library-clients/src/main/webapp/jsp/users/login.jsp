@@ -31,7 +31,10 @@
                 <s:a class="nav-link" action="search_books">Recherche</s:a>
             </li>
             <li class="nav-item">
-                <s:a class="nav-link" action="myBorrows">Mes emprunts</s:a>
+                <s:a class="nav-link" action="myBorrows">Mes emprunts en cours</s:a>
+            </li>
+            <li class="nav-item">
+                <s:a class="nav-link" action="history">Historique</s:a>
             </li>
         </ul>
         <%@include file="/include/jsp/navbar_right.jsp" %>
@@ -46,7 +49,8 @@
             <form method="post" action="login">
                 <div class="form-group mr-sm-2">
                     <label for="userLogin" class="mr-sm-2">Identifiant : </label>
-                    <input type="text" class="form-control is-invalid mb-2 mr-sm-2" id="userLogin" name="userLogin">
+                    <input type="text" class="form-control is-invalid mb-2 mr-sm-2" id="userLogin" name="userLogin"
+                           value='<s:property value="userLogin"/>' maxlength="30">
                     <div class="invalid-feedback"><s:fielderror fieldName="userLogin"/></div>
                 </div>
                 <div class="form-group mr-sm-2">
@@ -79,4 +83,5 @@
         crossorigin="anonymous"></script>
 </body>
 
-</body>
+
+</html>

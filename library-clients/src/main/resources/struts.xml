@@ -37,10 +37,53 @@
     <!-- "search_books" Action -->
     <action name="search_books"
       class="fr.brucella.projects.libraryclients.webapp.actions.bookslisting.BooksListingAction"
-      method="SearchBooks">
+      method="searchBooks">
       <result name="success">/jsp/booksListing/booksListing.jsp</result>
       <result name="input">/jsp/booksListing/booksListing.jsp</result>
       <result name="error">/jsp/error.jsp</result>
+    </action>
+
+    <!-- "myBorrows" Action -->
+    <action name="myBorrows"
+      class="fr.brucella.projects.libraryclients.webapp.actions.bookslisting.BorrowsListingAction"
+      method="currentlyBorrows">
+      <result name="success">/jsp/booksListing/borrowsListing.jsp</result>
+      <result name="error">/jsp/error.jsp</result>
+    </action>
+
+    <!-- "extend" Action -->
+    <action name="borrow_extend"
+      class="fr.brucella.projects.libraryclients.webapp.actions.book.BookAction"
+      method="BorrowExtend">
+      <result name="success" type="redirectAction">
+        <param name="actionName">myBorrows</param>
+      </result>
+      <result name="error">/jsp/error.jsp</result>
+    </action>
+
+    <!-- "book_details" Action -->
+    <action name="book_details"
+      class="fr.brucella.projects.libraryclients.webapp.actions.book.BookAction"
+      method="BookDetails">
+      <result name="success">/jsp/book/bookDetails.jsp</result>
+      <result name="error">/jsp/error.jsp</result>
+    </action>
+
+    <!-- "history" Action -->
+    <action name="history"
+      class="fr.brucella.projects.libraryclients.webapp.actions.bookslisting.BorrowsListingAction"
+      method="borrowsHistory">
+      <result name="success">/jsp/booksListing/borrowsHistoryListing.jsp</result>
+      <result name="error">/jsp/error.jsp</result>
+    </action>
+
+    <!-- "Register" Action -->
+    <action name="register"
+      class="fr.brucella.projects.libraryclients.webapp.actions.users.UserAction"
+      method="doRegister">
+      <result name="success">/jsp/users/login.jsp</result>
+      <result name="error">/jsp/error.jsp</result>
+      <result name="input">/jsp/users/register.jsp</result>
     </action>
 
     <!-- "Login" Action -->
@@ -49,6 +92,15 @@
       method="doLogin">
       <result name="success">/jsp/index.jsp</result>
       <result name="input">/jsp/users/login.jsp</result>
+      <result name="error">/jsp/error.jsp</result>
+    </action>
+
+    <!-- "userModification" Action -->
+    <action name="userModification"
+      class="fr.brucella.projects.libraryclients.webapp.actions.users.UserAction"
+      method="doModification">
+      <result name="success">/jsp/index.jsp</result>
+      <result name="input">/jsp/users/userModification.jsp</result>
       <result name="error">/jsp/error.jsp</result>
     </action>
 

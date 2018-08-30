@@ -1,7 +1,9 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <s:if test="#session.userLog">
     <ul class="navbar-nav ml-auto">
+        <li><s:a class="nav-link" action="userModification">Modifier le compte</s:a></li>
         <li><s:a class="nav-link" action="logout">Se déconnecter</s:a></li>
     </ul>
 </s:if>

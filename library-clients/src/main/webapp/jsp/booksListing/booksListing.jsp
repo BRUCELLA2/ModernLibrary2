@@ -31,7 +31,10 @@
                 <s:a class="nav-link active" action="search_books">Recherche</s:a>
             </li>
             <li class="nav-item">
-                <s:a class="nav-link" action="myBorrows">Mes emprunts</s:a>
+                <s:a class="nav-link" action="myBorrows">Mes emprunts en cours</s:a>
+            </li>
+            <li class="nav-item">
+                <s:a class="nav-link" action="history">Historique</s:a>
             </li>
         </ul>
         <%@include file="/include/jsp/navbar_right.jsp" %>
@@ -47,25 +50,30 @@
                 <div class="form-row justify-content-around">
                     <div class="form-group mr-sm-2">
                         <label for="authorLastName" class="mr-sm-2">Nom de l'auteur : </label>
-                        <input type="text" class="form-control mb-2 mr-sm-2" id="authorLastName" name="authorLastName">
+                        <input type="text" class="form-control mb-2 mr-sm-2" id="authorLastName" name="authorLastName"
+                               maxlength="50">
                     </div>
                     <div class="form-group mr-sm-2">
                         <label for="title" class="mr-sm-2">Titre du livre : </label>
-                        <input type="text" class="form-control mb-2 mr-sm-2" id="title" name="title">
+                        <input type="text" class="form-control mb-2 mr-sm-2" id="title" name="title"
+                               maxlength="150">
                     </div>
                 </div>
                 <div class="form-row justify-content-around">
                     <div class="form-group mr-sm-2">
                         <label for="genreName" class="mr-sm-2">Genre : </label>
-                        <input type="text" class="form-control mb-2 mr-sm-2" id="genreName" name="genreName">
+                        <input type="text" class="form-control mb-2 mr-sm-2" id="genreName" name="genreName"
+                               maxlength="50">
                     </div>
                     <div class="form-group mr-sm-2">
                         <label for="publisherName" class="mr-sm-2">Nom de l'éditeur : </label>
-                        <input type="text" class="form-control mb-2 mr-sm-2" id="publisherName" name="publisherName">
+                        <input type="text" class="form-control mb-2 mr-sm-2" id="publisherName" name="publisherName"
+                               maxlength="100">
                     </div>
                     <div class="form-group mr-sm-2">
                         <label for="ean13" class="mr-sm-2">EAN13 : </label>
-                        <input type="text" class="form-control mb-2 mr-sm-2" id="ean13" name="ean13">
+                        <input type="text" class="form-control mb-2 mr-sm-2" id="ean13" name="ean13"
+                               maxlength="13" minlength="13">
                     </div>
                 </div>
                 <div class="form-row justify-content-around">
