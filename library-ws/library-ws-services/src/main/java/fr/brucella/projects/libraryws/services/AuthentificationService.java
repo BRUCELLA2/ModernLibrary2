@@ -189,4 +189,37 @@ public class AuthentificationService {
           FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
     }
   }
+
+  /**
+   * Check if the login is available. Return true if login can be used, false is the login is
+   * already used.
+   *
+   * @param login login wanted for the user.
+   * @return true if the login can be used, false is the login is already used.
+   * @throws LibraryWsException Throw this exception if there is a technical problem. This exception
+   *     is throw if the login is null.
+   */
+  @WebMethod
+  public Boolean loginAvailable(final String login) throws LibraryWsException {
+
+    if (StringUtils.isEmpty(login)) {
+      LOG.error("Le login est vide, la vérification du login est donc impossible.");
+      throw new LibraryWsException(
+          FUNC_ERROR,
+          new LibraryWsFault(
+              CLIENT, "Le login est incorrect (login null) - Echec de la vérification"));
+    }
+
+    try {
+      return this.managerFactory.getAuthentificationManager().checkLoginAvailability(login);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
+    } catch (FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
+    }
+  }
 }

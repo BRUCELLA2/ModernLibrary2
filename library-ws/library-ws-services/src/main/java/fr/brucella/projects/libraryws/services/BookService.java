@@ -83,11 +83,34 @@ public class BookService extends SpringBeanAutowiringSupport {
    *     userId.
    */
   @WebMethod
-  public List<UserCurrentlyBorrowDto> currentlyBorrowForUser(final Integer userId)
-      throws LibraryWsException {
+  public List<BorrowDto> currentlyBorrowForUser(final Integer userId) throws LibraryWsException {
 
     try {
       return this.managerFactory.getBooksBorrowedListingManager().userCurrentlyBorrow(userId);
+    } catch (FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
+    }
+  }
+
+  /**
+   * Provides the list of books borrowed returned by the user.
+   *
+   * @param userId id of the user.
+   * @return the list of books borrowed returned by the user.
+   * @throws LibraryWsException Throw this exception if there is a technical problem or a null
+   *     userId.
+   */
+  @WebMethod
+  public List<BorrowDto> returnedBorrowsForUser(final Integer userId) throws LibraryWsException {
+
+    try {
+      return this.managerFactory.getBooksBorrowedListingManager().userReturnBorrow(userId);
     } catch (FunctionalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(
@@ -222,6 +245,22 @@ public class BookService extends SpringBeanAutowiringSupport {
 
     try {
       return this.managerFactory.getBooksManagementManager().getUsersDeadlineExpired();
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
+    }
+  }
+
+  /**
+   * Send a reminder email to all users with a borrow not returned with deadline expired.
+   *
+   * @throws LibraryWsException Throw this exception if there is a technical problem.
+   */
+  public void sendReminderToUsers() throws LibraryWsException {
+
+    try {
+      this.managerFactory.getBooksManagementManager().reminderToUsers();
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(

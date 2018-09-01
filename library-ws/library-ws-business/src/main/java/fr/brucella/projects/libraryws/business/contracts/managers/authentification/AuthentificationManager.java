@@ -63,4 +63,14 @@ public interface AuthentificationManager {
    */
   Boolean giveRole(final Integer userId, final Integer roleId)
       throws TechnicalException, FunctionalException;
+
+  /**
+   * Check if the login is available.
+   *
+   * @param login the user login
+   * @return true if the login is available, false is the login is already used.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the login is null.
+   */
+  Boolean checkLoginAvailability(final String login) throws TechnicalException, FunctionalException;
 }

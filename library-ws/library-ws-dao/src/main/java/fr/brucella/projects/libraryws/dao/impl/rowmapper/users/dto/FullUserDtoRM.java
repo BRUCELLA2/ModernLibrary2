@@ -41,15 +41,15 @@ public class FullUserDtoRM implements RowMapper<FullUserDto> {
     }
 
     if (resultSet.getString("line2") == null) {
-      fullUserDto.setLine1(null);
+      fullUserDto.setLine2(null);
     } else {
-      fullUserDto.setLine1(resultSet.getString("line2"));
+      fullUserDto.setLine2(resultSet.getString("line2"));
     }
 
     if (resultSet.getString("line3") == null) {
-      fullUserDto.setLine1(null);
+      fullUserDto.setLine3(null);
     } else {
-      fullUserDto.setLine1(resultSet.getString("line3"));
+      fullUserDto.setLine3(resultSet.getString("line3"));
     }
 
     fullUserDto.setZipCode(resultSet.getString("zip_code"));

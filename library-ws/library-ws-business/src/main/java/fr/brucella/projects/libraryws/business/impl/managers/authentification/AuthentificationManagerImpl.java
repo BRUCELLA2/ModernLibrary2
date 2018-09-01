@@ -212,6 +212,20 @@ public class AuthentificationManagerImpl extends AbstractManager
     return true;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public Boolean checkLoginAvailability(final String login)
+      throws TechnicalException, FunctionalException {
+
+    if (StringUtils.isEmpty(login)) {
+      LOG.error(messages.getString("authentificationManager.loginAvailable.loginNull"));
+      throw new FunctionalException(
+          messages.getString("authentificationManager.loginAvailable.loginNull"));
+    }
+
+    return this.getDaoFactory().getUserDao().loginAvailable(login);
+  }
+
   /**
    * This method encrypte a raw password with the password encoder {@link #passwordEncoder}.
    *

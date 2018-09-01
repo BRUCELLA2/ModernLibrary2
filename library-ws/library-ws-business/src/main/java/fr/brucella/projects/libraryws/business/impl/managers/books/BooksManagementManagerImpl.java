@@ -52,6 +52,20 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
   }
 
+  @Override
+  public void reminderToUsers() throws TechnicalException {
+
+    List<User> users = new ArrayList<>();
+
+    try {
+      this.getDaoFactory().getUserDao().getUserWithBorrowsExpired();
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug(exception.getMessage());
+      }
+    }
+  }
+
   /** {@inheritDoc} */
   @Override
   public List<BookStockDto> getStocksList() throws TechnicalException {

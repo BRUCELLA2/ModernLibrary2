@@ -146,6 +146,32 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
   /** {@inheritDoc} */
   @Override
+  public Boolean loginAvailable(String login) throws TechnicalException {
+
+    sql = "SELECT COUNT(login) FROM users WHERE login = :login";
+
+    final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+    parameterSource.addValue("login", login);
+
+    int count = 0;
+    try {
+      count = getNamedJdbcTemplate().queryForObject(sql, parameterSource, Integer.class);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+
+    return (count == 0);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public List<User> getUserWithBorrowsExpired() throws TechnicalException, NotFoundException {
 
     sql =

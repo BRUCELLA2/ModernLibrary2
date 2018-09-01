@@ -25,6 +25,13 @@ public interface BooksManagementManager {
   List<User> getUsersDeadlineExpired() throws TechnicalException;
 
   /**
+   * Send a reminder email to all users with a borrow not returned with deadline expired.
+   *
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   */
+  void reminderToUsers() throws TechnicalException;
+
+  /**
    * Provides the list of stocks and title of book.
    *
    * @return the list of stocks and title of book.

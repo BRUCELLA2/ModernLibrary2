@@ -30,7 +30,18 @@ public interface BooksBorrowedListingManager {
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws FunctionalException - This exception is throw if the id of the user is null.
    */
-  List<UserCurrentlyBorrowDto> userCurrentlyBorrow(final Integer userId)
+  List<BorrowDto> userCurrentlyBorrow(final Integer userId)
+      throws TechnicalException, FunctionalException;
+
+  /**
+   * Provides the list of informations about the borrows returned by the user.
+   *
+   * @param userId id
+   * @return the list of informations about currently borrows by the user.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the user is null.
+   */
+  List<BorrowDto> userReturnBorrow(final Integer userId)
       throws TechnicalException, FunctionalException;
 
   /**

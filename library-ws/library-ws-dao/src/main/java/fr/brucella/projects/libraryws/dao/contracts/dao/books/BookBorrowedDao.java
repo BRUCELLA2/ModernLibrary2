@@ -44,12 +44,13 @@ public interface BookBorrowedDao {
    * Give the list of informations about currently borrows by the user.
    *
    * @param userId id of the user.
-   * @return the list of informations about currently borrows by the user.
+   * @param currently true if need only currently borrow.
+   * @return A list of Borrow Data Transfert Object.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and no
    *     borrows is found.
    */
-  List<UserCurrentlyBorrowDto> getUserCurrentlyBorrows(final Integer userId)
+  List<BorrowDto> getUserBorrows(final Integer userId, final Boolean currently)
       throws TechnicalException, NotFoundException;
 
   /**

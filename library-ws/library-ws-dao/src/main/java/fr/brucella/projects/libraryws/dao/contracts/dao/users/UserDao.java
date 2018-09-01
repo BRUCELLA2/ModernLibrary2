@@ -36,6 +36,15 @@ public interface UserDao {
   FullUserDto getUserByLogin(final String login) throws TechnicalException, NotFoundException;
 
   /**
+   * Check if the login is not used.
+   *
+   * @param login the login.
+   * @return true if the login is not used. False, if the login is already used.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   */
+  Boolean loginAvailable(final String login) throws TechnicalException;
+
+  /**
    * Give the list of users with a borrows not returned expired.
    *
    * @return the list of users with a borrows not returned expired.

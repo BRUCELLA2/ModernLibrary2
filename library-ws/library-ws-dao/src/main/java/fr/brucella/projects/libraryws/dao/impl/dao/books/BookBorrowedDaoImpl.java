@@ -129,28 +129,29 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
 
   /** {@inheritDoc} */
   @Override
-  public List<UserCurrentlyBorrowDto> getUserCurrentlyBorrows(final Integer userId)
+  public List<BorrowDto> getUserBorrows(final Integer userId, final Boolean currently)
       throws TechnicalException, NotFoundException {
 
     sql =
-        "SELECT book_borrowed.book_borrowed_id, book_borrowed.user_id, book_borrowed.book_id, book_borrowed.borrow_date, book_borrowed.end_date, book_borrowed.extension, book.title FROM book_borrowed INNER JOIN book ON book_borrowed.book_id = book.book_id WHERE book_borrowed.user_id = :userId";
+        "SELECT book_borrowed.book_borrowed_id, book_borrowed.user_id, book_borrowed.book_id, book_borrowed.end_date, book_borrowed.borrow_date, book_borrowed.extension, book_borrowed.nb_reminder, book_borrowed.returned, book_borrowed.last_reminder, book.title, users.login FROM book_borrowed INNER JOIN book ON book.book_id = book_borrowed.book_id INNER JOIN users ON users.user_id = book_borrowed.user_id WHERE book_borrowed.user_id = :userId AND book_borrowed.returned = :currently";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
     parameterSource.addValue("userId", userId);
+    parameterSource.addValue("currently", !currently);
 
-    final RowMapper<UserCurrentlyBorrowDto> rowMapper = new UserCurrentlyBorrowDtoRM();
+    final RowMapper<BorrowDto> rowMapper = new BorrowDtoRM();
 
     try {
-      final List<UserCurrentlyBorrowDto> userCurrentlyBorrowDtoList =
+      final List<BorrowDto> borrowDtoList =
           this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
-      if (userCurrentlyBorrowDtoList.isEmpty()) {
+      if (borrowDtoList.isEmpty()) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
         }
         throw new NotFoundException(
             messages.getString("bookBorrowedDao.getUserCurrentlyBorrows.notFound"));
       } else {
-        return userCurrentlyBorrowDtoList;
+        return borrowDtoList;
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
