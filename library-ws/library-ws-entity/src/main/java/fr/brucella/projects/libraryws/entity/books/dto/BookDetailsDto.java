@@ -26,7 +26,7 @@ public class BookDetailsDto extends Book {
   private String genreName;
 
   /** List of authors who write the book */
-  @NotEmpty(message = "{bookDetailsDto.authors.empty")
+  @NotEmpty(message = "{bookDetailsDto.authors.empty}")
   private List<Author> authors;
 
   // ===== Constructor =====
