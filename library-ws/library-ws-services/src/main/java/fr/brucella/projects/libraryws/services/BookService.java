@@ -257,6 +257,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    *
    * @throws LibraryWsException Throw this exception if there is a technical problem.
    */
+  @WebMethod
   public void sendReminderToUsers() throws LibraryWsException {
 
     try {

@@ -63,6 +63,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void reminderToUsers() throws TechnicalException {
 

@@ -125,7 +125,7 @@
   <!-- Build -->
   <!-- =============================================================== -->
   <build>
-    <finalName>library-clients-webapp</finalName>
+    <finalName>library-clients</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- Packaging JAR -->
