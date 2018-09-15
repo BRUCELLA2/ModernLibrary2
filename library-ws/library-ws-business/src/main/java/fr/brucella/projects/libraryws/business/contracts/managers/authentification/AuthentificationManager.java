@@ -46,7 +46,7 @@ public interface AuthentificationManager {
    * @param fullUserDto full user informations to add.
    * @return id of the new user added.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the fullUserDto are not valid (null or
+   * @throws FunctionalException - This exception is throw if the fullUserDto is not valid (null or
    *     with invalid data).
    */
   Integer addNewUser(final FullUserDto fullUserDto) throws TechnicalException, FunctionalException;

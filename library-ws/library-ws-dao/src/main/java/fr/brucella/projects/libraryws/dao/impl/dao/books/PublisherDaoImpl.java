@@ -79,7 +79,7 @@ public class PublisherDaoImpl extends AbstractDao implements PublisherDao {
   public void updatePublisher(final Publisher publisher)
       throws TechnicalException, NotFoundException {
 
-    sql = "UPDATE publisher SET name = :name WHERE publisher_id = publisherId";
+    sql = "UPDATE publisher SET name = :name WHERE publisher_id = :publisherId";
 
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(publisher);
 

@@ -218,9 +218,9 @@ public class AuthentificationManagerImpl extends AbstractManager
       throws TechnicalException, FunctionalException {
 
     if (StringUtils.isEmpty(login)) {
-      LOG.error(messages.getString("authentificationManager.loginAvailable.loginNull"));
+      LOG.error(messages.getString("authentificationManager.checkLoginAvailability.loginNull"));
       throw new FunctionalException(
-          messages.getString("authentificationManager.loginAvailable.loginNull"));
+          messages.getString("authentificationManager.checkLoginAvailability.loginNull"));
     }
 
     return this.getDaoFactory().getUserDao().loginAvailable(login);

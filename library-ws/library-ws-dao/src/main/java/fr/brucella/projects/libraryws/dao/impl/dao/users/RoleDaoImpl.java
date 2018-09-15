@@ -153,7 +153,7 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
   @Override
   public int insertRole(final Role role) throws TechnicalException {
 
-    sql = "INSERT INTO role (role_id, role_name) VALUES (DEFAULT, :roleId, :roleName)";
+    sql = "INSERT INTO role (role_id, role_name) VALUES (DEFAULT, :roleName)";
 
     final KeyHolder keyHolder = new GeneratedKeyHolder();
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(role);

@@ -1,5 +1,6 @@
 package fr.brucella.projects.libraryws.business.contracts;
 
+import fr.brucella.projects.libraryws.business.contracts.managers.administration.AdministrationManager;
 import fr.brucella.projects.libraryws.business.contracts.managers.authentification.AuthentificationManager;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksBorrowedListingManager;
 import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksListingManager;
@@ -11,6 +12,20 @@ import fr.brucella.projects.libraryws.business.contracts.managers.books.BooksMan
  * @author BRUCELLA2
  */
 public interface ManagerFactory {
+
+  /**
+   * Get the Administration Manager.
+   *
+   * @return the Administration Manager.
+   */
+  AdministrationManager getAdministrationManager();
+
+  /**
+   * Set the Administration Manager.
+   *
+   * @param administrationManager the Administration Manager.
+   */
+  void setAdministrationManager(final AdministrationManager administrationManager);
 
   /**
    * Get the Authentification Manager.

@@ -365,7 +365,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    *
    * @param bookBorrowedId id of the bookBorrowed.
    * @return true if extend success. Throw exception if not.
-   * @throws LibraryWsException Throw this exception if there is a technical. Throw this exception
+   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this exception
    *     if there is a functional problem : - if the id of the bookBorrowed is not valid - if the
    *     bookBorrowed is not found - if the book is already returned - if end date of borrow is
    *     passed - if the bookBorrowed is already extended
@@ -399,7 +399,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    *
    * @param bookBorrowedId id of the bookBorrowed.
    * @return true if the borrowing return if a success. Throw exception if not.
-   * @throws LibraryWsException Throw this exception if there is a technical. Throw this exception
+   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this exception
    *     if there is a functional problem : - if the id of the bookBorrowed is not valid - if the
    *     bookBorrowed is not found - if the book is already returned
    */
@@ -434,7 +434,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    *
    * @param bookId id of the book.
    * @return the book details DTO.
-   * @throws LibraryWsException Throw this exception if there is a technical Throw this exception if
+   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this exception if
    *     there is a functional problem : - if the id of the book is not valid - if the book is not
    *     found
    */

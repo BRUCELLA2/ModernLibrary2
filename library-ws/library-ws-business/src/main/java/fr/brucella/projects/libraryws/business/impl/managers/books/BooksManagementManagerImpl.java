@@ -40,9 +40,8 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
   /** Books Borrowed Listing Manager logger */
   private static final Log LOG = LogFactory.getLog(BooksManagementManagerImpl.class);
 
-  // TODO need to externalize this parameter
   /** Number of days for a borrow or an extension of a borrow. */
-  private static final Integer NB_DAYS_BORROW = 30;
+  private static final Integer NB_DAYS_BORROW = Integer.parseInt(config.getString("nbDaysBorrow"));
 
   /** Default Constructor */
   public BooksManagementManagerImpl() {

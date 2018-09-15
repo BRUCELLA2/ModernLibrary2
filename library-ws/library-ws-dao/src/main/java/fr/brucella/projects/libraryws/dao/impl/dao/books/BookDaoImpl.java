@@ -325,7 +325,7 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
   public void updateBook(final Book book) throws TechnicalException, NotFoundException {
 
     sql =
-        "UPDATE book SET book_id = :bookId, title = :title, isbn13 = :isbn13, ean13 = :ean13, publishing_date = :publishingDate, resume = :resume, genre_id = :genreId, publisher_id = :publisherId WHERE book_id = bookId";
+        "UPDATE book SET book_id = :bookId, title = :title, isbn13 = :isbn13, ean13 = :ean13, publishing_date = :publishingDate, resume = :resume, genre_id = :genreId, publisher_id = :publisherId WHERE book_id = :bookId";
 
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(book);
 
