@@ -335,7 +335,6 @@ public class BookService extends SpringBeanAutowiringSupport {
    */
   @WebMethod
   public Integer bookBorrow(final Integer bookId, final Integer userId) throws LibraryWsException {
-    // TODO put message in message bundle if possible
 
     if (bookId == null || userId == null) {
       LOG.error("bookId = " + bookId);

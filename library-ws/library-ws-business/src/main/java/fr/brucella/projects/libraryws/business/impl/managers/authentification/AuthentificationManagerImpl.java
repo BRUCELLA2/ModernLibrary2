@@ -128,8 +128,6 @@ public class AuthentificationManagerImpl extends AbstractManager
   public Integer addNewUser(final FullUserDto fullUserDto)
       throws TechnicalException, FunctionalException {
 
-    // TODO add transaction management
-
     if (fullUserDto == null) {
       LOG.error(messages.getString("authentificationManager.userModification.fullUserDtoNull"));
       throw new FunctionalException(

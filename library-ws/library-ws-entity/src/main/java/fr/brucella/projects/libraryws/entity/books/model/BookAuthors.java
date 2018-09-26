@@ -4,7 +4,6 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * TODO To delete if not useful. Represents the association between an author and a book.
  *
  * @author BRUCELLA2
  */

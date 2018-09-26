@@ -125,8 +125,6 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
   public Integer bookBorrowing(final Integer bookId, final Integer userId)
       throws TechnicalException, FunctionalException {
 
-    // TODO if user have an active borrow for this book, a new borrow should not be possible.
-
     if (bookId == null || userId == null) {
       LOG.error("bookId = " + bookId);
       LOG.error("userId = " + userId);
@@ -167,8 +165,6 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
   @Override
   public Boolean extendBorrow(final Integer bookBorrowedId)
       throws TechnicalException, FunctionalException {
-
-    // TODO add transaction management
 
     if (bookBorrowedId == null) {
       LOG.error("bookBorrowedId = " + bookBorrowedId);
@@ -223,7 +219,6 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
   @Override
   public Boolean returnBorrow(final Integer bookBorrowedId)
       throws TechnicalException, FunctionalException {
-    // TODO add transaction management
 
     if (bookBorrowedId == null) {
       LOG.error("bookBorrowedId = " + bookBorrowedId);
