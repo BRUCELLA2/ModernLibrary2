@@ -7,6 +7,7 @@ import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
 import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
+import fr.brucella.projects.libraryws.entity.books.model.Stock;
 import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
@@ -76,7 +77,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       }
     }
 
-    sendReminderMails("smtp.mailtrap.io", 2525, "769021f57f48d2", "0042f935ee0f65", users);
+    sendReminderMails(config.getString("mail.host"), Integer.valueOf(config.getString("mail.port")), config.getString("mail.username"), config.getString("mail.password"), users);
   }
 
   /** {@inheritDoc} */
@@ -142,7 +143,24 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     bookBorrowed.setNbReminder(0);
     bookBorrowed.setReturned(false);
 
-    return this.getDaoFactory().getBookBorrowedDao().insertBookBorrowed(bookBorrowed);
+    Stock stock = new Stock();
+    Stock newStock = new Stock();
+    try {
+      stock = this.getDaoFactory().getStockDao().getStockForBook(bookId);
+      if(stock.getAmount() < 1) {
+        LOG.error(messages.getString("booksManagementManager.bookBorrowing.noEnoughStock"));
+        throw new FunctionalException(messages.getString("booksManagementManager.bookBorrowing.noEnoughStock"));
+      }
+      newStock = stock;
+      newStock.setAmountAvailable(stock.getAmountAvailable()-1);
+      this.getDaoFactory().getStockDao().updateStock(newStock);
+      return this.getDaoFactory().getBookBorrowedDao().insertBookBorrowed(bookBorrowed);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug(exception.getMessage());
+      }
+      throw new FunctionalException(exception.getMessage(), exception);
+    }
   }
 
   /** {@inheritDoc} */
@@ -260,6 +278,16 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
   }
 
+  /**
+   * Send reminder emails.
+   *
+   * @param host smtp host.
+   * @param port smtp host port.
+   * @param username username for smtp authentication.
+   * @param password password for smtp authentication.
+   * @param users list of User to send the reminder mails.
+   * @throws TechnicalException
+   */
   private void sendReminderMails(
       String host, Integer port, String username, String password, List<User> users)
       throws TechnicalException {
@@ -288,14 +316,11 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       try {
 
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("reminder@modernLibrary.fr"));
+        message.setFrom(new InternetAddress(config.getString("mail.sender")));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
-        message.setSubject("Livre non rendu");
+        message.setSubject(messages.getString("booksManagementManager.sendReminderMails.object"));
 
-        String msg =
-            "Mr "
-                + user.getLogin()
-                + ", Vous avez des livres non rendus. Veuillez vous connecter sur le site de la bibliothèque Bradbury pour plus de détails";
+        String msg = messages.getString("booksManagementManager.sendReminderMails.mail");
 
         LOG.error("Message : " + msg);
 

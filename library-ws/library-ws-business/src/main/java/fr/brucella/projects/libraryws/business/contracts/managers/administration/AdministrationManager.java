@@ -21,8 +21,8 @@ public interface AdministrationManager {
    * @param book book to add.
    * @return id of the new book.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the book is not valid (null or
-   *     with invalid data).
+   * @throws FunctionalException - This exception is throw if the book is not valid (null or with
+   *     invalid data).
    */
   Integer addBook(final Book book) throws TechnicalException, FunctionalException;
 
@@ -32,8 +32,8 @@ public interface AdministrationManager {
    * @param author an author.
    * @return id of the author.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the author is not valid (null or
-   *     with invalid data).
+   * @throws FunctionalException - This exception is throw if the author is not valid (null or with
+   *     invalid data).
    */
   Integer addAuthor(final Author author) throws TechnicalException, FunctionalException;
 
@@ -43,8 +43,8 @@ public interface AdministrationManager {
    * @param genre a genre.
    * @return id of the genre.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the genre is not valid (null or
-   *     with invalid data).
+   * @throws FunctionalException - This exception is throw if the genre is not valid (null or with
+   *     invalid data).
    */
   Integer addGenre(final Genre genre) throws TechnicalException, FunctionalException;
 
@@ -65,8 +65,8 @@ public interface AdministrationManager {
    * @param role a role.
    * @return id of the role.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the role is not valid (null or
-   *     with invalid data).
+   * @throws FunctionalException - This exception is throw if the role is not valid (null or with
+   *     invalid data).
    */
   Integer addRole(final Role role) throws TechnicalException, FunctionalException;
 
@@ -76,8 +76,8 @@ public interface AdministrationManager {
    * @param book book to modify (with data modified).
    * @return true if modification is a success. Throw exception if extend fail.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException Throw this exception if there is a functional problem : - if the
-   *     id of the book is not valid - if the book is not found.
+   * @throws FunctionalException Throw this exception if there is a functional problem : - if the id
+   *     of the book is not valid - if the book is not found.
    */
   Boolean modifyBook(final Book book) throws TechnicalException, FunctionalException;
 
@@ -87,8 +87,8 @@ public interface AdministrationManager {
    * @param author author to modify (with data modified).
    * @return true if modification is a success. Throw exception if extend fail.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException Throw this exception if there is a functional problem : - if the
-   *     id of the author is not valid - if the author is not found.
+   * @throws FunctionalException Throw this exception if there is a functional problem : - if the id
+   *     of the author is not valid - if the author is not found.
    */
   Boolean modifyAuthor(final Author author) throws TechnicalException, FunctionalException;
 
@@ -98,8 +98,8 @@ public interface AdministrationManager {
    * @param genre genre to modify (with data modified).
    * @return true if modification is a success. Throw exception if extend fail.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException Throw this exception if there is a functional problem : - if the
-   *     id of the genre is not valid - if the genre is not found.
+   * @throws FunctionalException Throw this exception if there is a functional problem : - if the id
+   *     of the genre is not valid - if the genre is not found.
    */
   Boolean modifyGenre(final Genre genre) throws TechnicalException, FunctionalException;
 
@@ -109,8 +109,8 @@ public interface AdministrationManager {
    * @param publisher publisher to modify (with data modified).
    * @return true if modification is a success. Throw exception if extend fail.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException Throw this exception if there is a functional problem : - if the
-   *     id of the publisher is not valid - if the publisher is not found.
+   * @throws FunctionalException Throw this exception if there is a functional problem : - if the id
+   *     of the publisher is not valid - if the publisher is not found.
    */
   Boolean modifyPublisher(final Publisher publisher) throws TechnicalException, FunctionalException;
 
@@ -120,8 +120,8 @@ public interface AdministrationManager {
    * @param role role to modify (with data modified).
    * @return true if modification is a success. Throw exception if extend fail.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException Throw this exception if there is a functional problem : - if the
-   *     id of the role is not valid - if the role is not found.
+   * @throws FunctionalException Throw this exception if there is a functional problem : - if the id
+   *     of the role is not valid - if the role is not found.
    */
   Boolean modifyRole(final Role role) throws TechnicalException, FunctionalException;
 }

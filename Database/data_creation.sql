@@ -50,12 +50,13 @@ INSERT INTO public.address(address_id, line1, line2, line3, city, zip_code)
 		(DEFAULT, '235 rue Paul Bringuier', '', '', 'Montpellier', '34080'),
 		(DEFAULT, '12 Boulevard de la clarté', 'Résidence du Frêne', '', 'Nimes', '31000');
 
-/* INSERT INTO users TABLE */
+/* INSERT INTO users TABLE 
+password is 'pass' without encryption */
 INSERT INTO public.users(user_id, password, email, login, phone, address_id)
 	VALUES 
-		(DEFAULT, 'pass1', 'user1@gmail.com', 'user1', '0102030405', 1),
-		(DEFAULT, 'fredpass', 'fred@gmail.com', 'fred', '0504030201', 2),
-		(DEFAULT, 'bobpass', 'bob@hotmail.com', 'bob', '0123456789', 3);
+		(DEFAULT, '$2a$10$qD/S8Wv/isAF12ADRdRsZ.M35zpWTdEkofs1/f8vQTFsf1htwTba.', 'user1@gmail.com', 'user1', '0102030405', 1),
+		(DEFAULT, '$2a$10$qD/S8Wv/isAF12ADRdRsZ.M35zpWTdEkofs1/f8vQTFsf1htwTba.', 'fred@gmail.com', 'fred', '0504030201', 2),
+		(DEFAULT, '$2a$10$qD/S8Wv/isAF12ADRdRsZ.M35zpWTdEkofs1/f8vQTFsf1htwTba.', 'bob@hotmail.com', 'bob', '0123456789', 3);
 
 /* INSERT INTO role TABLE */
 INSERT INTO public.role(role_id, role_name)
@@ -74,7 +75,8 @@ INSERT INTO public.user_roles(role_id, user_id)
 INSERT INTO public.book_borrowed(book_borrowed_id, user_id, book_id, end_date, borrow_date, extension, nb_reminder, returned, last_reminder)
 	VALUES 
 		(DEFAULT, 1, 2, '2018-08-01', '2018-07-01', true, 0, false, null),
-		(DEFAULT, 1, 1, '2018-01-15', '2017-10-03', false, 2, true, '2018-01-10'),
+		(DEFAULT, 1, 1, '2018-01-15', '2017-10-03', false, 2, true, '2018-03-10'),
+		(DEFAULT, 1, 3, '2018-10-15', '2018-09-01', false, 0, false, null),
 		(DEFAULT, 2, 3, '2018-08-15', '2018-07-10', false, 0, false, null),
 		(DEFAULT, 3, 1, '2018-09-04', '2018-07-11', true, 0, false, null),
 		(DEFAULT, 3, 2, '2018-07-04', '2018-06-11', true, 1, false, '2018-07-01');
@@ -84,4 +86,4 @@ INSERT INTO public.stock(stock_id, book_id, amount_available, amount)
 	VALUES 
 		(DEFAULT, 1, 8, 10),
 		(DEFAULT, 2, 4, 5),
-		(DEFAULT, 3, 14, 15);
+		(DEFAULT, 3, 0, 1);

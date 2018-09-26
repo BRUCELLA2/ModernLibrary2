@@ -10,7 +10,7 @@
     <!-- Interceptors -->
     <interceptors>
       <interceptor name="loginInterceptor"
-        class="fr.brucella.projects.libraryclients.webapp.interceptor.LoginInterceptor" />
+        class="fr.brucella.projects.libraryclients.webapp.interceptor.LoginInterceptor"/>
       <interceptor-stack name="loginStack">
         <interceptor-ref name="loginInterceptor"/>
         <interceptor-ref name="defaultStack"/>

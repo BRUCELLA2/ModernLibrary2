@@ -22,6 +22,10 @@ public class ObjectFactory {
   private final static QName _Login_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "login");
   private final static QName _AddRoleToUser_QNAME = new QName("http://services.libraryws.projects.brucella.fr/",
       "addRoleToUser");
+  private final static QName _LoginAvailable_QNAME = new QName("http://services.libraryws.projects.brucella.fr/",
+      "loginAvailable");
+  private final static QName _LoginAvailableResponse_QNAME = new QName(
+      "http://services.libraryws.projects.brucella.fr/", "loginAvailableResponse");
   private final static QName _AddUser_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "addUser");
   private final static QName _AddRoleToUserResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/",
       "addRoleToUserResponse");
@@ -70,6 +74,13 @@ public class ObjectFactory {
   }
 
   /**
+   * Create an instance of {@link LoginAvailableResponse }
+   */
+  public LoginAvailableResponse createLoginAvailableResponse() {
+    return new LoginAvailableResponse();
+  }
+
+  /**
    * Create an instance of {@link AddUser }
    */
   public AddUser createAddUser() {
@@ -81,6 +92,13 @@ public class ObjectFactory {
    */
   public AddRoleToUserResponse createAddRoleToUserResponse() {
     return new AddRoleToUserResponse();
+  }
+
+  /**
+   * Create an instance of {@link LoginAvailable }
+   */
+  public LoginAvailable createLoginAvailable() {
+    return new LoginAvailable();
   }
 
   /**
@@ -147,6 +165,23 @@ public class ObjectFactory {
   @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "addRoleToUser")
   public JAXBElement<AddRoleToUser> createAddRoleToUser(AddRoleToUser value) {
     return new JAXBElement<AddRoleToUser>(_AddRoleToUser_QNAME, AddRoleToUser.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link LoginAvailable }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "loginAvailable")
+  public JAXBElement<LoginAvailable> createLoginAvailable(LoginAvailable value) {
+    return new JAXBElement<LoginAvailable>(_LoginAvailable_QNAME, LoginAvailable.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link LoginAvailableResponse }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "loginAvailableResponse")
+  public JAXBElement<LoginAvailableResponse> createLoginAvailableResponse(LoginAvailableResponse value) {
+    return new JAXBElement<LoginAvailableResponse>(_LoginAvailableResponse_QNAME, LoginAvailableResponse.class, null,
+        value);
   }
 
   /**

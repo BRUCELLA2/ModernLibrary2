@@ -20,7 +20,7 @@ public class LoginInterceptor extends AbstractInterceptor implements StrutsStati
   /**
    * Name of the attribute in HttpSession which store the user.
    */
-  private static final String USER_IN_SESSION = "userLog" ;
+  private static final String USER_IN_SESSION = "userLog";
 
   /**
    * Initialization of the LoginInterceptor.
@@ -36,7 +36,9 @@ public class LoginInterceptor extends AbstractInterceptor implements StrutsStati
 
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String intercept(final ActionInvocation invocation) throws Exception {
 
@@ -45,8 +47,8 @@ public class LoginInterceptor extends AbstractInterceptor implements StrutsStati
     HttpSession session = request.getSession(true);
 
     Object user = session.getAttribute(USER_IN_SESSION);
-    if(user == null) {
-      if(invocation.getAction().getClass().equals(UserAction.class)) {
+    if (user == null) {
+      if (invocation.getAction().getClass().equals(UserAction.class)) {
         return invocation.invoke();
       }
       return "index";

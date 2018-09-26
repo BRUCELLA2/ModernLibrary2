@@ -21,8 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="genreId" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="isbn13" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="publisherId" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="publishingDate" type="{http://services.libraryws.projects.brucella.fr/}localDate"
- *         minOccurs="0"/>
+ *         &lt;element name="publishingDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="resume" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -42,7 +41,7 @@ public class Book {
   protected Integer genreId;
   protected String isbn13;
   protected Integer publisherId;
-  protected LocalDate publishingDate;
+  protected String publishingDate;
   protected String resume;
   protected String title;
 
@@ -144,9 +143,9 @@ public class Book {
   /**
    * Obtient la valeur de la propriété publishingDate.
    *
-   * @return possible object is {@link LocalDate }
+   * @return possible object is {@link String }
    */
-  public LocalDate getPublishingDate() {
+  public String getPublishingDate() {
     return publishingDate;
   }
 
@@ -154,9 +153,9 @@ public class Book {
    * Définit la valeur de la propriété publishingDate.
    *
    * @param value
-   *     allowed object is {@link LocalDate }
+   *     allowed object is {@link String }
    */
-  public void setPublishingDate(LocalDate value) {
+  public void setPublishingDate(String value) {
     this.publishingDate = value;
   }
 

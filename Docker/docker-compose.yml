@@ -1,0 +1,41 @@
+version: '3.1'
+services:
+  database:
+    image: postgres:10.4-alpine
+    container_name: modernlibrary_database
+    restart: always
+    hostname: 127.0.0.1
+    volumes:
+      - ../Database/CreateDataBase.sql:/docker-entrypoint-initdb.d/01.sql
+      - ../Database/data_creation.sql:/docker-entrypoint-initdb.d/02.sql
+    ports:
+      - 5436:5436
+    environment:
+      - POSTGRES_DB=modernlibrary
+      - POSTGRES_USER=adm_modernlibrary
+      - POSTGRES_PASSWORD=adm_modernlibrary
+  web-service:
+    image: tomcat:9.0.10-jre8-alpine
+    container_name: modernlibrary-web-service
+    restart: always
+    hostname: 127.0.0.1
+    volumes:
+      - ./library-ws/library-ws-services.war:/usr/local/tomcat/webapps/library-ws-services.war
+      - ./library-ws/library-ws-services:/usr/local/tomcat/webapps/library-ws-services
+    ports:
+      - 8080:8080
+  clients:
+    image: tomcat:9.0.10-jre8-alpine
+    container_name: modernlibrary-clients
+    restart: always
+    hostname: 127.0.0.1
+    volumes:
+      - ./library-clients/library-clients.war:/usr/local/tomcat/webapps/library-clients.war
+      - ./library-clients/library-clients:/usr/local/tomcat/webapps/library-clients/
+    ports:
+      - 8081:8080
+  batch:
+    image: modernlibbatch:latest
+    container_name: modernlibrary-batch
+    restart: always
+    hostname: 127.0.0.1

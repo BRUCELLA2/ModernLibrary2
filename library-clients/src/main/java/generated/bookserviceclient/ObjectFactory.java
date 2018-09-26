@@ -21,6 +21,8 @@ public class ObjectFactory {
       "http://services.libraryws.projects.brucella.fr/", "currentlyDeadLineExpiredForUserResponse");
   private final static QName _NbBorrowingByBooks_QNAME = new QName("http://services.libraryws.projects.brucella.fr/",
       "nbBorrowingByBooks");
+  private final static QName _ReturnedBorrowsForUserResponse_QNAME = new QName(
+      "http://services.libraryws.projects.brucella.fr/", "returnedBorrowsForUserResponse");
   private final static QName _AvailableBooksListResponse_QNAME = new QName(
       "http://services.libraryws.projects.brucella.fr/", "availableBooksListResponse");
   private final static QName _BookBorrow_QNAME = new QName("http://services.libraryws.projects.brucella.fr/",
@@ -33,6 +35,10 @@ public class ObjectFactory {
       "http://services.libraryws.projects.brucella.fr/", "currentlyBooksBorrowedList");
   private final static QName _CurrentlyDeadlineExpiredUsersResponse_QNAME = new QName(
       "http://services.libraryws.projects.brucella.fr/", "currentlyDeadlineExpiredUsersResponse");
+  private final static QName _ReturnedBorrowsForUser_QNAME = new QName(
+      "http://services.libraryws.projects.brucella.fr/", "returnedBorrowsForUser");
+  private final static QName _SendReminderToUsersResponse_QNAME = new QName(
+      "http://services.libraryws.projects.brucella.fr/", "sendReminderToUsersResponse");
   private final static QName _BooksSearchedList_QNAME = new QName("http://services.libraryws.projects.brucella.fr/",
       "booksSearchedList");
   private final static QName _BookStocksListResponse_QNAME = new QName(
@@ -63,6 +69,8 @@ public class ObjectFactory {
       "http://services.libraryws.projects.brucella.fr/", "currentlyDeadlineExpiredResponse");
   private final static QName _CurrentlyDeadlineExpiredUsers_QNAME = new QName(
       "http://services.libraryws.projects.brucella.fr/", "currentlyDeadlineExpiredUsers");
+  private final static QName _SendReminderToUsers_QNAME = new QName("http://services.libraryws.projects.brucella.fr/",
+      "sendReminderToUsers");
   private final static QName _BookBorrowResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/",
       "bookBorrowResponse");
   private final static QName _CurrentlyBorrowForUser_QNAME = new QName(
@@ -91,6 +99,13 @@ public class ObjectFactory {
    */
   public CurrentlyDeadlineExpiredUsers createCurrentlyDeadlineExpiredUsers() {
     return new CurrentlyDeadlineExpiredUsers();
+  }
+
+  /**
+   * Create an instance of {@link SendReminderToUsers }
+   */
+  public SendReminderToUsers createSendReminderToUsers() {
+    return new SendReminderToUsers();
   }
 
   /**
@@ -276,6 +291,13 @@ public class ObjectFactory {
   }
 
   /**
+   * Create an instance of {@link ReturnedBorrowsForUserResponse }
+   */
+  public ReturnedBorrowsForUserResponse createReturnedBorrowsForUserResponse() {
+    return new ReturnedBorrowsForUserResponse();
+  }
+
+  /**
    * Create an instance of {@link AvailableBooksList }
    */
   public AvailableBooksList createAvailableBooksList() {
@@ -287,6 +309,20 @@ public class ObjectFactory {
    */
   public BookStocksListResponse createBookStocksListResponse() {
     return new BookStocksListResponse();
+  }
+
+  /**
+   * Create an instance of {@link ReturnedBorrowsForUser }
+   */
+  public ReturnedBorrowsForUser createReturnedBorrowsForUser() {
+    return new ReturnedBorrowsForUser();
+  }
+
+  /**
+   * Create an instance of {@link SendReminderToUsersResponse }
+   */
+  public SendReminderToUsersResponse createSendReminderToUsersResponse() {
+    return new SendReminderToUsersResponse();
   }
 
   /**
@@ -322,13 +358,6 @@ public class ObjectFactory {
    */
   public CurrentlyBorrowExpiredDto createCurrentlyBorrowExpiredDto() {
     return new CurrentlyBorrowExpiredDto();
-  }
-
-  /**
-   * Create an instance of {@link LocalDate }
-   */
-  public LocalDate createLocalDate() {
-    return new LocalDate();
   }
 
   /**
@@ -414,6 +443,17 @@ public class ObjectFactory {
   }
 
   /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link ReturnedBorrowsForUserResponse }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name =
+      "returnedBorrowsForUserResponse")
+  public JAXBElement<ReturnedBorrowsForUserResponse> createReturnedBorrowsForUserResponse(
+      ReturnedBorrowsForUserResponse value) {
+    return new JAXBElement<ReturnedBorrowsForUserResponse>(_ReturnedBorrowsForUserResponse_QNAME,
+        ReturnedBorrowsForUserResponse.class, null, value);
+  }
+
+  /**
    * Create an instance of {@link JAXBElement }{@code <}{@link AvailableBooksListResponse }{@code >}}
    */
   @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "availableBooksListResponse")
@@ -464,6 +504,24 @@ public class ObjectFactory {
       CurrentlyDeadlineExpiredUsersResponse value) {
     return new JAXBElement<CurrentlyDeadlineExpiredUsersResponse>(_CurrentlyDeadlineExpiredUsersResponse_QNAME,
         CurrentlyDeadlineExpiredUsersResponse.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link ReturnedBorrowsForUser }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "returnedBorrowsForUser")
+  public JAXBElement<ReturnedBorrowsForUser> createReturnedBorrowsForUser(ReturnedBorrowsForUser value) {
+    return new JAXBElement<ReturnedBorrowsForUser>(_ReturnedBorrowsForUser_QNAME, ReturnedBorrowsForUser.class, null,
+        value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link SendReminderToUsersResponse }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "sendReminderToUsersResponse")
+  public JAXBElement<SendReminderToUsersResponse> createSendReminderToUsersResponse(SendReminderToUsersResponse value) {
+    return new JAXBElement<SendReminderToUsersResponse>(_SendReminderToUsersResponse_QNAME,
+        SendReminderToUsersResponse.class, null, value);
   }
 
   /**
@@ -599,6 +657,14 @@ public class ObjectFactory {
       CurrentlyDeadlineExpiredUsers value) {
     return new JAXBElement<CurrentlyDeadlineExpiredUsers>(_CurrentlyDeadlineExpiredUsers_QNAME,
         CurrentlyDeadlineExpiredUsers.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link SendReminderToUsers }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "sendReminderToUsers")
+  public JAXBElement<SendReminderToUsers> createSendReminderToUsers(SendReminderToUsers value) {
+    return new JAXBElement<SendReminderToUsers>(_SendReminderToUsers_QNAME, SendReminderToUsers.class, null, value);
   }
 
   /**

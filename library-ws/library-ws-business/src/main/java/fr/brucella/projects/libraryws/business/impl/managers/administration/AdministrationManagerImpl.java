@@ -45,7 +45,9 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
         }
       }
       LOG.error(messages.getString("administrationManager.addBook.constraints"));
-      throw new FunctionalException(messages.getString("administrationManager.addBook.constraints"), new ConstraintViolationException(violations));
+      throw new FunctionalException(
+          messages.getString("administrationManager.addBook.constraints"),
+          new ConstraintViolationException(violations));
     }
 
     return this.getDaoFactory().getBookDao().insertBook(book);
@@ -57,10 +59,12 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
 
     if (author == null) {
       LOG.error(messages.getString("administrationManager.addAuthor.authorNull"));
-      throw new FunctionalException(messages.getString("administrationManager.addAuthor.authorNull"));
+      throw new FunctionalException(
+          messages.getString("administrationManager.addAuthor.authorNull"));
     }
 
-    final Set<ConstraintViolation<Author>> violations = this.getConstraintValidator().validate(author);
+    final Set<ConstraintViolation<Author>> violations =
+        this.getConstraintValidator().validate(author);
     if (!violations.isEmpty()) {
       if (LOG.isDebugEnabled()) {
         for (final ConstraintViolation<Author> violation : violations) {
@@ -68,7 +72,9 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
         }
       }
       LOG.error(messages.getString("administrationManager.addAuthor.constraints"));
-      throw new FunctionalException(messages.getString("administrationManager.addAuthor.constraints"), new ConstraintViolationException(violations));
+      throw new FunctionalException(
+          messages.getString("administrationManager.addAuthor.constraints"),
+          new ConstraintViolationException(violations));
     }
 
     return this.getDaoFactory().getAuthorDao().insertAuthor(author);
@@ -83,7 +89,8 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
       throw new FunctionalException(messages.getString("administrationManager.addGenre.genreNull"));
     }
 
-    final Set<ConstraintViolation<Genre>> violations = this.getConstraintValidator().validate(genre);
+    final Set<ConstraintViolation<Genre>> violations =
+        this.getConstraintValidator().validate(genre);
     if (!violations.isEmpty()) {
       if (LOG.isDebugEnabled()) {
         for (final ConstraintViolation<Genre> violation : violations) {
@@ -91,7 +98,9 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
         }
       }
       LOG.error(messages.getString("administrationManager.addGenre.constraints"));
-      throw new FunctionalException(messages.getString("administrationManager.addGenre.constraints"), new ConstraintViolationException(violations));
+      throw new FunctionalException(
+          messages.getString("administrationManager.addGenre.constraints"),
+          new ConstraintViolationException(violations));
     }
 
     return this.getDaoFactory().getGenreDao().insertGenre(genre);
@@ -99,14 +108,17 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
 
   /** {@inheritDoc} */
   @Override
-  public Integer addPublisher(final Publisher publisher) throws TechnicalException, FunctionalException {
+  public Integer addPublisher(final Publisher publisher)
+      throws TechnicalException, FunctionalException {
 
     if (publisher == null) {
       LOG.error(messages.getString("administrationManager.addPublisher.publisherNull"));
-      throw new FunctionalException(messages.getString("administrationManager.addPublisher.publisherNull"));
+      throw new FunctionalException(
+          messages.getString("administrationManager.addPublisher.publisherNull"));
     }
 
-    final Set<ConstraintViolation<Publisher>> violations = this.getConstraintValidator().validate(publisher);
+    final Set<ConstraintViolation<Publisher>> violations =
+        this.getConstraintValidator().validate(publisher);
     if (!violations.isEmpty()) {
       if (LOG.isDebugEnabled()) {
         for (final ConstraintViolation<Publisher> violation : violations) {
@@ -114,7 +126,9 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
         }
       }
       LOG.error(messages.getString("administrationManager.addPublisher.constraints"));
-      throw new FunctionalException(messages.getString("administrationManager.addPublisher.constraints"), new ConstraintViolationException(violations));
+      throw new FunctionalException(
+          messages.getString("administrationManager.addPublisher.constraints"),
+          new ConstraintViolationException(violations));
     }
 
     return this.getDaoFactory().getPublisherDao().insertPublisher(publisher);
@@ -137,7 +151,9 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
         }
       }
       LOG.error(messages.getString("administrationManager.addRole.constraints"));
-      throw new FunctionalException(messages.getString("administrationManager.addRole.constraints"), new ConstraintViolationException(violations));
+      throw new FunctionalException(
+          messages.getString("administrationManager.addRole.constraints"),
+          new ConstraintViolationException(violations));
     }
 
     return this.getDaoFactory().getRoleDao().insertRole(role);
@@ -149,7 +165,8 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
 
     if (book == null) {
       LOG.error(messages.getString("administrationManager.modifyBook.bookNull"));
-      throw new FunctionalException(messages.getString("administrationManager.modifyBook.bookNull"));
+      throw new FunctionalException(
+          messages.getString("administrationManager.modifyBook.bookNull"));
     }
 
     final Set<ConstraintViolation<Book>> violations = this.getConstraintValidator().validate(book);
@@ -160,7 +177,9 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
         }
       }
       LOG.error(messages.getString("administrationManager.modifyBook.constraints"));
-      throw new FunctionalException(messages.getString("administrationManager.modifyBook.constraints"), new ConstraintViolationException(violations));
+      throw new FunctionalException(
+          messages.getString("administrationManager.modifyBook.constraints"),
+          new ConstraintViolationException(violations));
     }
 
     try {
@@ -170,7 +189,6 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
       LOG.error((exception.getMessage()));
       throw new FunctionalException(exception.getMessage(), exception);
     }
-
   }
 
   /** {@inheritDoc} */
@@ -179,10 +197,12 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
 
     if (author == null) {
       LOG.error(messages.getString("administrationManager.modifyAuthor.authorNull"));
-      throw new FunctionalException(messages.getString("administrationManager.modifyAuthor.authorNull"));
+      throw new FunctionalException(
+          messages.getString("administrationManager.modifyAuthor.authorNull"));
     }
 
-    final Set<ConstraintViolation<Author>> violations = this.getConstraintValidator().validate(author);
+    final Set<ConstraintViolation<Author>> violations =
+        this.getConstraintValidator().validate(author);
     if (!violations.isEmpty()) {
       if (LOG.isDebugEnabled()) {
         for (final ConstraintViolation<Author> violation : violations) {
@@ -190,7 +210,9 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
         }
       }
       LOG.error(messages.getString("administrationManager.modifyAuthor.constraints"));
-      throw new FunctionalException(messages.getString("administrationManager.modifyAuthor.constraints"), new ConstraintViolationException(violations));
+      throw new FunctionalException(
+          messages.getString("administrationManager.modifyAuthor.constraints"),
+          new ConstraintViolationException(violations));
     }
 
     try {
@@ -208,10 +230,12 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
 
     if (genre == null) {
       LOG.error(messages.getString("administrationManager.modifyGenre.genreNull"));
-      throw new FunctionalException(messages.getString("administrationManager.modifyGenre.genreNull"));
+      throw new FunctionalException(
+          messages.getString("administrationManager.modifyGenre.genreNull"));
     }
 
-    final Set<ConstraintViolation<Genre>> violations = this.getConstraintValidator().validate(genre);
+    final Set<ConstraintViolation<Genre>> violations =
+        this.getConstraintValidator().validate(genre);
     if (!violations.isEmpty()) {
       if (LOG.isDebugEnabled()) {
         for (final ConstraintViolation<Genre> violation : violations) {
@@ -219,7 +243,9 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
         }
       }
       LOG.error(messages.getString("administrationManager.modifyGenre.constraints"));
-      throw new FunctionalException(messages.getString("administrationManager.modifyGenre.constraints"), new ConstraintViolationException(violations));
+      throw new FunctionalException(
+          messages.getString("administrationManager.modifyGenre.constraints"),
+          new ConstraintViolationException(violations));
     }
 
     try {
@@ -233,14 +259,17 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
 
   /** {@inheritDoc} */
   @Override
-  public Boolean modifyPublisher(final Publisher publisher) throws TechnicalException, FunctionalException {
+  public Boolean modifyPublisher(final Publisher publisher)
+      throws TechnicalException, FunctionalException {
 
     if (publisher == null) {
       LOG.error(messages.getString("administrationManager.modifyPublisher.publisherNull"));
-      throw new FunctionalException(messages.getString("administrationManager.modifyPublisher.publisherNull"));
+      throw new FunctionalException(
+          messages.getString("administrationManager.modifyPublisher.publisherNull"));
     }
 
-    final Set<ConstraintViolation<Publisher>> violations = this.getConstraintValidator().validate(publisher);
+    final Set<ConstraintViolation<Publisher>> violations =
+        this.getConstraintValidator().validate(publisher);
     if (!violations.isEmpty()) {
       if (LOG.isDebugEnabled()) {
         for (final ConstraintViolation<Publisher> violation : violations) {
@@ -248,7 +277,9 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
         }
       }
       LOG.error(messages.getString("administrationManager.modifyPublisher.constraints"));
-      throw new FunctionalException(messages.getString("administrationManager.modifyPublisher.constraints"), new ConstraintViolationException(violations));
+      throw new FunctionalException(
+          messages.getString("administrationManager.modifyPublisher.constraints"),
+          new ConstraintViolationException(violations));
     }
 
     try {
@@ -266,7 +297,8 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
 
     if (role == null) {
       LOG.error(messages.getString("administrationManager.modifyRole.roleNull"));
-      throw new FunctionalException(messages.getString("administrationManager.modifyRole.roleNull"));
+      throw new FunctionalException(
+          messages.getString("administrationManager.modifyRole.roleNull"));
     }
 
     final Set<ConstraintViolation<Role>> violations = this.getConstraintValidator().validate(role);
@@ -277,7 +309,9 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
         }
       }
       LOG.error(messages.getString("administrationManager.modifyRole.constraints"));
-      throw new FunctionalException(messages.getString("administrationManager.modifyRole.constraints"), new ConstraintViolationException(violations));
+      throw new FunctionalException(
+          messages.getString("administrationManager.modifyRole.constraints"),
+          new ConstraintViolationException(violations));
     }
 
     try {
@@ -288,5 +322,4 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
       throw new FunctionalException(exception.getMessage(), exception);
     }
   }
-
 }

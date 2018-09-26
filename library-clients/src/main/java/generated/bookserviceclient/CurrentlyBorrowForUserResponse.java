@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://services.libraryws.projects.brucella.fr/}userCurrentlyBorrowDto"
+ *         &lt;element name="return" type="{http://services.libraryws.projects.brucella.fr/}borrowDto"
  *         maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlType;
 public class CurrentlyBorrowForUserResponse {
 
   @XmlElement(name = "return")
-  protected List<UserCurrentlyBorrowDto> _return;
+  protected List<BorrowDto> _return;
 
   /**
    * Gets the value of the return property.
@@ -49,11 +49,11 @@ public class CurrentlyBorrowForUserResponse {
    *
    *
    * <p>
-   * Objects of the following type(s) are allowed in the list {@link UserCurrentlyBorrowDto }
+   * Objects of the following type(s) are allowed in the list {@link BorrowDto }
    */
-  public List<UserCurrentlyBorrowDto> getReturn() {
+  public List<BorrowDto> getReturn() {
     if (_return == null) {
-      _return = new ArrayList<UserCurrentlyBorrowDto>();
+      _return = new ArrayList<BorrowDto>();
     }
     return this._return;
   }

@@ -63,7 +63,7 @@ public interface BooksManagementManager {
    * @return the id of the BookBorrowed.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws FunctionalException - This exception is throw if the id of the user or the id of the
-   *     book are not valid.
+   *     book are not valid or if the stock for this book is not found or not < 1.
    */
   Integer bookBorrowing(final Integer bookId, final Integer userId)
       throws TechnicalException, FunctionalException;
@@ -104,4 +104,5 @@ public interface BooksManagementManager {
    */
   BookDetailsDto getBookWithDetails(final Integer bookId)
       throws TechnicalException, FunctionalException;
+
 }

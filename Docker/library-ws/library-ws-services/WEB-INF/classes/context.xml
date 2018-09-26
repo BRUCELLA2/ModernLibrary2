@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:jaxws="http://cxf.apache.org/jaxws"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-4.0.xsd
+
+
+            http://cxf.apache.org/jaxws
+            http://cxf.apache.org/schemas/jaxws.xsd">
+
+  <context:annotation-config/>
+  <context:component-scan
+    base-package="fr.brucella.projects.libraryws"/>
+
+  <!-- Book Service -->
+  <jaxws:server
+    serviceClass="fr.brucella.projects.libraryws.services.BookService" address="/bookService"
+    serviceBean="#bookService"/>
+  <bean id="bookService" class="fr.brucella.projects.libraryws.services.BookService"/>
+
+  <!-- Authentification Service -->
+  <jaxws:server
+    serviceClass="fr.brucella.projects.libraryws.services.AuthentificationService" address="/authentificationService"
+    serviceBean="#authentificationService"/>
+  <bean id="authentificationService" class="fr.brucella.projects.libraryws.services.AuthentificationService"/>
+
+  <!-- Administration Service -->
+  <jaxws:server
+    serviceClass="fr.brucella.projects.libraryws.services.AdministrationService" address="/administrationService"
+    serviceBean="#administrationService"/>
+  <bean id="administrationService" class="fr.brucella.projects.libraryws.services.AdministrationService"/>
+
+  <!-- Spring context files import -->
+  <import
+    resource="classpath:/fr/brucella/projects/libraryws/services/servicesContext.xml"/>
+  <import
+    resource="classpath*:/fr/brucella/projects/libraryws/dao/daoContext.xml"/>
+  <import
+    resource="classpath*:/fr/brucella/projects/libraryws/entity/entityContext.xml"/>
+
+</beans>

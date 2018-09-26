@@ -10,7 +10,6 @@
 
     <!-- Bootstrap CSS Spacelab theme-->
     <link rel="stylesheet" href="/library-clients/boostrap/css/bootstrap.css">
-    <!-- <link rel="stylesheet" type="text/css" href="/library-clients/include/css/library-clients.css"> -->
 
     <title>Mes emprunts en cours - Bibliothèque Bradbury</title>
 </head>
@@ -49,12 +48,12 @@
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
                     <thead>
-                        <tr>
-                            <th>Titre</th>
-                            <th>Fin de l'emprunt</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Fin de l'emprunt</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                     </thead>
 
                     <s:iterator value="borrowsList" var="books">
@@ -75,13 +74,13 @@
                                 </s:elseif>
                                 <s:else>
                                     <s:a class="btn btn-primary text-center" action="borrow_extend">
-                                        <s:param name="bookBorrowedId" value="bookBorrowedId" />
+                                        <s:param name="bookBorrowedId" value="bookBorrowedId"/>
                                         Prolonger</s:a>
                                 </s:else>
                             </td>
                             <td class="text-center">
                                 <s:a class="btn btn-primary text-center" action="book_details">
-                                <s:param name="bookId" value="bookId" />
+                                    <s:param name="bookId" value="bookId"/>
                                     Détails</s:a></td>
                             </td>
                         </tr>

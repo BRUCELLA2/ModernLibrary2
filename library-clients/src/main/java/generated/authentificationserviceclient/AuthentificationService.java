@@ -63,4 +63,15 @@ public interface AuthentificationService {
       + ".fr/", className = "generated.authentificationserviceclient.ModifyUserResponse")
   public Boolean modifyUser(@WebParam(name = "arg0", targetNamespace = "") FullUserDto arg0) throws LibraryWsException;
 
+  /**
+   * @return returns java.lang.Boolean
+   */
+  @WebMethod
+  @WebResult(targetNamespace = "")
+  @RequestWrapper(localName = "loginAvailable", targetNamespace = "http://services.libraryws.projects.brucella.fr/",
+      className = "generated.authentificationserviceclient.LoginAvailable")
+  @ResponseWrapper(localName = "loginAvailableResponse", targetNamespace = "http://services.libraryws.projects"
+      + ".brucella.fr/", className = "generated.authentificationserviceclient.LoginAvailableResponse")
+  public Boolean loginAvailable(@WebParam(name = "arg0", targetNamespace = "") String arg0) throws LibraryWsException;
+
 }

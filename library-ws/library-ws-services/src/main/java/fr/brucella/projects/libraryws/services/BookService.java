@@ -331,7 +331,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @param bookId id of the book borrowed.
    * @param userId id of the user who borrow the book.
    * @return id of the borrowing.
-   * @throws LibraryWsException Throw this exception if there is a technical or functional problem
+   * @throws LibraryWsException Throw this exception if there is a technical or functional problem.
    */
   @WebMethod
   public Integer bookBorrow(final Integer bookId, final Integer userId) throws LibraryWsException {
@@ -365,10 +365,10 @@ public class BookService extends SpringBeanAutowiringSupport {
    *
    * @param bookBorrowedId id of the bookBorrowed.
    * @return true if extend success. Throw exception if not.
-   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this exception
-   *     if there is a functional problem : - if the id of the bookBorrowed is not valid - if the
-   *     bookBorrowed is not found - if the book is already returned - if end date of borrow is
-   *     passed - if the bookBorrowed is already extended
+   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this
+   *     exception if there is a functional problem : - if the id of the bookBorrowed is not valid -
+   *     if the bookBorrowed is not found - if the book is already returned - if end date of borrow
+   *     is passed - if the bookBorrowed is already extended
    */
   @WebMethod
   public Boolean extendBorrowing(final Integer bookBorrowedId) throws LibraryWsException {
@@ -399,9 +399,9 @@ public class BookService extends SpringBeanAutowiringSupport {
    *
    * @param bookBorrowedId id of the bookBorrowed.
    * @return true if the borrowing return if a success. Throw exception if not.
-   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this exception
-   *     if there is a functional problem : - if the id of the bookBorrowed is not valid - if the
-   *     bookBorrowed is not found - if the book is already returned
+   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this
+   *     exception if there is a functional problem : - if the id of the bookBorrowed is not valid -
+   *     if the bookBorrowed is not found - if the book is already returned
    */
   @WebMethod
   public Boolean borrowingReturn(final Integer bookBorrowedId) throws LibraryWsException {
@@ -434,9 +434,9 @@ public class BookService extends SpringBeanAutowiringSupport {
    *
    * @param bookId id of the book.
    * @return the book details DTO.
-   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this exception if
-   *     there is a functional problem : - if the id of the book is not valid - if the book is not
-   *     found
+   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this
+   *     exception if there is a functional problem : - if the id of the book is not valid - if the
+   *     book is not found
    */
   public BookDetailsDto bookDetails(final Integer bookId) throws LibraryWsException {
 

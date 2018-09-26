@@ -175,7 +175,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
   public List<User> getUserWithBorrowsExpired() throws TechnicalException, NotFoundException {
 
     sql =
-        "SELECT * FROM users INNER JOIN book_borrowed ON users.user_id = book_borrowed.user_id WHERE book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE";
+        "SELECT users.user_id, users.password, users.email, users.login, users.phone, users.address_id FROM users INNER JOIN book_borrowed ON users.user_id = book_borrowed.user_id WHERE book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE GROUP BY users.user_id";
 
     final RowMapper<User> rowMapper = new UserRM();
 

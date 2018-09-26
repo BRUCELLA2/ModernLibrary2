@@ -5,8 +5,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import generated.authentificationserviceclient.FullUserDto;
 import generated.bookserviceclient.BookService;
 import generated.bookserviceclient.BookService_Service;
+import generated.bookserviceclient.BorrowDto;
 import generated.bookserviceclient.LibraryWsException;
-import generated.bookserviceclient.UserCurrentlyBorrowDto;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -37,36 +37,34 @@ public class BorrowsListingAction extends ActionSupport implements SessionAware,
 
   // ----- Output
   /**
-   * A list of User Currently Borrow Dto.
+   * A list of Borrow Dto.
    */
-  private List<UserCurrentlyBorrowDto> borrowsList;
-
+  private List<BorrowDto> borrowsList;
 
   // ----- Getters and Setters
 
   /**
-   * Give the list of User Currently Borrow Dto.
+   * Give the list of Borrow Dto.
    *
-   * @return the list of User Currently Borrow Dto.
+   * @return the list of Borrow Dto.
    */
-  public List<UserCurrentlyBorrowDto> getBorrowsList() {
+  public List<BorrowDto> getBorrowsList() {
     return borrowsList;
   }
 
   /**
-   * Set the list of User Currently Borrow Dto.
+   * Set the list of Borrow Dto.
    *
-   * @param borrowsList the list of User Currently Borrow Dto.
+   * @param borrowsList
+   *     the list of Borrow Dto.
    */
-  public void setBorrowsList(List<UserCurrentlyBorrowDto> borrowsList) {
+  public void setBorrowsList(List<BorrowDto> borrowsList) {
     this.borrowsList = borrowsList;
   }
 
 
   /**
    * Set the Http Servlet Request.
-   *
-   * @param request
    */
   @Override
   public void setServletRequest(final HttpServletRequest request) {
@@ -81,7 +79,6 @@ public class BorrowsListingAction extends ActionSupport implements SessionAware,
     this.session = session;
   }
 
-
   // ===== Methods =====
 
   public String currentlyBorrows() {
@@ -95,7 +92,7 @@ public class BorrowsListingAction extends ActionSupport implements SessionAware,
     } catch (LibraryWsException exception) {
       LOG.error(exception.getMessage());
       LOG.error(exception.getFaultInfo().getFaultString());
-      this.addActionError(exception.getMessage());
+      this.addActionError(exception.getFaultInfo().getFaultString());
       return Action.ERROR;
     }
 
@@ -103,20 +100,29 @@ public class BorrowsListingAction extends ActionSupport implements SessionAware,
   }
 
 
-  public String borrowsHistory(){
+  public String borrowsHistory() {
 
     BookService_Service bookservice = new BookService_Service();
     BookService bookServicePort = bookservice.getBookServicePort();
 
-    return Action.ERROR;
+    try {
+      FullUserDto fullUserDto = (FullUserDto) this.servletRequest.getSession().getAttribute("userLog");
+      setBorrowsList(bookServicePort.returnedBorrowsForUser(fullUserDto.getUserId()));
+    } catch (LibraryWsException exception) {
+      LOG.error(exception.getMessage());
+      LOG.error(exception.getFaultInfo().getFaultString());
+      this.addActionError(exception.getFaultInfo().getFaultString());
+      return Action.ERROR;
+    }
+
+    return Action.SUCCESS;
   }
 
 
-  public String isBeforeToNow(UserCurrentlyBorrowDto userCurrentlyBorrowDto) {
-
+  public String isBeforeToNow(BorrowDto borrowDto) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    LocalDate endDate = LocalDate.parse(userCurrentlyBorrowDto.getEndDate(), formatter);
-    if(endDate.isBefore(LocalDate.now())) {
+    LocalDate endDate = LocalDate.parse(borrowDto.getEndDate(), formatter);
+    if (endDate.isBefore(LocalDate.now())) {
       return "true";
     } else {
       return "false";

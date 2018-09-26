@@ -10,7 +10,6 @@
 
     <!-- Bootstrap CSS Spacelab theme-->
     <link rel="stylesheet" href="/library-clients/boostrap/css/bootstrap.css">
-    <!-- <link rel="stylesheet" type="text/css" href="/library-clients/include/css/library-clients.css"> -->
 
     <title>Recherche de livres - Bibliothèque Bradbury</title>
 </head>

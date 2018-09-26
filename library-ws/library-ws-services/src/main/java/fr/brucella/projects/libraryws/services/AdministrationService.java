@@ -44,9 +44,7 @@ public class AdministrationService {
 
   // ----- Manager
   /** The Manager Factory Manager Factory allow to get and set business managers. */
-  @Autowired
-  private ManagerFactory managerFactory;
-
+  @Autowired private ManagerFactory managerFactory;
 
   // ===== WebMethods ===== //
 
@@ -58,7 +56,7 @@ public class AdministrationService {
    * @return id of the new book added.
    */
   @WebMethod
-  public Integer addBook(final Book book) throws  LibraryWsException {
+  public Integer addBook(final Book book) throws LibraryWsException {
 
     try {
       return this.managerFactory.getAdministrationManager().addBook(book);
@@ -166,8 +164,8 @@ public class AdministrationService {
    *
    * @param book book to modify (with data modified).
    * @return true if modification is a success. Throw exception if not.
-   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this exception
-   *     if there is a functional problem : - if the id of the book is not valid - if the
+   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this
+   *     exception if there is a functional problem : - if the id of the book is not valid - if the
    *     book is not found.
    */
   @WebMethod
@@ -191,9 +189,9 @@ public class AdministrationService {
    *
    * @param author author to modify (with data modified).
    * @return true if modification is a success. Throw exception if not.
-   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this exception
-   *     if there is a functional problem : - if the id of the author is not valid - if the
-   *     author is not found.
+   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this
+   *     exception if there is a functional problem : - if the id of the author is not valid - if
+   *     the author is not found.
    */
   @WebMethod
   public Boolean modifyAuthor(final Author author) throws LibraryWsException {
@@ -216,8 +214,8 @@ public class AdministrationService {
    *
    * @param genre genre to modify (with data modified).
    * @return true if modification is a success. Throw exception if not.
-   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this exception
-   *     if there is a functional problem : - if the id of the genre is not valid - if the
+   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this
+   *     exception if there is a functional problem : - if the id of the genre is not valid - if the
    *     genre is not found.
    */
   @WebMethod
@@ -241,9 +239,9 @@ public class AdministrationService {
    *
    * @param publisher publisher to modify (with data modified).
    * @return true if modification is a success. Throw exception if not.
-   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this exception
-   *     if there is a functional problem : - if the id of the publisher is not valid - if the
-   *     publisher is not found.
+   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this
+   *     exception if there is a functional problem : - if the id of the publisher is not valid - if
+   *     the publisher is not found.
    */
   @WebMethod
   public Boolean modifyPublisher(final Publisher publisher) throws LibraryWsException {
@@ -266,8 +264,8 @@ public class AdministrationService {
    *
    * @param role role to modify (with data modified).
    * @return true if modification is a success. Throw exception if not.
-   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this exception
-   *     if there is a functional problem : - if the id of the role is not valid - if the
+   * @throws LibraryWsException Throw this exception if there is a technical problem. Throw this
+   *     exception if there is a functional problem : - if the id of the role is not valid - if the
    *     role is not found.
    */
   @WebMethod

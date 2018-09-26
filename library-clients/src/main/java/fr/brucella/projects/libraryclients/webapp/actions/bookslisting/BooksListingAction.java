@@ -229,7 +229,7 @@ public class BooksListingAction extends ActionSupport {
     } catch (LibraryWsException exception) {
       LOG.error(exception.getMessage());
       LOG.error(exception.getFaultInfo().getFaultString());
-      this.addActionError(exception.getMessage());
+      this.addActionError(exception.getFaultInfo().getFaultString());
       return Action.ERROR;
     }
 

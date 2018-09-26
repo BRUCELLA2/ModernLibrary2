@@ -109,7 +109,18 @@ public interface BookService {
   public List<User> currentlyDeadlineExpiredUsers() throws LibraryWsException;
 
   /**
-   * @return returns java.util.List<generated.bookserviceclient.UserCurrentlyBorrowDto>
+   *
+   * @throws LibraryWsException
+   */
+  @WebMethod
+  @RequestWrapper(localName = "sendReminderToUsers", targetNamespace = "http://services.libraryws.projects.brucella"
+      + ".fr/", className = "generated.bookserviceclient.SendReminderToUsers")
+  @ResponseWrapper(localName = "sendReminderToUsersResponse", targetNamespace = "http://services.libraryws.projects"
+      + ".brucella.fr/", className = "generated.bookserviceclient.SendReminderToUsersResponse")
+  public void sendReminderToUsers() throws LibraryWsException;
+
+  /**
+   * @return returns java.util.List<generated.bookserviceclient.BorrowDto>
    */
   @WebMethod
   @WebResult(targetNamespace = "")
@@ -117,8 +128,8 @@ public interface BookService {
       + ".brucella.fr/", className = "generated.bookserviceclient.CurrentlyBorrowForUser")
   @ResponseWrapper(localName = "currentlyBorrowForUserResponse", targetNamespace = "http://services.libraryws"
       + ".projects.brucella.fr/", className = "generated.bookserviceclient.CurrentlyBorrowForUserResponse")
-  public List<UserCurrentlyBorrowDto> currentlyBorrowForUser(
-      @WebParam(name = "arg0", targetNamespace = "") Integer arg0) throws LibraryWsException;
+  public List<BorrowDto> currentlyBorrowForUser(@WebParam(name = "arg0", targetNamespace = "") Integer arg0)
+      throws LibraryWsException;
 
   /**
    * @return returns java.util.List<generated.bookserviceclient.BorrowDto>
@@ -141,6 +152,18 @@ public interface BookService {
   @ResponseWrapper(localName = "allBooksResponse", targetNamespace = "http://services.libraryws.projects.brucella"
       + ".fr/", className = "generated.bookserviceclient.AllBooksResponse")
   public List<BookDetailsDto> allBooks() throws LibraryWsException;
+
+  /**
+   * @return returns java.util.List<generated.bookserviceclient.BorrowDto>
+   */
+  @WebMethod
+  @WebResult(targetNamespace = "")
+  @RequestWrapper(localName = "returnedBorrowsForUser", targetNamespace = "http://services.libraryws.projects"
+      + ".brucella.fr/", className = "generated.bookserviceclient.ReturnedBorrowsForUser")
+  @ResponseWrapper(localName = "returnedBorrowsForUserResponse", targetNamespace = "http://services.libraryws"
+      + ".projects.brucella.fr/", className = "generated.bookserviceclient.ReturnedBorrowsForUserResponse")
+  public List<BorrowDto> returnedBorrowsForUser(@WebParam(name = "arg0", targetNamespace = "") Integer arg0)
+      throws LibraryWsException;
 
   /**
    * @return returns java.util.List<generated.bookserviceclient.BookDetailsDto>

@@ -10,7 +10,6 @@
 
     <!-- Bootstrap CSS Spacelab theme-->
     <link rel="stylesheet" href="/library-clients/boostrap/css/bootstrap.css">
-    <!-- <link rel="stylesheet" type="text/css" href="/library-clients/include/css/library-clients.css"> -->
 
     <title>Détails du livre - Bibliothèque Bradbury</title>
 </head>
@@ -31,7 +30,7 @@
                 <s:a class="nav-link" action="search_books">Recherche</s:a>
             </li>
             <li class="nav-item">
-                <s:a class="nav-link active" action="myBorrows">Mes emprunts en cours</s:a>
+                <s:a class="nav-link" action="myBorrows">Mes emprunts en cours</s:a>
             </li>
             <li class="nav-item">
                 <s:a class="nav-link" action="history">Historique</s:a>
@@ -53,7 +52,8 @@
                     </s:iterator>
                 </ul>
             </div>
-            <p>Editeur : <s:property value="bookDetailsDto.publisherName"/> - Date de publication : <s:property value="bookDetailsDto.publishingDate"/></p>
+            <p>Editeur : <s:property value="bookDetailsDto.publisherName"/><br/>
+                Date de publication : <s:property value="bookDetailsDto.publishingDate"/></p>
             <p>Genre : <s:property value="bookDetailsDto.genreName"/></p>
             <p>EAN13 : <s:property value="bookDetailsDto.ean13"/></p>
             <p>Résumé : <br/><br/>

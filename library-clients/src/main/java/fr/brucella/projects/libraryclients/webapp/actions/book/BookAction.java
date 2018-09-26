@@ -28,7 +28,6 @@ public class BookAction extends ActionSupport {
    */
   private Integer bookId;
 
-
   // ----- Output
   /**
    * Book Details Dto.
@@ -49,7 +48,8 @@ public class BookAction extends ActionSupport {
   /**
    * Set the the id of the bookBorrowed.
    *
-   * @param bookBorrowedId the id of the bookBorrowed.
+   * @param bookBorrowedId
+   *     the id of the bookBorrowed.
    */
   public void setBookBorrowedId(final Integer bookBorrowedId) {
     this.bookBorrowedId = bookBorrowedId;
@@ -67,7 +67,8 @@ public class BookAction extends ActionSupport {
   /**
    * Set the id of the book.
    *
-   * @param bookId the id of the book.
+   * @param bookId
+   *     the id of the book.
    */
   public void setBookId(final Integer bookId) {
     this.bookId = bookId;
@@ -85,7 +86,8 @@ public class BookAction extends ActionSupport {
   /**
    * Set the Book Details Dto.
    *
-   * @param bookDetailsDto the Book Details Dto.
+   * @param bookDetailsDto
+   *     the Book Details Dto.
    */
   public void setBookDetailsDto(BookDetailsDto bookDetailsDto) {
     this.bookDetailsDto = bookDetailsDto;
@@ -95,7 +97,7 @@ public class BookAction extends ActionSupport {
 
   public String BorrowExtend() {
 
-    if(this.bookBorrowedId == null) {
+    if (this.bookBorrowedId == null) {
       LOG.error("bookBorrowedId NULL - BorrowExtend failure");
       this.addActionError("L'identifiant de l'emprunt est incorrect (Identifiant vide) - Echec de la prolongation");
       return Action.ERROR;
@@ -109,7 +111,7 @@ public class BookAction extends ActionSupport {
     } catch (LibraryWsException exception) {
       LOG.error(exception.getMessage());
       LOG.error(exception.getFaultInfo().getFaultString());
-      this.addActionError(exception.getMessage());
+      this.addActionError(exception.getFaultInfo().getFaultString());
       return Action.ERROR;
     }
 
@@ -118,21 +120,22 @@ public class BookAction extends ActionSupport {
 
   public String BookDetails() {
 
-    if(this.bookId == null) {
+    if (this.bookId == null) {
       LOG.error("bookId NULL - Book Details failure");
-      this.addActionError("L'identifiant du livre est incorrect (Identifiant vide) - Echec de l'affichage du détail du livre.");
+      this.addActionError(
+          "L'identifiant du livre est incorrect (Identifiant vide) - Echec de l'affichage du détail du livre.");
       return Action.ERROR;
     }
 
     BookService_Service bookservice = new BookService_Service();
     BookService bookServicePort = bookservice.getBookServicePort();
 
-    try{
+    try {
       this.setBookDetailsDto(bookServicePort.bookDetails(bookId));
     } catch (LibraryWsException exception) {
       LOG.error(exception.getMessage());
       LOG.error(exception.getFaultInfo().getFaultString());
-      this.addActionError(exception.getMessage());
+      this.addActionError(exception.getFaultInfo().getFaultString());
       return Action.ERROR;
     }
 

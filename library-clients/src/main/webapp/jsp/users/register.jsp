@@ -10,7 +10,6 @@
 
     <!-- Bootstrap CSS Spacelab theme-->
     <link rel="stylesheet" href="/library-clients/boostrap/css/bootstrap.css">
-    <!-- <link rel="stylesheet" type="text/css" href="/library-clients/include/css/library-clients.css"> -->
 
     <title>Enregistrement - Bibliothèque Bradbury</title>
 </head>
@@ -52,7 +51,7 @@
                     <div class="col-sm-6">
                         <label for="userLogin" class="mr-sm-2">Identifiant : </label>
                         <input type="text" class="form-control is-invalid mb-2 mr-sm-2" id="userLogin" name="userLogin"
-                                value='<s:property value="userLogin"/>' maxlength="30">
+                               value='<s:property value="userLogin"/>' maxlength="30">
                         <div class="invalid-feedback"><s:fielderror fieldName="userLogin"/></div>
                     </div>
                 </div>
@@ -83,7 +82,8 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="userZipCode" class="mr-sm-2">Code postal : </label>
-                        <input type="text" class="form-control is-invalid mb-2 mr-sm-2" id="userZipCode" name="userZipCode"
+                        <input type="text" class="form-control is-invalid mb-2 mr-sm-2" id="userZipCode"
+                               name="userZipCode"
                                value='<s:property value="userZipCode"/>' maxlength="5" minlength="5">
                         <div class="invalid-feedback"><s:fielderror fieldName="userZipCode"/></div>
                     </div>
@@ -115,14 +115,16 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="userPass" class="mr-sm-2">Mot de passe : </label>
-                        <input type="password" class="form-control is-invalid mb-2 mr-sm-2" id="userPass" name="userPass"
+                        <input type="password" class="form-control is-invalid mb-2 mr-sm-2" id="userPass"
+                               name="userPass"
                                maxlength="100">
                         <div class="invalid-feedback"><s:fielderror fieldName="userPass"/></div>
                     </div>
 
                     <div class="col-sm-6">
                         <label for="userPassConf" class="mr-sm-2">Confirmation du mot de passe : </label>
-                        <input type="password" class="form-control is-invalid mb-2 mr-sm-2" id="userPassConf" name="userPassConf"
+                        <input type="password" class="form-control is-invalid mb-2 mr-sm-2" id="userPassConf"
+                               name="userPassConf"
                                maxlength="100">
                         <div class="invalid-feedback"><s:fielderror fieldName="userPassConf"/></div>
                     </div>
@@ -138,7 +140,6 @@
         </div>
     </div>
 </div>
-
 
 
 <%@include file="/include/jsp/footer.jsp" %>
