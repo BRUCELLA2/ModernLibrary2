@@ -98,6 +98,16 @@ CREATE TABLE public.book (
 
 ALTER SEQUENCE public.book_book_id_seq OWNED BY public.book.book_id;
 
+CREATE TABLE public.book_reservation (
+                book_reservation_id INTEGER NOT NULL,
+                book_id INTEGER NOT NULL,
+                user_id INTEGER NOT NULL,
+                date_reservation DATE NOT NULL,
+                date_reservation_email_send DATE,
+                CONSTRAINT book_reservation_pk PRIMARY KEY (book_reservation_id)
+);
+
+
 CREATE SEQUENCE public.book_borrowed_book_borrowed_id_seq;
 
 CREATE TABLE public.book_borrowed (
@@ -164,6 +174,13 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+ALTER TABLE public.book_reservation ADD CONSTRAINT users_book_reservation_fk
+FOREIGN KEY (user_id)
+REFERENCES public.users (user_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
 ALTER TABLE public.book ADD CONSTRAINT publisher_book_fk
 FOREIGN KEY (publisher_id)
 REFERENCES public.publisher (publisher_id)
@@ -200,6 +217,13 @@ ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE public.book_borrowed ADD CONSTRAINT book_book_borrowed_fk
+FOREIGN KEY (book_id)
+REFERENCES public.book (book_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.book_reservation ADD CONSTRAINT book_book_reservation_fk
 FOREIGN KEY (book_id)
 REFERENCES public.book (book_id)
 ON DELETE NO ACTION
