@@ -369,6 +369,11 @@ public class BookService extends SpringBeanAutowiringSupport {
    *     if the bookBorrowed is not found - if the book is already returned - if end date of borrow
    *     is passed - if the bookBorrowed is already extended
    */
+      /*
+      @TICKET #2
+      if the end date of the borrow is passed, the functionalException is caught and the message is send to client
+      with a LibraryWsException
+     */
   @WebMethod
   public Boolean extendBorrowing(final Integer bookBorrowedId) throws LibraryWsException {
 

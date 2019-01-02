@@ -119,6 +119,11 @@ public class BorrowsListingAction extends ActionSupport implements SessionAware,
   }
 
 
+  /*
+  @TICKET #2
+  Check if a date is before Now.
+  This method is called in the fix solution to the problem of borrowing after the end date of borrows.
+ */
   public String isBeforeToNow(BorrowDto borrowDto) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     LocalDate endDate = LocalDate.parse(borrowDto.getEndDate(), formatter);

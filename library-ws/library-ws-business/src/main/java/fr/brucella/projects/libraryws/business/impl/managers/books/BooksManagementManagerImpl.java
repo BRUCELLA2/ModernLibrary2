@@ -193,6 +193,10 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
           messages.getString("booksManagementManager.extendBorrow.returned"));
     }
 
+    /*
+      @TICKET #2
+      Check if the end date of the borrow is passed. If end date is passed, throw FunctionalException.
+     */
     if (bookBorrowed.getEndDate().isBefore(LocalDate.now())) {
       LOG.error(messages.getString("booksManagementManager.extendBorrow.endPassed"));
       throw new FunctionalException(
