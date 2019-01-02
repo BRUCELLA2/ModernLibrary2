@@ -104,6 +104,7 @@ CREATE TABLE public.book_reservation (
                 user_id INTEGER NOT NULL,
                 date_reservation DATE NOT NULL,
                 date_reservation_email_send DATE,
+                active_reservation BOOLEAN NOT NULL,
                 CONSTRAINT book_reservation_pk PRIMARY KEY (book_reservation_id)
 );
 
