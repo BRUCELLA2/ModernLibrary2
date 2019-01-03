@@ -98,16 +98,20 @@ CREATE TABLE public.book (
 
 ALTER SEQUENCE public.book_book_id_seq OWNED BY public.book.book_id;
 
+CREATE SEQUENCE public.book_reservation_book_reservation_id_seq;
+
 CREATE TABLE public.book_reservation (
-                book_reservation_id INTEGER NOT NULL,
+                book_reservation_id INTEGER NOT NULL DEFAULT nextval('public.book_reservation_book_reservation_id_seq'),
                 book_id INTEGER NOT NULL,
                 user_id INTEGER NOT NULL,
-                date_reservation DATE NOT NULL,
-                date_reservation_email_send DATE,
+                date_reservation TIMESTAMP NOT NULL,
+                date_reservation_email_send TIMESTAMP,
                 active_reservation BOOLEAN NOT NULL,
                 CONSTRAINT book_reservation_pk PRIMARY KEY (book_reservation_id)
 );
 
+
+ALTER SEQUENCE public.book_reservation_book_reservation_id_seq OWNED BY public.book_reservation.book_reservation_id;
 
 CREATE SEQUENCE public.book_borrowed_book_borrowed_id_seq;
 
