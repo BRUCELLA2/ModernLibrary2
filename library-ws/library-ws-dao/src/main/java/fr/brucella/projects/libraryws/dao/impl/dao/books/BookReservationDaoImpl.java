@@ -6,6 +6,7 @@ import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model.BookReserva
 import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
@@ -74,7 +75,86 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
 
   /** {@inheritDoc} */
   @Override
-  public void updateBookReservation(BookReservation bookReservation) throws TechnicalException, NotFoundException {
+  public List<BookReservation> getReservationsList() throws TechnicalException, NotFoundException {
+
+    sql = "SELECT * from book_reservation";
+
+    final RowMapper<BookReservation> rowMapper = new BookReservationRM();
+
+    try {
+      final List<BookReservation> reservationsList = this.getJdbcTemplate().query(sql, rowMapper);
+      if(reservationsList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+        }
+        throw new NotFoundException(messages.getString("bookReservationDao.getReservationsList.notFound"));
+      } else {
+        return reservationsList;
+      }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
+  @Override
+  public List<BookReservation> getActiveReservationsList() throws TechnicalException, NotFoundException {
+
+    sql = "SELECT * FROM book_reservation WHERE active_reservation = true";
+
+    final RowMapper<BookReservation> rowMapper = new BookReservationRM();
+
+    try {
+      final List<BookReservation> reservationsList = this.getJdbcTemplate().query(sql, rowMapper);
+      if(reservationsList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+        }
+        throw new NotFoundException(messages.getString("bookReservationDao.getActiveReservationsList.notFound"));
+      } else {
+        return reservationsList;
+      }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<BookReservation> getActiveReservationsListForUser(Integer userId)
+      throws TechnicalException, NotFoundException {
+    return getReservationsListForUser(userId, true);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<BookReservation> getInactiveReservationsListForUser(Integer userId)
+      throws TechnicalException, NotFoundException {
+    return getReservationsListForUser(userId, false);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void updateBookReservation(final BookReservation bookReservation) throws TechnicalException, NotFoundException {
 
     sql = "UPDATE book_reservation SET book_id = :bookId, user_id = :userId, date_reservation = :dateReservation, date_reservation_email_send = :dateReservationEmailSend, active_reservation = :activeReservation WHERE book_reservation_id = :bookReservationId";
 
@@ -115,7 +195,7 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
 
   /** {@inheritDoc} */
   @Override
-  public Integer insertBookReservation(BookReservation bookReservation) throws TechnicalException {
+  public Integer insertBookReservation(final BookReservation bookReservation) throws TechnicalException {
 
     sql = "INSERT INTO book_reservation (book_reservation_id, book_id, user_id, date_reservation, date_reservation_email_send, active_reservation) VALUES (DEFAULT, :bookReservationId, :bookId, :userId, :dateReservation, :dateReservationEmailSend, :activeReservation)";
 
@@ -157,7 +237,7 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
 
   /** {@inheritDoc} */
   @Override
-  public void deleteBookReservation(Integer bookReservationId) throws TechnicalException, NotFoundException {
+  public void deleteBookReservation(final Integer bookReservationId) throws TechnicalException, NotFoundException {
 
     sql = "DELETE FROM book_reservation WHERE book_reservation_id = :bookReservationId";
 
@@ -183,6 +263,56 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("bookReservation = " + bookReservationId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
+  /**
+   * Give the list of reservation for the userId and with the activeStatut.
+   *
+   * @param userId id of the user.
+   * @param activeStatut status of the reservation.
+   * @return the list of reservation for the userId and with the activeStatut.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     reservation is found.
+   */
+  private List<BookReservation> getReservationsListForUser(Integer userId, Boolean activeStatut)
+      throws NotFoundException, TechnicalException {
+
+    sql = "SELECT * FROM book_reservation WHERE user_id = :userId, active_reservation = :activeReservation";
+
+    final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+    parameterSource.addValue("userId", userId);
+    parameterSource.addValue("activeReservation", activeStatut);
+
+    final RowMapper<BookReservation> rowMapper = new BookReservationRM();
+
+    try {
+      final List<BookReservation> reservationsList = this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
+      if (reservationsList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("User Id : " + userId);
+          LOG.debug("Active Statut : " + activeStatut);
+        }
+        throw new NotFoundException(messages.getString("bookReservationDao.getReservationsList.notFound"));
+      } else {
+        return reservationsList;
+      }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("User Id : " + userId);
+        LOG.debug("Active Statut : " + activeStatut);
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
