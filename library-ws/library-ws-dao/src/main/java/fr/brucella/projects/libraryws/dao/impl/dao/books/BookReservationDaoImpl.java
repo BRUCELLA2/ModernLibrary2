@@ -106,6 +106,7 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public List<BookReservation> getActiveReservationsList() throws TechnicalException, NotFoundException {
 
@@ -132,6 +133,44 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<BookReservation> getActiveReservationListForBook(Integer bookId)
+      throws TechnicalException, NotFoundException {
+    sql = "SELECT * FROM book_reservation WHERE active_reservation = true AND book_id = :bookId";
+
+    final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+    parameterSource.addValue("bookId", bookId);
+
+    final RowMapper<BookReservation> rowMapper = new BookReservationRM();
+
+    try {
+      final List<BookReservation> reservationsList = this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
+      if (reservationsList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("bookId = " + bookId);
+        }
+        throw new NotFoundException(messages.getString("bookReservationDao.getActiveReservationListForBook.notFound"));
+      } else {
+        return reservationsList;
+      }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("bookId = " + bookId);
       }
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);

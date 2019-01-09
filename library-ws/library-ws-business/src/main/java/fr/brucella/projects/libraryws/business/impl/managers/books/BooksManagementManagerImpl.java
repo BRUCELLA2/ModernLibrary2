@@ -7,6 +7,7 @@ import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
 import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
+import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.books.model.Stock;
 import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
@@ -254,7 +255,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     return true;
   }
 
-  /** {@inheritDoc} * */
+  /** {@inheritDoc} */
   @Override
   public BookDetailsDto getBookWithDetails(final Integer bookId)
       throws TechnicalException, FunctionalException {
@@ -267,6 +268,69 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
 
     try {
       return this.getDaoFactory().getBookDao().getBookDetails(bookId);
+    } catch (NotFoundException exception) {
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Integer bookReservation(Integer bookId, Integer userId)
+      throws TechnicalException, FunctionalException {
+
+    if (bookId == null || userId == null) {
+      LOG.error("bookId = " + bookId);
+      LOG.error("userId = " + userId);
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.bookReservation.userOrBookNull"));
+    }
+
+    try {
+      List<BookReservation> listActiveReservation = getDaoFactory().getBookReservationDao().getActiveReservationListForBook(bookId);
+      Stock stock = getDaoFactory().getStockDao().getStockForBook(bookId);
+
+      // Check if number of reservation is not 2 * the amount of book.
+      if (listActiveReservation.size() > (2 * stock.getAmount())) {
+        throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.reservationfull"));
+      }
+
+      // Check if the book is already borrow by the user.
+      List<BorrowDto> listBookBorrowed = getDaoFactory().getBookBorrowedDao().getUserBorrows(userId, true);
+      for (BorrowDto borrow : listBookBorrowed) {
+        if (borrow.getBookId().equals(bookId)) {
+          throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.alreadyBorrow"));
+        }
+      }
+
+      // If all checks are ok, reservation is done
+      BookReservation bookReservation = new BookReservation();
+      bookReservation.setBookId(bookId);
+      bookReservation.setUserId(userId);
+      bookReservation.setActiveReservation(true);
+      bookReservation.setDateReservation(LocalDate.now());
+
+      return getDaoFactory().getBookReservationDao().insertBookReservation(bookReservation);
+
+    } catch (NotFoundException exception) {
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void cancelReservation(Integer bookReservationId) throws TechnicalException, FunctionalException {
+    if (bookReservationId == null) {
+      LOG.error("bookReservationId = " + bookReservationId);
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.cancelReservation.idNull"));
+    }
+
+    try {
+      BookReservation bookReservation = getDaoFactory().getBookReservationDao().getBookReservation(bookReservationId);
+      bookReservation.setActiveReservation(false);
+      getDaoFactory().getBookReservationDao().updateBookReservation(bookReservation);
     } catch (NotFoundException exception) {
       LOG.error(exception.getMessage());
       throw new FunctionalException(exception.getMessage(), exception);

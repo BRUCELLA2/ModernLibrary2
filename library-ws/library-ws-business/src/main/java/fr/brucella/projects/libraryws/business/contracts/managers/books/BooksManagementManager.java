@@ -105,4 +105,26 @@ public interface BooksManagementManager {
   BookDetailsDto getBookWithDetails(final Integer bookId)
       throws TechnicalException, FunctionalException;
 
+  /**
+   * Add a reservation of a book with the book id for the user with the user id.
+   *
+   * @param bookId id of the book.
+   * @param userId id of the user who borrow the book.
+   * @return the id of the BookReservation.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the user or the id of the
+   *     book are not valid or if the maximum number of reservations has been reached or that the user has already reserved the book..
+   */
+  Integer bookReservation(final Integer bookId, final Integer userId) throws TechnicalException, FunctionalException;
+
+  /**
+   * Cancel the reservation of the book with the bookReservation Id. Set activeReservation property to false.
+   *
+   * @param bookReservationId the bookReservation Id
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the bookReservation is not valid. This
+   *     exception is throw if the bookReservation is not found.
+   */
+  void cancelReservation(final Integer bookReservationId) throws TechnicalException, FunctionalException;
+
 }

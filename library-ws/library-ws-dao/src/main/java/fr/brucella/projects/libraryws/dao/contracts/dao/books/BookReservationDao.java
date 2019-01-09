@@ -43,10 +43,21 @@ public interface BookReservationDao {
   List<BookReservation> getActiveReservationsList() throws TechnicalException, NotFoundException;
 
   /**
+   * Give the list of active reservations for the book specified with the bookId from the datastore.
+   *
+   * @param bookId id of the book.
+   * @return The list of active BookReservation for a specific book.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     reservation is found.
+   */
+  List<BookReservation> getActiveReservationListForBook(final Integer bookId) throws TechnicalException, NotFoundException;
+
+  /**
    * Give the list of active reservations for the user.
    *
    * @param userId id of the user.
-   * @return A list of BookReservation.
+   * @return A list of active BookReservation for a specific user.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and no
    *     reservation is found.
@@ -57,7 +68,7 @@ public interface BookReservationDao {
    * Give the list of inactive reservations for the user.
    *
    * @param userId id of the user.
-   * @return A list of BookReservation.
+   * @return A list of inactive BookReservation for a specific user.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and no
    *     reservation is found.
