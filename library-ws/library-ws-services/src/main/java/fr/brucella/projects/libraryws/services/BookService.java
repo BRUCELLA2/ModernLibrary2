@@ -16,6 +16,7 @@ import fr.brucella.projects.libraryws.entity.users.model.User;
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.persistence.criteria.CriteriaBuilder.In;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -460,6 +461,69 @@ public class BookService extends SpringBeanAutowiringSupport {
               FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
       LOG.error(ex.toString());
       throw ex;
+    }
+  }
+
+  // ===== Reservation Management
+
+  /**
+   * Return the id of the reservation.
+   *
+   * @param bookId id of the book.
+   * @param userId id of the user.
+   * @return the id of the reservation
+   * @throws LibraryWsException Throw this exception if there is a technical or functional problem.
+   */
+  @WebMethod
+  public Integer makeReservation(final Integer bookId, final Integer userId) throws LibraryWsException {
+
+    if (bookId == null || userId == null) {
+      LOG.error("bookId = " + bookId);
+      LOG.error("userId = " + userId);
+      throw new LibraryWsException(
+          "Paramètre(s) incorrect(s). L'identifiant du livre et de l'utilisateur ne peuvent être vides",
+          new LibraryWsFault(
+              CLIENT,
+              "Paramètre(s) incorrect(s). L'identifiant du livre et de l'utilisateur ne peuvent être vides"));
+    }
+
+    try {
+      return this.managerFactory.getBooksManagementManager().bookReservation(bookId, userId);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
+    } catch (FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
+    }
+  }
+
+  /**
+   * Cancel a reservation (set the activeReservation attribut to false)
+   *
+   * @param reservationId id of the reservation.
+   * @throws LibraryWsException Throw this exception if there is a technical or functional problem.
+   */
+  @WebMethod
+  public void cancelAreservation(final Integer reservationId) throws LibraryWsException {
+
+    if (reservationId == null) {
+      LOG.error("reservationId = " + reservationId);
+      throw new LibraryWsException("Paramètre incorrect. L'identifiant de la réservation ne peut être vide", new LibraryWsFault(CLIENT, "Paramètre incorrect. L'identifiant de la réservation ne peut être vide"));
+    }
+
+    try {
+      this.managerFactory.getBooksManagementManager().cancelReservation(reservationId);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
+    } catch (FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
     }
   }
 }

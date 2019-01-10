@@ -286,8 +286,14 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
           messages.getString("booksManagementManager.bookReservation.userOrBookNull"));
     }
 
+    List<BookReservation> listActiveReservation;
     try {
-      List<BookReservation> listActiveReservation = getDaoFactory().getBookReservationDao().getActiveReservationListForBook(bookId);
+      listActiveReservation = getDaoFactory().getBookReservationDao().getActiveReservationListForBook(bookId);
+    } catch (NotFoundException exception) {
+      listActiveReservation = new ArrayList<>();
+    }
+
+    try {
       Stock stock = getDaoFactory().getStockDao().getStockForBook(bookId);
 
       // Check if number of reservation is not 2 * the amount of book.

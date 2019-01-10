@@ -236,7 +236,7 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
   @Override
   public Integer insertBookReservation(final BookReservation bookReservation) throws TechnicalException {
 
-    sql = "INSERT INTO book_reservation (book_reservation_id, book_id, user_id, date_reservation, date_reservation_email_send, active_reservation) VALUES (DEFAULT, :bookReservationId, :bookId, :userId, :dateReservation, :dateReservationEmailSend, :activeReservation)";
+    sql = "INSERT INTO book_reservation (book_reservation_id, book_id, user_id, date_reservation, date_reservation_email_send, active_reservation) VALUES (DEFAULT, :bookId, :userId, :dateReservation, :dateReservationEmailSend, :activeReservation)";
 
     final KeyHolder keyHolder = new GeneratedKeyHolder();
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(bookReservation);
