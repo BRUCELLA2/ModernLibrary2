@@ -144,6 +144,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
 
     Stock stock = new Stock();
     Stock newStock = new Stock();
+    Integer bookBorrowingId;
     try {
       stock = this.getDaoFactory().getStockDao().getStockForBook(bookId);
       if(stock.getAmount() < 1) {
@@ -153,13 +154,29 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       newStock = stock;
       newStock.setAmountAvailable(stock.getAmountAvailable()-1);
       this.getDaoFactory().getStockDao().updateStock(newStock);
-      return this.getDaoFactory().getBookBorrowedDao().insertBookBorrowed(bookBorrowed);
+      bookBorrowingId = this.getDaoFactory().getBookBorrowedDao().insertBookBorrowed(bookBorrowed);
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
       throw new FunctionalException(exception.getMessage(), exception);
     }
+
+    // Cancel the reservation if the user have reserved this book (and the reservation is active)
+    BookReservation bookReservation = new BookReservation();
+    try {
+      bookReservation = this.getDaoFactory().getBookReservationDao().getBookReservation(bookId, userId);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug(exception.getMessage());
+      }
+    }
+
+    if (bookReservation.getUserId() != null) {
+      this.cancelReservation(bookReservation.getBookReservationId());
+    }
+
+    return bookBorrowingId;
   }
 
   /** {@inheritDoc} */

@@ -78,7 +78,7 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
   public BookReservation getBookReservation(final Integer bookId, final Integer userId)
       throws TechnicalException, NotFoundException {
 
-    sql = "SELECT * FROM book_reservation WHERE book_id = :bookId AND user_id = :userId";
+    sql = "SELECT * FROM book_reservation WHERE book_id = :bookId AND user_id = :userId AND active_reservation = TRUE";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
     parameterSource.addValue("bookId", bookId);
