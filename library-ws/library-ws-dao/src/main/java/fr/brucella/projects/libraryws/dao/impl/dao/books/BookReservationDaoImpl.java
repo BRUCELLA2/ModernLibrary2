@@ -75,6 +75,46 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
 
   /** {@inheritDoc} */
   @Override
+  public BookReservation getBookReservation(final Integer bookId, final Integer userId)
+      throws TechnicalException, NotFoundException {
+
+    sql = "SELECT * FROM book_reservation WHERE book_id = :bookId AND user_id = :userId";
+
+    final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+    parameterSource.addValue("bookId", bookId);
+    parameterSource.addValue("userId", userId);
+
+    final RowMapper<BookReservation> rowMapper = new BookReservationRM();
+
+    try {
+      return this.getNamedJdbcTemplate().queryForObject(sql, parameterSource, rowMapper);
+    } catch (EmptyResultDataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("bookId = " + bookId);
+        LOG.debug("userId = " + userId);
+      }
+      LOG.error(exception.getMessage());
+      throw new NotFoundException(messages.getString("bookReservationDao.getBookReservation.notFound"), exception);
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("bookId = " + bookId);
+        LOG.debug("userId = " + userId);
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public List<BookReservation> getReservationsList() throws TechnicalException, NotFoundException {
 
     sql = "SELECT * from book_reservation";

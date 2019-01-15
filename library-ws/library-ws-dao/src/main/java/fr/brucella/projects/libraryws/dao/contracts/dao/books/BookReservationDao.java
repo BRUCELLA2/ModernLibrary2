@@ -23,6 +23,17 @@ public interface BookReservationDao {
   BookReservation getBookReservation(final Integer bookReservationId) throws TechnicalException, NotFoundException;
 
   /**
+   * Give the bookReservation with the specified id from the datastore.
+   *
+   * @param bookId id of the book reservation.
+   * @param userId id of the user reservation.
+   * @return the bookReservation with the id of the book reservation.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and the book reservation is not found.
+   */
+  BookReservation getBookReservation(final Integer bookId, final Integer userId) throws TechnicalException, NotFoundException;
+
+  /**
    * Give the list of all reservations (active or not) from the datastore.
    *
    * @return the list of all reservations (active or not) from the datastore.
