@@ -300,28 +300,41 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       if (listActiveReservation.size() > (2 * stock.getAmount())) {
         throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.reservationfull"));
       }
-
-      // Check if the book is already borrow by the user.
-      List<BorrowDto> listBookBorrowed = getDaoFactory().getBookBorrowedDao().getUserBorrows(userId, true);
-      for (BorrowDto borrow : listBookBorrowed) {
-        if (borrow.getBookId().equals(bookId)) {
-          throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.alreadyBorrow"));
-        }
-      }
-
-      // If all checks are ok, reservation is done
-      BookReservation bookReservation = new BookReservation();
-      bookReservation.setBookId(bookId);
-      bookReservation.setUserId(userId);
-      bookReservation.setActiveReservation(true);
-      bookReservation.setDateReservation(LocalDate.now());
-
-      return getDaoFactory().getBookReservationDao().insertBookReservation(bookReservation);
-
     } catch (NotFoundException exception) {
       LOG.error(exception.getMessage());
       throw new FunctionalException(exception.getMessage(), exception);
     }
+
+    // Check if the user have already make a reservation for this book
+    for (BookReservation bookReservation : listActiveReservation) {
+      if (bookReservation.getUserId().equals(userId)) {
+        throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.alreadyReserved"));
+      }
+    }
+
+    // Check if the book is already borrow by the user.
+    List<BorrowDto> listBookBorrowed;
+    try {
+      listBookBorrowed = getDaoFactory().getBookBorrowedDao().getUserBorrows(userId, true);
+    } catch (NotFoundException exception) {
+      listBookBorrowed = new ArrayList<>();
+    }
+
+    for (BorrowDto borrow : listBookBorrowed) {
+      if (borrow.getBookId().equals(bookId)) {
+        throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.alreadyBorrow"));
+      }
+    }
+
+    // If all checks are ok, reservation is done
+    BookReservation bookReservation = new BookReservation();
+    bookReservation.setBookId(bookId);
+    bookReservation.setUserId(userId);
+    bookReservation.setActiveReservation(true);
+    bookReservation.setDateReservation(LocalDate.now());
+
+    return getDaoFactory().getBookReservationDao().insertBookReservation(bookReservation);
+
   }
 
   /** {@inheritDoc} */
