@@ -6,6 +6,7 @@ import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model.BookReserva
 import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import java.time.LocalDate;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -216,6 +217,44 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
   }
+
+  @Override
+  public List<BookReservation> getActiveReservationWithoutBorrowInTime(LocalDate dateDepassed)
+      throws TechnicalException, NotFoundException {
+    sql = "SELECT * FROM book_reservation WHERE active_reservation = true AND date_reservation_email_send < :dateDepassed ORDER BY date_reservation_email_send DESC";
+
+    final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+    parameterSource.addValue("dateDepassed", dateDepassed);
+
+    final RowMapper<BookReservation> rowMapper = new BookReservationRM();
+
+    try {
+      final List<BookReservation> reservationsList = this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
+      if (reservationsList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+          LOG.debug("dateDepassed : " + dateDepassed.toString());
+        }
+        throw new NotFoundException(messages.getString("bookReservationDao.getActiveReservationWithoutBorrowInTime.notFound"));
+      } else {
+        return reservationsList;
+      }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("SQL : " + sql);
+        LOG.debug("dateDepassed : " + dateDepassed.toString());
+      }
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
 
   /** {@inheritDoc} */
   @Override

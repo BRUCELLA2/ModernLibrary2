@@ -3,6 +3,7 @@ package fr.brucella.projects.libraryws.dao.contracts.dao.books;
 import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -63,6 +64,18 @@ public interface BookReservationDao {
    *     reservation is found.
    */
   List<BookReservation> getActiveReservationListForBook(final Integer bookId) throws TechnicalException, NotFoundException;
+
+  /**
+   * Give the list of active reservations without borrow in time (Afer sending email, user have a delay to borrow the book).
+   * Order by date_reservation_email_send DESC
+   *
+   * @param dateDepassed before this date, an active reservation is out of time.
+   * @return the list of active reservations without borrow in time
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     reservation is found.
+   */
+  List<BookReservation> getActiveReservationWithoutBorrowInTime(final LocalDate dateDepassed) throws TechnicalException, NotFoundException;
 
   /**
    * Give the list of active reservations for the user.
