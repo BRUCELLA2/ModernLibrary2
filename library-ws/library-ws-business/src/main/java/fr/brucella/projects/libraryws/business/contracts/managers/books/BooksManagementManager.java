@@ -33,6 +33,15 @@ public interface BooksManagementManager {
   void reminderToUsers() throws TechnicalException;
 
   /**
+   * Get the list of reservation without borrow in the time allowed.
+   * Cancel the reservation in this list and send an email to the next user in the active reservation list for the book.
+   *
+   * @Return the nb of error - 0 if they is no problem.
+   * @throws TechnicalException
+   */
+  int reservationNotBorrowInTime() throws TechnicalException;
+
+  /**
    * Provides the list of stocks and title of book.
    *
    * @return the list of stocks and title of book.

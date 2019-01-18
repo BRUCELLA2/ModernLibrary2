@@ -26,7 +26,7 @@ public class BookRM implements RowMapper<Book> {
     book.setGenreId(resultSet.getInt("genre_id"));
     book.setIsbn13(resultSet.getString("isbn13"));
     book.setPublisherId(resultSet.getInt("publisher_id"));
-    book.setPublishingDate(resultSet.getDate("publishind_date").toLocalDate());
+    book.setPublishingDate(resultSet.getDate("publishing_date").toLocalDate());
     book.setResume(resultSet.getString("resume"));
     book.setTitle(resultSet.getString("title"));
 

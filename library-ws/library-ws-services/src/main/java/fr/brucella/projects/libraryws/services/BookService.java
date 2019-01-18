@@ -271,6 +271,23 @@ public class BookService extends SpringBeanAutowiringSupport {
   }
 
   /**
+   * Check reservation not picked up in the time allowed
+   *
+   * @throws LibraryWsException Throw this exception if there is a technical problem.
+   */
+  @WebMethod
+  public void checkReservationNotPickedUp() throws LibraryWsException {
+
+    try {
+      this.managerFactory.getBooksManagementManager().reservationNotBorrowInTime();
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
+    }
+  }
+
+  /**
    * Provides the list of stocks for each book.
    *
    * @return the list of stocks for each book.

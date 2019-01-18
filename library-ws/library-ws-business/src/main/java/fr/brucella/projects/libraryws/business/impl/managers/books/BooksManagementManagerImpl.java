@@ -46,6 +46,9 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
   /** Number of days for a borrow or an extension of a borrow. */
   private static final Integer NB_DAYS_BORROW = Integer.parseInt(config.getString("nbDaysBorrow"));
 
+  /** Number of days to pick up a reservation */
+  private static final int NB_DAYS_RESERVATION = Integer.parseInt(config.getString("nbDaysReservation"));
+
   /** Default Constructor */
   public BooksManagementManagerImpl() {
     super();
@@ -80,6 +83,36 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
 
     sendReminderMails(config.getString("mail.host"), Integer.valueOf(config.getString("mail.port")), config.getString("mail.username"), config.getString("mail.password"), users);
+  }
+
+  @Override
+  public int reservationNotBorrowInTime() throws TechnicalException {
+
+    List<BookReservation> reservationsList= new ArrayList<>();
+    LocalDate dateMax = LocalDate.now().minusDays(NB_DAYS_RESERVATION);
+    int nbError = 0;
+
+    try {
+      reservationsList = this.getDaoFactory().getBookReservationDao().getActiveReservationWithoutBorrowInTime(dateMax);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug(exception.getMessage());
+      }
+    }
+
+    for (BookReservation bookReservation : reservationsList) {
+      try {
+        Book book = this.getDaoFactory().getBookDao().getBook(bookReservation.getBookId());
+        bookReservation.setActiveReservation(false);
+        this.cancelReservation(bookReservation.getBookReservationId());
+        sendMailBookAvailable(book);
+      } catch (FunctionalException | NotFoundException exception) {
+        LOG.error(exception.getMessage());
+        nbError++;
+      }
+    }
+
+    return nbError;
   }
 
   /** {@inheritDoc} */
