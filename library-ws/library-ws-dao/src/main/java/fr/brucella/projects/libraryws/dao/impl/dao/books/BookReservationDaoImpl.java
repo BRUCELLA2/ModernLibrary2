@@ -118,7 +118,7 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
   @Override
   public List<BookReservation> getReservationsList() throws TechnicalException, NotFoundException {
 
-    sql = "SELECT * from book_reservation";
+    sql = "SELECT * from book_reservation ORDER BY date_reservation DESC";
 
     final RowMapper<BookReservation> rowMapper = new BookReservationRM();
 
@@ -151,7 +151,7 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
   @Override
   public List<BookReservation> getActiveReservationsList() throws TechnicalException, NotFoundException {
 
-    sql = "SELECT * FROM book_reservation WHERE active_reservation = true";
+    sql = "SELECT * FROM book_reservation WHERE active_reservation = true ORDER BY date_reservation DESC";
 
     final RowMapper<BookReservation> rowMapper = new BookReservationRM();
 
@@ -184,7 +184,7 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
   @Override
   public List<BookReservation> getActiveReservationListForBook(Integer bookId)
       throws TechnicalException, NotFoundException {
-    sql = "SELECT * FROM book_reservation WHERE active_reservation = true AND book_id = :bookId";
+    sql = "SELECT * FROM book_reservation WHERE active_reservation = true AND book_id = :bookId ORDER BY date_reservation DESC";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
     parameterSource.addValue("bookId", bookId);
@@ -400,7 +400,7 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
   private List<BookReservation> getReservationsListForUser(Integer userId, Boolean activeStatut)
       throws NotFoundException, TechnicalException {
 
-    sql = "SELECT * FROM book_reservation WHERE user_id = :userId, active_reservation = :activeReservation";
+    sql = "SELECT * FROM book_reservation WHERE user_id = :userId AND active_reservation = :activeReservation ORDER BY date_reservation DESC";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
     parameterSource.addValue("userId", userId);

@@ -36,6 +36,7 @@ public interface BookReservationDao {
 
   /**
    * Give the list of all reservations (active or not) from the datastore.
+   * ORDER BY date_reservation DESC.
    *
    * @return the list of all reservations (active or not) from the datastore.
    * @throws TechnicalException - wraps technical exception caused during data access.
@@ -46,6 +47,7 @@ public interface BookReservationDao {
 
   /**
    * Give the list of active reservations from the datastore.
+   * ORDER BY date_reservation DESC.
    *
    * @return the list of active reservations from the datastore.
    * @throws TechnicalException - wraps technical exception caused during data access.
@@ -56,6 +58,7 @@ public interface BookReservationDao {
 
   /**
    * Give the list of active reservations for the book specified with the bookId from the datastore.
+   * ORDER BY date_reservation DESC.
    *
    * @param bookId id of the book.
    * @return The list of active BookReservation for a specific book.
@@ -79,6 +82,7 @@ public interface BookReservationDao {
 
   /**
    * Give the list of active reservations for the user.
+   * ORDER BY date_reservation DESC.
    *
    * @param userId id of the user.
    * @return A list of active BookReservation for a specific user.
@@ -90,6 +94,7 @@ public interface BookReservationDao {
 
   /**
    * Give the list of inactive reservations for the user.
+   * ORDER BY date_reservation DESC.
    *
    * @param userId id of the user.
    * @return A list of inactive BookReservation for a specific user.
