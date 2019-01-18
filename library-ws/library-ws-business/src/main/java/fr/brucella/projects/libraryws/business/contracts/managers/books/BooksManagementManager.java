@@ -4,6 +4,7 @@ import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.model.Book;
 import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.users.model.User;
@@ -126,5 +127,14 @@ public interface BooksManagementManager {
    *     exception is throw if the bookReservation is not found.
    */
   void cancelReservation(final Integer bookReservationId) throws TechnicalException, FunctionalException;
+
+  /**
+   * Send email to the first user of the reservation list to tell him book is available. Book reservation is updated with date of email sending.
+   *
+   * @param book Book reserved and available.
+   * @throws TechnicalException - wraps technical exception.
+   * @throws FunctionalException - This exception is throw if the book is null or if the bookReservation is not found.
+   */
+  void sendMailBookAvailable(Book book) throws TechnicalException, FunctionalException;
 
 }

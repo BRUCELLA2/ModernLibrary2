@@ -6,6 +6,7 @@ import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.model.Book;
 import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
 import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.books.model.Stock;
@@ -269,6 +270,14 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       throw new FunctionalException(exception.getMessage());
     }
 
+    try {
+      Book book = this.getDaoFactory().getBookDao().getBook(bookBorrowed.getBookId());
+      this.sendMailBookAvailable(book);
+    } catch (Exception exception) {
+      // if a problem occurred with email sending, user get no message because he's not directly concerned by the problem.
+      LOG.error(exception.getMessage());
+    }
+
     return true;
   }
 
@@ -373,6 +382,45 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public void sendMailBookAvailable(Book book) throws TechnicalException, FunctionalException {
+
+    if(book == null) {
+      LOG.error("book null");
+      throw new FunctionalException(messages.getString("booksManagementManager.sendMailBookAvailable.bookNull"));
+    }
+    List<BookReservation> listReservations;
+    try {
+      listReservations = getDaoFactory().getBookReservationDao().getActiveReservationListForBook(book.getBookId());
+    } catch (NotFoundException exception) {
+      LOG.debug("liste reservation vide");
+      listReservations = new ArrayList<>();
+    }
+
+    if (!listReservations.isEmpty()) {
+      User user;
+      BookReservation bookReservation = listReservations.get(0);
+      try {
+        user = getDaoFactory().getUserDao().getUser(bookReservation.getUserId());
+      } catch (NotFoundException exception) {
+        LOG.error(exception.getMessage());
+        throw new FunctionalException(messages.getString("booksManagementManager.sendMailBookAvailable.userNotFound"));
+      }
+
+      mailBookAvailable(config.getString("mail.host"), Integer.valueOf(config.getString("mail.port")), config.getString("mail.username"), config.getString("mail.password"), user, book);
+      bookReservation.setDateReservationEmailSend(LocalDate.now());
+
+      try {
+        getDaoFactory().getBookReservationDao().updateBookReservation(bookReservation);
+      } catch (NotFoundException exception) {
+        LOG.error(exception.getMessage());
+        throw new FunctionalException(messages.getString("booksManagementManager.sendMailBookAvailable.reservationNotFound"));
+      }
+    }
+
+  }
+
   /**
    * Send reminder emails.
    *
@@ -433,5 +481,64 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
         throw new TechnicalException(exception.getMessage(), exception);
       }
     }
+  }
+
+  /**
+   * Send email to user to tell him book reserved is available.
+   *
+   * @param host smtp host.
+   * @param port smtp host port.
+   * @param username username for smtp authentication.
+   * @param password password for smtp authentication.
+   * @param user User to send the mail.
+   * @param book Book reserved and available.
+   * @throws TechnicalException
+   */
+  private void mailBookAvailable(String host, Integer port, String username, String password, User user, Book book) throws TechnicalException {
+
+    Properties prop = new Properties();
+    prop.put("mail.smtp.auth", true);
+    prop.put("mail.smtp.starttls.enable", "true");
+    prop.put("mail.smtp.host", host);
+    prop.put("mail.smtp.port", port);
+    prop.put("mail.smtp.ssl.trust", host);
+
+    LOG.error(prop.stringPropertyNames());
+    LOG.error("Prop text :" + prop.toString());
+
+    Session session =
+        Session.getInstance(
+            prop,
+            new Authenticator() {
+              @Override
+              protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+              }
+            });
+    session.setDebug(true);
+    try {
+      Message message = new MimeMessage(session);
+      message.setFrom(new InternetAddress(config.getString("mail.sender")));
+      message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
+      message.setSubject(messages.getString("booksManagementManager.sendMailBookAvailable.object"));
+
+      String msg = messages.getString("booksManagementManager.sendMailBookAvailable.mail");
+      msg = msg + book.getTitle();
+
+      LOG.error("Message : " + msg);
+
+      MimeBodyPart mimeBodyPart = new MimeBodyPart();
+      mimeBodyPart.setContent(msg, "text/html");
+
+      Multipart multipart = new MimeMultipart();
+      multipart.addBodyPart(mimeBodyPart);
+
+      message.setContent(multipart);
+
+      Transport.send(message);
+  } catch (Exception exception) {
+    LOG.error("Email error : " + exception.getMessage());
+    throw new TechnicalException(exception.getMessage(), exception);
+  }
   }
 }
