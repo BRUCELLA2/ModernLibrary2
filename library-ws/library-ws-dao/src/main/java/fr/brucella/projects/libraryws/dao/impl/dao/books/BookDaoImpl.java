@@ -4,10 +4,12 @@ import fr.brucella.projects.libraryws.dao.contracts.dao.books.BookDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.dto.BookDetailsDtoRM;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model.AuthorRM;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model.BookBorrowedRM;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model.BookRM;
 import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.model.Author;
 import fr.brucella.projects.libraryws.entity.books.model.Book;
+import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.searchcriteria.dto.BooksSearchClientCriteriaDto;
@@ -84,7 +86,7 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       throws NotFoundException, TechnicalException {
 
     sql =
-        "SELECT book.book_id, book.title, book.isbn13, book.ean13, book.publishing_date, book.resume, book.genre_id, book.publisher_id, publisher.name as publisher_name, genre.name as genre_name FROM book INNER JOIN publisher ON publisher.publisher_id = book.publisher_id INNER JOIN genre ON genre.genre_id = book.genre_id WHERE book.book_id = :bookId";
+        "SELECT book.book_id, book.title, book.isbn13, book.ean13, book.publishing_date, book.resume, book.genre_id, book.publisher_id, publisher.name as publisher_name, genre.name as genre_name, stock.amount_available as amount_available FROM book INNER JOIN publisher ON publisher.publisher_id = book.publisher_id INNER JOIN genre ON genre.genre_id = book.genre_id INNER JOIN stock ON stock.book_id = book.book_id WHERE book.book_id = :bookId";
 
     final MapSqlParameterSource parameterSourceBook = new MapSqlParameterSource();
     parameterSourceBook.addValue("bookId", bookId);
@@ -142,6 +144,54 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
 
+    // Get the end date of borrow if quantity of book is = 0
+    if (bookDetails.getAmountAvailable() == 0) {
+      sql = "SELECT * from book_borrowed WHERE book_id = :bookId ORDER BY end_date ASC";
+
+      final MapSqlParameterSource parameterSourceBorrow = new MapSqlParameterSource();
+      parameterSourceBorrow.addValue("bookId", bookId);
+
+      final RowMapper<BookBorrowed> bookBorrowedRowMapper = new BookBorrowedRM();
+
+      try {
+        List<BookBorrowed> bookBorrowedList = getNamedJdbcTemplate().query(sql, parameterSourceBorrow, bookBorrowedRowMapper);
+        if (!bookBorrowedList.isEmpty()) {
+          bookDetails.setEndBorrowDate(bookBorrowedList.get(0).getEndDate());
+        }
+      } catch (PermissionDeniedDataAccessException exception) {
+        LOG.error(exception.getMessage());
+        throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      } catch (DataAccessResourceFailureException exception) {
+        LOG.error(exception.getMessage());
+        throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      } catch (DataAccessException exception) {
+        LOG.error(exception.getMessage());
+        throw new TechnicalException(messages.getString("dataAccess"), exception);
+      }
+    }
+
+    // Get the amount of reservation for this book if quantity of book is = 0
+    if (bookDetails.getAmountAvailable() == 0) {
+      sql = "SELECT COUNT(*) from book_reservation WHERE book_id = :bookId AND active_reservation = true";
+
+      final MapSqlParameterSource parameterSourceCount = new MapSqlParameterSource();
+      parameterSourceCount.addValue("bookId", bookId);
+
+      try {
+        int count = getNamedJdbcTemplate().queryForObject(sql, parameterSourceCount, Integer.class);
+        bookDetails.setNbActiveReservations(count);
+      } catch (PermissionDeniedDataAccessException exception) {
+        LOG.error(exception.getMessage());
+        throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      } catch (DataAccessResourceFailureException exception) {
+        LOG.error(exception.getMessage());
+        throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      } catch (DataAccessException exception) {
+        LOG.error(exception.getMessage());
+        throw new TechnicalException(messages.getString("dataAccess"), exception);
+      }
+    }
+
     return bookDetails;
   }
 
@@ -150,7 +200,7 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
   public List<BookDetailsDto> getBookDetailsList() throws TechnicalException, NotFoundException {
 
     sql =
-        "SELECT book.book_id, book.title, book.isbn13, book.ean13, book.publishing_date, book.resume, book.genre_id, book.publisher_id, publisher.name as publisher_name, genre.name as genre_name FROM book INNER JOIN publisher ON publisher.publisher_id = book.publisher_id INNER JOIN genre ON genre.genre_id = book.genre_id";
+        "SELECT book.book_id, book.title, book.isbn13, book.ean13, book.publishing_date, book.resume, book.genre_id, book.publisher_id, publisher.name as publisher_name, genre.name as genre_name, stock.amount_available as amount_available FROM book INNER JOIN publisher ON publisher.publisher_id = book.publisher_id INNER JOIN genre ON genre.genre_id = book.genre_id INNER JOIN stock ON stock.book_id = book.book_id";
 
     final RowMapper<BookDetailsDto> bookDetailsDtoRowMapper = new BookDetailsDtoRM();
 
@@ -201,6 +251,54 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
         LOG.error(exception.getMessage());
         throw new TechnicalException(messages.getString("dataAccess"), exception);
       }
+
+      // Get the end date of borrow if quantity of book is = 0
+      if (bookDetails.getAmountAvailable() == 0) {
+        sql = "SELECT * from book_borrowed WHERE book_id = :bookId ORDER BY end_date ASC";
+
+        final MapSqlParameterSource parameterSourceBorrow = new MapSqlParameterSource();
+        parameterSourceBorrow.addValue("bookId", bookDetails.getBookId());
+
+        final RowMapper<BookBorrowed> bookBorrowedRowMapper = new BookBorrowedRM();
+
+        try {
+          List<BookBorrowed> bookBorrowedList = getNamedJdbcTemplate().query(sql, parameterSourceBorrow, bookBorrowedRowMapper);
+          if (!bookBorrowedList.isEmpty()) {
+            bookDetails.setEndBorrowDate(bookBorrowedList.get(0).getEndDate());
+          }
+        } catch (PermissionDeniedDataAccessException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("permissionDenied"), exception);
+        } catch (DataAccessResourceFailureException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+        } catch (DataAccessException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("dataAccess"), exception);
+        }
+      }
+
+      // Get the amount of reservation for this book if quantity of book is = 0
+      if (bookDetails.getAmountAvailable() == 0) {
+        sql = "SELECT COUNT(*) from book_reservation WHERE book_id = :bookId AND active_reservation = true";
+
+        final MapSqlParameterSource parameterSourceCount = new MapSqlParameterSource();
+        parameterSourceCount.addValue("bookId", bookDetails.getBookId());
+
+        try {
+          int count = getNamedJdbcTemplate().queryForObject(sql, parameterSourceCount, Integer.class);
+          bookDetails.setNbActiveReservations(count);
+        } catch (PermissionDeniedDataAccessException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("permissionDenied"), exception);
+        } catch (DataAccessResourceFailureException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+        } catch (DataAccessException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("dataAccess"), exception);
+        }
+      }
     }
 
     return bookDetailsDtoList;
@@ -219,7 +317,7 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 
     sql =
-        "SELECT book.book_id, book.title, book.isbn13, book.ean13, book.publishing_date, book.resume, book.genre_id, book.publisher_id, publisher.name as publisher_name, genre.name as genre_name FROM book INNER JOIN publisher ON publisher.publisher_id = book.publisher_id INNER JOIN genre ON genre.genre_id = book.genre_id INNER JOIN stock ON book.book_id = stock.book_id";
+        "SELECT book.book_id, book.title, book.isbn13, book.ean13, book.publishing_date, book.resume, book.genre_id, book.publisher_id, publisher.name as publisher_name, genre.name as genre_name, stock.amount_available as amount_available FROM book INNER JOIN publisher ON publisher.publisher_id = book.publisher_id INNER JOIN genre ON genre.genre_id = book.genre_id INNER JOIN stock ON book.book_id = stock.book_id";
 
     if (booksSearchClientCriteriaDto != null) {
 
@@ -315,6 +413,54 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       } catch (DataAccessException exception) {
         LOG.error(exception.getMessage());
         throw new TechnicalException(messages.getString("dataAccess"), exception);
+      }
+
+      // Get the end date of borrow if quantity of book is = 0
+      if (bookDetails.getAmountAvailable() == 0) {
+        sql = "SELECT * from book_borrowed WHERE book_id = :bookId ORDER BY end_date ASC";
+
+        final MapSqlParameterSource parameterSourceBorrow = new MapSqlParameterSource();
+        parameterSourceBorrow.addValue("bookId", bookDetails.getBookId());
+
+        final RowMapper<BookBorrowed> bookBorrowedRowMapper = new BookBorrowedRM();
+
+        try {
+          List<BookBorrowed> bookBorrowedList = getNamedJdbcTemplate().query(sql, parameterSourceBorrow, bookBorrowedRowMapper);
+          if (!bookBorrowedList.isEmpty()) {
+            bookDetails.setEndBorrowDate(bookBorrowedList.get(0).getEndDate());
+          }
+        } catch (PermissionDeniedDataAccessException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("permissionDenied"), exception);
+        } catch (DataAccessResourceFailureException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+        } catch (DataAccessException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("dataAccess"), exception);
+        }
+      }
+
+      // Get the amount of reservation for this book if quantity of book is = 0
+      if (bookDetails.getAmountAvailable() == 0) {
+        sql = "SELECT COUNT(*) from book_reservation WHERE book_id = :bookId AND active_reservation = true";
+
+        final MapSqlParameterSource parameterSourceCount = new MapSqlParameterSource();
+        parameterSourceCount.addValue("bookId", bookDetails.getBookId());
+
+        try {
+          int count = getNamedJdbcTemplate().queryForObject(sql, parameterSourceCount, Integer.class);
+          bookDetails.setNbActiveReservations(count);
+        } catch (PermissionDeniedDataAccessException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("permissionDenied"), exception);
+        } catch (DataAccessResourceFailureException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+        } catch (DataAccessException exception) {
+          LOG.error(exception.getMessage());
+          throw new TechnicalException(messages.getString("dataAccess"), exception);
+        }
       }
     }
     return bookDetailsDtoList;
