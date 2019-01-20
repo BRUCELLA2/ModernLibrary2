@@ -1,3 +1,4 @@
+
 package generated.bookserviceclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Classe Java pour bookBorrow complex type.
- *
+ * 
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- *
+ * 
  * <pre>
  * &lt;complexType name="bookBorrow">
  *   &lt;complexContent>
@@ -22,50 +23,65 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "bookBorrow", propOrder = {"arg0", "arg1"})
+@XmlType(name = "bookBorrow", propOrder = {
+    "arg0",
+    "arg1"
+})
 public class BookBorrow {
 
-  protected Integer arg0;
-  protected Integer arg1;
+    protected Integer arg0;
+    protected Integer arg1;
 
-  /**
-   * Obtient la valeur de la propriété arg0.
-   *
-   * @return possible object is {@link Integer }
-   */
-  public Integer getArg0() {
-    return arg0;
-  }
+    /**
+     * Obtient la valeur de la propriété arg0.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getArg0() {
+        return arg0;
+    }
 
-  /**
-   * Définit la valeur de la propriété arg0.
-   *
-   * @param value
-   *     allowed object is {@link Integer }
-   */
-  public void setArg0(Integer value) {
-    this.arg0 = value;
-  }
+    /**
+     * Définit la valeur de la propriété arg0.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setArg0(Integer value) {
+        this.arg0 = value;
+    }
 
-  /**
-   * Obtient la valeur de la propriété arg1.
-   *
-   * @return possible object is {@link Integer }
-   */
-  public Integer getArg1() {
-    return arg1;
-  }
+    /**
+     * Obtient la valeur de la propriété arg1.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getArg1() {
+        return arg1;
+    }
 
-  /**
-   * Définit la valeur de la propriété arg1.
-   *
-   * @param value
-   *     allowed object is {@link Integer }
-   */
-  public void setArg1(Integer value) {
-    this.arg1 = value;
-  }
+    /**
+     * Définit la valeur de la propriété arg1.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setArg1(Integer value) {
+        this.arg1 = value;
+    }
 
 }

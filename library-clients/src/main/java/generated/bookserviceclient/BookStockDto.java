@@ -1,3 +1,4 @@
+
 package generated.bookserviceclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Classe Java pour bookStockDto complex type.
- *
+ * 
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- *
+ * 
  * <pre>
  * &lt;complexType name="bookStockDto">
  *   &lt;complexContent>
@@ -21,30 +22,41 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "bookStockDto", propOrder = {"title"})
-public class BookStockDto extends Stock {
+@XmlType(name = "bookStockDto", propOrder = {
+    "title"
+})
+public class BookStockDto
+    extends Stock
+{
 
-  protected String title;
+    protected String title;
 
-  /**
-   * Obtient la valeur de la propriété title.
-   *
-   * @return possible object is {@link String }
-   */
-  public String getTitle() {
-    return title;
-  }
+    /**
+     * Obtient la valeur de la propriété title.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTitle() {
+        return title;
+    }
 
-  /**
-   * Définit la valeur de la propriété title.
-   *
-   * @param value
-   *     allowed object is {@link String }
-   */
-  public void setTitle(String value) {
-    this.title = value;
-  }
+    /**
+     * Définit la valeur de la propriété title.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTitle(String value) {
+        this.title = value;
+    }
 
 }

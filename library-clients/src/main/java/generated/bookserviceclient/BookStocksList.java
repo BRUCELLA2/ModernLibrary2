@@ -1,3 +1,4 @@
+
 package generated.bookserviceclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Classe Java pour bookStocksList complex type.
- *
+ * 
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- *
+ * 
  * <pre>
  * &lt;complexType name="bookStocksList">
  *   &lt;complexContent>
@@ -20,6 +21,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bookStocksList")
