@@ -54,7 +54,7 @@
     <!-- "extend" Action -->
     <action name="borrow_extend"
       class="fr.brucella.projects.libraryclients.webapp.actions.book.BookAction"
-      method="BorrowExtend">
+      method="borrowExtend">
       <result name="success" type="redirectAction">
         <param name="actionName">myBorrows</param>
       </result>
@@ -64,8 +64,18 @@
     <!-- "book_details" Action -->
     <action name="book_details"
       class="fr.brucella.projects.libraryclients.webapp.actions.book.BookAction"
-      method="BookDetails">
+      method="bookDetails">
       <result name="success">/jsp/book/bookDetails.jsp</result>
+      <result name="error">/jsp/error.jsp</result>
+    </action>
+
+    <!-- "Book Reservation" Action -->
+    <action name="book_reservation"
+      class="fr.brucella.projects.libraryclients.webapp.actions.bookslisting.BooksListingAction"
+      method="bookReservation">
+      <result name="success" type="redirectAction">
+        <param name="actionName">search_books</param>
+      </result>
       <result name="error">/jsp/error.jsp</result>
     </action>
 

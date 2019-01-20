@@ -95,7 +95,7 @@ public class BookAction extends ActionSupport {
 
   // ===== Methods =====
 
-  public String BorrowExtend() {
+  public String borrowExtend() {
 
     if (this.bookBorrowedId == null) {
       LOG.error("bookBorrowedId NULL - BorrowExtend failure");
@@ -103,8 +103,8 @@ public class BookAction extends ActionSupport {
       return Action.ERROR;
     }
 
-    BookService_Service bookservice = new BookService_Service();
-    BookService bookServicePort = bookservice.getBookServicePort();
+    BookService_Service bookService = new BookService_Service();
+    BookService bookServicePort = bookService.getBookServicePort();
 
     try {
       bookServicePort.extendBorrowing(this.bookBorrowedId);
@@ -118,7 +118,7 @@ public class BookAction extends ActionSupport {
     return Action.SUCCESS;
   }
 
-  public String BookDetails() {
+  public String bookDetails() {
 
     if (this.bookId == null) {
       LOG.error("bookId NULL - Book Details failure");
