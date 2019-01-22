@@ -7,6 +7,7 @@ import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
 import fr.brucella.projects.libraryws.entity.books.dto.CurrentlyBorrowExpiredDto;
 import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
+import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
 import fr.brucella.projects.libraryws.entity.exceptions.LibraryWsException;
 import fr.brucella.projects.libraryws.entity.exceptions.LibraryWsFault;
@@ -533,6 +534,34 @@ public class BookService extends SpringBeanAutowiringSupport {
 
     try {
       this.managerFactory.getBooksManagementManager().cancelReservation(reservationId);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
+    } catch (FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
+    }
+  }
+
+  /**
+   * Return the list of reservations for the user.
+   *
+   * @param userId id of the user.
+   * @return the list of reservations for the user.
+   * @throws LibraryWsException Throw this exception if there is a technical or functional problem.
+   */
+  @WebMethod
+  public List<BookReservation> userReservations(final Integer userId) throws LibraryWsException {
+
+    if (userId == null) {
+      LOG.error("userId = " + userId);
+      throw new LibraryWsException("Paramètre incorrect. L'identifiant de l'utilisateur ne peut être vide.", new LibraryWsFault(CLIENT, "Paramètre incorrect. L'identifiant de l'utilisateur ne peut être vide."));
+    }
+
+    try {
+      return this.managerFactory.getBooksManagementManager().userReservationsList(userId);
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(

@@ -2,6 +2,7 @@ package fr.brucella.projects.libraryws.entity.books.model;
 
 import fr.brucella.projects.libraryws.entity.LocalDateWithTimeAdapter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -26,10 +27,10 @@ public class BookReservation {
 
   /** Date of the reservation. Can't be null. */
   @NotNull(message = "{bookReservation.dateReservation.null}")
-  private LocalDate dateReservation;
+  private LocalDateTime dateReservation;
 
   /** Date of the email send to the user. **/
-  private LocalDate dateReservationEmailSend;
+  private LocalDateTime dateReservationEmailSend;
 
   @NotNull(message = "{bookReservation.activeReservation.null}")
   private Boolean activeReservation;
@@ -97,7 +98,7 @@ public class BookReservation {
    * @return the date of the reservation.
    */
   @XmlJavaTypeAdapter(value = LocalDateWithTimeAdapter.class)
-  public LocalDate getDateReservation() {
+  public LocalDateTime getDateReservation() {
     return dateReservation;
   }
 
@@ -106,7 +107,7 @@ public class BookReservation {
    *
    * @param dateReservation the date of the reservation.
    */
-  public void setDateReservation(LocalDate dateReservation) {
+  public void setDateReservation(LocalDateTime dateReservation) {
     this.dateReservation = dateReservation;
   }
 
@@ -116,7 +117,7 @@ public class BookReservation {
    * @return the date of the email send.
    */
   @XmlJavaTypeAdapter(value = LocalDateWithTimeAdapter.class)
-  public LocalDate getDateReservationEmailSend() {
+  public LocalDateTime getDateReservationEmailSend() {
     return dateReservationEmailSend;
   }
 
@@ -125,7 +126,7 @@ public class BookReservation {
    *
    * @param dateReservationEmailSend the date of the email send.
    */
-  public void setDateReservationEmailSend(LocalDate dateReservationEmailSend) {
+  public void setDateReservationEmailSend(LocalDateTime dateReservationEmailSend) {
     this.dateReservationEmailSend = dateReservationEmailSend;
   }
 

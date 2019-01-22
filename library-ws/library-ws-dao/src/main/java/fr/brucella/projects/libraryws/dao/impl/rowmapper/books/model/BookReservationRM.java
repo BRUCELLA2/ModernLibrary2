@@ -3,6 +3,7 @@ package fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model;
 import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import org.springframework.jdbc.core.RowMapper;
 
 public class BookReservationRM implements RowMapper<BookReservation> {
@@ -19,12 +20,12 @@ public class BookReservationRM implements RowMapper<BookReservation> {
     bookReservation.setBookId(resultSet.getInt("book_id"));
     bookReservation.setUserId(resultSet.getInt("user_id"));
     if (resultSet.getDate("date_reservation") != null) {
-      bookReservation.setDateReservation(resultSet.getDate("date_reservation").toLocalDate());
+      bookReservation.setDateReservation(resultSet.getTimestamp("date_reservation").toLocalDateTime());
     } else {
       bookReservation.setDateReservation(null);
     }
     if (resultSet.getDate("date_reservation_email_send") != null) {
-      bookReservation.setDateReservationEmailSend(resultSet.getDate("date_reservation_email_send").toLocalDate());
+      bookReservation.setDateReservationEmailSend(resultSet.getTimestamp("date_reservation_email_send").toLocalDateTime());
     } else {
       bookReservation.setDateReservationEmailSend(null);
     }

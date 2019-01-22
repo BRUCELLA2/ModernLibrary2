@@ -15,6 +15,7 @@ import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.users.model.User;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -390,7 +391,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     bookReservation.setBookId(bookId);
     bookReservation.setUserId(userId);
     bookReservation.setActiveReservation(true);
-    bookReservation.setDateReservation(LocalDate.now());
+    bookReservation.setDateReservation(LocalDateTime.now());
 
     return getDaoFactory().getBookReservationDao().insertBookReservation(bookReservation);
 
@@ -409,6 +410,21 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       BookReservation bookReservation = getDaoFactory().getBookReservationDao().getBookReservation(bookReservationId);
       bookReservation.setActiveReservation(false);
       getDaoFactory().getBookReservationDao().updateBookReservation(bookReservation);
+    } catch (NotFoundException exception) {
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
+    }
+  }
+
+  @Override
+  public List<BookReservation> userReservationsList(final Integer userId) throws TechnicalException, FunctionalException {
+    if (userId == null) {
+      LOG.error("userId = " + userId);
+      throw new FunctionalException(messages.getString("booksManagementManager.userReservationsList.userIdNull"));
+    }
+
+    try {
+      return getDaoFactory().getBookReservationDao().getActiveReservationsListForUser(userId);
     } catch (NotFoundException exception) {
       LOG.error(exception.getMessage());
       throw new FunctionalException(exception.getMessage(), exception);
@@ -442,7 +458,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       }
 
       mailBookAvailable(config.getString("mail.host"), Integer.valueOf(config.getString("mail.port")), config.getString("mail.username"), config.getString("mail.password"), user, book);
-      bookReservation.setDateReservationEmailSend(LocalDate.now());
+      bookReservation.setDateReservationEmailSend(LocalDateTime.now());
 
       try {
         getDaoFactory().getBookReservationDao().updateBookReservation(bookReservation);
