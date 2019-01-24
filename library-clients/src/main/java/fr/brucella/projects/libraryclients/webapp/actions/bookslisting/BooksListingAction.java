@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import generated.authentificationserviceclient.FullUserDto;
 import generated.bookserviceclient.BookDetailsDto;
+import generated.bookserviceclient.BookReservation;
 import generated.bookserviceclient.BookService;
 import generated.bookserviceclient.BookService_Service;
 import generated.bookserviceclient.BooksSearchClientCriteriaDto;
@@ -315,4 +316,34 @@ public class BooksListingAction extends ActionSupport implements SessionAware, S
     return Action.SUCCESS;
   }
 
+  public String checkReservedByUser(final BookDetailsDto book) {
+
+    if (book == null) {
+      LOG.error("BookId NULL - CheckReservedByUser failure");
+      this.addActionError("La vérification de la réservation du livre par l'utilisateur n'a pu se faire");
+      return Action.ERROR;
+    }
+
+    BookService_Service bookService = new BookService_Service();
+    BookService bookServicePort = bookService.getBookServicePort();
+
+    FullUserDto fullUserDto = (FullUserDto) this.servletRequest.getSession().getAttribute("userLog");
+    List<BookReservation> reservations;
+    try {
+      reservations = bookServicePort.userReservations(fullUserDto.getUserId());
+    } catch (LibraryWsException exception) {
+      LOG.error(exception.getMessage());
+      LOG.error(exception.getFaultInfo().getFaultString());
+      this.addActionError(exception.getFaultInfo().getFaultString());
+      return Action.ERROR;
+    }
+
+    for (BookReservation reservation : reservations) {
+      if (reservation.getBookId().equals(book.getBookId())) {
+        return "true";
+      }
+    }
+
+    return "false";
+  }
 }

@@ -192,6 +192,23 @@ public interface BookService {
 
     /**
      * 
+     * @param arg0
+     * @return
+     *     returns java.util.List<generated.bookserviceclient.BookReservation>
+     * @throws LibraryWsException
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "userReservations", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.UserReservations")
+    @ResponseWrapper(localName = "userReservationsResponse", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.UserReservationsResponse")
+    public List<BookReservation> userReservations(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Integer arg0)
+        throws LibraryWsException
+    ;
+
+    /**
+     * 
      * @return
      *     returns java.util.List<generated.bookserviceclient.BorrowDto>
      * @throws LibraryWsException

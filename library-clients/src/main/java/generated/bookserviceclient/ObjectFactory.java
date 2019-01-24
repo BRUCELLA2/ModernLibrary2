@@ -24,6 +24,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _UserReservationsResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "userReservationsResponse");
     private final static QName _CheckReservationNotPickedUpResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "checkReservationNotPickedUpResponse");
     private final static QName _CurrentlyDeadLineExpiredForUserResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyDeadLineExpiredForUserResponse");
     private final static QName _NbBorrowingByBooks_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "nbBorrowingByBooks");
@@ -32,6 +33,7 @@ public class ObjectFactory {
     private final static QName _BookBorrow_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookBorrow");
     private final static QName _BookDetails_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookDetails");
     private final static QName _CheckReservationNotPickedUp_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "checkReservationNotPickedUp");
+    private final static QName _UserReservations_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "userReservations");
     private final static QName _LibraryWsException_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "LibraryWsException");
     private final static QName _CurrentlyBooksBorrowedList_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyBooksBorrowedList");
     private final static QName _CancelAreservation_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "cancelAreservation");
@@ -266,6 +268,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link UserReservations }
+     * 
+     */
+    public UserReservations createUserReservations() {
+        return new UserReservations();
+    }
+
+    /**
      * Create an instance of {@link LibraryWsFault }
      * 
      */
@@ -343,6 +353,14 @@ public class ObjectFactory {
      */
     public ReturnedBorrowsForUserResponse createReturnedBorrowsForUserResponse() {
         return new ReturnedBorrowsForUserResponse();
+    }
+
+    /**
+     * Create an instance of {@link UserReservationsResponse }
+     * 
+     */
+    public UserReservationsResponse createUserReservationsResponse() {
+        return new UserReservationsResponse();
     }
 
     /**
@@ -450,6 +468,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link BookReservation }
+     * 
+     */
+    public BookReservation createBookReservation() {
+        return new BookReservation();
+    }
+
+    /**
      * Create an instance of {@link BookBorrowed }
      * 
      */
@@ -495,6 +521,15 @@ public class ObjectFactory {
      */
     public User createUser() {
         return new User();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UserReservationsResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "userReservationsResponse")
+    public JAXBElement<UserReservationsResponse> createUserReservationsResponse(UserReservationsResponse value) {
+        return new JAXBElement<UserReservationsResponse>(_UserReservationsResponse_QNAME, UserReservationsResponse.class, null, value);
     }
 
     /**
@@ -567,6 +602,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "checkReservationNotPickedUp")
     public JAXBElement<CheckReservationNotPickedUp> createCheckReservationNotPickedUp(CheckReservationNotPickedUp value) {
         return new JAXBElement<CheckReservationNotPickedUp>(_CheckReservationNotPickedUp_QNAME, CheckReservationNotPickedUp.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UserReservations }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "userReservations")
+    public JAXBElement<UserReservations> createUserReservations(UserReservations value) {
+        return new JAXBElement<UserReservations>(_UserReservations_QNAME, UserReservations.class, null, value);
     }
 
     /**
