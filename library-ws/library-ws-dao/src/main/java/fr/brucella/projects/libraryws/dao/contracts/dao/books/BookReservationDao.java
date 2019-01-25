@@ -104,7 +104,6 @@ public interface BookReservationDao {
    */
   List<BookReservation> getInactiveReservationsListForUser(final Integer userId) throws TechnicalException, NotFoundException;
 
-
   /**
    * Update an existing bookReservation in the datastore.
    *

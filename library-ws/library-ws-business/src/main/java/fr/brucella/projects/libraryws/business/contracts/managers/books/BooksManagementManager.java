@@ -139,14 +139,24 @@ public interface BooksManagementManager {
   void cancelReservation(final Integer bookReservationId) throws TechnicalException, FunctionalException;
 
   /**
-   * Return the list of reservations for the user.
+   * Return the list of active reservations for the user.
    *
    * @param userId id of the user.
-   * @return the list of reservations for the user.
+   * @return the list of active reservations for the user.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the id of the user. List can be empty.
+   * @throws FunctionalException - This exception is throw if the id of the user is not valid. List can be empty.
    */
   List<BookReservation> userReservationsList(final Integer userId) throws TechnicalException, FunctionalException;
+
+  /**
+   * Return the list of active reservations for the book.
+   *
+   * @param bookId id of the book.
+   * @return the list of active reservation for the book.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the book is not valid. List can be empty.
+   */
+  List<BookReservation> activeReservationsListForBook(final Integer bookId) throws TechnicalException, FunctionalException;
 
   /**
    * Send email to the first user of the reservation list to tell him book is available. Book reservation is updated with date of email sending.

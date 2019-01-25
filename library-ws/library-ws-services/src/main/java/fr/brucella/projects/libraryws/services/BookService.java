@@ -546,10 +546,10 @@ public class BookService extends SpringBeanAutowiringSupport {
   }
 
   /**
-   * Return the list of reservations for the user.
+   * Return the list of active reservations for the user.
    *
    * @param userId id of the user.
-   * @return the list of reservations for the user.
+   * @return the list of active reservations for the user.
    * @throws LibraryWsException Throw this exception if there is a technical or functional problem.
    */
   @WebMethod
@@ -562,6 +562,34 @@ public class BookService extends SpringBeanAutowiringSupport {
 
     try {
       return this.managerFactory.getBooksManagementManager().userReservationsList(userId);
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
+    } catch (FunctionalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
+    }
+  }
+
+  /**
+   * Return the list of active reservations for the book.
+   *
+   * @param bookId id of the book.
+   * @return the list of active reservations for the book.
+   * @throws LibraryWsException Throw this exception if there is a technical or functional problem.
+   */
+  @WebMethod
+  public List<BookReservation> bookReservations(final Integer bookId) throws LibraryWsException {
+
+    if (bookId == null) {
+      LOG.error("bookId = " + bookId);
+      throw new LibraryWsException("Paramètre incorrect. L'identifiant du livre ne peut être vide.", new LibraryWsFault(CLIENT, "Paramètre incorrect. L'identifiant du livre ne peut être vide."));
+    }
+
+    try {
+      return this.managerFactory.getBooksManagementManager().activeReservationsListForBook(bookId);
     } catch (TechnicalException exception) {
       LOG.error(exception.getMessage());
       throw new LibraryWsException(

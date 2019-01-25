@@ -431,6 +431,21 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
   }
 
+  @Override
+  public List<BookReservation> activeReservationsListForBook(Integer bookId) throws TechnicalException, FunctionalException {
+    if (bookId == null) {
+      LOG.error("bookId = " + bookId);
+      throw new FunctionalException(messages.getString("booksManagementManager.activeReservationsListForBook.bookIdNull"));
+    }
+
+    try {
+      return getDaoFactory().getBookReservationDao().getActiveReservationListForBook(bookId);
+    } catch (NotFoundException exception) {
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
+    }
+  }
+
   /** {@inheritDoc} */
   @Override
   public void sendMailBookAvailable(Book book) throws TechnicalException, FunctionalException {
