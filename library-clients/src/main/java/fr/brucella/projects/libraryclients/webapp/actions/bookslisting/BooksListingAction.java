@@ -9,6 +9,7 @@ import generated.bookserviceclient.BookService;
 import generated.bookserviceclient.BookService_Service;
 import generated.bookserviceclient.BooksSearchClientCriteriaDto;
 import generated.bookserviceclient.LibraryWsException;
+import generated.bookserviceclient.ReservationDetailsDto;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -328,7 +329,7 @@ public class BooksListingAction extends ActionSupport implements SessionAware, S
     BookService bookServicePort = bookService.getBookServicePort();
 
     FullUserDto fullUserDto = (FullUserDto) this.servletRequest.getSession().getAttribute("userLog");
-    List<BookReservation> reservations;
+    List<ReservationDetailsDto> reservations;
     try {
       reservations = bookServicePort.userReservations(fullUserDto.getUserId());
     } catch (LibraryWsException exception) {

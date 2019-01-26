@@ -7,6 +7,7 @@ import generated.bookserviceclient.BookReservation;
 import generated.bookserviceclient.BookService;
 import generated.bookserviceclient.BookService_Service;
 import generated.bookserviceclient.LibraryWsException;
+import generated.bookserviceclient.ReservationDetailsDto;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +36,7 @@ public class ReservationsListingAction extends ActionSupport implements SessionA
 
   // ----- Output
 
-  private List<BookReservation> reservationList;
+  private List<ReservationDetailsDto> reservationList;
 
 
   // ----- Getters and Setters
@@ -45,7 +46,7 @@ public class ReservationsListingAction extends ActionSupport implements SessionA
    *
    * @return the list of BookReservations.
    */
-  public List<BookReservation> getReservationList() {
+  public List<ReservationDetailsDto> getReservationList() {
     return reservationList;
   }
 
@@ -54,7 +55,7 @@ public class ReservationsListingAction extends ActionSupport implements SessionA
    *
    * @param reservationList the list of BookReservations.
    */
-  public void setReservationList(final List<BookReservation> reservationList) {
+  public void setReservationList(final List<ReservationDetailsDto> reservationList) {
     this.reservationList = reservationList;
   }
 
@@ -93,7 +94,7 @@ public class ReservationsListingAction extends ActionSupport implements SessionA
     return Action.SUCCESS;
   }
 
-  public int position(BookReservation bookReservation) {
+  public int position(ReservationDetailsDto bookReservation) {
 
     BookService_Service bookService = new BookService_Service();
     BookService bookServicePort = bookService.getBookServicePort();

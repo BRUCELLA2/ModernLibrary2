@@ -6,6 +6,7 @@ import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
 import fr.brucella.projects.libraryws.entity.books.dto.CurrentlyBorrowExpiredDto;
+import fr.brucella.projects.libraryws.entity.books.dto.ReservationDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.UserCurrentlyBorrowDto;
 import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
@@ -553,7 +554,7 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @throws LibraryWsException Throw this exception if there is a technical or functional problem.
    */
   @WebMethod
-  public List<BookReservation> userReservations(final Integer userId) throws LibraryWsException {
+  public List<ReservationDetailsDto> userReservations(final Integer userId) throws LibraryWsException {
 
     if (userId == null) {
       LOG.error("userId = " + userId);

@@ -470,6 +470,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ReservationDetailsDto }
+     * 
+     */
+    public ReservationDetailsDto createReservationDetailsDto() {
+        return new ReservationDetailsDto();
+    }
+
+    /**
      * Create an instance of {@link Author }
      * 
      */

@@ -1,5 +1,6 @@
 package fr.brucella.projects.libraryws.dao.contracts.dao.books;
 
+import fr.brucella.projects.libraryws.entity.books.dto.ReservationDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
@@ -85,24 +86,24 @@ public interface BookReservationDao {
    * ORDER BY date_reservation ASC.
    *
    * @param userId id of the user.
-   * @return A list of active BookReservation for a specific user.
+   * @return A list of active ReservationDetailsDto for a specific user.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and no
    *     reservation is found.
    */
-  List<BookReservation> getActiveReservationsListForUser(final Integer userId) throws TechnicalException, NotFoundException;
+  List<ReservationDetailsDto> getActiveReservationsListForUser(final Integer userId) throws TechnicalException, NotFoundException;
 
   /**
    * Give the list of inactive reservations for the user.
    * ORDER BY date_reservation ASC.
    *
    * @param userId id of the user.
-   * @return A list of inactive BookReservation for a specific user.
+   * @return A list of inactive ReservationDetailsDto for a specific user.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and no
    *     reservation is found.
    */
-  List<BookReservation> getInactiveReservationsListForUser(final Integer userId) throws TechnicalException, NotFoundException;
+  List<ReservationDetailsDto> getInactiveReservationsListForUser(final Integer userId) throws TechnicalException, NotFoundException;
 
   /**
    * Update an existing bookReservation in the datastore.

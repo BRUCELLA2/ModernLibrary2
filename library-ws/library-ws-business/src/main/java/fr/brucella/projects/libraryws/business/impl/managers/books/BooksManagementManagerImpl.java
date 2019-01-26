@@ -6,6 +6,7 @@ import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.dto.ReservationDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.model.Book;
 import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
 import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
@@ -417,7 +418,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
   }
 
   @Override
-  public List<BookReservation> userReservationsList(final Integer userId) throws TechnicalException, FunctionalException {
+  public List<ReservationDetailsDto> userReservationsList(final Integer userId) throws TechnicalException, FunctionalException {
     if (userId == null) {
       LOG.error("userId = " + userId);
       throw new FunctionalException(messages.getString("booksManagementManager.userReservationsList.userIdNull"));

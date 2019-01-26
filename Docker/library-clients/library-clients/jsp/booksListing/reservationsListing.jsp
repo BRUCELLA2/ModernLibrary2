@@ -65,7 +65,7 @@
                                 <s:property value="title"/>
                             </td>
                             <td class="text-center">
-                                <s:property value="endBorrowDate"/>
+                                <s:property value="firstEndBorrowDate"/>
                             </td>
                             <td class="text-center">
                                 <s:set var="position" value="%{position(#reservation)}"/>

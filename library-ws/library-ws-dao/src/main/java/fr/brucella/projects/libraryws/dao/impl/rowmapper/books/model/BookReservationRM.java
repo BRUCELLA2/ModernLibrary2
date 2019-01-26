@@ -3,9 +3,13 @@ package fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model;
 import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import org.springframework.jdbc.core.RowMapper;
 
+/**
+ * This class allow to map row of ResultSet to an ReservationDetailsDto object.
+ *
+ * @author BRUCELLA2
+ */
 public class BookReservationRM implements RowMapper<BookReservation> {
 
   /** Default Constructor. */

@@ -4,6 +4,7 @@ import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.dto.ReservationDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.model.Book;
 import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
@@ -146,7 +147,7 @@ public interface BooksManagementManager {
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws FunctionalException - This exception is throw if the id of the user is not valid. List can be empty.
    */
-  List<BookReservation> userReservationsList(final Integer userId) throws TechnicalException, FunctionalException;
+  List<ReservationDetailsDto> userReservationsList(final Integer userId) throws TechnicalException, FunctionalException;
 
   /**
    * Return the list of active reservations for the book.

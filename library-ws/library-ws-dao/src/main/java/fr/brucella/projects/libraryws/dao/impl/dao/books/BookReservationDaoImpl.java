@@ -2,7 +2,11 @@ package fr.brucella.projects.libraryws.dao.impl.dao.books;
 
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.BookReservationDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.dto.ReservationDetailsDtoRM;
+import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model.BookBorrowedRM;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.books.model.BookReservationRM;
+import fr.brucella.projects.libraryws.entity.books.dto.ReservationDetailsDto;
+import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
 import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
@@ -258,14 +262,14 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
 
   /** {@inheritDoc} */
   @Override
-  public List<BookReservation> getActiveReservationsListForUser(Integer userId)
+  public List<ReservationDetailsDto> getActiveReservationsListForUser(Integer userId)
       throws TechnicalException, NotFoundException {
     return getReservationsListForUser(userId, true);
   }
 
   /** {@inheritDoc} */
   @Override
-  public List<BookReservation> getInactiveReservationsListForUser(Integer userId)
+  public List<ReservationDetailsDto> getInactiveReservationsListForUser(Integer userId)
       throws TechnicalException, NotFoundException {
     return getReservationsListForUser(userId, false);
   }
@@ -397,19 +401,20 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
    * @throws NotFoundException - This exception is throws if there is no technical exception and no
    *     reservation is found.
    */
-  private List<BookReservation> getReservationsListForUser(Integer userId, Boolean activeStatut)
+  private List<ReservationDetailsDto> getReservationsListForUser(Integer userId, Boolean activeStatut)
       throws NotFoundException, TechnicalException {
 
-    sql = "SELECT * FROM book_reservation WHERE user_id = :userId AND active_reservation = :activeReservation ORDER BY date_reservation ASC";
+    sql = "SELECT book_reservation.book_reservation_id, book_reservation.book_id, book_reservation.user_id, book_reservation.date_reservation, book_reservation.date_reservation_email_send, book_reservation.active_reservation, book.title FROM book_reservation INNER JOIN book ON book.book_id = book_reservation.book_id WHERE user_id = :userId AND active_reservation = :activeReservation ORDER BY date_reservation ASC";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
     parameterSource.addValue("userId", userId);
     parameterSource.addValue("activeReservation", activeStatut);
 
-    final RowMapper<BookReservation> rowMapper = new BookReservationRM();
+    final RowMapper<ReservationDetailsDto> rowMapper = new ReservationDetailsDtoRM();
 
+    List<ReservationDetailsDto> reservationsList;
     try {
-      final List<BookReservation> reservationsList = this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
+      reservationsList = this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
       if (reservationsList.isEmpty()) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
@@ -417,8 +422,6 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
           LOG.debug("Active Statut : " + activeStatut);
         }
         throw new NotFoundException(messages.getString("bookReservationDao.getReservationsList.notFound"));
-      } else {
-        return reservationsList;
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
@@ -435,5 +438,31 @@ public class BookReservationDaoImpl extends AbstractDao implements BookReservati
       LOG.error(exception.getMessage());
       throw new TechnicalException(messages.getString("dataAccess"), exception);
     }
+
+    for (ReservationDetailsDto reservationDetails : reservationsList) {
+      sql = "SELECT * from book_borrowed WHERE book_id = :bookId ORDER BY end_date ASC";
+      final MapSqlParameterSource parameterSourceBorrow = new MapSqlParameterSource();
+      parameterSourceBorrow.addValue("bookId", reservationDetails.getBookId());
+
+      final RowMapper<BookBorrowed> bookBorrowedRowMapper = new BookBorrowedRM();
+
+      try {
+        List<BookBorrowed> bookBorrowedList = getNamedJdbcTemplate().query(sql, parameterSourceBorrow, bookBorrowedRowMapper);
+        if (!bookBorrowedList.isEmpty()) {
+          reservationDetails.setFirstEndBorrowDate(bookBorrowedList.get(0).getEndDate());
+        }
+      } catch (PermissionDeniedDataAccessException exception) {
+        LOG.error(exception.getMessage());
+        throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      } catch (DataAccessResourceFailureException exception) {
+        LOG.error(exception.getMessage());
+        throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      } catch (DataAccessException exception) {
+        LOG.error(exception.getMessage());
+        throw new TechnicalException(messages.getString("dataAccess"), exception);
+      }
+    }
+
+    return reservationsList;
   }
 }

@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://services.libraryws.projects.brucella.fr/}bookReservation" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://services.libraryws.projects.brucella.fr/}reservationDetailsDto" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 public class UserReservationsResponse {
 
     @XmlElement(name = "return")
-    protected List<BookReservation> _return;
+    protected List<ReservationDetailsDto> _return;
 
     /**
      * Gets the value of the return property.
@@ -55,13 +55,13 @@ public class UserReservationsResponse {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link BookReservation }
+     * {@link ReservationDetailsDto }
      * 
      * 
      */
-    public List<BookReservation> getReturn() {
+    public List<ReservationDetailsDto> getReturn() {
         if (_return == null) {
-            _return = new ArrayList<BookReservation>();
+            _return = new ArrayList<ReservationDetailsDto>();
         }
         return this._return;
     }
