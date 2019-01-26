@@ -51,6 +51,23 @@
       <result name="error">/jsp/error.jsp</result>
     </action>
 
+    <!-- "myReservations" Action -->
+    <action name="myReservations"
+      class="fr.brucella.projects.libraryclients.webapp.actions.bookslisting.ReservationsListingAction"
+      method="currentlyReservations">
+      <result name="success">/jsp/booksListing/reservationsListing.jsp</result>
+    </action>
+
+    <!-- "cancelReservation" Action -->
+    <action name="cancelReservation"
+      class="fr.brucella.projects.libraryclients.webapp.actions.book.BookAction"
+      method="cancelReservations">
+      <result name="success" type="redirectAction">
+        <param name="actionName">myReservations</param>
+      </result>
+      <result name="error">/jsp/error.jsp</result>
+    </action>
+
     <!-- "extend" Action -->
     <action name="borrow_extend"
       class="fr.brucella.projects.libraryclients.webapp.actions.book.BookAction"

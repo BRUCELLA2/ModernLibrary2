@@ -28,6 +28,11 @@ public class BookAction extends ActionSupport {
    */
   private Integer bookId;
 
+  /**
+   * id of the reservation
+   */
+  private Integer bookReservationId;
+
   // ----- Output
   /**
    * Book Details Dto.
@@ -75,6 +80,24 @@ public class BookAction extends ActionSupport {
   }
 
   /**
+   * Give the id of the reservation.
+   *
+   * @return the id of the reservation.
+   */
+  public Integer getBookReservationId() {
+    return bookReservationId;
+  }
+
+  /**
+   * Set the id of the reservation.
+   *
+   * @param bookReservationId the id of the reservation.
+   */
+  public void setBookReservationId(final Integer bookReservationId) {
+    this.bookReservationId = bookReservationId;
+  }
+
+  /**
    * Give the Book Details Dto.
    *
    * @return the Book Details Dto.
@@ -92,6 +115,7 @@ public class BookAction extends ActionSupport {
   public void setBookDetailsDto(BookDetailsDto bookDetailsDto) {
     this.bookDetailsDto = bookDetailsDto;
   }
+
 
   // ===== Methods =====
 
@@ -132,6 +156,29 @@ public class BookAction extends ActionSupport {
 
     try {
       this.setBookDetailsDto(bookServicePort.bookDetails(bookId));
+    } catch (LibraryWsException exception) {
+      LOG.error(exception.getMessage());
+      LOG.error(exception.getFaultInfo().getFaultString());
+      this.addActionError(exception.getFaultInfo().getFaultString());
+      return Action.ERROR;
+    }
+
+    return Action.SUCCESS;
+  }
+
+  public String cancelReservations() {
+
+    if(this.bookReservationId == null) {
+      LOG.error("bookReservationId NULL - cancel reservation failure");
+      this.addActionError("L'identifiant de la réservation est incorrect (Identifiant vide) - Echec de l'annulation de la réservation.");
+      return Action.ERROR;
+    }
+
+    BookService_Service bookService = new BookService_Service();
+    BookService bookServicePort = bookService.getBookServicePort();
+
+    try {
+      bookServicePort.cancelAreservation(bookReservationId);
     } catch (LibraryWsException exception) {
       LOG.error(exception.getMessage());
       LOG.error(exception.getFaultInfo().getFaultString());

@@ -102,6 +102,23 @@ public interface BookService {
 
     /**
      * 
+     * @param arg0
+     * @return
+     *     returns generated.bookserviceclient.BookDetailsDto
+     * @throws LibraryWsException
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "bookDetails", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookDetails")
+    @ResponseWrapper(localName = "bookDetailsResponse", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookDetailsResponse")
+    public BookDetailsDto bookDetails(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Integer arg0)
+        throws LibraryWsException
+    ;
+
+    /**
+     * 
      * @param arg1
      * @param arg0
      * @return
@@ -117,23 +134,6 @@ public interface BookService {
         Integer arg0,
         @WebParam(name = "arg1", targetNamespace = "")
         Integer arg1)
-        throws LibraryWsException
-    ;
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns generated.bookserviceclient.BookDetailsDto
-     * @throws LibraryWsException
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "bookDetails", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookDetails")
-    @ResponseWrapper(localName = "bookDetailsResponse", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookDetailsResponse")
-    public BookDetailsDto bookDetails(
-        @WebParam(name = "arg0", targetNamespace = "")
-        Integer arg0)
         throws LibraryWsException
     ;
 
@@ -295,6 +295,23 @@ public interface BookService {
     @RequestWrapper(localName = "currentlyDeadLineExpiredForUser", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.CurrentlyDeadLineExpiredForUser")
     @ResponseWrapper(localName = "currentlyDeadLineExpiredForUserResponse", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.CurrentlyDeadLineExpiredForUserResponse")
     public List<UserCurrentlyBorrowDto> currentlyDeadLineExpiredForUser(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Integer arg0)
+        throws LibraryWsException
+    ;
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.util.List<generated.bookserviceclient.BookReservation>
+     * @throws LibraryWsException
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "bookReservations", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookReservations")
+    @ResponseWrapper(localName = "bookReservationsResponse", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookReservationsResponse")
+    public List<BookReservation> bookReservations(
         @WebParam(name = "arg0", targetNamespace = "")
         Integer arg0)
         throws LibraryWsException

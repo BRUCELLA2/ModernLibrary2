@@ -42,6 +42,7 @@ public class ObjectFactory {
     private final static QName _SendReminderToUsersResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "sendReminderToUsersResponse");
     private final static QName _BooksSearchedList_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "booksSearchedList");
     private final static QName _BookStocksListResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookStocksListResponse");
+    private final static QName _BookReservations_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookReservations");
     private final static QName _MakeReservation_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "makeReservation");
     private final static QName _AvailableBooksList_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "availableBooksList");
     private final static QName _ExtendBorrowingResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "extendBorrowingResponse");
@@ -64,6 +65,7 @@ public class ObjectFactory {
     private final static QName _MakeReservationResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "makeReservationResponse");
     private final static QName _BorrowingHistoryListResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "borrowingHistoryListResponse");
     private final static QName _BorrowingReturnResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "borrowingReturnResponse");
+    private final static QName _BookReservationsResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookReservationsResponse");
     private final static QName _CurrentlyDeadLineExpiredForUser_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyDeadLineExpiredForUser");
     private final static QName _CurrentlyDeadlineExpired_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyDeadlineExpired");
     private final static QName _BookDetailsResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookDetailsResponse");
@@ -209,6 +211,14 @@ public class ObjectFactory {
      */
     public BookDetailsResponse createBookDetailsResponse() {
         return new BookDetailsResponse();
+    }
+
+    /**
+     * Create an instance of {@link BookReservationsResponse }
+     * 
+     */
+    public BookReservationsResponse createBookReservationsResponse() {
+        return new BookReservationsResponse();
     }
 
     /**
@@ -385,6 +395,14 @@ public class ObjectFactory {
      */
     public BookStocksListResponse createBookStocksListResponse() {
         return new BookStocksListResponse();
+    }
+
+    /**
+     * Create an instance of {@link BookReservations }
+     * 
+     */
+    public BookReservations createBookReservations() {
+        return new BookReservations();
     }
 
     /**
@@ -686,6 +704,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link BookReservations }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "bookReservations")
+    public JAXBElement<BookReservations> createBookReservations(BookReservations value) {
+        return new JAXBElement<BookReservations>(_BookReservations_QNAME, BookReservations.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link MakeReservation }{@code >}}
      * 
      */
@@ -881,6 +908,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "borrowingReturnResponse")
     public JAXBElement<BorrowingReturnResponse> createBorrowingReturnResponse(BorrowingReturnResponse value) {
         return new JAXBElement<BorrowingReturnResponse>(_BorrowingReturnResponse_QNAME, BorrowingReturnResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link BookReservationsResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "bookReservationsResponse")
+    public JAXBElement<BookReservationsResponse> createBookReservationsResponse(BookReservationsResponse value) {
+        return new JAXBElement<BookReservationsResponse>(_BookReservationsResponse_QNAME, BookReservationsResponse.class, null, value);
     }
 
     /**
