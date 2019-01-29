@@ -4,6 +4,7 @@ import fr.brucella.projects.libraryws.entity.users.model.Role;
 import fr.brucella.projects.libraryws.entity.users.model.User;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -40,6 +41,12 @@ public class FullUserDto extends User {
 
   /** List of roles associated to the user */
   private List<Role> roles;
+
+  /**
+   * The value of the beforeReminder option.
+   */
+  @NotNull(message = "{UserOptions.beforeReminder.null}")
+  private Boolean beforeReminder;
 
   // ===== Constructor =====
 
@@ -158,17 +165,35 @@ public class FullUserDto extends User {
     this.roles = roles;
   }
 
+  /**
+   * Give the value of the beforeReminder option.
+   *
+   * @return the value of the beforeReminder option.
+   */
+  public Boolean getBeforeReminder() {
+    return beforeReminder;
+  }
+
+  /**
+   * Set the value of the beforeReminder option.
+   *
+   * @param beforeReminder the value of the beforeReminder option.
+   */
+  public void setBeforeReminder(Boolean beforeReminder) {
+    this.beforeReminder = beforeReminder;
+  }
+
   // ===== Methods =====
 
+  /**
+   * A string representation of the FullUserDto.
+   *
+   * @return A string representation of the FullUserDto.
+   */
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-        .append("line1", line1)
-        .append("line2", line2)
-        .append("line3", line3)
-        .append("city", city)
-        .append("zipCode", zipCode)
-        .append("roles", roles)
+    return new ToStringBuilder(this).append("line1", line1).append("line2", line2).append("line3", line3)
+        .append("city", city).append("zipCode", zipCode).append("roles", roles).append("beforeReminder", beforeReminder)
         .toString();
   }
 }
