@@ -31,6 +31,7 @@ public class UserRM implements RowMapper<User> {
       user.setPhone(resultSet.getString("phone"));
     }
     user.setUserId(resultSet.getInt("user_id"));
+    user.setUserOptionsId(resultSet.getInt("user_options_id"));
 
     return user;
   }
