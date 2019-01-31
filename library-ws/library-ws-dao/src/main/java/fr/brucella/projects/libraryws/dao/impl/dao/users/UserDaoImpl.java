@@ -84,7 +84,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       throws TechnicalException, NotFoundException {
 
     sql =
-        "SELECT users.user_id, users.password, users.email, users.login, users.phone, users.address_id, address.city, address.line1, address.line2, address.line3, address.zip_code FROM users INNER JOIN address ON users.address_id = address.address_id WHERE users.login = :login";
+        "SELECT users.user_id, users.password, users.email, users.login, users.phone, users.address_id, users.user_options_id, address.city, address.line1, address.line2, address.line3, address.zip_code, user_options.before_reminder FROM users INNER JOIN address ON users.address_id = address.address_id INNER JOIN user_options ON user_options_id = users.user_options_id WHERE users.login = :login";
 
     final MapSqlParameterSource userParameterSource = new MapSqlParameterSource();
     userParameterSource.addValue("login", login);

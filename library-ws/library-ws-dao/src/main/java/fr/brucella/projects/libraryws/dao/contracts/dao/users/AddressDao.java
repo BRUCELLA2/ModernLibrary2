@@ -18,7 +18,7 @@ public interface AddressDao {
    * @return the address with the specified id.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   *     address is not found.
    */
   Address getAddress(final Integer addressId) throws TechnicalException, NotFoundException;
 
@@ -28,7 +28,7 @@ public interface AddressDao {
    * @param address the address with the updated informations to save in datastore.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   *     address is not found.
    */
   void updateAddress(final Address address) throws TechnicalException, NotFoundException;
 
@@ -47,7 +47,7 @@ public interface AddressDao {
    * @param addressId id of the address.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
-   *     author is not found.
+   *     address is not found.
    */
   void deleteAddress(final Integer addressId) throws TechnicalException, NotFoundException;
 }
