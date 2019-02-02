@@ -269,6 +269,24 @@ public class BookService extends SpringBeanAutowiringSupport {
     }
   }
 
+
+  /**
+   * Send a mail to all users few days before borrow expire if they activate the options.
+   *
+   * @throws LibraryWsException
+   */
+  @WebMethod
+  public void sendReminderBeforeExpirationToUsers() throws LibraryWsException {
+
+    try {
+      this.managerFactory.getBooksManagementManager().beforeReminderToUsers();
+    } catch (TechnicalException exception) {
+      LOG.error(exception.getMessage());
+      throw new LibraryWsException(
+          TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
+    }
+  }
+
   /**
    * Provides the list of stocks for each book.
    *

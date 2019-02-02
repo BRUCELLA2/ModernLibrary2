@@ -84,7 +84,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       throws TechnicalException, NotFoundException {
 
     sql =
-        "SELECT users.user_id, users.password, users.email, users.login, users.phone, users.address_id, users.user_options_id, address.city, address.line1, address.line2, address.line3, address.zip_code, user_options.before_reminder FROM users INNER JOIN address ON users.address_id = address.address_id INNER JOIN user_options ON user_options_id = users.user_options_id WHERE users.login = :login";
+        "SELECT users.user_id, users.password, users.email, users.login, users.phone, users.address_id, users.user_options_id, address.city, address.line1, address.line2, address.line3, address.zip_code, user_options.before_reminder FROM users INNER JOIN address ON users.address_id = address.address_id INNER JOIN user_options ON user_options.user_options_id = users.user_options_id WHERE users.login = :login";
 
     final MapSqlParameterSource userParameterSource = new MapSqlParameterSource();
     userParameterSource.addValue("login", login);
@@ -175,7 +175,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
   public List<User> getUserWithBorrowsExpired() throws TechnicalException, NotFoundException {
 
     sql =
-        "SELECT users.user_id, users.password, users.email, users.login, users.phone, users.address_id FROM users INNER JOIN book_borrowed ON users.user_id = book_borrowed.user_id WHERE book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE GROUP BY users.user_id";
+        "SELECT users.user_id, users.password, users.email, users.login, users.phone, users.address_id, users.user_options_id FROM users INNER JOIN book_borrowed ON users.user_id = book_borrowed.user_id WHERE book_borrowed.returned = false AND book_borrowed.end_date < CURRENT_DATE GROUP BY users.user_id";
 
     final RowMapper<User> rowMapper = new UserRM();
 
@@ -202,12 +202,44 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
   }
 
+  @Override
+  public List<User> getUserBeforeReminder(Integer nbDaysBeforeReminder) throws TechnicalException, NotFoundException {
+
+    sql ="SELECT users.user_id, users.password, users.email, users.login, users.phone, users.address_id, users.user_options_id FROM users INNER JOIN book_borrowed ON users.user_id = book_borrowed.user_id INNER JOIN user_options ON users.user_options_id = user_options.user_options_id WHERE book_borrowed.returned = false AND user_options.before_reminder = true AND (book_borrowed.end_date - :nbDaysBeforeReminder -1) < CURRENT_DATE GROUP BY users.user_id";
+
+    final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+    parameterSource.addValue("nbDaysBeforeReminder", nbDaysBeforeReminder);
+
+    final RowMapper<User> rowMapper = new UserRM();
+
+    try {
+      final List<User> usersList = this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
+      if (usersList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+        }
+        throw new NotFoundException(messages.getString("UserDao.getUserBeforeReminder.notFound"));
+      } else {
+        return usersList;
+      }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
   /** {@inheritDoc} */
   @Override
   public void updateUser(final User user) throws TechnicalException, NotFoundException {
 
     sql =
-        "UPDATE users SET password = :password, email = :email, login = :login, phone = :phone, address_id = :addressId WHERE user_id = :userId";
+        "UPDATE users SET password = :password, email = :email, login = :login, phone = :phone, address_id = :addressId, users.user_options_id = :userOptionsId WHERE user_id = :userId";
 
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
 
@@ -245,7 +277,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
   public int insertUser(final User user) throws TechnicalException {
 
     sql =
-        "INSERT INTO users (user_id, password, email, login, phone, address_id) VALUES (DEFAULT, :password, :email, :login, :phone, :addressId)";
+        "INSERT INTO users (user_id, password, email, login, phone, address_id, user_options_id) VALUES (DEFAULT, :password, :email, :login, :phone, :addressId, :user_options_id)";
 
     final KeyHolder keyHolder = new GeneratedKeyHolder();
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
