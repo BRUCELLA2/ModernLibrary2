@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- =============================================================== -->
+  <!-- PROJECT INFORMATIONS -->
+  <!-- =============================================================== -->
+
+  <!-- ===== Parent Maven Projet ===== -->
+  <parent>
+    <artifactId>library-ws</artifactId>
+    <groupId>fr.brucella.projects</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <!-- ===== Maven Informations ===== -->
+  <artifactId>library-ws-services</artifactId>
+  <packaging>war</packaging>
+
+
+  <!-- ===== General Informations ===== -->
+  <name>${projectName} - Services</name>
+
+  <!-- =============================================================== -->
+  <!-- DEPENDENCIES -->
+  <!-- =============================================================== -->
+  <dependencies>
+
+    <!-- ===== Modules ===== -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>${project.parent.artifactId}-technical</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>${project.parent.artifactId}-entity</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>${project.parent.artifactId}-business</artifactId>
+    </dependency>
+
+    <!-- ===== Third party libraries ===== -->
+
+    <!-- Spring web -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+    </dependency>
+
+    <!-- JDBC PostgreSQL Drivers -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-web-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-databinding-jaxb</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.xml.ws</groupId>
+      <artifactId>jaxws-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.cxf.xjc-utils</groupId>
+      <artifactId>cxf-xjc-runtime</artifactId>
+    </dependency>
+
+    <!-- TEST -->
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-impl</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>library-ws-services</finalName>
+  </build>
+</project>
