@@ -36,10 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "fullUserDto", propOrder = {
-<<<<<<< HEAD
-=======
     "beforeReminder",
->>>>>>> reminder_option
     "city",
     "line1",
     "line2",
@@ -51,10 +48,7 @@ public class FullUserDto
     extends User
 {
 
-<<<<<<< HEAD
-=======
     protected Boolean beforeReminder;
->>>>>>> reminder_option
     protected String city;
     protected String line1;
     protected String line2;
@@ -64,8 +58,6 @@ public class FullUserDto
     protected String zipCode;
 
     /**
-<<<<<<< HEAD
-=======
      * Obtient la valeur de la propriété beforeReminder.
      * 
      * @return
@@ -90,7 +82,6 @@ public class FullUserDto
     }
 
     /**
->>>>>>> reminder_option
      * Obtient la valeur de la propriété city.
      * 
      * @return

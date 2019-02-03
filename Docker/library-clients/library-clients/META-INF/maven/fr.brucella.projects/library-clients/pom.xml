@@ -10,7 +10,7 @@
   <!-- =============================================================== -->
   <groupId>fr.brucella.projects</groupId>
   <artifactId>library-clients</artifactId>
-  <version>1.0.0.1-SNAPSHOT</version>
+  <version>1.1.0.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <!-- =============================================================== -->
@@ -98,26 +98,6 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.1</version>
     </dependency>
-
-    <!--
-
-    <dependency>
-      <groupId>fr.brucella.projects.wsclient</groupId>
-      <artifactId>bookServiceClient</artifactId>
-      <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/generated-sources/bookServiceClient.jar</systemPath>
-    </dependency>
-
-    <dependency>
-      <groupId>fr.brucella.projects.wsclient</groupId>
-      <artifactId>authentificationServiceCLient</artifactId>
-      <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/generated-sources/authentificationServiceClient.jar</systemPath>
-    </dependency>
-    -->
-
   </dependencies>
 
 

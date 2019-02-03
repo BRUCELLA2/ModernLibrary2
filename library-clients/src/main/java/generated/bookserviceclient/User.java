@@ -38,12 +38,8 @@ import javax.xml.bind.annotation.XmlType;
     "login",
     "password",
     "phone",
-<<<<<<< HEAD
-    "userId"
-=======
     "userId",
     "userOptionsId"
->>>>>>> reminder_option
 })
 public class User {
 
@@ -53,10 +49,7 @@ public class User {
     protected String password;
     protected String phone;
     protected Integer userId;
-<<<<<<< HEAD
-=======
     protected Integer userOptionsId;
->>>>>>> reminder_option
 
     /**
      * Obtient la valeur de la propriété addressId.
@@ -201,8 +194,6 @@ public class User {
     public void setUserId(Integer value) {
         this.userId = value;
     }
-<<<<<<< HEAD
-=======
 
     /**
      * Obtient la valeur de la propriété userOptionsId.
@@ -227,6 +218,5 @@ public class User {
     public void setUserOptionsId(Integer value) {
         this.userOptionsId = value;
     }
->>>>>>> reminder_option
 
 }
