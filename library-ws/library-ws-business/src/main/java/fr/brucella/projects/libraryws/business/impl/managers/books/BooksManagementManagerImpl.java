@@ -404,8 +404,9 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
         msg.append("<ul>");
         for (BorrowDto borrowDto : borrowDtoList) {
           msg.append("<li>")
+              .append("Titre : ")
               .append(borrowDto.getTitle())
-              .append(" - L'emprunt expire le : ")
+              .append(" ---- Cet emprunt expire le : ")
               .append(borrowDto.getEndDate().toString())
               .append("</li>");
         }

@@ -4,7 +4,9 @@ MAINTAINER BRUCELLA2@ModernLibrary
 
 # Add crontab file in the cron directory
 ADD crontab /etc/cron.d/reminder-cron
-ADD request.xml opt/scripts/request.xml
+ADD borrowExpired.xml opt/scripts/borrowExpired.xml
+ADD reminderBeforeExpiration.xml opt/scripts/reminderBeforeExpiration.xml
+
 
 # Give execution rights on the cron job
 RUN chmod 0644 /etc/cron.d/reminder-cron
