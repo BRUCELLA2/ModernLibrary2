@@ -55,6 +55,9 @@ public class FullUserDtoRM implements RowMapper<FullUserDto> {
     fullUserDto.setZipCode(resultSet.getString("zip_code"));
     fullUserDto.setRoles(null);
 
+    fullUserDto.setUserOptionsId(resultSet.getInt("user_options_id"));
+    fullUserDto.setBeforeReminder(resultSet.getBoolean("before_reminder"));
+
     return fullUserDto;
   }
 }

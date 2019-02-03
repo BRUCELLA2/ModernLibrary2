@@ -54,13 +54,21 @@ INSERT INTO public.address(address_id, line1, line2, line3, city, zip_code)
 		(DEFAULT, '235 rue Paul Bringuier', '', '', 'Montpellier', '34080'),
 		(DEFAULT, '12 Boulevard de la clarté', 'Résidence du Frêne', '', 'Nimes', '31000');
 
+/* INSERT INTO user_options TABLE */
+INSERT INTO public.user_options(user_options_id, before_reminder)
+	VALUES
+		(DEFAULT, true),
+		(DEFAULT, false),
+		(DEFAULT, true);
+
 /* INSERT INTO users TABLE 
 password is 'pass' without encryption */
-INSERT INTO public.users(user_id, password, email, login, phone, address_id)
+INSERT INTO public.users(user_id, password, email, login, phone, address_id, user_options_id)
 	VALUES 
-		(DEFAULT, '$2a$10$qD/S8Wv/isAF12ADRdRsZ.M35zpWTdEkofs1/f8vQTFsf1htwTba.', 'user1@gmail.com', 'user1', '0102030405', 1),
-		(DEFAULT, '$2a$10$qD/S8Wv/isAF12ADRdRsZ.M35zpWTdEkofs1/f8vQTFsf1htwTba.', 'fred@gmail.com', 'fred', '0504030201', 2),
-		(DEFAULT, '$2a$10$qD/S8Wv/isAF12ADRdRsZ.M35zpWTdEkofs1/f8vQTFsf1htwTba.', 'bob@hotmail.com', 'bob', '0123456789', 3);
+		(DEFAULT, '$2a$10$qD/S8Wv/isAF12ADRdRsZ.M35zpWTdEkofs1/f8vQTFsf1htwTba.', 'user1@gmail.com', 'user1', '0102030405', 1, 1),
+		(DEFAULT, '$2a$10$qD/S8Wv/isAF12ADRdRsZ.M35zpWTdEkofs1/f8vQTFsf1htwTba.', 'fred@gmail.com', 'fred', '0504030201', 2, 2),
+		(DEFAULT, '$2a$10$qD/S8Wv/isAF12ADRdRsZ.M35zpWTdEkofs1/f8vQTFsf1htwTba.', 'bob@hotmail.com', 'bob', '0123456789', 3, 3);
+
 
 /* INSERT INTO role TABLE */
 INSERT INTO public.role(role_id, role_name)

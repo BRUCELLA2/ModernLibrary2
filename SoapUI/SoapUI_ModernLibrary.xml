@@ -73,6 +73,8 @@
       <xs:element name="nbBorrowingByBooksResponse" type="tns:nbBorrowingByBooksResponse"/>
       <xs:element name="returnedBorrowsForUser" type="tns:returnedBorrowsForUser"/>
       <xs:element name="returnedBorrowsForUserResponse" type="tns:returnedBorrowsForUserResponse"/>
+      <xs:element name="sendReminderBeforeExpirationToUsers" type="tns:sendReminderBeforeExpirationToUsers"/>
+      <xs:element name="sendReminderBeforeExpirationToUsersResponse" type="tns:sendReminderBeforeExpirationToUsersResponse"/>
       <xs:element name="sendReminderToUsers" type="tns:sendReminderToUsers"/>
       <xs:element name="sendReminderToUsersResponse" type="tns:sendReminderToUsersResponse"/>
       <xs:element name="userReservations" type="tns:userReservations"/>
@@ -217,6 +219,12 @@
           <xs:element minOccurs="0" name="lastName" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:complexType name="sendReminderBeforeExpirationToUsers">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="sendReminderBeforeExpirationToUsersResponse">
+        <xs:sequence/>
+      </xs:complexType>
       <xs:complexType name="bookBorrow">
         <xs:sequence>
           <xs:element minOccurs="0" name="arg0" type="xs:int"/>
@@ -250,6 +258,7 @@
           <xs:element minOccurs="0" name="password" type="xs:string"/>
           <xs:element minOccurs="0" name="phone" type="xs:string"/>
           <xs:element minOccurs="0" name="userId" type="xs:int"/>
+          <xs:element minOccurs="0" name="userOptionsId" type="xs:int"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="sendReminderToUsers">
@@ -451,6 +460,9 @@
   <wsdl:message name="availableBooksListResponse">
     <wsdl:part element="tns:availableBooksListResponse" name="parameters"></wsdl:part>
   </wsdl:message>
+  <wsdl:message name="sendReminderBeforeExpirationToUsers">
+    <wsdl:part element="tns:sendReminderBeforeExpirationToUsers" name="parameters"></wsdl:part>
+  </wsdl:message>
   <wsdl:message name="checkReservationNotPickedUp">
     <wsdl:part element="tns:checkReservationNotPickedUp" name="parameters"></wsdl:part>
   </wsdl:message>
@@ -492,6 +504,9 @@
   </wsdl:message>
   <wsdl:message name="extendBorrowingResponse">
     <wsdl:part element="tns:extendBorrowingResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sendReminderBeforeExpirationToUsersResponse">
+    <wsdl:part element="tns:sendReminderBeforeExpirationToUsersResponse" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="currentlyBorrowForUserResponse">
     <wsdl:part element="tns:currentlyBorrowForUserResponse" name="parameters"></wsdl:part>
@@ -601,6 +616,11 @@
     <wsdl:operation name="checkReservationNotPickedUp">
       <wsdl:input message="tns:checkReservationNotPickedUp" name="checkReservationNotPickedUp"></wsdl:input>
       <wsdl:output message="tns:checkReservationNotPickedUpResponse" name="checkReservationNotPickedUpResponse"></wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendReminderBeforeExpirationToUsers">
+      <wsdl:input message="tns:sendReminderBeforeExpirationToUsers" name="sendReminderBeforeExpirationToUsers"></wsdl:input>
+      <wsdl:output message="tns:sendReminderBeforeExpirationToUsersResponse" name="sendReminderBeforeExpirationToUsersResponse"></wsdl:output>
       <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException"></wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="currentlyDeadlineExpiredUsers">
@@ -766,6 +786,18 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="checkReservationNotPickedUpResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendReminderBeforeExpirationToUsers">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sendReminderBeforeExpirationToUsers">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sendReminderBeforeExpirationToUsersResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="LibraryWsException">
@@ -1070,6 +1102,12 @@
    <soapenv:Body>
       <ser:sendReminderToUsers/>
    </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/BookService/sendReminderToUsers"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="4e00a0de-be36-448d-8986-0ba342228932" isOneWay="false" action="" name="sendReminderBeforeExpirationToUsers" bindingOperationName="sendReminderBeforeExpirationToUsers" type="Request-Response" outputName="sendReminderBeforeExpirationToUsersResponse" inputName="sendReminderBeforeExpirationToUsers" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="384c728b-31e5-4aa5-b00b-eec4b9384b31" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/bookService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:sendReminderBeforeExpirationToUsers/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/BookService/sendReminderBeforeExpirationToUsers"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="40bea9e6-4a3d-4d2f-9e3c-b5ba2b99f41b" wsaVersion="NONE" name="AdministrationServiceSoapBinding" type="wsdl" bindingName="{http://services.libraryws.projects.brucella.fr/}AdministrationServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/library-ws-services/services/administrationService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/library-ws-services/services/administrationService?wsdl"><con:part><con:url>http://localhost:8080/library-ws-services/services/administrationService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="AdministrationService" targetNamespace="http://services.libraryws.projects.brucella.fr/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://services.libraryws.projects.brucella.fr/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
 </soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/BookService/sendReminderToUsers"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="f193dc76-029f-4990-8f8e-98d7bc94e7d2" isOneWay="false" action="" name="cancelAreservation" bindingOperationName="cancelAreservation" type="Request-Response" outputName="cancelAreservationResponse" inputName="cancelAreservation" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ed0ce23d-3452-4123-b896-9610b5915dfc" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/bookService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
@@ -2271,6 +2309,7 @@ declare namespace ns1='http://services.libraryws.projects.brucella.fr/';
       <ser:borrowingReturn>
       </ser:borrowingReturn>
    </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="bb950d46-8375-4a25-99e1-29b04b049192" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="658c4975-84c1-47d3-adde-7b1f136cb879" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/BookService/borrowingReturn"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>bookBorrowedId</con:name><con:value>13</con:value></con:property><con:property><con:name>bookId</con:name><con:value>1</con:value></con:property><con:property><con:name>userId</con:name><con:value>1</con:value></con:property><con:property><con:name>NotBookBorrowedId</con:name><con:value>5555</con:value></con:property></con:properties></con:testCase><con:testCase id="b5ade852-c040-46d2-9585-988d5541acf2" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase currentlyBooksBorrowedList" searchProperties="true"><con:settings/><con:testStep type="request" id="f672a5c0-bb5a-4955-aec7-a27e8a1adbc4" name="currentlyBooksBorrowedList - passing test"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookServiceSoapBinding</con:interface><con:operation>currentlyBooksBorrowedList</con:operation><con:request name="currentlyBooksBorrowedList - passing test" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="59768828-78c1-4165-932f-ee8e9c953227"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/bookService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="bb950d46-8375-4a25-99e1-29b04b049192" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="658c4975-84c1-47d3-adde-7b1f136cb879" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/BookService/borrowingReturn"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>bookBorrowedId</con:name><con:value>9</con:value></con:property><con:property><con:name>bookId</con:name><con:value>1</con:value></con:property><con:property><con:name>userId</con:name><con:value>1</con:value></con:property><con:property><con:name>NotBookBorrowedId</con:name><con:value>5555</con:value></con:property></con:properties></con:testCase><con:testCase id="b5ade852-c040-46d2-9585-988d5541acf2" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase currentlyBooksBorrowedList" searchProperties="true"><con:settings/><con:testStep type="request" id="f672a5c0-bb5a-4955-aec7-a27e8a1adbc4" name="currentlyBooksBorrowedList - passing test"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookServiceSoapBinding</con:interface><con:operation>currentlyBooksBorrowedList</con:operation><con:request name="currentlyBooksBorrowedList - passing test" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="59768828-78c1-4165-932f-ee8e9c953227"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/bookService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">
    <soapenv:Header/>
    <soapenv:Body>
@@ -2373,6 +2412,7 @@ declare namespace ns1='http://services.libraryws.projects.brucella.fr/';
          <arg0>${#TestCase#notBookBorrowedId}</arg0>
       </ser:extendBorrowing>
    </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="1b2715d5-8695-4cd8-8ec9-9973e290bb3d" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="31c11065-49d4-4aea-bd3c-61254d809e6b" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/BookService/extendBorrowing"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>bookBorrowedId</con:name><con:value>14</con:value></con:property><con:property><con:name>notBookBorrowedId</con:name><con:value>5555</con:value></con:property><con:property><con:name>bookId</con:name><con:value>1</con:value></con:property><con:property><con:name>userId</con:name><con:value>1</con:value></con:property></con:properties></con:testCase><con:testCase id="11544e9e-f668-4a2e-9d99-c9bc1f91eadb" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase nbBorrowingByBooks" searchProperties="true"><con:settings/><con:testStep type="request" id="71206d09-e962-46b3-a93b-e0564a40d11b" name="nbBorrowingByBooks - passing test"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookServiceSoapBinding</con:interface><con:operation>nbBorrowingByBooks</con:operation><con:request name="nbBorrowingByBooks - passing test" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="6f473072-17c5-414d-ab32-be26d3f97e04"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/bookService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="1b2715d5-8695-4cd8-8ec9-9973e290bb3d" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="31c11065-49d4-4aea-bd3c-61254d809e6b" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/BookService/extendBorrowing"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>bookBorrowedId</con:name><con:value>11</con:value></con:property><con:property><con:name>notBookBorrowedId</con:name><con:value>5555</con:value></con:property><con:property><con:name>bookId</con:name><con:value>1</con:value></con:property><con:property><con:name>userId</con:name><con:value>1</con:value></con:property></con:properties></con:testCase><con:testCase id="11544e9e-f668-4a2e-9d99-c9bc1f91eadb" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase nbBorrowingByBooks" searchProperties="true"><con:settings/><con:testStep type="request" id="71206d09-e962-46b3-a93b-e0564a40d11b" name="nbBorrowingByBooks - passing test"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookServiceSoapBinding</con:interface><con:operation>nbBorrowingByBooks</con:operation><con:request name="nbBorrowingByBooks - passing test" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="6f473072-17c5-414d-ab32-be26d3f97e04"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/bookService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">
    <soapenv:Header/>
    <soapenv:Body>
@@ -2405,6 +2445,7 @@ declare namespace ns1='http://services.libraryws.projects.brucella.fr/';
    <soapenv:Body>
       <ser:sendReminderToUsers/>
    </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="dfafb2ff-20a4-41fc-bf7d-a07d9997a3ae" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="cb8ef5ed-2290-40d5-94a8-f78da8bd65b7" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/BookService/sendReminderToUsers"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="5560d46b-7916-4705-82b8-30a065ebc613" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase sendReminderBeforeExpirationToUsers" searchProperties="true"><con:settings/><con:testStep type="request" id="4509963c-1325-4278-b7a4-f46e9846ee5e" name="sendReminderBeforeExpirationToUsers - passing test"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookServiceSoapBinding</con:interface><con:operation>sendReminderBeforeExpirationToUsers</con:operation><con:request name="sendReminderBeforeExpirationToUsers - passing test" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="9ba1a13f-7e67-4279-a81d-4c5ddb7a4443"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/bookService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="dfafb2ff-20a4-41fc-bf7d-a07d9997a3ae" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="cb8ef5ed-2290-40d5-94a8-f78da8bd65b7" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/BookService/sendReminderToUsers"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="b9af80db-fad3-4dcf-a466-bbff9777bbe0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase makeReservation" searchProperties="true"><con:settings/><con:testStep type="request" id="e8fe8132-2c56-457e-807d-559b1eeda89b" name="makeReservation - passingTest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookServiceSoapBinding</con:interface><con:operation>makeReservation</con:operation><con:request name="makeReservation - passingTest" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="011d6f1c-6a98-47c6-a586-5625a5c78d5e"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/bookService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
@@ -2500,6 +2541,11 @@ declare namespace ns1='http://services.libraryws.projects.brucella.fr/';
       </ser:cancelAreservation>\r
    </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="be979757-7400-4cce-a528-4c8c5e97d13c" name="SOAP Response"/><con:assertion type="Schema Compliance" id="3d8de572-e7a0-4d22-83f3-223bcf9d06fb" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Not SOAP Fault Assertion" id="d780304e-b753-4df6-8d38-4ef1bcf2388b" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/BookService/cancelAreservation"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>reservationId</con:name><con:value>4</con:value></con:property><con:property><con:name>notReservationId</con:name><con:value>555</con:value></con:property></con:properties></con:testCase><con:testCase id="0834dc41-646d-43df-923a-fa792f64ca69" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase checkReservationNotPickedUp" searchProperties="true"><con:settings/><con:testStep type="request" id="8957c862-e1d7-4c15-8f21-87fc053fc11c" name="checkReservationNotPickedUp - passing test"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookServiceSoapBinding</con:interface><con:operation>checkReservationNotPickedUp</con:operation><con:request name="checkReservationNotPickedUp - passing test" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="54d78d4d-52c1-402d-bb29-164f8163b4a6"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/bookService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:sendReminderBeforeExpirationToUsers/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="58cc60bc-0f2c-4902-ab21-af6b95c07b1c" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="42085f27-72af-4f70-b369-12bc279ce43d" name="Not SOAP Fault"/><con:assertion type="Schema Compliance" id="53e34906-a9d8-4e49-b0b9-9b1d43906421" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/BookService/sendReminderBeforeExpirationToUsers"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="c2551fef-ff52-45de-bd98-12a3489be244" name="TestSuite AdministrationService"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="32e59e09-fad1-4e4b-92d0-84b8f93a241d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase addAuthor" searchProperties="true"><con:settings/><con:testStep type="request" id="1153167a-753c-430e-b4d5-a231c46020e4" name="addAuthor - passing test"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>AdministrationServiceSoapBinding</con:interface><con:operation>addAuthor</con:operation><con:request name="addAuthor - passing test" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="d18cad3e-97b5-476c-8116-5255a93f33a6"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/administrationService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">
    <soapenv:Header/>
    <soapenv:Body>
       <ser:checkReservationNotPickedUp/>
@@ -3911,9 +3957,12 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7aed5c6d-7173-4ec9-b27d-ae4fee10c988" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="4dba56d9-4693-4e87-ac47-7f9073491cb6" name="Not SOAP Fault"/><con:assertion type="Simple Contains" id="6205b9a2-bf61-4076-8e91-bc851e263b33" name="Contains"><con:configuration><token>&lt;return></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/addUser"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>login</con:name><con:value>Login rucO6st2AeIdUIC</con:value></con:property><con:property><con:name>password</con:name><con:value>password kd3J1IdjmgwPKO2</con:value></con:property><con:property><con:name>email</con:name><con:value>7SaT9Gq7bXPm193@mail.com</con:value></con:property><con:property><con:name>addressId</con:name><con:value/></con:property><con:property><con:name>phone</con:name><con:value>1376497100</con:value></con:property><con:property><con:name>city</con:name><con:value>city YI6MQ8z7xG51MQA</con:value></con:property><con:property><con:name>line1</con:name><con:value>line1 arNppqLgootJFmr</con:value></con:property><con:property><con:name>line2</con:name><con:value>line2 ye6z4XK53Swgszh</con:value></con:property><con:property><con:name>line3</con:name><con:value>line3 WoiZ4eg2qfkMfln</con:value></con:property><con:property><con:name>zipCode</con:name><con:value>55268</con:value></con:property><con:property><con:name>emailAlreadyUsed</con:name><con:value>user1@gmail.com</con:value></con:property><con:property><con:name>loginAlreadyUsed</con:name><con:value>user1</con:value></con:property><con:property><con:name>beforeReminder</con:name><con:value>true</con:value></con:property></con:properties></con:testCase><con:testCase id="4d8c617f-2091-4925-ad80-45c61ed7cb5a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase addUser null params test" searchProperties="true"><con:settings/><con:testStep type="groovy" name="RandomParam2" id="aca99906-2c17-4236-8319-28925f7cae8e"><con:settings/><con:config><script>import org.apache.commons.lang.RandomStringUtils;
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7aed5c6d-7173-4ec9-b27d-ae4fee10c988" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="4dba56d9-4693-4e87-ac47-7f9073491cb6" name="Not SOAP Fault"/><con:assertion type="Simple Contains" id="6205b9a2-bf61-4076-8e91-bc851e263b33" name="Contains"><con:configuration><token>&lt;return></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/addUser"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>login</con:name><con:value>Login tRInepMP1OUPGjf</con:value></con:property><con:property><con:name>password</con:name><con:value>password KTQlIt4T4ODUiuW</con:value></con:property><con:property><con:name>email</con:name><con:value>yc9zdZ3IGt7LOvN@mail.com</con:value></con:property><con:property><con:name>addressId</con:name><con:value/></con:property><con:property><con:name>phone</con:name><con:value>5617217235</con:value></con:property><con:property><con:name>city</con:name><con:value>city L5mdXtMYEgOamjU</con:value></con:property><con:property><con:name>line1</con:name><con:value>line1 V7JvC9KXAt3vs0o</con:value></con:property><con:property><con:name>line2</con:name><con:value>line2 huXBsVNfeCASKWX</con:value></con:property><con:property><con:name>line3</con:name><con:value>line3 oN0QiGlNuYeJ0py</con:value></con:property><con:property><con:name>zipCode</con:name><con:value>15966</con:value></con:property><con:property><con:name>emailAlreadyUsed</con:name><con:value>user1@gmail.com</con:value></con:property><con:property><con:name>loginAlreadyUsed</con:name><con:value>user1</con:value></con:property></con:properties></con:testCase><con:testCase id="4d8c617f-2091-4925-ad80-45c61ed7cb5a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase addUser null params test" searchProperties="true"><con:settings/><con:testStep type="groovy" name="RandomParam2" id="aca99906-2c17-4236-8319-28925f7cae8e"><con:settings/><con:config><script>import org.apache.commons.lang.RandomStringUtils;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -3968,6 +4017,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>\r
             <!--Optional:-->\r
             <zipCode>${#TestCase#zipCode}</zipCode>\r
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>\r
       </ser:addUser>\r
    </soapenv:Body>\r
@@ -4082,6 +4133,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>\r
             <!--Optional:-->\r
             <zipCode>${#TestCase#zipCode}</zipCode>\r
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>\r
       </ser:addUser>\r
    </soapenv:Body>\r
@@ -4139,6 +4192,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>\r
             <!--Optional:-->\r
             <zipCode>${#TestCase#zipCode}</zipCode>\r
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>\r
       </ser:addUser>\r
    </soapenv:Body>\r
@@ -4196,6 +4251,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -4253,6 +4310,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>\r
             <!--Optional:-->\r
             <zipCode>${#TestCase#zipCode}</zipCode>\r
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>\r
       </ser:addUser>\r
    </soapenv:Body>\r
@@ -4310,6 +4369,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>\r
             <!--Optional:-->\r
             <zipCode>${#TestCase#zipCode}</zipCode>\r
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>\r
       </ser:addUser>\r
    </soapenv:Body>\r
@@ -4367,6 +4428,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line2>${#TestCase#line2}</line2>\r
             <!--Optional:-->\r
             <zipCode>${#TestCase#zipCode}</zipCode>\r
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>\r
       </ser:addUser>\r
    </soapenv:Body>\r
@@ -4424,10 +4487,72 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line2>${#TestCase#line2}</line2>\r
             <!--Optional:-->\r
             <line3>${#TestCase#line3}</line3>\r
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>\r
       </ser:addUser>\r
    </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7aed5c6d-7173-4ec9-b27d-ae4fee10c988" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="f39e3c20-903b-4c18-b558-c7554e9caca2" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/addUser"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="RandomParam11" id="4d862031-4c7c-47f9-9c3d-4fde687554d9"><con:settings/><con:config><script>import org.apache.commons.lang.RandomStringUtils;
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7aed5c6d-7173-4ec9-b27d-ae4fee10c988" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="f39e3c20-903b-4c18-b558-c7554e9caca2" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/addUser"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>login</con:name><con:value>Login pBr96hRgj3Cv7E0</con:value></con:property><con:property><con:name>password</con:name><con:value>password Ewz52fWDLOpBkbQ</con:value></con:property><con:property><con:name>email</con:name><con:value>cPt9uDzIiK6rTUp@mail.com</con:value></con:property><con:property><con:name>addressId</con:name><con:value/></con:property><con:property><con:name>phone</con:name><con:value>4008224894</con:value></con:property><con:property><con:name>city</con:name><con:value>city Lk6N8JHmB6b8bjh</con:value></con:property><con:property><con:name>line1</con:name><con:value>line1 FxrbzN3847NU32x</con:value></con:property><con:property><con:name>line2</con:name><con:value>line2 GdD5Amc6PFC2iKY</con:value></con:property><con:property><con:name>line3</con:name><con:value>line3 Eg67ceQoe4txrSe</con:value></con:property><con:property><con:name>zipCode</con:name><con:value>14355</con:value></con:property><con:property><con:name>emailAlreadyUsed</con:name><con:value>user1@gmail.com</con:value></con:property><con:property><con:name>loginAlreadyUsed</con:name><con:value>user1</con:value></con:property></con:properties></con:testCase><con:testCase id="853f3f9b-fb18-4592-b6bf-083b1716b44f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase addUser params size test" searchProperties="true"><con:settings/><con:testStep type="groovy" name="RandomParam 2" id="de4313fa-cf05-45e6-9551-0245ed692de2"><con:settings/><con:config><script>import org.apache.commons.lang.RandomStringUtils;
+import java.util.concurrent.ThreadLocalRandom;
+
+int defaultLength = 15
+String charset = (('a'..'z') + ('A'..'Z') + ('0'..'9')).join()
+String charsetInt = ('0'..'9').join()
+
+String randomLogin = "Login " + RandomStringUtils.random(defaultLength, charset.toCharArray());
+testRunner.testCase.setPropertyValue("login", randomLogin);
+
+String randomPassword = "password " + RandomStringUtils.random(defaultLength, charset.toCharArray());
+testRunner.testCase.setPropertyValue("password", randomPassword);
+
+String randomEmail = RandomStringUtils.random(defaultLength, charset.toCharArray()) + "@mail.com";
+testRunner.testCase.setPropertyValue("email", randomEmail);
+
+String randomPhone = RandomStringUtils.random(10, charsetInt.toCharArray());
+testRunner.testCase.setPropertyValue("phone", randomPhone);
+
+String randomCity = "city " + RandomStringUtils.random(defaultLength, charset.toCharArray());
+testRunner.testCase.setPropertyValue("city", randomCity);
+
+String randomLine1 = "line1 " + RandomStringUtils.random(defaultLength, charset.toCharArray());
+testRunner.testCase.setPropertyValue("line1", randomLine1);
+
+String randomLine2 = "line2 " + RandomStringUtils.random(defaultLength, charset.toCharArray());
+testRunner.testCase.setPropertyValue("line2", randomLine2);
+
+String randomLine3 = "line3 " + RandomStringUtils.random(defaultLength, charset.toCharArray());
+testRunner.testCase.setPropertyValue("line3", randomLine3);
+
+String randomZip = RandomStringUtils.random(5, charsetInt.toCharArray());
+testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config></con:testStep><con:testStep type="request" id="6ad49303-9692-4ebd-846b-8ecb39f032ca" name="addUser - beforeReminder null"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>AuthentificationServiceSoapBinding</con:interface><con:operation>addUser</con:operation><con:request name="addUser - beforeReminder null" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="9f26af8e-e499-48a9-902c-bad0bf21e9b6"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/authentificationService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:addUser>
+         <!--Optional:-->
+         <arg0>
+            <!--Optional:-->
+            <email>${#TestCase#email}</email>
+            <!--Optional:-->
+            <login>${#TestCase#login}</login>
+            <!--Optional:-->
+            <password>${#TestCase#password}</password>
+            <!--Optional:-->
+            <phone>${#TestCase#phone}</phone>
+            <!--Optional:-->
+            <city>${#TestCase#city}</city>
+            <!--Optional:-->
+            <line1>${#TestCase#line1}</line1>
+            <!--Optional:-->
+            <line2>${#TestCase#line2}</line2>
+            <!--Optional:-->
+            <line3>${#TestCase#line3}</line3>
+            <!--Optional:-->
+            <zipCode>${#TestCase#zipCode}</zipCode>
+         </arg0>
+      </ser:addUser>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7aed5c6d-7173-4ec9-b27d-ae4fee10c988" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="5a0e7b58-6885-4a7a-bcde-893d4bf77ce5" name="SOAP Fault"/><con:assertion type="Schema Compliance" id="2e81966b-964a-43e6-86f1-d8ea0a3979c5" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/addUser"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>login</con:name><con:value>Login OQamdujLmwNqrp9</con:value></con:property><con:property><con:name>password</con:name><con:value>password aOWBJYNi0wmFsAv</con:value></con:property><con:property><con:name>email</con:name><con:value>M3OOsmJqCIlZQdX@mail.com</con:value></con:property><con:property><con:name>addressId</con:name><con:value/></con:property><con:property><con:name>phone</con:name><con:value>0267239991</con:value></con:property><con:property><con:name>city</con:name><con:value>city he3P3eGb37G6M9a</con:value></con:property><con:property><con:name>line1</con:name><con:value>line1 2458WwKHHMH6gls</con:value></con:property><con:property><con:name>line2</con:name><con:value>line2 SU5rFK8TXINCLqi</con:value></con:property><con:property><con:name>line3</con:name><con:value>line3 KNu4oJCWEyMNffu</con:value></con:property><con:property><con:name>zipCode</con:name><con:value>17596</con:value></con:property><con:property><con:name>emailAlreadyUsed</con:name><con:value>user1@gmail.com</con:value></con:property><con:property><con:name>loginAlreadyUsed</con:name><con:value>user1</con:value></con:property><con:property><con:name>beforeReminder</con:name><con:value>true</con:value></con:property></con:properties></con:testCase><con:testCase id="853f3f9b-fb18-4592-b6bf-083b1716b44f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase addUser params size test" searchProperties="true"><con:settings/><con:testStep type="groovy" name="RandomParam 2" id="de4313fa-cf05-45e6-9551-0245ed692de2"><con:settings/><con:config><script>import org.apache.commons.lang.RandomStringUtils;
 import java.util.concurrent.ThreadLocalRandom;
 
 int defaultLength = 15
@@ -4483,6 +4608,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -4542,6 +4669,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -4601,6 +4730,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -4660,6 +4791,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -4719,6 +4852,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -4778,6 +4913,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -4837,6 +4974,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -4896,6 +5035,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -4955,6 +5096,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestSuite#String 201}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -5014,6 +5157,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestSuite#String 6}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -5073,9 +5218,12 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestSuite#String 4}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7aed5c6d-7173-4ec9-b27d-ae4fee10c988" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="22455652-3371-4495-a542-2b77866b7a76" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/addUser"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>login</con:name><con:value>Login gJelQ8SMTVfUPfH</con:value></con:property><con:property><con:name>password</con:name><con:value>password 8GksDD71fhvHloX</con:value></con:property><con:property><con:name>email</con:name><con:value>h7d16NtSSw54WVU@mail.com</con:value></con:property><con:property><con:name>addressId</con:name><con:value/></con:property><con:property><con:name>phone</con:name><con:value>7210680819</con:value></con:property><con:property><con:name>city</con:name><con:value>city mpoF1tQQ18yGCWb</con:value></con:property><con:property><con:name>line1</con:name><con:value>line1 atIcVY1ceeb9gDK</con:value></con:property><con:property><con:name>line2</con:name><con:value>line2 Kn8vMtHSt6saj4K</con:value></con:property><con:property><con:name>line3</con:name><con:value>line3 n7C9VkHNb4yOiym</con:value></con:property><con:property><con:name>zipCode</con:name><con:value>96850</con:value></con:property><con:property><con:name>emailAlreadyUsed</con:name><con:value>user1@gmail.com</con:value></con:property><con:property><con:name>loginAlreadyUsed</con:name><con:value>user1</con:value></con:property><con:property><con:name>emailTooLong</con:name><con:value/></con:property><con:property><con:name>beforeReminder</con:name><con:value>true</con:value></con:property></con:properties></con:testCase><con:testCase id="62aea7f2-8879-4c9d-8847-993bfc39cb17" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase addRoleToUser" searchProperties="true"><con:settings/><con:testStep type="groovy" name="RandomParam user" id="2bcbba37-7575-4d16-b8c4-104e2226ea57"><con:settings/><con:config><script>import org.apache.commons.lang.RandomStringUtils;
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7aed5c6d-7173-4ec9-b27d-ae4fee10c988" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="22455652-3371-4495-a542-2b77866b7a76" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/addUser"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>login</con:name><con:value>Login UDuFyrJZUg6DJIg</con:value></con:property><con:property><con:name>password</con:name><con:value>password VccR6mgkWqJFLPl</con:value></con:property><con:property><con:name>email</con:name><con:value>teTBeqIZCsiZXI0@mail.com</con:value></con:property><con:property><con:name>addressId</con:name><con:value/></con:property><con:property><con:name>phone</con:name><con:value>3958268920</con:value></con:property><con:property><con:name>city</con:name><con:value>city GrMzkX92F0sQHOk</con:value></con:property><con:property><con:name>line1</con:name><con:value>line1 udOhEFC4soe5M40</con:value></con:property><con:property><con:name>line2</con:name><con:value>line2 gdetJLZ4UiHtm38</con:value></con:property><con:property><con:name>line3</con:name><con:value>line3 LU49l1Gar7nAl1M</con:value></con:property><con:property><con:name>zipCode</con:name><con:value>22875</con:value></con:property><con:property><con:name>emailAlreadyUsed</con:name><con:value>user1@gmail.com</con:value></con:property><con:property><con:name>loginAlreadyUsed</con:name><con:value>user1</con:value></con:property><con:property><con:name>emailTooLong</con:name><con:value/></con:property></con:properties></con:testCase><con:testCase id="62aea7f2-8879-4c9d-8847-993bfc39cb17" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase addRoleToUser" searchProperties="true"><con:settings/><con:testStep type="groovy" name="RandomParam user" id="2bcbba37-7575-4d16-b8c4-104e2226ea57"><con:settings/><con:config><script>import org.apache.commons.lang.RandomStringUtils;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -5132,6 +5280,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -5185,6 +5335,7 @@ declare namespace ns1='http://services.libraryws.projects.brucella.fr/';
          <arg1>${#TestCase#notRoleId}</arg1>\r
       </ser:addRoleToUser>\r
    </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="b8a53792-795b-4935-a385-1e520df86d5c" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="81c2a24c-ea59-4b86-badc-9559b14b3349" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/addRoleToUser"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>roleId</con:name><con:value>1</con:value></con:property><con:property><con:name>userId</con:name><con:value>10</con:value></con:property><con:property><con:name>notRoleId</con:name><con:value>555</con:value></con:property><con:property><con:name>notUserId</con:name><con:value>555</con:value></con:property><con:property><con:name>login</con:name><con:value>Login v5iBn7TbE6Vii5L</con:value></con:property><con:property><con:name>password</con:name><con:value>password qUwmEdLOlvhuSa4</con:value></con:property><con:property><con:name>email</con:name><con:value>QzQWe56H3XY1tFj@mail.com</con:value></con:property><con:property><con:name>phone</con:name><con:value>5494464284</con:value></con:property><con:property><con:name>city</con:name><con:value>city 3rO4fTIWXsxOuZJ</con:value></con:property><con:property><con:name>line1</con:name><con:value>line1 TOMYx49GQEeQpXs</con:value></con:property><con:property><con:name>line2</con:name><con:value>line2 oZljDlfKA3VJtcD</con:value></con:property><con:property><con:name>line3</con:name><con:value>line3 hxv5p8VxoZk6kJG</con:value></con:property><con:property><con:name>zipCode</con:name><con:value>56565</con:value></con:property><con:property><con:name>beforeReminder</con:name><con:value>true</con:value></con:property></con:properties></con:testCase><con:testCase id="ce109261-e2f5-47a2-b8a4-0ae691a56fde" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase login" searchProperties="true"><con:settings/><con:testStep type="request" id="2b6b9303-15fc-4c3e-a33f-c396fc898487" name="login - passing test"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>AuthentificationServiceSoapBinding</con:interface><con:operation>login</con:operation><con:request name="login - passing test" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="4bc25548-1b89-473e-b551-d88fec4dcdd7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/authentificationService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">\r
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="b8a53792-795b-4935-a385-1e520df86d5c" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="81c2a24c-ea59-4b86-badc-9559b14b3349" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/addRoleToUser"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>roleId</con:name><con:value>1</con:value></con:property><con:property><con:name>userId</con:name><con:value>9</con:value></con:property><con:property><con:name>notRoleId</con:name><con:value>555</con:value></con:property><con:property><con:name>notUserId</con:name><con:value>555</con:value></con:property><con:property><con:name>login</con:name><con:value>Login X4V25nipGGQvcqo</con:value></con:property><con:property><con:name>password</con:name><con:value>password XHHC0qwzI3Q3Fc5</con:value></con:property><con:property><con:name>email</con:name><con:value>T9oJdJdyYyqLtrO@mail.com</con:value></con:property><con:property><con:name>phone</con:name><con:value>8115156128</con:value></con:property><con:property><con:name>city</con:name><con:value>city ZqMJvyHxrLgEVb8</con:value></con:property><con:property><con:name>line1</con:name><con:value>line1 dKxMMfFCRrW80OW</con:value></con:property><con:property><con:name>line2</con:name><con:value>line2 4CmUHReWr5Py24F</con:value></con:property><con:property><con:name>line3</con:name><con:value>line3 aGTA2cWzNnay5GU</con:value></con:property><con:property><con:name>zipCode</con:name><con:value>87594</con:value></con:property></con:properties></con:testCase><con:testCase id="ce109261-e2f5-47a2-b8a4-0ae691a56fde" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase login" searchProperties="true"><con:settings/><con:testStep type="request" id="2b6b9303-15fc-4c3e-a33f-c396fc898487" name="login - passing test"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>AuthentificationServiceSoapBinding</con:interface><con:operation>login</con:operation><con:request name="login - passing test" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="4bc25548-1b89-473e-b551-d88fec4dcdd7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/authentificationService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
@@ -5262,6 +5413,7 @@ testRunner.testCase.setPropertyValue("login", randomLogin);</script></con:config
       <ser:loginAvailable>\r
       </ser:loginAvailable>\r
    </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7afde198-6b44-4f9f-a6d7-7b962d7a9dc1" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="f341e300-254c-4b9d-a619-62fab4449e70" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/loginAvailable"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>login</con:name><con:value>Login io4dFeTl2X0kmdZ</con:value></con:property><con:property><con:name>loginUsed</con:name><con:value>user1</con:value></con:property></con:properties></con:testCase><con:testCase id="c5599260-7ac7-4de0-b8e5-0d2c54a76fd3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase ModifyUser" searchProperties="true"><con:settings/><con:testStep type="groovy" name="RandomParam" id="6e0b1a9b-2965-4dc7-b7d8-b51bc3a3aa94"><con:settings/><con:config><script>import org.apache.commons.lang.RandomStringUtils;
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7afde198-6b44-4f9f-a6d7-7b962d7a9dc1" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="f341e300-254c-4b9d-a619-62fab4449e70" name="SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/loginAvailable"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>login</con:name><con:value>Login R8vFpdjVt3bRGKx</con:value></con:property><con:property><con:name>loginUsed</con:name><con:value>user1</con:value></con:property></con:properties></con:testCase><con:testCase id="c5599260-7ac7-4de0-b8e5-0d2c54a76fd3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase ModifyUser" searchProperties="true"><con:settings/><con:testStep type="groovy" name="RandomParam" id="6e0b1a9b-2965-4dc7-b7d8-b51bc3a3aa94"><con:settings/><con:config><script>import org.apache.commons.lang.RandomStringUtils;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -5318,6 +5470,8 @@ testRunner.testCase.setPropertyValue("zipCode", randomZip);</script></con:config
             <line3>${#TestCase#line3}</line3>
             <!--Optional:-->
             <zipCode>${#TestCase#zipCode}</zipCode>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#beforeReminder}</beforeReminder>
          </arg0>
       </ser:addUser>
    </soapenv:Body>
@@ -5337,7 +5491,10 @@ declare namespace ns1='http://services.libraryws.projects.brucella.fr/';
 /soap:Envelope/soap:Body/ns1:loginResponse/return/userId/text()</con:sourcePath><con:targetType>userId</con:targetType><con:targetStep>#TestCase#</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>addressID</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>login</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace ns1='http://services.libraryws.projects.brucella.fr/';
 
-/soap:Envelope/soap:Body/ns1:loginResponse/return/addressId/text()</con:sourcePath><con:targetType>addressId</con:targetType><con:targetStep>#TestCase#</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" id="1e7067be-3ff8-45d8-aaba-038cfcfe28ca" name="modifyUser - passing test"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>AuthentificationServiceSoapBinding</con:interface><con:operation>modifyUser</con:operation><con:request name="modifyUser - passing test" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="5246dfb0-fb0f-4a31-bf2f-b7dc870b3b80"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/authentificationService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">\r
+/soap:Envelope/soap:Body/ns1:loginResponse/return/addressId/text()</con:sourcePath><con:targetType>addressId</con:targetType><con:targetStep>#TestCase#</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>userOptionsId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>login</con:sourceStep><con:sourcePath>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://services.libraryws.projects.brucella.fr/';
+
+/soap:Envelope/soap:Body/ns1:loginResponse/return/userOptionsId/text()</con:sourcePath><con:targetType>userOptionsId</con:targetType><con:targetStep>#TestCase#</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" id="1e7067be-3ff8-45d8-aaba-038cfcfe28ca" name="modifyUser - passing test"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>AuthentificationServiceSoapBinding</con:interface><con:operation>modifyUser</con:operation><con:request name="modifyUser - passing test" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="5246dfb0-fb0f-4a31-bf2f-b7dc870b3b80"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/library-ws-services/services/authentificationService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">\r
    <soapenv:Header/>\r
    <soapenv:Body>\r
       <ser:modifyUser>\r
@@ -5365,8 +5522,13 @@ declare namespace ns1='http://services.libraryws.projects.brucella.fr/';
             <line3>${#TestCase#newLine3}</line3>\r
             <!--Optional:-->\r
             <zipCode>${#TestCase#newZipCode}</zipCode>\r
+            <!--Optional:-->
+            <userOptionsId>${#TestCase#userOptionsId}</userOptionsId>
+            <!--Optional:-->
+            <beforeReminder>${#TestCase#newBeforeReminder}</beforeReminder>
          </arg0>\r
       </ser:modifyUser>\r
    </soapenv:Body>\r
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="d174dfdb-f919-40e5-bbf8-bd23af4abdab" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="0bb9f148-927d-4ace-9af8-5129934de394" name="Not SOAP Fault"/><con:assertion type="Simple Contains" id="47d98b42-2a69-4531-9b1d-09e92e03d7cd" name="Contains"><con:configuration><token>&lt;return>true&lt;/return>
+</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/modifyUser"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>login</con:name><con:value>Login 8rvLWPdLnHj7RxO</con:value></con:property><con:property><con:name>password</con:name><con:value>password TSHbSFOyPlFFhra</con:value></con:property><con:property><con:name>email</con:name><con:value>a8wl4RB9iepkIjr@mail.com</con:value></con:property><con:property><con:name>phone</con:name><con:value>8581210531</con:value></con:property><con:property><con:name>city</con:name><con:value>city 4yivqa8129KQTJq</con:value></con:property><con:property><con:name>line1</con:name><con:value>line1 GHNWF5nkod7s6DO</con:value></con:property><con:property><con:name>line2</con:name><con:value>line2 pZQENioAACmk1xV</con:value></con:property><con:property><con:name>line3</con:name><con:value>line3 Fr8zSzGJe8Ds95x</con:value></con:property><con:property><con:name>zipCode</con:name><con:value>39090</con:value></con:property><con:property><con:name>newEmail</con:name><con:value>newEmail@mail.fr</con:value></con:property><con:property><con:name>newPhone</con:name><con:value>1122334455</con:value></con:property><con:property><con:name>newCity</con:name><con:value>newCity</con:value></con:property><con:property><con:name>newLine1</con:name><con:value>newLine1</con:value></con:property><con:property><con:name>newLine2</con:name><con:value>newLine2</con:value></con:property><con:property><con:name>newLine3</con:name><con:value>newLine3</con:value></con:property><con:property><con:name>newZipCode</con:name><con:value>00000</con:value></con:property><con:property><con:name>userId</con:name><con:value>14</con:value></con:property><con:property><con:name>addressId</con:name><con:value>37</con:value></con:property><con:property><con:name>beforeReminder</con:name><con:value>true</con:value></con:property><con:property><con:name>newBeforeReminder</con:name><con:value>false</con:value></con:property><con:property><con:name>userOptionsId</con:name><con:value>20</con:value></con:property></con:properties></con:testCase><con:properties><con:property><con:name>String 101</con:name><con:value>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrst101</con:value></con:property><con:property><con:name>String81email</con:name><con:value>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabvfgrtabcdefghijk101@mail.fr</con:value></con:property><con:property><con:name>String 31</con:name><con:value>abcdefghijklmnopqrstuvwxyzabc31</con:value></con:property><con:property><con:name>String 11</con:name><con:value>12345678901</con:value></con:property><con:property><con:name>String 9</con:name><con:value>123456789</con:value></con:property><con:property><con:name>String 201</con:name><con:value>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv201</con:value></con:property><con:property><con:name>String 6</con:name><con:value>123456</con:value></con:property><con:property><con:name>String 4</con:name><con:value>1234</con:value></con:property></con:properties></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
 </token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.libraryws.projects.brucella.fr/AuthentificationService/modifyUser"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>login</con:name><con:value>Login 8UTLmaAjM47oMUT</con:value></con:property><con:property><con:name>password</con:name><con:value>password FcBJeu2ZudCs936</con:value></con:property><con:property><con:name>email</con:name><con:value>wVpGsGFu0OzRpSj@mail.com</con:value></con:property><con:property><con:name>phone</con:name><con:value>6261107874</con:value></con:property><con:property><con:name>city</con:name><con:value>city s0quqIC18OvyUYb</con:value></con:property><con:property><con:name>line1</con:name><con:value>line1 hu4ncX31QmLnwjT</con:value></con:property><con:property><con:name>line2</con:name><con:value>line2 52qiOFyqQOd2dy5</con:value></con:property><con:property><con:name>line3</con:name><con:value>line3 64mACnkn9qSderE</con:value></con:property><con:property><con:name>zipCode</con:name><con:value>77552</con:value></con:property><con:property><con:name>newEmail</con:name><con:value>newEmail@mail.fr</con:value></con:property><con:property><con:name>newPhone</con:name><con:value>1122334455</con:value></con:property><con:property><con:name>newCity</con:name><con:value>newCity</con:value></con:property><con:property><con:name>newLine1</con:name><con:value>newLine1</con:value></con:property><con:property><con:name>newLine2</con:name><con:value>newLine2</con:value></con:property><con:property><con:name>newLine3</con:name><con:value>newLine3</con:value></con:property><con:property><con:name>newZipCode</con:name><con:value>00000</con:value></con:property><con:property><con:name>userId</con:name><con:value>10</con:value></con:property><con:property><con:name>addressId</con:name><con:value>17</con:value></con:property></con:properties></con:testCase><con:properties><con:property><con:name>String 101</con:name><con:value>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrst101</con:value></con:property><con:property><con:name>String81email</con:name><con:value>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabvfgrtabcdefghijk101@mail.fr</con:value></con:property><con:property><con:name>String 31</con:name><con:value>abcdefghijklmnopqrstuvwxyzabc31</con:value></con:property><con:property><con:name>String 11</con:name><con:value>12345678901</con:value></con:property><con:property><con:name>String 9</con:name><con:value>123456789</con:value></con:property><con:property><con:name>String 201</con:name><con:value>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv201</con:value></con:property><con:property><con:name>String 6</con:name><con:value>123456</con:value></con:property><con:property><con:name>String 4</con:name><con:value>1234</con:value></con:property></con:properties></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

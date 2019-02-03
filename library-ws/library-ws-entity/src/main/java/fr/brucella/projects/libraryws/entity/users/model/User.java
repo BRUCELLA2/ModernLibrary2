@@ -40,6 +40,9 @@ public class User {
   @NotNull(message = "{user.address.null}")
   private Integer addressId;
 
+  @NotNull(message = "{user.options.null")
+  private Integer userOptionsId;
+
   // ===== Getters and Setters =====
 
   /**
@@ -150,6 +153,24 @@ public class User {
     this.addressId = addressId;
   }
 
+  /**
+   * Give the id of the user options
+   *
+   * @return the id of the user options
+   */
+  public Integer getUserOptionsId() {
+    return userOptionsId;
+  }
+
+  /**
+   * Set the id of the user options
+   *
+   * @param userOptionsId the id of the user options
+   */
+  public void setUserOptionsId(final Integer userOptionsId) {
+    this.userOptionsId = userOptionsId;
+  }
+
   // ===== Constructor =====
 
   /** Default Constructor */
@@ -164,13 +185,8 @@ public class User {
    */
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-        .append("userId", userId)
-        .append("login", login)
-        .append("password", password)
-        .append("email", email)
-        .append("phone", phone)
-        .append("addressId", addressId)
-        .toString();
+    return new ToStringBuilder(this).append("userId", userId).append("login", login).append("password", password)
+        .append("email", email).append("phone", phone).append("addressId", addressId)
+        .append("userOptionsId", userOptionsId).toString();
   }
 }

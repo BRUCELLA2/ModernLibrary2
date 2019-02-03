@@ -44,6 +44,13 @@ public interface BooksManagementManager {
   int reservationNotBorrowInTime() throws TechnicalException;
 
   /**
+   * Send a email few days before the end of the borrow. The number of days is set in config.properties.
+   *
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   */
+  void beforeReminderToUsers() throws TechnicalException;
+
+  /**
    * Provides the list of stocks and title of book.
    *
    * @return the list of stocks and title of book.

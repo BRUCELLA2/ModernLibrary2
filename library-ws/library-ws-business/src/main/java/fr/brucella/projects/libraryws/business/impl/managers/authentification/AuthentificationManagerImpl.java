@@ -8,6 +8,7 @@ import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.users.dto.FullUserDto;
 import fr.brucella.projects.libraryws.entity.users.model.Address;
 import fr.brucella.projects.libraryws.entity.users.model.User;
+import fr.brucella.projects.libraryws.entity.users.model.UserOptions;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -105,6 +106,12 @@ public class AuthentificationManagerImpl extends AbstractManager
 
       this.getDaoFactory().getAddressDao().updateAddress(modifyAddress);
 
+      UserOptions modifyUserOptions = new UserOptions();
+      modifyUserOptions.setUserOptionsId(fullUserDto.getUserOptionsId());
+      modifyUserOptions.setBeforeReminder(fullUserDto.getBeforeReminder());
+
+      this.getDaoFactory().getUserOptionsDao().updateUserOptions(modifyUserOptions);
+
       User modifyUser = new User();
       modifyUser.setUserId(fullUserDto.getUserId());
       modifyUser.setPassword(this.encodePassword(fullUserDto.getPassword()));
@@ -112,6 +119,7 @@ public class AuthentificationManagerImpl extends AbstractManager
       modifyUser.setLogin(fullUserDto.getLogin());
       modifyUser.setAddressId(fullUserDto.getAddressId());
       modifyUser.setEmail(fullUserDto.getEmail());
+      modifyUser.setUserOptionsId(modifyUserOptions.getUserOptionsId());
 
       this.getDaoFactory().getUserDao().updateUser(modifyUser);
 
@@ -159,6 +167,24 @@ public class AuthentificationManagerImpl extends AbstractManager
     Integer addressId = this.getDaoFactory().getAddressDao().insertAddress(newAddress);
     newAddress.setAddressId(addressId);
 
+
+    UserOptions newUserOptions = new UserOptions();
+    newUserOptions.setBeforeReminder(fullUserDto.getBeforeReminder());
+
+    final Set<ConstraintViolation<UserOptions>> userOptionsViolations = this.getConstraintValidator().validate(newUserOptions);
+    if (!userOptionsViolations.isEmpty()) {
+      if (LOG.isDebugEnabled()) {
+        for (final ConstraintViolation<UserOptions> violation : userOptionsViolations) {
+          LOG.debug(violation.getMessage());
+        }
+      }
+      LOG.error(messages.getString("authentificationManager.addNewUser.userOptionsConstraints"));
+      throw new FunctionalException(messages.getString("authentificationManager.addNewUser.userOptionsConstraints"), new ConstraintViolationException(userOptionsViolations));
+    }
+
+    Integer userOptionsId = this.getDaoFactory().getUserOptionsDao().insertUserOptions(newUserOptions);
+    newUserOptions.setUserOptionsId(userOptionsId);
+
     User newUser = new User();
     newUser.setUserId(fullUserDto.getUserId());
     newUser.setPassword(this.encodePassword(fullUserDto.getPassword()));
@@ -166,6 +192,7 @@ public class AuthentificationManagerImpl extends AbstractManager
     newUser.setLogin(fullUserDto.getLogin());
     newUser.setAddressId(newAddress.getAddressId());
     newUser.setEmail(fullUserDto.getEmail());
+    newUser.setUserOptionsId(newUserOptions.getUserOptionsId());
 
     final Set<ConstraintViolation<User>> userViolations =
         this.getConstraintValidator().validate(newUser);
@@ -178,6 +205,7 @@ public class AuthentificationManagerImpl extends AbstractManager
       LOG.error(messages.getString("authentificationManager.addNewUser.userConstraints"));
       try {
         this.getDaoFactory().getAddressDao().deleteAddress(addressId);
+        this.getDaoFactory().getUserOptionsDao().deleteUserOptions(userOptionsId);
       } catch (NotFoundException exception) {
         LOG.error(exception.getMessage());
       }

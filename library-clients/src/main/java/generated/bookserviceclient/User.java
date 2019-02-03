@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="phone" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="userOptionsId" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,7 +38,12 @@ import javax.xml.bind.annotation.XmlType;
     "login",
     "password",
     "phone",
+<<<<<<< HEAD
     "userId"
+=======
+    "userId",
+    "userOptionsId"
+>>>>>>> reminder_option
 })
 public class User {
 
@@ -47,6 +53,10 @@ public class User {
     protected String password;
     protected String phone;
     protected Integer userId;
+<<<<<<< HEAD
+=======
+    protected Integer userOptionsId;
+>>>>>>> reminder_option
 
     /**
      * Obtient la valeur de la propriété addressId.
@@ -191,5 +201,32 @@ public class User {
     public void setUserId(Integer value) {
         this.userId = value;
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Obtient la valeur de la propriété userOptionsId.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getUserOptionsId() {
+        return userOptionsId;
+    }
+
+    /**
+     * Définit la valeur de la propriété userOptionsId.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setUserOptionsId(Integer value) {
+        this.userOptionsId = value;
+    }
+>>>>>>> reminder_option
 
 }

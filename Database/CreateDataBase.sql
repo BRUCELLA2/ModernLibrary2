@@ -1,4 +1,15 @@
 
+CREATE SEQUENCE public.user_options_user_options_id_seq;
+
+CREATE TABLE public.user_options (
+                user_options_id INTEGER NOT NULL DEFAULT nextval('public.user_options_user_options_id_seq'),
+                before_reminder BOOLEAN NOT NULL,
+                CONSTRAINT user_options_pk PRIMARY KEY (user_options_id)
+);
+
+
+ALTER SEQUENCE public.user_options_user_options_id_seq OWNED BY public.user_options.user_options_id;
+
 CREATE SEQUENCE public.role_role_id_seq;
 
 CREATE TABLE public.role (
@@ -34,6 +45,7 @@ CREATE TABLE public.users (
                 login VARCHAR(30) NOT NULL,
                 phone VARCHAR(10),
                 address_id INTEGER NOT NULL,
+                user_options_id INTEGER NOT NULL,
                 CONSTRAINT users_pk PRIMARY KEY (user_id)
 );
 
@@ -150,6 +162,13 @@ CREATE TABLE public.stock (
 
 
 ALTER SEQUENCE public.stock_stock_id_seq OWNED BY public.stock.stock_id;
+
+ALTER TABLE public.users ADD CONSTRAINT user_options_users_fk
+FOREIGN KEY (user_options_id)
+REFERENCES public.user_options (user_options_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
 
 ALTER TABLE public.user_roles ADD CONSTRAINT role_user_roles_fk
 FOREIGN KEY (role_id)

@@ -11,6 +11,7 @@ import fr.brucella.projects.libraryws.dao.contracts.dao.books.StockDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.users.AddressDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.users.RoleDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.users.UserDao;
+import fr.brucella.projects.libraryws.dao.contracts.dao.users.UserOptionsDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -51,6 +52,9 @@ public class DaoFactoryImpl implements DaoFactory {
 
   /** User Data Access Object. */
   @Autowired private UserDao userDao;
+
+  /** UserOptions Data Access Object. */
+  @Autowired private UserOptionsDao userOptionsDao;
 
   // ===== Constructor =====
 
@@ -121,6 +125,12 @@ public class DaoFactoryImpl implements DaoFactory {
 
   /** {@inheritDoc} */
   @Override
+  public  UserOptionsDao getUserOptionsDao() {
+    return userOptionsDao;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public void setAuthorDao(final AuthorDao authorDao) {
     this.authorDao = authorDao;
   }
@@ -176,5 +186,11 @@ public class DaoFactoryImpl implements DaoFactory {
   @Override
   public void setUserDao(final UserDao userDao) {
     this.userDao = userDao;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setUserOptionsDao(final UserOptionsDao userOptionsDao) {
+    this.userOptionsDao = userOptionsDao;
   }
 }

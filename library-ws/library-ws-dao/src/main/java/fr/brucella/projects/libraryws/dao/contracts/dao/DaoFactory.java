@@ -10,6 +10,7 @@ import fr.brucella.projects.libraryws.dao.contracts.dao.books.StockDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.users.AddressDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.users.RoleDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.users.UserDao;
+import fr.brucella.projects.libraryws.dao.contracts.dao.users.UserOptionsDao;
 
 /**
  * Interface for the Data Access Object Factory.
@@ -90,6 +91,14 @@ public interface DaoFactory {
    */
   UserDao getUserDao();
 
+  /**
+   * Give the UserOptions Data Access Object.
+   *
+   * @return the UserOptions Data Access Object.
+   */
+  UserOptionsDao getUserOptionsDao();
+
+
   // ===== Setters =====
 
   /**
@@ -161,4 +170,11 @@ public interface DaoFactory {
    * @param userDao the User Data Access Object.
    */
   void setUserDao(final UserDao userDao);
+
+  /**
+   * Set the User Data Access Object.
+   *
+   * @param userOptionsDao
+   */
+  void setUserOptionsDao(final UserOptionsDao userOptionsDao);
 }

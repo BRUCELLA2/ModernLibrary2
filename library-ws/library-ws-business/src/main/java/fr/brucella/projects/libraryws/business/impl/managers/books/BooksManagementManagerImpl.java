@@ -51,6 +51,9 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
   /** Number of days to pick up a reservation */
   private static final int NB_DAYS_RESERVATION = Integer.parseInt(config.getString("nbDaysReservation"));
 
+  /** Number of days before the end of borrow for before reminder send. */
+  private static final Integer NB_DAYS_BEFORE_REMINDER = Integer.parseInt(config.getString("nbDaysBeforeReminder"));
+
   /** Default Constructor */
   public BooksManagementManagerImpl() {
     super();
@@ -115,6 +118,23 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
 
     return nbError;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void beforeReminderToUsers() throws TechnicalException {
+
+    List<User> users = new ArrayList<>();
+
+    try {
+      users = this.getDaoFactory().getUserDao().getUserBeforeReminder(NB_DAYS_BEFORE_REMINDER);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug(exception.getMessage());
+      }
+    }
+
+    sendBeforeReminderMails(config.getString("mail.host"), Integer.valueOf(config.getString("mail.port")), config.getString("mail.username"), config.getString("mail.password"), users);
   }
 
   /** {@inheritDoc} */
@@ -609,5 +629,80 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     LOG.error("Email error : " + exception.getMessage());
     throw new TechnicalException(exception.getMessage(), exception);
   }
+  }
+
+  /**
+   * Send email with list of borrow almost expired to users.
+   *
+   * @param host smtp host.
+   * @param port smtp host port.
+   * @param username username for smtp authentication.
+   * @param password password for smtp authentication.
+   * @param users list of User to send the reminder mails.
+   * @throws TechnicalException
+   */
+  private void sendBeforeReminderMails(String host, Integer port, String username, String password, List<User> users) throws TechnicalException {
+
+    Properties prop = new Properties();
+    prop.put("mail.smtp.auth", true);
+    prop.put("mail.smtp.starttls.enable", "true");
+    prop.put("mail.smtp.host", host);
+    prop.put("mail.smtp.port", port);
+    prop.put("mail.smtp.ssl.trust", host);
+
+    LOG.error(prop.stringPropertyNames());
+    LOG.error("Prop text :" + prop.toString());
+
+    Session session =
+        Session.getInstance(
+            prop,
+            new Authenticator() {
+              @Override
+              protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+              }
+            });
+    session.setDebug(true);
+    for (User user : users) {
+      try {
+
+        // Get list of title and end date of borrow for each book borrowed
+        List<BorrowDto>  borrowDtoList = this.getDaoFactory().getBookBorrowedDao().getBorrowsAlmostExpiredForUser(user.getUserId(), NB_DAYS_BEFORE_REMINDER);
+
+        // Message creation
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(config.getString("mail.sender")));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
+        message.setSubject(messages.getString("booksManagementManager.sendBeforeReminderMails.object"));
+
+        StringBuilder msg = new StringBuilder();
+        msg.append(messages.getString("booksManagementManager.sendBeforeReminderMails.mail"));
+        msg.append("<ul>");
+        for (BorrowDto borrowDto : borrowDtoList) {
+          msg.append("<li>")
+              .append("Titre : ")
+              .append(borrowDto.getTitle())
+              .append(" ---- Cet emprunt expire le : ")
+              .append(borrowDto.getEndDate().toString())
+              .append("</li>");
+        }
+        msg.append("</ul><br><br><br>L'équipe Moderne Library");
+
+        LOG.error("Message : " + msg);
+
+        MimeBodyPart mimeBodyPart = new MimeBodyPart();
+        mimeBodyPart.setContent(msg.toString(), "text/html");
+
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(mimeBodyPart);
+
+        message.setContent(multipart);
+
+        Transport.send(message);
+      } catch (Exception exception) {
+        LOG.error("Email error : " + exception.getMessage());
+        throw new TechnicalException(exception.getMessage(), exception);
+      }
+    }
   }
 }

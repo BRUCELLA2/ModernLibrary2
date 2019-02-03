@@ -1,6 +1,0 @@
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.libraryws.projects.brucella.fr/">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <ser:sendReminderToUsers/>
-   </soapenv:Body>
-</soapenv:Envelope>

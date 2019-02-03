@@ -55,6 +55,17 @@ public interface UserDao {
   List<User> getUserWithBorrowsExpired() throws TechnicalException, NotFoundException;
 
   /**
+   * Give the list of users with before reminder options actived and a borrows not returned ended in less than the number of days specified.
+   *
+   * @param nbDaysBeforeReminder the number of days before the end of borrows.
+   * @return with before reminder options actived and a borrows not returned ended in less than the number of days specified.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and the
+   *     user is not found.
+   */
+  List<User> getUserBeforeReminder(final Integer nbDaysBeforeReminder) throws TechnicalException, NotFoundException;
+
+  /**
    * Update an existing user in the database.
    *
    * @param user the user with the updated informations to save in datastore.

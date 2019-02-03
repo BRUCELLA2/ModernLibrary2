@@ -125,6 +125,14 @@
                     </div>
                 </div>
 
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="beforeReminder"
+                           <s:if test="beforeReminder.equals('true')">
+                           checked="checked"
+                           </s:if>
+                           value="true" name="beforeReminder">
+                    <label class="form-check-label" for="beforeReminder">Rappel avant expiration des emprunts.</label>
+                </div>
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Valider les modifications</button>

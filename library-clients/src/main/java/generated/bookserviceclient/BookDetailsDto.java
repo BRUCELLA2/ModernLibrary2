@@ -19,9 +19,13 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{http://services.libraryws.projects.brucella.fr/}book">
  *       &lt;sequence>
+<<<<<<< HEAD
  *         &lt;element name="amountAvailable" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="authors" type="{http://services.libraryws.projects.brucella.fr/}author" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="endBorrowDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+=======
+ *         &lt;element name="authors" type="{http://services.libraryws.projects.brucella.fr/}author" maxOccurs="unbounded" minOccurs="0"/>
+>>>>>>> reminder_option
  *         &lt;element name="genreName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="nbActiveReservations" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="publisherName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -35,17 +39,23 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bookDetailsDto", propOrder = {
+<<<<<<< HEAD
     "amountAvailable",
     "authors",
     "endBorrowDate",
     "genreName",
     "nbActiveReservations",
+=======
+    "authors",
+    "genreName",
+>>>>>>> reminder_option
     "publisherName"
 })
 public class BookDetailsDto
     extends Book
 {
 
+<<<<<<< HEAD
     protected Integer amountAvailable;
     @XmlElement(nillable = true)
     protected List<Author> authors;
@@ -79,6 +89,14 @@ public class BookDetailsDto
     }
 
     /**
+=======
+    @XmlElement(nillable = true)
+    protected List<Author> authors;
+    protected String genreName;
+    protected String publisherName;
+
+    /**
+>>>>>>> reminder_option
      * Gets the value of the authors property.
      * 
      * <p>
@@ -105,6 +123,7 @@ public class BookDetailsDto
             authors = new ArrayList<Author>();
         }
         return this.authors;
+<<<<<<< HEAD
     }
 
     /**
@@ -202,5 +221,56 @@ public class BookDetailsDto
     public void setPublisherName(String value) {
         this.publisherName = value;
     }
+=======
+    }
+
+    /**
+     * Obtient la valeur de la propriété genreName.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getGenreName() {
+        return genreName;
+    }
+
+    /**
+     * Définit la valeur de la propriété genreName.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setGenreName(String value) {
+        this.genreName = value;
+    }
+
+    /**
+     * Obtient la valeur de la propriété publisherName.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPublisherName() {
+        return publisherName;
+    }
+
+    /**
+     * Définit la valeur de la propriété publisherName.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPublisherName(String value) {
+        this.publisherName = value;
+    }
+>>>>>>> reminder_option
 
 }

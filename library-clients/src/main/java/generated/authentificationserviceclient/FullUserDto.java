@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{http://services.libraryws.projects.brucella.fr/}user">
  *       &lt;sequence>
+ *         &lt;element name="beforeReminder" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="line1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="line2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -35,6 +36,10 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "fullUserDto", propOrder = {
+<<<<<<< HEAD
+=======
+    "beforeReminder",
+>>>>>>> reminder_option
     "city",
     "line1",
     "line2",
@@ -46,6 +51,10 @@ public class FullUserDto
     extends User
 {
 
+<<<<<<< HEAD
+=======
+    protected Boolean beforeReminder;
+>>>>>>> reminder_option
     protected String city;
     protected String line1;
     protected String line2;
@@ -55,6 +64,33 @@ public class FullUserDto
     protected String zipCode;
 
     /**
+<<<<<<< HEAD
+=======
+     * Obtient la valeur de la propriété beforeReminder.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isBeforeReminder() {
+        return beforeReminder;
+    }
+
+    /**
+     * Définit la valeur de la propriété beforeReminder.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setBeforeReminder(Boolean value) {
+        this.beforeReminder = value;
+    }
+
+    /**
+>>>>>>> reminder_option
      * Obtient la valeur de la propriété city.
      * 
      * @return

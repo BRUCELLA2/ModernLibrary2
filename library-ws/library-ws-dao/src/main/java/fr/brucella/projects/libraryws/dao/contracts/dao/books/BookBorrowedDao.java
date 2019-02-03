@@ -77,6 +77,18 @@ public interface BookBorrowedDao {
       throws TechnicalException, NotFoundException;
 
   /**
+   * Give the list of informations about borrows by the user almost expired.
+   *
+   * @param userId id of the user.
+   * @param nbDaysBeforeReminder the number of days before the end of borrows.
+   * @return The list of Borrow Data Transfert Object.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and no
+   *     borrows is found.
+   */
+  List<BorrowDto> getBorrowsAlmostExpiredForUser(final Integer userId, final Integer nbDaysBeforeReminder) throws TechnicalException, NotFoundException;
+
+  /**
    * Give the list of borrows pas and present.
    *
    * @return the list of borrows pas and present.

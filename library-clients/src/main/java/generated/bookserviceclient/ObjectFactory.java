@@ -24,35 +24,54 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+<<<<<<< HEAD
     private final static QName _UserReservationsResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "userReservationsResponse");
     private final static QName _CheckReservationNotPickedUpResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "checkReservationNotPickedUpResponse");
+=======
+>>>>>>> reminder_option
     private final static QName _CurrentlyDeadLineExpiredForUserResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyDeadLineExpiredForUserResponse");
     private final static QName _NbBorrowingByBooks_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "nbBorrowingByBooks");
     private final static QName _ReturnedBorrowsForUserResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "returnedBorrowsForUserResponse");
     private final static QName _AvailableBooksListResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "availableBooksListResponse");
     private final static QName _BookBorrow_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookBorrow");
     private final static QName _BookDetails_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookDetails");
+<<<<<<< HEAD
     private final static QName _CheckReservationNotPickedUp_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "checkReservationNotPickedUp");
     private final static QName _UserReservations_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "userReservations");
     private final static QName _LibraryWsException_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "LibraryWsException");
     private final static QName _CurrentlyBooksBorrowedList_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyBooksBorrowedList");
     private final static QName _CancelAreservation_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "cancelAreservation");
+=======
+    private final static QName _SendReminderBeforeExpirationToUsers_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "sendReminderBeforeExpirationToUsers");
+    private final static QName _LibraryWsException_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "LibraryWsException");
+    private final static QName _CurrentlyBooksBorrowedList_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyBooksBorrowedList");
+>>>>>>> reminder_option
     private final static QName _CurrentlyDeadlineExpiredUsersResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyDeadlineExpiredUsersResponse");
     private final static QName _ReturnedBorrowsForUser_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "returnedBorrowsForUser");
     private final static QName _SendReminderToUsersResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "sendReminderToUsersResponse");
     private final static QName _BooksSearchedList_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "booksSearchedList");
     private final static QName _BookStocksListResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookStocksListResponse");
+<<<<<<< HEAD
     private final static QName _BookReservations_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookReservations");
     private final static QName _MakeReservation_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "makeReservation");
+=======
+>>>>>>> reminder_option
     private final static QName _AvailableBooksList_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "availableBooksList");
     private final static QName _ExtendBorrowingResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "extendBorrowingResponse");
     private final static QName _CurrentlyBooksBorrowedListResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyBooksBorrowedListResponse");
     private final static QName _CurrentlyBorrowForUserResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyBorrowForUserResponse");
+<<<<<<< HEAD
+=======
+    private final static QName _SendReminderBeforeExpirationToUsersResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "sendReminderBeforeExpirationToUsersResponse");
+>>>>>>> reminder_option
     private final static QName _BorrowingReturn_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "borrowingReturn");
     private final static QName _ExtendBorrowing_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "extendBorrowing");
     private final static QName _NbBorrowingByBooksResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "nbBorrowingByBooksResponse");
     private final static QName _BorrowingHistoryList_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "borrowingHistoryList");
+<<<<<<< HEAD
     private final static QName _CancelAreservationResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "cancelAreservationResponse");
+=======
+>>>>>>> reminder_option
     private final static QName _AllBooksResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "allBooksResponse");
     private final static QName _BooksSearchedListResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "booksSearchedListResponse");
     private final static QName _BookStocksList_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookStocksList");
@@ -62,10 +81,15 @@ public class ObjectFactory {
     private final static QName _BookBorrowResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookBorrowResponse");
     private final static QName _CurrentlyBorrowForUser_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyBorrowForUser");
     private final static QName _AllBooks_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "allBooks");
+<<<<<<< HEAD
     private final static QName _MakeReservationResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "makeReservationResponse");
     private final static QName _BorrowingHistoryListResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "borrowingHistoryListResponse");
     private final static QName _BorrowingReturnResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "borrowingReturnResponse");
     private final static QName _BookReservationsResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookReservationsResponse");
+=======
+    private final static QName _BorrowingHistoryListResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "borrowingHistoryListResponse");
+    private final static QName _BorrowingReturnResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "borrowingReturnResponse");
+>>>>>>> reminder_option
     private final static QName _CurrentlyDeadLineExpiredForUser_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyDeadLineExpiredForUser");
     private final static QName _CurrentlyDeadlineExpired_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "currentlyDeadlineExpired");
     private final static QName _BookDetailsResponse_QNAME = new QName("http://services.libraryws.projects.brucella.fr/", "bookDetailsResponse");
@@ -150,6 +174,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link CancelAreservationResponse }
      * 
      */
@@ -158,6 +183,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link AllBooksResponse }
      * 
      */
@@ -198,6 +225,17 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Create an instance of {@link SendReminderBeforeExpirationToUsersResponse }
+     * 
+     */
+    public SendReminderBeforeExpirationToUsersResponse createSendReminderBeforeExpirationToUsersResponse() {
+        return new SendReminderBeforeExpirationToUsersResponse();
+    }
+
+    /**
+>>>>>>> reminder_option
      * Create an instance of {@link BorrowingReturn }
      * 
      */
@@ -214,6 +252,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link BookReservationsResponse }
      * 
      */
@@ -222,6 +261,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link CurrentlyDeadLineExpiredForUser }
      * 
      */
@@ -254,6 +295,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link MakeReservationResponse }
      * 
      */
@@ -262,6 +304,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link BorrowingHistoryListResponse }
      * 
      */
@@ -270,6 +314,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link CheckReservationNotPickedUp }
      * 
      */
@@ -286,6 +331,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link LibraryWsFault }
      * 
      */
@@ -302,6 +349,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link CancelAreservation }
      * 
      */
@@ -310,6 +358,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link AvailableBooksListResponse }
      * 
      */
@@ -334,11 +384,19 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link CheckReservationNotPickedUpResponse }
      * 
      */
     public CheckReservationNotPickedUpResponse createCheckReservationNotPickedUpResponse() {
         return new CheckReservationNotPickedUpResponse();
+=======
+     * Create an instance of {@link SendReminderBeforeExpirationToUsers }
+     * 
+     */
+    public SendReminderBeforeExpirationToUsers createSendReminderBeforeExpirationToUsers() {
+        return new SendReminderBeforeExpirationToUsers();
+>>>>>>> reminder_option
     }
 
     /**
@@ -366,6 +424,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link UserReservationsResponse }
      * 
      */
@@ -382,6 +441,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link AvailableBooksList }
      * 
      */
@@ -398,6 +459,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link BookReservations }
      * 
      */
@@ -406,6 +468,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link ReturnedBorrowsForUser }
      * 
      */
@@ -470,6 +534,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link ReservationDetailsDto }
      * 
      */
@@ -478,6 +543,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link Author }
      * 
      */
@@ -494,6 +561,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link BookReservation }
      * 
      */
@@ -502,6 +570,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link BookBorrowed }
      * 
      */
@@ -550,6 +620,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link JAXBElement }{@code <}{@link UserReservationsResponse }{@code >}}
      * 
      */
@@ -568,6 +639,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link JAXBElement }{@code <}{@link CurrentlyDeadLineExpiredForUserResponse }{@code >}}
      * 
      */
@@ -622,6 +695,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link JAXBElement }{@code <}{@link CheckReservationNotPickedUp }{@code >}}
      * 
      */
@@ -637,6 +711,14 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "userReservations")
     public JAXBElement<UserReservations> createUserReservations(UserReservations value) {
         return new JAXBElement<UserReservations>(_UserReservations_QNAME, UserReservations.class, null, value);
+=======
+     * Create an instance of {@link JAXBElement }{@code <}{@link SendReminderBeforeExpirationToUsers }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "sendReminderBeforeExpirationToUsers")
+    public JAXBElement<SendReminderBeforeExpirationToUsers> createSendReminderBeforeExpirationToUsers(SendReminderBeforeExpirationToUsers value) {
+        return new JAXBElement<SendReminderBeforeExpirationToUsers>(_SendReminderBeforeExpirationToUsers_QNAME, SendReminderBeforeExpirationToUsers.class, null, value);
+>>>>>>> reminder_option
     }
 
     /**
@@ -658,6 +740,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link JAXBElement }{@code <}{@link CancelAreservation }{@code >}}
      * 
      */
@@ -667,6 +750,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link JAXBElement }{@code <}{@link CurrentlyDeadlineExpiredUsersResponse }{@code >}}
      * 
      */
@@ -712,6 +797,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link JAXBElement }{@code <}{@link BookReservations }{@code >}}
      * 
      */
@@ -730,6 +816,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link JAXBElement }{@code <}{@link AvailableBooksList }{@code >}}
      * 
      */
@@ -766,6 +854,18 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Create an instance of {@link JAXBElement }{@code <}{@link SendReminderBeforeExpirationToUsersResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://services.libraryws.projects.brucella.fr/", name = "sendReminderBeforeExpirationToUsersResponse")
+    public JAXBElement<SendReminderBeforeExpirationToUsersResponse> createSendReminderBeforeExpirationToUsersResponse(SendReminderBeforeExpirationToUsersResponse value) {
+        return new JAXBElement<SendReminderBeforeExpirationToUsersResponse>(_SendReminderBeforeExpirationToUsersResponse_QNAME, SendReminderBeforeExpirationToUsersResponse.class, null, value);
+    }
+
+    /**
+>>>>>>> reminder_option
      * Create an instance of {@link JAXBElement }{@code <}{@link BorrowingReturn }{@code >}}
      * 
      */
@@ -802,6 +902,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link JAXBElement }{@code <}{@link CancelAreservationResponse }{@code >}}
      * 
      */
@@ -811,6 +912,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link JAXBElement }{@code <}{@link AllBooksResponse }{@code >}}
      * 
      */
@@ -892,6 +995,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link JAXBElement }{@code <}{@link MakeReservationResponse }{@code >}}
      * 
      */
@@ -901,6 +1005,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link JAXBElement }{@code <}{@link BorrowingHistoryListResponse }{@code >}}
      * 
      */
@@ -919,6 +1025,7 @@ public class ObjectFactory {
     }
 
     /**
+<<<<<<< HEAD
      * Create an instance of {@link JAXBElement }{@code <}{@link BookReservationsResponse }{@code >}}
      * 
      */
@@ -928,6 +1035,8 @@ public class ObjectFactory {
     }
 
     /**
+=======
+>>>>>>> reminder_option
      * Create an instance of {@link JAXBElement }{@code <}{@link CurrentlyDeadLineExpiredForUser }{@code >}}
      * 
      */

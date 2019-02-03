@@ -240,6 +240,41 @@ public class BookBorrowedDaoImpl extends AbstractDao implements BookBorrowedDao 
     }
   }
 
+  @Override
+  public List<BorrowDto> getBorrowsAlmostExpiredForUser(Integer userId, Integer nbDaysBeforeReminder)
+      throws TechnicalException, NotFoundException {
+    sql = "SELECT book_borrowed.book_borrowed_id, book_borrowed.user_id, book_borrowed.book_id, book_borrowed.end_date, book_borrowed.borrow_date, book_borrowed.extension, book_borrowed.nb_reminder, book_borrowed.returned, book_borrowed.last_reminder, book.title, users.login FROM book_borrowed INNER JOIN book ON book.book_id = book_borrowed.book_id INNER JOIN users ON users.user_id = book_borrowed.user_id WHERE book_borrowed.user_id = :userId AND book_borrowed.returned = false AND (book_borrowed.end_date - :nbDaysBeforeReminder -1) < CURRENT_DATE";
+
+    final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+    parameterSource.addValue("userId", userId);
+    parameterSource.addValue("nbDaysBeforeReminder", nbDaysBeforeReminder);
+
+    final RowMapper<BorrowDto> rowMapper = new BorrowDtoRM();
+
+    try {
+      final List<BorrowDto> borrowDtoList =
+          this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
+      if (borrowDtoList.isEmpty()) {
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("SQL : " + sql);
+        }
+        throw new NotFoundException(
+            messages.getString("bookBorrowedDao.getBorrowsAlmostExpiredForUser.notFound"));
+      } else {
+        return borrowDtoList;
+      }
+    } catch (PermissionDeniedDataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+    } catch (DataAccessResourceFailureException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+    } catch (DataAccessException exception) {
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString("dataAccess"), exception);
+    }
+  }
+
   /** {@inheritDoc} */
   @Override
   public List<BorrowDto> getAllBorrows() throws TechnicalException, NotFoundException {

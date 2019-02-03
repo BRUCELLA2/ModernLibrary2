@@ -102,31 +102,27 @@ public interface BookService {
 
     /**
      * 
+<<<<<<< HEAD
      * @param arg0
      * @return
      *     returns generated.bookserviceclient.BookDetailsDto
+=======
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.lang.Integer
+>>>>>>> reminder_option
      * @throws LibraryWsException
      */
     @WebMethod
     @WebResult(targetNamespace = "")
+<<<<<<< HEAD
     @RequestWrapper(localName = "bookDetails", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookDetails")
     @ResponseWrapper(localName = "bookDetailsResponse", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookDetailsResponse")
     public BookDetailsDto bookDetails(
         @WebParam(name = "arg0", targetNamespace = "")
         Integer arg0)
-        throws LibraryWsException
-    ;
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns java.lang.Integer
-     * @throws LibraryWsException
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
+=======
     @RequestWrapper(localName = "bookBorrow", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookBorrow")
     @ResponseWrapper(localName = "bookBorrowResponse", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookBorrowResponse")
     public Integer bookBorrow(
@@ -134,6 +130,41 @@ public interface BookService {
         Integer arg0,
         @WebParam(name = "arg1", targetNamespace = "")
         Integer arg1)
+>>>>>>> reminder_option
+        throws LibraryWsException
+    ;
+
+    /**
+     * 
+<<<<<<< HEAD
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.lang.Integer
+=======
+     * @param arg0
+     * @return
+     *     returns generated.bookserviceclient.BookDetailsDto
+>>>>>>> reminder_option
+     * @throws LibraryWsException
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+<<<<<<< HEAD
+    @RequestWrapper(localName = "bookBorrow", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookBorrow")
+    @ResponseWrapper(localName = "bookBorrowResponse", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookBorrowResponse")
+    public Integer bookBorrow(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Integer arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        Integer arg1)
+=======
+    @RequestWrapper(localName = "bookDetails", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookDetails")
+    @ResponseWrapper(localName = "bookDetailsResponse", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.BookDetailsResponse")
+    public BookDetailsDto bookDetails(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Integer arg0)
+>>>>>>> reminder_option
         throws LibraryWsException
     ;
 
@@ -142,9 +173,15 @@ public interface BookService {
      * @throws LibraryWsException
      */
     @WebMethod
+<<<<<<< HEAD
     @RequestWrapper(localName = "checkReservationNotPickedUp", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.CheckReservationNotPickedUp")
     @ResponseWrapper(localName = "checkReservationNotPickedUpResponse", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.CheckReservationNotPickedUpResponse")
     public void checkReservationNotPickedUp()
+=======
+    @RequestWrapper(localName = "sendReminderBeforeExpirationToUsers", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.SendReminderBeforeExpirationToUsers")
+    @ResponseWrapper(localName = "sendReminderBeforeExpirationToUsersResponse", targetNamespace = "http://services.libraryws.projects.brucella.fr/", className = "generated.bookserviceclient.SendReminderBeforeExpirationToUsersResponse")
+    public void sendReminderBeforeExpirationToUsers()
+>>>>>>> reminder_option
         throws LibraryWsException
     ;
 
@@ -192,6 +229,7 @@ public interface BookService {
 
     /**
      * 
+<<<<<<< HEAD
      * @param arg0
      * @return
      *     returns java.util.List<generated.bookserviceclient.ReservationDetailsDto>
@@ -209,6 +247,8 @@ public interface BookService {
 
     /**
      * 
+=======
+>>>>>>> reminder_option
      * @return
      *     returns java.util.List<generated.bookserviceclient.BorrowDto>
      * @throws LibraryWsException
@@ -223,6 +263,7 @@ public interface BookService {
 
     /**
      * 
+<<<<<<< HEAD
      * @param arg0
      * @throws LibraryWsException
      */
@@ -237,6 +278,8 @@ public interface BookService {
 
     /**
      * 
+=======
+>>>>>>> reminder_option
      * @return
      *     returns java.util.List<generated.bookserviceclient.BookDetailsDto>
      * @throws LibraryWsException
@@ -302,6 +345,7 @@ public interface BookService {
 
     /**
      * 
+<<<<<<< HEAD
      * @param arg0
      * @return
      *     returns java.util.List<generated.bookserviceclient.BookReservation>
@@ -319,6 +363,8 @@ public interface BookService {
 
     /**
      * 
+=======
+>>>>>>> reminder_option
      * @return
      *     returns java.util.List<generated.bookserviceclient.CurrentlyBorrowExpiredDto>
      * @throws LibraryWsException
@@ -333,6 +379,7 @@ public interface BookService {
 
     /**
      * 
+<<<<<<< HEAD
      * @param arg1
      * @param arg0
      * @return
@@ -353,6 +400,8 @@ public interface BookService {
 
     /**
      * 
+=======
+>>>>>>> reminder_option
      * @return
      *     returns java.util.List<generated.bookserviceclient.BookDetailsDto>
      * @throws LibraryWsException
