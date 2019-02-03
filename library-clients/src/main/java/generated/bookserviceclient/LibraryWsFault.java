@@ -1,3 +1,4 @@
+
 package generated.bookserviceclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Classe Java pour libraryWsFault complex type.
- *
+ * 
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- *
+ * 
  * <pre>
  * &lt;complexType name="libraryWsFault">
  *   &lt;complexContent>
@@ -22,50 +23,65 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "libraryWsFault", propOrder = {"faultCode", "faultString"})
+@XmlType(name = "libraryWsFault", propOrder = {
+    "faultCode",
+    "faultString"
+})
 public class LibraryWsFault {
 
-  protected String faultCode;
-  protected String faultString;
+    protected String faultCode;
+    protected String faultString;
 
-  /**
-   * Obtient la valeur de la propriété faultCode.
-   *
-   * @return possible object is {@link String }
-   */
-  public String getFaultCode() {
-    return faultCode;
-  }
+    /**
+     * Obtient la valeur de la propriété faultCode.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFaultCode() {
+        return faultCode;
+    }
 
-  /**
-   * Définit la valeur de la propriété faultCode.
-   *
-   * @param value
-   *     allowed object is {@link String }
-   */
-  public void setFaultCode(String value) {
-    this.faultCode = value;
-  }
+    /**
+     * Définit la valeur de la propriété faultCode.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFaultCode(String value) {
+        this.faultCode = value;
+    }
 
-  /**
-   * Obtient la valeur de la propriété faultString.
-   *
-   * @return possible object is {@link String }
-   */
-  public String getFaultString() {
-    return faultString;
-  }
+    /**
+     * Obtient la valeur de la propriété faultString.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFaultString() {
+        return faultString;
+    }
 
-  /**
-   * Définit la valeur de la propriété faultString.
-   *
-   * @param value
-   *     allowed object is {@link String }
-   */
-  public void setFaultString(String value) {
-    this.faultString = value;
-  }
+    /**
+     * Définit la valeur de la propriété faultString.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFaultString(String value) {
+        this.faultString = value;
+    }
 
 }

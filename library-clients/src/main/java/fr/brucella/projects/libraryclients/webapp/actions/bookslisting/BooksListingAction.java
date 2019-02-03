@@ -2,24 +2,42 @@ package fr.brucella.projects.libraryclients.webapp.actions.bookslisting;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
+import generated.authentificationserviceclient.FullUserDto;
 import generated.bookserviceclient.BookDetailsDto;
+import generated.bookserviceclient.BookReservation;
 import generated.bookserviceclient.BookService;
 import generated.bookserviceclient.BookService_Service;
 import generated.bookserviceclient.BooksSearchClientCriteriaDto;
 import generated.bookserviceclient.LibraryWsException;
+import generated.bookserviceclient.ReservationDetailsDto;
 import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.SessionAware;
 
 
-public class BooksListingAction extends ActionSupport {
+public class BooksListingAction extends ActionSupport implements SessionAware, ServletRequestAware {
 
   // ----- Logger
   /**
    * Book Listing Action logger.
    */
   private static final Log LOG = LogFactory.getLog(BooksListingAction.class);
+
+  // ----- Session
+  /**
+   * the user's HTTP session attributes.
+   */
+  private Map<String, Object> session;
+
+  /**
+   * The Http Servlet Request. Used to get session informations.
+   */
+  private HttpServletRequest servletRequest;
 
   // ----- Input
 
@@ -52,6 +70,11 @@ public class BooksListingAction extends ActionSupport {
    * Title of the book. Can be empty. Max size = 150.
    */
   private String title;
+
+  /**
+   * Id of the book.
+   */
+  private Integer bookId;
 
   // ----- Output
   /**
@@ -180,22 +203,56 @@ public class BooksListingAction extends ActionSupport {
   }
 
   /**
-   * Give the list of Book Details Dto
+   * Give the list of Book Details Dto.
    *
-   * @return the list of Book Details Dto
+   * @return the list of Book Details Dto.
    */
   public List<BookDetailsDto> getBooksList() {
     return booksList;
   }
 
   /**
-   * Set the list of Book Details Dto
+   * Set the list of Book Details Dto.
    *
    * @param booksList
-   *     the list of Book Details Dto
+   *     the list of Book Details Dto.
    */
-  public void setBooksList(List<BookDetailsDto> booksList) {
+  public void setBooksList(final List<BookDetailsDto> booksList) {
     this.booksList = booksList;
+  }
+
+  /**
+   * Get the id of the book.
+   *
+   * @return the id of the book.
+   */
+  public Integer getBookId() {
+    return bookId;
+  }
+
+  /**
+   * Set the id of the book.
+   *
+   * @param bookId id of the book.
+   */
+  public void setBookId(final Integer bookId) {
+    this.bookId = bookId;
+  }
+
+  /**
+   * Set the Http Servlet Request.
+   */
+  @Override
+  public void setServletRequest(final HttpServletRequest request) {
+    this.servletRequest = request;
+  }
+
+  /**
+   * Set the user's HTTP session attributes.
+   */
+  @Override
+  public void setSession(final Map<String, Object> session) {
+    this.session = session;
   }
 
   // ===== Methods =====
@@ -236,4 +293,58 @@ public class BooksListingAction extends ActionSupport {
     return Action.SUCCESS;
   }
 
+  public String bookReservation() {
+
+    if (this.bookId == null) {
+      LOG.error("bookId NULL - book reservation failure");
+      this.addActionError("L'identifiant du livre à reserver est incorrect (Identifiant vide) - Echec de la réservation");
+      return Action.ERROR;
+    }
+
+    BookService_Service bookService = new BookService_Service();
+    BookService bookServicePort = bookService.getBookServicePort();
+
+    try {
+      FullUserDto fullUserDto = (FullUserDto) this.servletRequest.getSession().getAttribute("userLog");
+      bookServicePort.makeReservation(this.bookId, fullUserDto.getUserId());
+    } catch (LibraryWsException exception) {
+      LOG.error(exception.getMessage());
+      LOG.error(exception.getFaultInfo().getFaultString());
+      this.addActionError(exception.getFaultInfo().getFaultString());
+      return Action.ERROR;
+    }
+
+    return Action.SUCCESS;
+  }
+
+  public String checkReservedByUser(final BookDetailsDto book) {
+
+    if (book == null) {
+      LOG.error("BookId NULL - CheckReservedByUser failure");
+      this.addActionError("La vérification de la réservation du livre par l'utilisateur n'a pu se faire");
+      return Action.ERROR;
+    }
+
+    BookService_Service bookService = new BookService_Service();
+    BookService bookServicePort = bookService.getBookServicePort();
+
+    FullUserDto fullUserDto = (FullUserDto) this.servletRequest.getSession().getAttribute("userLog");
+    List<ReservationDetailsDto> reservations;
+    try {
+      reservations = bookServicePort.userReservations(fullUserDto.getUserId());
+    } catch (LibraryWsException exception) {
+      LOG.error(exception.getMessage());
+      LOG.error(exception.getFaultInfo().getFaultString());
+      this.addActionError(exception.getFaultInfo().getFaultString());
+      return Action.ERROR;
+    }
+
+    for (BookReservation reservation : reservations) {
+      if (reservation.getBookId().equals(book.getBookId())) {
+        return "true";
+      }
+    }
+
+    return "false";
+  }
 }

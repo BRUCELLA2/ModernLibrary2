@@ -4,6 +4,7 @@ import fr.brucella.projects.libraryws.dao.contracts.dao.DaoFactory;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.AuthorDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.BookBorrowedDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.BookDao;
+import fr.brucella.projects.libraryws.dao.contracts.dao.books.BookReservationDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.GenreDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.PublisherDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.StockDao;
@@ -29,6 +30,9 @@ public class DaoFactoryImpl implements DaoFactory {
 
   /** BookBorrowed Data Access Object. */
   @Autowired private BookBorrowedDao bookBorrowedDao;
+
+  /** BookReservation Data Access Object. */
+  @Autowired private BookReservationDao bookReservationDao;
 
   /** Genre Data Access Object. */
   @Autowired private GenreDao genreDao;
@@ -71,6 +75,12 @@ public class DaoFactoryImpl implements DaoFactory {
   @Override
   public BookBorrowedDao getBookBorrowedDao() {
     return this.bookBorrowedDao;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public BookReservationDao getBookReservationDao() {
+    return this.bookReservationDao;
   }
 
   /** {@inheritDoc} */
@@ -124,6 +134,11 @@ public class DaoFactoryImpl implements DaoFactory {
   /** {@inheritDoc} */
   @Override
   public void setBookBorrowedDao(final BookBorrowedDao bookBorrowedDao) {
+    this.bookBorrowedDao = bookBorrowedDao;
+  }
+
+  @Override
+  public void setBookReservationDao(final BookReservationDao bookReservationDao) {
     this.bookBorrowedDao = bookBorrowedDao;
   }
 

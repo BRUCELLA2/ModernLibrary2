@@ -4,6 +4,9 @@ import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.dto.ReservationDetailsDto;
+import fr.brucella.projects.libraryws.entity.books.model.Book;
+import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.users.model.User;
@@ -30,6 +33,15 @@ public interface BooksManagementManager {
    * @throws TechnicalException - wraps technical exception caused during data access.
    */
   void reminderToUsers() throws TechnicalException;
+
+  /**
+   * Get the list of reservation without borrow in the time allowed.
+   * Cancel the reservation in this list and send an email to the next user in the active reservation list for the book.
+   *
+   * @Return the nb of error - 0 if they is no problem.
+   * @throws TechnicalException
+   */
+  int reservationNotBorrowInTime() throws TechnicalException;
 
   /**
    * Provides the list of stocks and title of book.
@@ -104,5 +116,56 @@ public interface BooksManagementManager {
    */
   BookDetailsDto getBookWithDetails(final Integer bookId)
       throws TechnicalException, FunctionalException;
+
+  /**
+   * Add a reservation of a book with the book id for the user with the user id.
+   *
+   * @param bookId id of the book.
+   * @param userId id of the user who borrow the book.
+   * @return the id of the BookReservation.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the user or the id of the
+   *     book are not valid or if the maximum number of reservations has been reached or that the user has already reserved the book..
+   */
+  Integer bookReservation(final Integer bookId, final Integer userId) throws TechnicalException, FunctionalException;
+
+  /**
+   * Cancel the reservation of the book with the bookReservation Id. Set activeReservation property to false.
+   *
+   * @param bookReservationId the bookReservation Id
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the bookReservation is not valid. This
+   *     exception is throw if the bookReservation is not found.
+   */
+  void cancelReservation(final Integer bookReservationId) throws TechnicalException, FunctionalException;
+
+  /**
+   * Return the list of active reservations for the user.
+   *
+   * @param userId id of the user.
+   * @return the list of active reservations for the user.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the user is not valid. List can be empty.
+   */
+  List<ReservationDetailsDto> userReservationsList(final Integer userId) throws TechnicalException, FunctionalException;
+
+  /**
+   * Return the list of active reservations for the book.
+   *
+   * @param bookId id of the book.
+   * @return the list of active reservation for the book.
+   * @throws TechnicalException - wraps technical exception caused during data access.
+   * @throws FunctionalException - This exception is throw if the id of the book is not valid. List can be empty.
+   */
+  List<BookReservation> activeReservationsListForBook(final Integer bookId) throws TechnicalException, FunctionalException;
+
+  /**
+   * Send email to the first user of the reservation list to tell him book is available. Book reservation is updated with date of email sending.
+   *
+   * @param book Book reserved and available.
+   * @throws TechnicalException - wraps technical exception.
+   * @throws FunctionalException - This exception is throw if the book is null or if the bookReservation is not found.
+   */
+  void sendMailBookAvailable(Book book) throws TechnicalException, FunctionalException;
 
 }

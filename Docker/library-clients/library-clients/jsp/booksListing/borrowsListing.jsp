@@ -34,6 +34,9 @@
                 <s:a class="nav-link active" action="myBorrows">Mes emprunts en cours</s:a>
             </li>
             <li class="nav-item">
+                <s:a class="nav-link" action="myReservations">Mes réservations en cours</s:a>
+            </li>
+            <li class="nav-item">
                 <s:a class="nav-link" action="history">Historique</s:a>
             </li>
         </ul>

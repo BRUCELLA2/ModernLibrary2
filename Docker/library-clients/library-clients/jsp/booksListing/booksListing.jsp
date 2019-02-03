@@ -33,6 +33,9 @@
                 <s:a class="nav-link" action="myBorrows">Mes emprunts en cours</s:a>
             </li>
             <li class="nav-item">
+                <s:a class="nav-link" action="myReservations">Mes réservations en cours</s:a>
+            </li>
+            <li class="nav-item">
                 <s:a class="nav-link" action="history">Historique</s:a>
             </li>
         </ul>
@@ -103,16 +106,20 @@
                         <th>Titre</th>
                         <th>Auteur(s)</th>
                         <th>Genre</th>
-                        <th>Editeur</th>
                         <th>Résumé</th>
+                        <th>Stock disponible</th>
+                        <th>Date de retour</th>
+                        <th>Nb de réservations</th>
+                        <th></th>
                     </tr>
                     </thead>
 
                     <s:iterator value="booksList" var="books">
                         <tr>
                             <td>
-                                <s:property value="title"/><br>
-                                publié le : <s:property value="publishingDate"/>
+                                <b><s:property value="title"/></b><br><br>
+                                Publié le : <s:property value="publishingDate"/>
+                                Editeur : <s:property value="publisherName"/>
                             </td>
                             <td>
                                 <ul>
@@ -122,8 +129,25 @@
                                 </ul>
                             </td>
                             <td><s:property value="genreName"/></td>
-                            <td><s:property value="publisherName"/></td>
                             <td><s:property value="resume"/></td>
+                            <td><s:property value="amountAvailable" /></td>
+                            <td><s:property value="endBorrowDate" /></td>
+                            <td><s:property value="nbActiveReservations" /></td>
+                            <td class="text-center">
+                                <s:set var="amount" value="amountAvailable" />
+                                <s:set var="checkReservationUser" value="%{checkReservedByUser(#books)}"/>
+                                <s:if test="#amount != 0">
+                                    <b>Disponible</b>
+                                </s:if>
+                                <s:elseif test="#checkReservationUser">
+                                    Déjà réserver !
+                                </s:elseif>
+                                <s:elseif test="#amount == 0">
+                                    <s:a class="btn btn-primary text-center" action="book_reservation">
+                                        <s:param name="bookId" value="bookId"/>
+                                        Réserver</s:a></td>
+                                </s:elseif>
+                            </td>
                         </tr>
                     </s:iterator>
                 </table>

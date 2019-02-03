@@ -6,13 +6,17 @@ import fr.brucella.projects.libraryws.entity.books.dto.BookBorrowsCountDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookDetailsDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BookStockDto;
 import fr.brucella.projects.libraryws.entity.books.dto.BorrowDto;
+import fr.brucella.projects.libraryws.entity.books.dto.ReservationDetailsDto;
+import fr.brucella.projects.libraryws.entity.books.model.Book;
 import fr.brucella.projects.libraryws.entity.books.model.BookBorrowed;
+import fr.brucella.projects.libraryws.entity.books.model.BookReservation;
 import fr.brucella.projects.libraryws.entity.books.model.Stock;
 import fr.brucella.projects.libraryws.entity.exceptions.FunctionalException;
 import fr.brucella.projects.libraryws.entity.exceptions.NotFoundException;
 import fr.brucella.projects.libraryws.entity.exceptions.TechnicalException;
 import fr.brucella.projects.libraryws.entity.users.model.User;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -43,6 +47,9 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
 
   /** Number of days for a borrow or an extension of a borrow. */
   private static final Integer NB_DAYS_BORROW = Integer.parseInt(config.getString("nbDaysBorrow"));
+
+  /** Number of days to pick up a reservation */
+  private static final int NB_DAYS_RESERVATION = Integer.parseInt(config.getString("nbDaysReservation"));
 
   /** Default Constructor */
   public BooksManagementManagerImpl() {
@@ -78,6 +85,36 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
 
     sendReminderMails(config.getString("mail.host"), Integer.valueOf(config.getString("mail.port")), config.getString("mail.username"), config.getString("mail.password"), users);
+  }
+
+  @Override
+  public int reservationNotBorrowInTime() throws TechnicalException {
+
+    List<BookReservation> reservationsList= new ArrayList<>();
+    LocalDate dateMax = LocalDate.now().minusDays(NB_DAYS_RESERVATION);
+    int nbError = 0;
+
+    try {
+      reservationsList = this.getDaoFactory().getBookReservationDao().getActiveReservationWithoutBorrowInTime(dateMax);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug(exception.getMessage());
+      }
+    }
+
+    for (BookReservation bookReservation : reservationsList) {
+      try {
+        Book book = this.getDaoFactory().getBookDao().getBook(bookReservation.getBookId());
+        bookReservation.setActiveReservation(false);
+        this.cancelReservation(bookReservation.getBookReservationId());
+        sendMailBookAvailable(book);
+      } catch (FunctionalException | NotFoundException exception) {
+        LOG.error(exception.getMessage());
+        nbError++;
+      }
+    }
+
+    return nbError;
   }
 
   /** {@inheritDoc} */
@@ -143,6 +180,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
 
     Stock stock = new Stock();
     Stock newStock = new Stock();
+    Integer bookBorrowingId;
     try {
       stock = this.getDaoFactory().getStockDao().getStockForBook(bookId);
       if(stock.getAmount() < 1) {
@@ -152,13 +190,29 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       newStock = stock;
       newStock.setAmountAvailable(stock.getAmountAvailable()-1);
       this.getDaoFactory().getStockDao().updateStock(newStock);
-      return this.getDaoFactory().getBookBorrowedDao().insertBookBorrowed(bookBorrowed);
+      bookBorrowingId = this.getDaoFactory().getBookBorrowedDao().insertBookBorrowed(bookBorrowed);
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
       throw new FunctionalException(exception.getMessage(), exception);
     }
+
+    // Cancel the reservation if the user have reserved this book (and the reservation is active)
+    BookReservation bookReservation = new BookReservation();
+    try {
+      bookReservation = this.getDaoFactory().getBookReservationDao().getBookReservation(bookId, userId);
+    } catch (NotFoundException exception) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug(exception.getMessage());
+      }
+    }
+
+    if (bookReservation.getUserId() != null) {
+      this.cancelReservation(bookReservation.getBookReservationId());
+    }
+
+    return bookBorrowingId;
   }
 
   /** {@inheritDoc} */
@@ -255,10 +309,18 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       throw new FunctionalException(exception.getMessage());
     }
 
+    try {
+      Book book = this.getDaoFactory().getBookDao().getBook(bookBorrowed.getBookId());
+      this.sendMailBookAvailable(book);
+    } catch (Exception exception) {
+      // if a problem occurred with email sending, user get no message because he's not directly concerned by the problem.
+      LOG.error(exception.getMessage());
+    }
+
     return true;
   }
 
-  /** {@inheritDoc} * */
+  /** {@inheritDoc} */
   @Override
   public BookDetailsDto getBookWithDetails(final Integer bookId)
       throws TechnicalException, FunctionalException {
@@ -275,6 +337,157 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       LOG.error(exception.getMessage());
       throw new FunctionalException(exception.getMessage(), exception);
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Integer bookReservation(Integer bookId, Integer userId)
+      throws TechnicalException, FunctionalException {
+
+    if (bookId == null || userId == null) {
+      LOG.error("bookId = " + bookId);
+      LOG.error("userId = " + userId);
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.bookReservation.userOrBookNull"));
+    }
+
+    List<BookReservation> listActiveReservation;
+    try {
+      listActiveReservation = getDaoFactory().getBookReservationDao().getActiveReservationListForBook(bookId);
+    } catch (NotFoundException exception) {
+      listActiveReservation = new ArrayList<>();
+    }
+
+    try {
+      Stock stock = getDaoFactory().getStockDao().getStockForBook(bookId);
+
+      // Check if number of reservation is not 2 * the amount of book.
+      if (listActiveReservation.size() > (2 * stock.getAmount())) {
+        throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.reservationfull"));
+      }
+    } catch (NotFoundException exception) {
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
+    }
+
+    // Check if the user have already make a reservation for this book
+    for (BookReservation bookReservation : listActiveReservation) {
+      if (bookReservation.getUserId().equals(userId)) {
+        throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.alreadyReserved"));
+      }
+    }
+
+    // Check if the book is already borrow by the user.
+    List<BorrowDto> listBookBorrowed;
+    try {
+      listBookBorrowed = getDaoFactory().getBookBorrowedDao().getUserBorrows(userId, true);
+    } catch (NotFoundException exception) {
+      listBookBorrowed = new ArrayList<>();
+    }
+
+    for (BorrowDto borrow : listBookBorrowed) {
+      if (borrow.getBookId().equals(bookId)) {
+        throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.alreadyBorrow"));
+      }
+    }
+
+    // If all checks are ok, reservation is done
+    BookReservation bookReservation = new BookReservation();
+    bookReservation.setBookId(bookId);
+    bookReservation.setUserId(userId);
+    bookReservation.setActiveReservation(true);
+    bookReservation.setDateReservation(LocalDateTime.now());
+
+    return getDaoFactory().getBookReservationDao().insertBookReservation(bookReservation);
+
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void cancelReservation(Integer bookReservationId) throws TechnicalException, FunctionalException {
+    if (bookReservationId == null) {
+      LOG.error("bookReservationId = " + bookReservationId);
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.cancelReservation.idNull"));
+    }
+
+    try {
+      BookReservation bookReservation = getDaoFactory().getBookReservationDao().getBookReservation(bookReservationId);
+      bookReservation.setActiveReservation(false);
+      getDaoFactory().getBookReservationDao().updateBookReservation(bookReservation);
+    } catch (NotFoundException exception) {
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
+    }
+  }
+
+  @Override
+  public List<ReservationDetailsDto> userReservationsList(final Integer userId) throws TechnicalException, FunctionalException {
+    if (userId == null) {
+      LOG.error("userId = " + userId);
+      throw new FunctionalException(messages.getString("booksManagementManager.userReservationsList.userIdNull"));
+    }
+
+    try {
+      return getDaoFactory().getBookReservationDao().getActiveReservationsListForUser(userId);
+    } catch (NotFoundException exception) {
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
+    }
+  }
+
+  @Override
+  public List<BookReservation> activeReservationsListForBook(Integer bookId) throws TechnicalException, FunctionalException {
+    if (bookId == null) {
+      LOG.error("bookId = " + bookId);
+      throw new FunctionalException(messages.getString("booksManagementManager.activeReservationsListForBook.bookIdNull"));
+    }
+
+    try {
+      return getDaoFactory().getBookReservationDao().getActiveReservationListForBook(bookId);
+    } catch (NotFoundException exception) {
+      LOG.error(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void sendMailBookAvailable(Book book) throws TechnicalException, FunctionalException {
+
+    if(book == null) {
+      LOG.error("book null");
+      throw new FunctionalException(messages.getString("booksManagementManager.sendMailBookAvailable.bookNull"));
+    }
+    List<BookReservation> listReservations;
+    try {
+      listReservations = getDaoFactory().getBookReservationDao().getActiveReservationListForBook(book.getBookId());
+    } catch (NotFoundException exception) {
+      LOG.debug("liste reservation vide");
+      listReservations = new ArrayList<>();
+    }
+
+    if (!listReservations.isEmpty()) {
+      User user;
+      BookReservation bookReservation = listReservations.get(0);
+      try {
+        user = getDaoFactory().getUserDao().getUser(bookReservation.getUserId());
+      } catch (NotFoundException exception) {
+        LOG.error(exception.getMessage());
+        throw new FunctionalException(messages.getString("booksManagementManager.sendMailBookAvailable.userNotFound"));
+      }
+
+      mailBookAvailable(config.getString("mail.host"), Integer.valueOf(config.getString("mail.port")), config.getString("mail.username"), config.getString("mail.password"), user, book);
+      bookReservation.setDateReservationEmailSend(LocalDateTime.now());
+
+      try {
+        getDaoFactory().getBookReservationDao().updateBookReservation(bookReservation);
+      } catch (NotFoundException exception) {
+        LOG.error(exception.getMessage());
+        throw new FunctionalException(messages.getString("booksManagementManager.sendMailBookAvailable.reservationNotFound"));
+      }
+    }
+
   }
 
   /**
@@ -337,5 +550,64 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
         throw new TechnicalException(exception.getMessage(), exception);
       }
     }
+  }
+
+  /**
+   * Send email to user to tell him book reserved is available.
+   *
+   * @param host smtp host.
+   * @param port smtp host port.
+   * @param username username for smtp authentication.
+   * @param password password for smtp authentication.
+   * @param user User to send the mail.
+   * @param book Book reserved and available.
+   * @throws TechnicalException
+   */
+  private void mailBookAvailable(String host, Integer port, String username, String password, User user, Book book) throws TechnicalException {
+
+    Properties prop = new Properties();
+    prop.put("mail.smtp.auth", true);
+    prop.put("mail.smtp.starttls.enable", "true");
+    prop.put("mail.smtp.host", host);
+    prop.put("mail.smtp.port", port);
+    prop.put("mail.smtp.ssl.trust", host);
+
+    LOG.error(prop.stringPropertyNames());
+    LOG.error("Prop text :" + prop.toString());
+
+    Session session =
+        Session.getInstance(
+            prop,
+            new Authenticator() {
+              @Override
+              protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+              }
+            });
+    session.setDebug(true);
+    try {
+      Message message = new MimeMessage(session);
+      message.setFrom(new InternetAddress(config.getString("mail.sender")));
+      message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
+      message.setSubject(messages.getString("booksManagementManager.sendMailBookAvailable.object"));
+
+      String msg = messages.getString("booksManagementManager.sendMailBookAvailable.mail");
+      msg = msg + book.getTitle();
+
+      LOG.error("Message : " + msg);
+
+      MimeBodyPart mimeBodyPart = new MimeBodyPart();
+      mimeBodyPart.setContent(msg, "text/html");
+
+      Multipart multipart = new MimeMultipart();
+      multipart.addBodyPart(mimeBodyPart);
+
+      message.setContent(multipart);
+
+      Transport.send(message);
+  } catch (Exception exception) {
+    LOG.error("Email error : " + exception.getMessage());
+    throw new TechnicalException(exception.getMessage(), exception);
+  }
   }
 }

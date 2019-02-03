@@ -3,6 +3,7 @@ package fr.brucella.projects.libraryws.dao.contracts.dao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.AuthorDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.BookBorrowedDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.BookDao;
+import fr.brucella.projects.libraryws.dao.contracts.dao.books.BookReservationDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.GenreDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.PublisherDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.books.StockDao;
@@ -39,6 +40,13 @@ public interface DaoFactory {
    * @return the BookBorrowed Data Access Object.
    */
   BookBorrowedDao getBookBorrowedDao();
+
+  /**
+   * Give the bookReservation Data Access Object.
+   *
+   * @return the bookReservation Data Access Object.
+   */
+  BookReservationDao getBookReservationDao();
 
   /**
    * Give the Genre Data Access Object.
@@ -104,6 +112,13 @@ public interface DaoFactory {
    * @param bookBorrowedDao the BookBorrowed Data Access Object.
    */
   void setBookBorrowedDao(final BookBorrowedDao bookBorrowedDao);
+
+  /**
+   * Set the BookReservation Data Access Object.
+   *
+   * @param bookReservationDao the BookReservation Data Access Object.
+   */
+  void setBookReservationDao(final BookReservationDao bookReservationDao);
 
   /**
    * Set the Genre Data Access Object.
