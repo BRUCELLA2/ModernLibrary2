@@ -239,7 +239,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
   public void updateUser(final User user) throws TechnicalException, NotFoundException {
 
     sql =
-        "UPDATE users SET password = :password, email = :email, login = :login, phone = :phone, address_id = :addressId, users.user_options_id = :userOptionsId WHERE user_id = :userId";
+        "UPDATE users SET password = :password, email = :email, login = :login, phone = :phone, address_id = :addressId, user_options_id = :userOptionsId WHERE user_id = :userId";
 
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
 
@@ -277,7 +277,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
   public int insertUser(final User user) throws TechnicalException {
 
     sql =
-        "INSERT INTO users (user_id, password, email, login, phone, address_id, user_options_id) VALUES (DEFAULT, :password, :email, :login, :phone, :addressId, :user_options_id)";
+        "INSERT INTO users (user_id, password, email, login, phone, address_id, user_options_id) VALUES (DEFAULT, :password, :email, :login, :phone, :addressId, :userOptionsId)";
 
     final KeyHolder keyHolder = new GeneratedKeyHolder();
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);

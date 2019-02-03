@@ -119,6 +119,7 @@ public class AuthentificationManagerImpl extends AbstractManager
       modifyUser.setLogin(fullUserDto.getLogin());
       modifyUser.setAddressId(fullUserDto.getAddressId());
       modifyUser.setEmail(fullUserDto.getEmail());
+      modifyUser.setUserOptionsId(modifyUserOptions.getUserOptionsId());
 
       this.getDaoFactory().getUserDao().updateUser(modifyUser);
 

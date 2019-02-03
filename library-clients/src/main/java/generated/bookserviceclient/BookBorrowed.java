@@ -1,3 +1,4 @@
+
 package generated.bookserviceclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -8,9 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Classe Java pour bookBorrowed complex type.
- *
+ * 
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- *
+ * 
  * <pre>
  * &lt;complexType name="bookBorrowed">
  *   &lt;complexContent>
@@ -30,192 +31,250 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "bookBorrowed", propOrder = {"bookBorrowedId", "bookId", "borrowDate", "endDate", "extension",
-    "lastReminder", "nbReminder", "returned", "userId"})
-@XmlSeeAlso({BorrowDto.class})
+@XmlType(name = "bookBorrowed", propOrder = {
+    "bookBorrowedId",
+    "bookId",
+    "borrowDate",
+    "endDate",
+    "extension",
+    "lastReminder",
+    "nbReminder",
+    "returned",
+    "userId"
+})
+@XmlSeeAlso({
+    BorrowDto.class
+})
 public class BookBorrowed {
 
-  protected Integer bookBorrowedId;
-  protected Integer bookId;
-  protected String borrowDate;
-  protected String endDate;
-  protected Boolean extension;
-  protected String lastReminder;
-  protected Integer nbReminder;
-  protected Boolean returned;
-  protected Integer userId;
+    protected Integer bookBorrowedId;
+    protected Integer bookId;
+    protected String borrowDate;
+    protected String endDate;
+    protected Boolean extension;
+    protected String lastReminder;
+    protected Integer nbReminder;
+    protected Boolean returned;
+    protected Integer userId;
 
-  /**
-   * Obtient la valeur de la propriété bookBorrowedId.
-   *
-   * @return possible object is {@link Integer }
-   */
-  public Integer getBookBorrowedId() {
-    return bookBorrowedId;
-  }
+    /**
+     * Obtient la valeur de la propriété bookBorrowedId.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getBookBorrowedId() {
+        return bookBorrowedId;
+    }
 
-  /**
-   * Définit la valeur de la propriété bookBorrowedId.
-   *
-   * @param value
-   *     allowed object is {@link Integer }
-   */
-  public void setBookBorrowedId(Integer value) {
-    this.bookBorrowedId = value;
-  }
+    /**
+     * Définit la valeur de la propriété bookBorrowedId.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setBookBorrowedId(Integer value) {
+        this.bookBorrowedId = value;
+    }
 
-  /**
-   * Obtient la valeur de la propriété bookId.
-   *
-   * @return possible object is {@link Integer }
-   */
-  public Integer getBookId() {
-    return bookId;
-  }
+    /**
+     * Obtient la valeur de la propriété bookId.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getBookId() {
+        return bookId;
+    }
 
-  /**
-   * Définit la valeur de la propriété bookId.
-   *
-   * @param value
-   *     allowed object is {@link Integer }
-   */
-  public void setBookId(Integer value) {
-    this.bookId = value;
-  }
+    /**
+     * Définit la valeur de la propriété bookId.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setBookId(Integer value) {
+        this.bookId = value;
+    }
 
-  /**
-   * Obtient la valeur de la propriété borrowDate.
-   *
-   * @return possible object is {@link String }
-   */
-  public String getBorrowDate() {
-    return borrowDate;
-  }
+    /**
+     * Obtient la valeur de la propriété borrowDate.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getBorrowDate() {
+        return borrowDate;
+    }
 
-  /**
-   * Définit la valeur de la propriété borrowDate.
-   *
-   * @param value
-   *     allowed object is {@link String }
-   */
-  public void setBorrowDate(String value) {
-    this.borrowDate = value;
-  }
+    /**
+     * Définit la valeur de la propriété borrowDate.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setBorrowDate(String value) {
+        this.borrowDate = value;
+    }
 
-  /**
-   * Obtient la valeur de la propriété endDate.
-   *
-   * @return possible object is {@link String }
-   */
-  public String getEndDate() {
-    return endDate;
-  }
+    /**
+     * Obtient la valeur de la propriété endDate.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEndDate() {
+        return endDate;
+    }
 
-  /**
-   * Définit la valeur de la propriété endDate.
-   *
-   * @param value
-   *     allowed object is {@link String }
-   */
-  public void setEndDate(String value) {
-    this.endDate = value;
-  }
+    /**
+     * Définit la valeur de la propriété endDate.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEndDate(String value) {
+        this.endDate = value;
+    }
 
-  /**
-   * Obtient la valeur de la propriété extension.
-   *
-   * @return possible object is {@link Boolean }
-   */
-  public Boolean isExtension() {
-    return extension;
-  }
+    /**
+     * Obtient la valeur de la propriété extension.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isExtension() {
+        return extension;
+    }
 
-  /**
-   * Définit la valeur de la propriété extension.
-   *
-   * @param value
-   *     allowed object is {@link Boolean }
-   */
-  public void setExtension(Boolean value) {
-    this.extension = value;
-  }
+    /**
+     * Définit la valeur de la propriété extension.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setExtension(Boolean value) {
+        this.extension = value;
+    }
 
-  /**
-   * Obtient la valeur de la propriété lastReminder.
-   *
-   * @return possible object is {@link String }
-   */
-  public String getLastReminder() {
-    return lastReminder;
-  }
+    /**
+     * Obtient la valeur de la propriété lastReminder.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLastReminder() {
+        return lastReminder;
+    }
 
-  /**
-   * Définit la valeur de la propriété lastReminder.
-   *
-   * @param value
-   *     allowed object is {@link String }
-   */
-  public void setLastReminder(String value) {
-    this.lastReminder = value;
-  }
+    /**
+     * Définit la valeur de la propriété lastReminder.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLastReminder(String value) {
+        this.lastReminder = value;
+    }
 
-  /**
-   * Obtient la valeur de la propriété nbReminder.
-   *
-   * @return possible object is {@link Integer }
-   */
-  public Integer getNbReminder() {
-    return nbReminder;
-  }
+    /**
+     * Obtient la valeur de la propriété nbReminder.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getNbReminder() {
+        return nbReminder;
+    }
 
-  /**
-   * Définit la valeur de la propriété nbReminder.
-   *
-   * @param value
-   *     allowed object is {@link Integer }
-   */
-  public void setNbReminder(Integer value) {
-    this.nbReminder = value;
-  }
+    /**
+     * Définit la valeur de la propriété nbReminder.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setNbReminder(Integer value) {
+        this.nbReminder = value;
+    }
 
-  /**
-   * Obtient la valeur de la propriété returned.
-   *
-   * @return possible object is {@link Boolean }
-   */
-  public Boolean isReturned() {
-    return returned;
-  }
+    /**
+     * Obtient la valeur de la propriété returned.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isReturned() {
+        return returned;
+    }
 
-  /**
-   * Définit la valeur de la propriété returned.
-   *
-   * @param value
-   *     allowed object is {@link Boolean }
-   */
-  public void setReturned(Boolean value) {
-    this.returned = value;
-  }
+    /**
+     * Définit la valeur de la propriété returned.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setReturned(Boolean value) {
+        this.returned = value;
+    }
 
-  /**
-   * Obtient la valeur de la propriété userId.
-   *
-   * @return possible object is {@link Integer }
-   */
-  public Integer getUserId() {
-    return userId;
-  }
+    /**
+     * Obtient la valeur de la propriété userId.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getUserId() {
+        return userId;
+    }
 
-  /**
-   * Définit la valeur de la propriété userId.
-   *
-   * @param value
-   *     allowed object is {@link Integer }
-   */
-  public void setUserId(Integer value) {
-    this.userId = value;
-  }
+    /**
+     * Définit la valeur de la propriété userId.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setUserId(Integer value) {
+        this.userId = value;
+    }
 
 }

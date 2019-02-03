@@ -11,9 +11,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class UserOptions {
 
   /**
-   * Id of the UserOptions. Can't be null.
+   * Id of the UserOptions.
    */
-  @NotNull(message = "{UserOptions.id.null}")
   private Integer userOptionsId;
 
   /**

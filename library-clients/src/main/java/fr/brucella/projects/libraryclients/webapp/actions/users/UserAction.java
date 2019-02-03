@@ -75,6 +75,11 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   private String userZipCode;
 
   /**
+   * String indicating if the option "before reminder" is active. "true" or "false".
+   */
+  private String beforeReminder;
+
+  /**
    * the user's HTTP session attributes.
    */
   private Map<String, Object> session;
@@ -275,6 +280,24 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   }
 
   /**
+   * Indicate if the option "before reminder" is active. "true" or "false".
+   *
+   * @return the string "true" if the option "before reminder" is active, "false" otherwise.
+   */
+  public String getBeforeReminder() {
+    return beforeReminder;
+  }
+
+  /**
+   * Indicate if the option "before reminder" is active. "true" or "false".
+   *
+   * @param beforeReminder the string "true" if the option "before reminder" is active, "false" otherwise.
+   */
+  public void setBeforeReminder(final String beforeReminder) {
+    this.beforeReminder = beforeReminder;
+  }
+
+  /**
    * Set the Http Servlet Request.
    */
   @Override
@@ -362,7 +385,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
 
     if (StringUtils
         .isAllEmpty(this.userLogin, this.userCity, this.userEmail, this.userLine1, this.userLine2, this.userLine3,
-            this.userPass, this.userPassConf, this.userPhone, this.userZipCode)) {
+            this.userPass, this.userPassConf, this.userPhone, this.userZipCode, this.beforeReminder)) {
       return Action.INPUT;
     }
 
@@ -416,6 +439,11 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
     fullUserDto.setLogin(this.userLogin);
     fullUserDto.setPassword(this.userPass);
     fullUserDto.setPhone(this.userPhone);
+    if (StringUtils.equals(this.beforeReminder, "true")) {
+      fullUserDto.setBeforeReminder(true);
+    } else {
+      fullUserDto.setBeforeReminder(false);
+    }
 
     AuthentificationService_Service authentificationService = new AuthentificationService_Service();
     AuthentificationService authentificationServicePort = authentificationService.getAuthentificationServicePort();
@@ -439,7 +467,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
 
     if (StringUtils
         .isAllEmpty(this.userCity, this.userEmail, this.userLine1, this.userLine2, this.userLine3, this.userPass,
-            this.userPassConf, this.userPhone, this.userZipCode)) {
+            this.userPassConf, this.userPhone, this.userZipCode, this.beforeReminder)) {
 
       this.userCity = fullUserDto.getCity();
       this.userLine1 = fullUserDto.getLine1();
@@ -448,7 +476,12 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
       this.userZipCode = fullUserDto.getZipCode();
       this.userPhone = fullUserDto.getPhone();
       this.userEmail = fullUserDto.getEmail();
-      return Action.INPUT;
+      if(fullUserDto.isBeforeReminder()) {
+        this.beforeReminder = "true";
+      } else {
+        this.beforeReminder = "false";
+      }
+
     }
 
     if (StringUtils.isEmpty(this.userPass)) {
@@ -495,6 +528,12 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
     fullUserDto.setEmail(this.userEmail);
     fullUserDto.setPassword(this.userPass);
     fullUserDto.setPhone(this.userPhone);
+    LOG.error("**** before : " + this.beforeReminder);
+    if (StringUtils.equals(this.beforeReminder, "true")) {
+      fullUserDto.setBeforeReminder(true);
+    } else {
+      fullUserDto.setBeforeReminder(false);
+    }
 
     AuthentificationService_Service authentificationService = new AuthentificationService_Service();
     AuthentificationService authentificationServicePort = authentificationService.getAuthentificationServicePort();
