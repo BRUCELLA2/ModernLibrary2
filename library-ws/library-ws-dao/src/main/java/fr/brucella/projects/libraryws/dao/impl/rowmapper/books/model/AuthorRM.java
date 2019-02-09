@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class AuthorRM implements RowMapper<Author> {
 
   /** Default Constructor */
-  public AuthorRM() {}
+  public AuthorRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

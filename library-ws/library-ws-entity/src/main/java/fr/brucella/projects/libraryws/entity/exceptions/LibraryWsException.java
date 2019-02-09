@@ -2,6 +2,11 @@ package fr.brucella.projects.libraryws.entity.exceptions;
 
 import javax.xml.ws.WebFault;
 
+/**
+ * Exception send by the webservice.
+ *
+ * @author BRUCELLA2
+ */
 @WebFault(name = "LibraryWsException")
 public class LibraryWsException extends Exception {
 

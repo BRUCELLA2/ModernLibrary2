@@ -46,6 +46,13 @@ public class AdministrationService {
   /** The Manager Factory Manager Factory allow to get and set business managers. */
   @Autowired private ManagerFactory managerFactory;
 
+  // ===== Constructor =====
+
+  /** Default constructor. */
+  public AdministrationService() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
   // ===== WebMethods ===== //
 
   // ===== Add Book

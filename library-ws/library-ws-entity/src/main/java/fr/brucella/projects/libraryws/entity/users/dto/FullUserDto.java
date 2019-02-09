@@ -42,9 +42,7 @@ public class FullUserDto extends User {
   /** List of roles associated to the user */
   private List<Role> roles;
 
-  /**
-   * The value of the beforeReminder option.
-   */
+  /** The value of the beforeReminder option. */
   @NotNull(message = "{UserOptions.beforeReminder.null}")
   private Boolean beforeReminder;
 
@@ -192,8 +190,14 @@ public class FullUserDto extends User {
    */
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("line1", line1).append("line2", line2).append("line3", line3)
-        .append("city", city).append("zipCode", zipCode).append("roles", roles).append("beforeReminder", beforeReminder)
+    return new ToStringBuilder(this)
+        .append("line1", line1)
+        .append("line2", line2)
+        .append("line3", line3)
+        .append("city", city)
+        .append("zipCode", zipCode)
+        .append("roles", roles)
+        .append("beforeReminder", beforeReminder)
         .toString();
   }
 }

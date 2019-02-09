@@ -65,13 +65,13 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
       throw new NotFoundException(messages.getString("roleDao.getRole.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -102,13 +102,13 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -139,13 +139,13 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
           messages.getString("roleDao.updateRole.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -179,13 +179,13 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
           messages.getString("roleDao.insertRole.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -221,13 +221,13 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
           messages.getString("roleDao.insertUserRole.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -251,17 +251,17 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("roleId = " + roleId);
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 }

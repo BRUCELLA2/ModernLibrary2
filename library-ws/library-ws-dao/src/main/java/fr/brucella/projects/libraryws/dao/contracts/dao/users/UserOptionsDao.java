@@ -20,7 +20,8 @@ public interface UserOptionsDao {
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
    *     userOptions is not found.
    */
-  UserOptions getUserOptions(final Integer userOptionsId) throws TechnicalException, NotFoundException;
+  UserOptions getUserOptions(final Integer userOptionsId)
+      throws TechnicalException, NotFoundException;
 
   /**
    * Update existing user options in the datastore.
@@ -30,7 +31,8 @@ public interface UserOptionsDao {
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
    *     userOptions is not found.
    */
-  void updateUserOptions(final UserOptions userOptions) throws TechnicalException, NotFoundException;
+  void updateUserOptions(final UserOptions userOptions)
+      throws TechnicalException, NotFoundException;
 
   /**
    * Insert a new userOptions in the datastore.

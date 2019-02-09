@@ -98,7 +98,6 @@ public interface DaoFactory {
    */
   UserOptionsDao getUserOptionsDao();
 
-
   // ===== Setters =====
 
   /**

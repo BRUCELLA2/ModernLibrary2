@@ -35,14 +35,17 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
   @Override
   public List<BorrowDto> currentlyBooksBorrow() throws TechnicalException {
 
+    List<BorrowDto> borrowDtoList = new ArrayList<>();
     try {
-      return this.getDaoFactory().getBookBorrowedDao().getBorrowListWithUserLoginAndTitle(true);
+      borrowDtoList =
+          this.getDaoFactory().getBookBorrowedDao().getBorrowListWithUserLoginAndTitle(true);
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      return new ArrayList<>();
     }
+
+    return borrowDtoList;
   }
 
   /** {@inheritDoc} */
@@ -57,19 +60,22 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
       throw new FunctionalException(messages.getString("booksBorrowedListingManager.userIdNull"));
     }
 
+    List<BorrowDto> borrowDtoList = new ArrayList<>();
+
     try {
-      return this.getDaoFactory().getBookBorrowedDao().getUserBorrows(userId, true);
+      borrowDtoList = this.getDaoFactory().getBookBorrowedDao().getUserBorrows(userId, true);
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      return new ArrayList<>();
     }
+
+    return borrowDtoList;
   }
 
   /** {@inheritDoc} */
   @Override
-  public List<BorrowDto> userReturnBorrow(Integer userId)
+  public List<BorrowDto> userReturnBorrow(final Integer userId)
       throws TechnicalException, FunctionalException {
 
     if (userId == null || userId == 0) {
@@ -79,27 +85,34 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
       throw new FunctionalException(messages.getString("booksBorrowedListingManager.userIdNull"));
     }
 
+    List<BorrowDto> borrowDtoList = new ArrayList<>();
+
     try {
-      return this.getDaoFactory().getBookBorrowedDao().getUserBorrows(userId, false);
+      borrowDtoList = this.getDaoFactory().getBookBorrowedDao().getUserBorrows(userId, false);
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      return new ArrayList<>();
     }
+
+    return borrowDtoList;
   }
 
   /** {@inheritDoc} */
   @Override
   public List<CurrentlyBorrowExpiredDto> currentlyBorrowExpired() throws TechnicalException {
+
+    List<CurrentlyBorrowExpiredDto> currentlyBorrowExpiredDtoList = new ArrayList<>();
+
     try {
-      return this.getDaoFactory().getBookBorrowedDao().getBorrowExpired();
+      currentlyBorrowExpiredDtoList = this.getDaoFactory().getBookBorrowedDao().getBorrowExpired();
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      return new ArrayList<>();
     }
+
+    return currentlyBorrowExpiredDtoList;
   }
 
   /** {@inheritDoc} */
@@ -114,13 +127,17 @@ public class BooksBorrowedListingManagerImpl extends AbstractManager
       throw new FunctionalException(messages.getString("booksBorrowedListingManager.userIdNull"));
     }
 
+    List<UserCurrentlyBorrowDto> userCurrentlyBorrowDtoList = new ArrayList<>();
+
     try {
-      return this.getDaoFactory().getBookBorrowedDao().getUserBorrowsExpired(userId);
+      userCurrentlyBorrowDtoList =
+          this.getDaoFactory().getBookBorrowedDao().getUserBorrowsExpired(userId);
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      return new ArrayList<>();
     }
+
+    return userCurrentlyBorrowDtoList;
   }
 }

@@ -32,6 +32,14 @@ public class ManagerFactoryImpl implements ManagerFactory {
   /** Books Listing Manager */
   @Autowired private BooksManagementManager booksManagementManager;
 
+  // ===== Constructor =====
+  /** Defaut constructor */
+  public ManagerFactoryImpl() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
+  // ===== Getters and Setters =====
+
   /** {@inheritDoc} */
   @Override
   public AdministrationManager getAdministrationManager() {

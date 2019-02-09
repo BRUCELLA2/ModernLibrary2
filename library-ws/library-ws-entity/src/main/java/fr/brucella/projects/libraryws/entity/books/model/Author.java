@@ -24,6 +24,13 @@ public class Author {
   @Size(min = 1, max = 50, message = "{author.lastName.size}")
   private String lastName;
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public Author() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
   // ===== Getters and Setters =====
 
   /**
@@ -79,11 +86,6 @@ public class Author {
   public void setLastName(final String lastName) {
     this.lastName = lastName;
   }
-
-  // ===== Constructor =====
-
-  /** Default Constructor */
-  public Author() {}
 
   // ===== Methods =====
 

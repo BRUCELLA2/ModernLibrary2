@@ -27,24 +27,31 @@ public class BooksListingManagerImpl extends AbstractManager implements BooksLis
   /** Books Listing Manager logger */
   private static final Log LOG = LogFactory.getLog(BooksListingManagerImpl.class);
 
+  /** Default constructor. */
+  public BooksListingManagerImpl() {
+    super();
+  }
+
   /** {@inheritDoc} */
   @Override
   public List<BookDetailsDto> getAllBooks() throws TechnicalException {
 
+    List<BookDetailsDto> bookDetailsDtoList = new ArrayList<>();
     try {
-      return this.getDaoFactory().getBookDao().getBookDetailsList();
+      bookDetailsDtoList = this.getDaoFactory().getBookDao().getBookDetailsList();
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      return new ArrayList<>();
     }
+
+    return bookDetailsDtoList;
   }
 
   /** {@inheritDoc} */
   @Override
   public List<BookDetailsDto> getSearchBooks(
-      BooksSearchClientCriteriaDto booksSearchClientCriteriaDto)
+      final BooksSearchClientCriteriaDto booksSearchClientCriteriaDto)
       throws TechnicalException, FunctionalException {
 
     if (booksSearchClientCriteriaDto == null) {
@@ -68,31 +75,36 @@ public class BooksListingManagerImpl extends AbstractManager implements BooksLis
           new ConstraintViolationException(violations));
     }
 
+    List<BookDetailsDto> bookDetailsDtoList = new ArrayList<>();
     try {
-      return this.getDaoFactory()
-          .getBookDao()
-          .getSearchBookDetailsList(booksSearchClientCriteriaDto);
+      bookDetailsDtoList =
+          this.getDaoFactory().getBookDao().getSearchBookDetailsList(booksSearchClientCriteriaDto);
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      return new ArrayList<>();
     }
+
+    return bookDetailsDtoList;
   }
 
+  /** {@inheritDoc} */
   @Override
   public List<BookDetailsDto> getBooksAvailable() throws TechnicalException {
 
-    BooksSearchClientCriteriaDto searchClientCriteriaDto = new BooksSearchClientCriteriaDto();
+    final BooksSearchClientCriteriaDto searchClientCriteriaDto = new BooksSearchClientCriteriaDto();
     searchClientCriteriaDto.setBookAvailable(true);
 
+    List<BookDetailsDto> bookDetailsDtoList = new ArrayList<>();
     try {
-      return this.getDaoFactory().getBookDao().getSearchBookDetailsList(searchClientCriteriaDto);
+      bookDetailsDtoList =
+          this.getDaoFactory().getBookDao().getSearchBookDetailsList(searchClientCriteriaDto);
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      return new ArrayList<>();
     }
+
+    return bookDetailsDtoList;
   }
 }

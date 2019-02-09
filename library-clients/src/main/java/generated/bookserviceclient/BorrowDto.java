@@ -1,16 +1,14 @@
-
 package generated.bookserviceclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Classe Java pour borrowDto complex type.
- * 
+ * Classe Java pour borrowDto complex type.
+ *
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * 
+ *
  * <pre>
  * &lt;complexType name="borrowDto">
  *   &lt;complexContent>
@@ -23,67 +21,49 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "borrowDto", propOrder = {
-    "login",
-    "title"
-})
-public class BorrowDto
-    extends BookBorrowed
-{
+@XmlType(
+    name = "borrowDto",
+    propOrder = {"login", "title"})
+public class BorrowDto extends BookBorrowed {
 
-    protected String login;
-    protected String title;
+  protected String login;
+  protected String title;
 
-    /**
-     * Obtient la valeur de la propriété login.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getLogin() {
-        return login;
-    }
+  /**
+   * Obtient la valeur de la propriété login.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getLogin() {
+    return login;
+  }
 
-    /**
-     * Définit la valeur de la propriété login.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setLogin(String value) {
-        this.login = value;
-    }
+  /**
+   * Définit la valeur de la propriété login.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setLogin(String value) {
+    this.login = value;
+  }
 
-    /**
-     * Obtient la valeur de la propriété title.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTitle() {
-        return title;
-    }
+  /**
+   * Obtient la valeur de la propriété title.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getTitle() {
+    return title;
+  }
 
-    /**
-     * Définit la valeur de la propriété title.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTitle(String value) {
-        this.title = value;
-    }
-
+  /**
+   * Définit la valeur de la propriété title.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setTitle(String value) {
+    this.title = value;
+  }
 }

@@ -28,6 +28,11 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
   /** Administration Manager Logger */
   private static final Log LOG = LogFactory.getLog(AdministrationManagerImpl.class);
 
+  /** Default Constructor. */
+  public AdministrationManagerImpl() {
+    super();
+  }
+
   /** {@inheritDoc} */
   @Override
   public Integer addBook(final Book book) throws TechnicalException, FunctionalException {
@@ -226,7 +231,7 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
 
   /** {@inheritDoc} */
   @Override
-  public Boolean modifyGenre(Genre genre) throws TechnicalException, FunctionalException {
+  public Boolean modifyGenre(final Genre genre) throws TechnicalException, FunctionalException {
 
     if (genre == null) {
       LOG.error(messages.getString("administrationManager.modifyGenre.genreNull"));
@@ -293,7 +298,7 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
 
   /** {@inheritDoc} */
   @Override
-  public Boolean modifyRole(Role role) throws TechnicalException, FunctionalException {
+  public Boolean modifyRole(final Role role) throws TechnicalException, FunctionalException {
 
     if (role == null) {
       LOG.error(messages.getString("administrationManager.modifyRole.roleNull"));
@@ -318,7 +323,7 @@ public class AdministrationManagerImpl extends AbstractManager implements Admini
       this.getDaoFactory().getRoleDao().updateRole(role);
       return true;
     } catch (NotFoundException exception) {
-      LOG.error((exception.getMessage()));
+      LOG.error(exception.getMessage());
       throw new FunctionalException(exception.getMessage(), exception);
     }
   }

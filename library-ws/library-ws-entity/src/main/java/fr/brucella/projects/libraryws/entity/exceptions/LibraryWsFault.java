@@ -15,6 +15,24 @@ public class LibraryWsFault {
   /** Message of the fault. */
   private String faultString;
 
+  // ===== Constructors =====
+
+  /** Default Constructor. */
+  public LibraryWsFault() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
+  /**
+   * Full Constructor.
+   *
+   * @param faultCode the fault code.
+   * @param faultString the fault message.
+   */
+  public LibraryWsFault(final String faultCode, final String faultString) {
+    this.faultCode = faultCode;
+    this.faultString = faultString;
+  }
+
   // ===== Getters and Setters =====
 
   /**
@@ -53,21 +71,7 @@ public class LibraryWsFault {
     this.faultString = faultString;
   }
 
-  // ===== Constructor =====
-
-  /** Default Constructor. */
-  public LibraryWsFault() {}
-
-  /**
-   * Full Constructor.
-   *
-   * @param faultCode the fault code.
-   * @param faultString the fault message.
-   */
-  public LibraryWsFault(final String faultCode, final String faultString) {
-    this.faultCode = faultCode;
-    this.faultString = faultString;
-  }
+  // ===== Methods =====
 
   /**
    * a string representation of the LibraryWsFault object.

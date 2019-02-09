@@ -1,7 +1,6 @@
 package fr.brucella.projects.libraryws.entity.books.dto;
 
 import fr.brucella.projects.libraryws.entity.LocalDateAdapter;
-import fr.brucella.projects.libraryws.entity.LocalDateWithTimeAdapter;
 import fr.brucella.projects.libraryws.entity.books.model.Author;
 import fr.brucella.projects.libraryws.entity.books.model.Book;
 import java.time.LocalDate;
@@ -98,7 +97,6 @@ public class BookDetailsDto extends Book {
     return authors;
   }
 
-
   /**
    * Set the list of authors.
    *
@@ -141,7 +139,7 @@ public class BookDetailsDto extends Book {
    *
    * @param endBorrowDate the end date of borrow.
    */
-  public void setEndBorrowDate(LocalDate endBorrowDate) {
+  public void setEndBorrowDate(final LocalDate endBorrowDate) {
     this.endBorrowDate = endBorrowDate;
   }
 
@@ -159,16 +157,22 @@ public class BookDetailsDto extends Book {
    *
    * @param nbActiveReservations the number of active reservations.
    */
-  public void setNbActiveReservations(Integer nbActiveReservations) {
+  public void setNbActiveReservations(final Integer nbActiveReservations) {
     this.nbActiveReservations = nbActiveReservations;
   }
 
   // ===== Methods =====
 
+  /** {@inheritDoc} */
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("publisherName", publisherName).append("genreName", genreName)
-        .append("authors", authors).append("amountAvailable", amountAvailable).append("endBorrowDate", endBorrowDate)
-        .append("nbActiveReservations", nbActiveReservations).toString();
+    return new ToStringBuilder(this)
+        .append("publisherName", publisherName)
+        .append("genreName", genreName)
+        .append("authors", authors)
+        .append("amountAvailable", amountAvailable)
+        .append("endBorrowDate", endBorrowDate)
+        .append("nbActiveReservations", nbActiveReservations)
+        .toString();
   }
 }

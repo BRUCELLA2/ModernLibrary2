@@ -9,35 +9,37 @@ import generated.bookserviceclient.LibraryWsException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * Book actions
+ *
+ * @author BRUCELLA2
+ */
 public class BookAction extends ActionSupport {
 
   // ----- Logger
-  /**
-   * Book Listing Action logger.
-   */
+  /** Book Listing Action logger. */
   private static final Log LOG = LogFactory.getLog(BookAction.class);
 
   // ----- Input
-  /**
-   * id of the bookBorrowed.
-   */
+  /** id of the bookBorrowed. */
   private Integer bookBorrowedId;
 
-  /**
-   * id of the book.
-   */
+  /** id of the book. */
   private Integer bookId;
 
-  /**
-   * id of the reservation
-   */
+  /** id of the reservation */
   private Integer bookReservationId;
 
   // ----- Output
-  /**
-   * Book Details Dto.
-   */
+  /** Book Details Dto. */
   private BookDetailsDto bookDetailsDto;
+
+  // ----- Constructors
+
+  /** Default constructor. */
+  public BookAction() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   // ----- Getters and Setters
 
@@ -53,8 +55,7 @@ public class BookAction extends ActionSupport {
   /**
    * Set the the id of the bookBorrowed.
    *
-   * @param bookBorrowedId
-   *     the id of the bookBorrowed.
+   * @param bookBorrowedId the id of the bookBorrowed.
    */
   public void setBookBorrowedId(final Integer bookBorrowedId) {
     this.bookBorrowedId = bookBorrowedId;
@@ -72,8 +73,7 @@ public class BookAction extends ActionSupport {
   /**
    * Set the id of the book.
    *
-   * @param bookId
-   *     the id of the book.
+   * @param bookId the id of the book.
    */
   public void setBookId(final Integer bookId) {
     this.bookId = bookId;
@@ -109,26 +109,30 @@ public class BookAction extends ActionSupport {
   /**
    * Set the Book Details Dto.
    *
-   * @param bookDetailsDto
-   *     the Book Details Dto.
+   * @param bookDetailsDto the Book Details Dto.
    */
-  public void setBookDetailsDto(BookDetailsDto bookDetailsDto) {
+  public void setBookDetailsDto(final BookDetailsDto bookDetailsDto) {
     this.bookDetailsDto = bookDetailsDto;
   }
 
-
   // ===== Methods =====
 
+  /**
+   * Extend a borrow for the user.
+   *
+   * @return Action.SUCCESS or Action.ERROR if errors occurred.
+   */
   public String borrowExtend() {
 
     if (this.bookBorrowedId == null) {
       LOG.error("bookBorrowedId NULL - BorrowExtend failure");
-      this.addActionError("L'identifiant de l'emprunt est incorrect (Identifiant vide) - Echec de la prolongation");
+      this.addActionError(
+          "L'identifiant de l'emprunt est incorrect (Identifiant vide) - Echec de la prolongation");
       return Action.ERROR;
     }
 
-    BookService_Service bookService = new BookService_Service();
-    BookService bookServicePort = bookService.getBookServicePort();
+    final BookService_Service bookService = new BookService_Service();
+    final BookService bookServicePort = bookService.getBookServicePort();
 
     try {
       bookServicePort.extendBorrowing(this.bookBorrowedId);
@@ -142,6 +146,11 @@ public class BookAction extends ActionSupport {
     return Action.SUCCESS;
   }
 
+  /**
+   * Action that provides book details.
+   *
+   * @return Action.SUCCESS or Action.ERROR if errors occurred.
+   */
   public String bookDetails() {
 
     if (this.bookId == null) {
@@ -151,8 +160,8 @@ public class BookAction extends ActionSupport {
       return Action.ERROR;
     }
 
-    BookService_Service bookservice = new BookService_Service();
-    BookService bookServicePort = bookservice.getBookServicePort();
+    final BookService_Service bookservice = new BookService_Service();
+    final BookService bookServicePort = bookservice.getBookServicePort();
 
     try {
       this.setBookDetailsDto(bookServicePort.bookDetails(bookId));
@@ -166,16 +175,22 @@ public class BookAction extends ActionSupport {
     return Action.SUCCESS;
   }
 
+  /**
+   * Cancel a reservation for the user.
+   *
+   * @return Action.SUCCESS or Action.ERROR if errors occurred.
+   */
   public String cancelReservations() {
 
-    if(this.bookReservationId == null) {
+    if (this.bookReservationId == null) {
       LOG.error("bookReservationId NULL - cancel reservation failure");
-      this.addActionError("L'identifiant de la réservation est incorrect (Identifiant vide) - Echec de l'annulation de la réservation.");
+      this.addActionError(
+          "L'identifiant de la réservation est incorrect (Identifiant vide) - Echec de l'annulation de la réservation.");
       return Action.ERROR;
     }
 
-    BookService_Service bookService = new BookService_Service();
-    BookService bookServicePort = bookService.getBookServicePort();
+    final BookService_Service bookService = new BookService_Service();
+    final BookService bookServicePort = bookService.getBookServicePort();
 
     try {
       bookServicePort.cancelAreservation(bookReservationId);

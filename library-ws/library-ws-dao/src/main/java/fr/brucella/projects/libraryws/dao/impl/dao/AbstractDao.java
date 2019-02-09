@@ -14,6 +14,15 @@ import org.springframework.stereotype.Component;
 @Component
 public abstract class AbstractDao {
 
+  /** Message key for permission denied. */
+  protected static final String PERMISSION_DENIED = "permissionDenied";
+
+  /** Message key for data access resource failure. */
+  protected static final String DATA_ACCESS_RESOURCE_FAILURE = "dataAccessResourceFailure";
+
+  /** Message key for data access problem. */
+  protected static final String DATA_ACCESS = "dataAccess";
+
   /** sql string used in database request. */
   protected transient String sql;
 

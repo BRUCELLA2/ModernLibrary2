@@ -35,8 +35,10 @@ public class AddressDaoImpl extends AbstractDao implements AddressDao {
 
   // ===== Constructor =====
 
-  /** Default Constructor */
-  public AddressDaoImpl() {}
+  /** Default Constructor. */
+  public AddressDaoImpl() {
+    super();
+  }
 
   // ===== Methods =====
 
@@ -62,17 +64,17 @@ public class AddressDaoImpl extends AbstractDao implements AddressDao {
       throw new NotFoundException(messages.getString("addressDao.getAddress.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
-      LOG.error((exception.getMessage()));
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug(("addressId = " + addressId));
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -104,17 +106,17 @@ public class AddressDaoImpl extends AbstractDao implements AddressDao {
           messages.getString("addressDao.updateAddress.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("address = " + address.toString());
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -151,17 +153,17 @@ public class AddressDaoImpl extends AbstractDao implements AddressDao {
           messages.getString("addressDao.insertAddress.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("address = " + address.toString());
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -185,17 +187,17 @@ public class AddressDaoImpl extends AbstractDao implements AddressDao {
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("addressId = " + addressId);
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 }

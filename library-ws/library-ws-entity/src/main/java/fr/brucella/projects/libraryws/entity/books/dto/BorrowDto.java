@@ -70,6 +70,7 @@ public class BorrowDto extends BookBorrowed {
 
   // ===== Methods =====
 
+  /** {@inheritDoc} */
   @Override
   public String toString() {
     return new ToStringBuilder(this).append("title", title).append("login", login).toString();

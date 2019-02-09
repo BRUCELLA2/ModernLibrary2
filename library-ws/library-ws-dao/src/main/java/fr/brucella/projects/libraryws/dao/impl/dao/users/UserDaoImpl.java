@@ -69,13 +69,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       throw new NotFoundException(messages.getString("UserDao.getUser.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -105,13 +105,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       throw new NotFoundException(messages.getString("UserDao.getUserByLogin.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
 
     // Get roles informations
@@ -132,13 +132,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       fullUserDto.setRoles(rolesList);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
 
     return fullUserDto;
@@ -146,7 +146,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
   /** {@inheritDoc} */
   @Override
-  public Boolean loginAvailable(String login) throws TechnicalException {
+  public Boolean loginAvailable(final String login) throws TechnicalException {
 
     sql = "SELECT COUNT(login) FROM users WHERE login = :login";
 
@@ -158,16 +158,16 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       count = getNamedJdbcTemplate().queryForObject(sql, parameterSource, Integer.class);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
 
-    return (count == 0);
+    return count == 0;
   }
 
   /** {@inheritDoc} */
@@ -192,20 +192,23 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
+  /** {@inheritDoc} */
   @Override
-  public List<User> getUserBeforeReminder(Integer nbDaysBeforeReminder) throws TechnicalException, NotFoundException {
+  public List<User> getUserBeforeReminder(final Integer nbDaysBeforeReminder)
+      throws TechnicalException, NotFoundException {
 
-    sql ="SELECT users.user_id, users.password, users.email, users.login, users.phone, users.address_id, users.user_options_id FROM users INNER JOIN book_borrowed ON users.user_id = book_borrowed.user_id INNER JOIN user_options ON users.user_options_id = user_options.user_options_id WHERE book_borrowed.returned = false AND user_options.before_reminder = true AND (book_borrowed.end_date - :nbDaysBeforeReminder -1) < CURRENT_DATE GROUP BY users.user_id";
+    sql =
+        "SELECT users.user_id, users.password, users.email, users.login, users.phone, users.address_id, users.user_options_id FROM users INNER JOIN book_borrowed ON users.user_id = book_borrowed.user_id INNER JOIN user_options ON users.user_options_id = user_options.user_options_id WHERE book_borrowed.returned = false AND user_options.before_reminder = true AND (book_borrowed.end_date - :nbDaysBeforeReminder -1) < CURRENT_DATE GROUP BY users.user_id";
 
     final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
     parameterSource.addValue("nbDaysBeforeReminder", nbDaysBeforeReminder);
@@ -213,7 +216,8 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     final RowMapper<User> rowMapper = new UserRM();
 
     try {
-      final List<User> usersList = this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
+      final List<User> usersList =
+          this.getNamedJdbcTemplate().query(sql, parameterSource, rowMapper);
       if (usersList.isEmpty()) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("SQL : " + sql);
@@ -224,13 +228,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -262,13 +266,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
           messages.getString("UserDao.updateUser.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -303,13 +307,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
           messages.getString("userDao.insertUser.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -333,17 +337,17 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("userId = " + userId);
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 }

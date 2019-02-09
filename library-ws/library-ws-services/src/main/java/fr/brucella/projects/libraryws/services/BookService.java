@@ -18,7 +18,6 @@ import fr.brucella.projects.libraryws.entity.users.model.User;
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-import javax.persistence.criteria.CriteriaBuilder.In;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +51,11 @@ public class BookService extends SpringBeanAutowiringSupport {
   // ----- Manager
   /** The Manager Factory Manager Factory allow to get and set business managers. */
   @Autowired private ManagerFactory managerFactory;
+
+  /** Default constructor. */
+  public BookService() {
+    // This constructor is intentionally empty.
+  }
 
   // ===== WebMethods ===== //
 
@@ -272,7 +276,6 @@ public class BookService extends SpringBeanAutowiringSupport {
     }
   }
 
-
   /**
    * Send a mail to all users few days before borrow expire if they activate the options.
    *
@@ -407,11 +410,11 @@ public class BookService extends SpringBeanAutowiringSupport {
    *     if the bookBorrowed is not found - if the book is already returned - if end date of borrow
    *     is passed - if the bookBorrowed is already extended
    */
-      /*
-      @TICKET #2
-      if the end date of the borrow is passed, the functionalException is caught and the message is send to client
-      with a LibraryWsException
-     */
+  /*
+   @TICKET #2
+   if the end date of the borrow is passed, the functionalException is caught and the message is send to client
+   with a LibraryWsException
+  */
   @WebMethod
   public Boolean extendBorrowing(final Integer bookBorrowedId) throws LibraryWsException {
 
@@ -498,11 +501,11 @@ public class BookService extends SpringBeanAutowiringSupport {
           TECH_ERROR, exception, new LibraryWsFault(SERVER, exception.getMessage()));
     } catch (FunctionalException exception) {
       LOG.error(exception.getMessage());
-      LibraryWsException ex =
+      final LibraryWsException libraryWsException =
           new LibraryWsException(
               FUNC_ERROR, exception, new LibraryWsFault(CLIENT, exception.getMessage()));
-      LOG.error(ex.toString());
-      throw ex;
+      LOG.error(libraryWsException.toString());
+      throw libraryWsException;
     }
   }
 
@@ -517,7 +520,8 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @throws LibraryWsException Throw this exception if there is a technical or functional problem.
    */
   @WebMethod
-  public Integer makeReservation(final Integer bookId, final Integer userId) throws LibraryWsException {
+  public Integer makeReservation(final Integer bookId, final Integer userId)
+      throws LibraryWsException {
 
     if (bookId == null || userId == null) {
       LOG.error("bookId = " + bookId);
@@ -553,7 +557,10 @@ public class BookService extends SpringBeanAutowiringSupport {
 
     if (reservationId == null) {
       LOG.error("reservationId = " + reservationId);
-      throw new LibraryWsException("Paramètre incorrect. L'identifiant de la réservation ne peut être vide", new LibraryWsFault(CLIENT, "Paramètre incorrect. L'identifiant de la réservation ne peut être vide"));
+      throw new LibraryWsException(
+          "Paramètre incorrect. L'identifiant de la réservation ne peut être vide",
+          new LibraryWsFault(
+              CLIENT, "Paramètre incorrect. L'identifiant de la réservation ne peut être vide"));
     }
 
     try {
@@ -577,11 +584,15 @@ public class BookService extends SpringBeanAutowiringSupport {
    * @throws LibraryWsException Throw this exception if there is a technical or functional problem.
    */
   @WebMethod
-  public List<ReservationDetailsDto> userReservations(final Integer userId) throws LibraryWsException {
+  public List<ReservationDetailsDto> userReservations(final Integer userId)
+      throws LibraryWsException {
 
     if (userId == null) {
       LOG.error("userId = " + userId);
-      throw new LibraryWsException("Paramètre incorrect. L'identifiant de l'utilisateur ne peut être vide.", new LibraryWsFault(CLIENT, "Paramètre incorrect. L'identifiant de l'utilisateur ne peut être vide."));
+      throw new LibraryWsException(
+          "Paramètre incorrect. L'identifiant de l'utilisateur ne peut être vide.",
+          new LibraryWsFault(
+              CLIENT, "Paramètre incorrect. L'identifiant de l'utilisateur ne peut être vide."));
     }
 
     try {
@@ -609,7 +620,10 @@ public class BookService extends SpringBeanAutowiringSupport {
 
     if (bookId == null) {
       LOG.error("bookId = " + bookId);
-      throw new LibraryWsException("Paramètre incorrect. L'identifiant du livre ne peut être vide.", new LibraryWsFault(CLIENT, "Paramètre incorrect. L'identifiant du livre ne peut être vide."));
+      throw new LibraryWsException(
+          "Paramètre incorrect. L'identifiant du livre ne peut être vide.",
+          new LibraryWsFault(
+              CLIENT, "Paramètre incorrect. L'identifiant du livre ne peut être vide."));
     }
 
     try {

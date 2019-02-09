@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class GenreRM implements RowMapper<Genre> {
 
   /** Default Constructor */
-  public GenreRM() {}
+  public GenreRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

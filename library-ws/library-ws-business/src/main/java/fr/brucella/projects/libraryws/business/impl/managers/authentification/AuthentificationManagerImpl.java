@@ -27,11 +27,16 @@ import org.springframework.stereotype.Component;
 public class AuthentificationManagerImpl extends AbstractManager
     implements AuthentificationManager {
 
-  /** Authentification Manager Logger */
+  /** Authentification Manager Logger. */
   private static final Log LOG = LogFactory.getLog(AuthentificationManagerImpl.class);
 
   /** Password encoder. */
-  private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+  private final transient BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+  /** Default Constructor. */
+  public AuthentificationManagerImpl() {
+    super();
+  }
 
   /** {@inheritDoc} */
   @Override
@@ -43,12 +48,10 @@ public class AuthentificationManagerImpl extends AbstractManager
       throw new FunctionalException(
           messages.getString("authentificationManager.getConnectUser.loginPasswordNull"));
     }
-
+    FullUserDto user = null;
     try {
-      final FullUserDto user = this.getDaoFactory().getUserDao().getUserByLogin(login);
-      if (this.checkPassword(password, user.getPassword())) {
-        return user;
-      } else {
+      user = this.getDaoFactory().getUserDao().getUserByLogin(login);
+      if (this.NotCheckedPassword(password, user.getPassword())) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("login : " + login);
           LOG.debug("password = wrong");
@@ -58,8 +61,9 @@ public class AuthentificationManagerImpl extends AbstractManager
       }
     } catch (NotFoundException exception) {
       LOG.error(exception.getMessage());
-      return null;
     }
+
+    return user;
   }
 
   /** {@inheritDoc} */
@@ -90,13 +94,13 @@ public class AuthentificationManagerImpl extends AbstractManager
     try {
       final User oldUser = this.getDaoFactory().getUserDao().getUser(fullUserDto.getUserId());
 
-      if (!this.checkPassword(fullUserDto.getPassword(), oldUser.getPassword())) {
+      if (this.NotCheckedPassword(fullUserDto.getPassword(), oldUser.getPassword())) {
         LOG.error("password wrong");
         throw new FunctionalException(
             messages.getString("authentificationManager.userModification.passDontMatch"));
       }
 
-      Address modifyAddress = new Address();
+      final Address modifyAddress = new Address();
       modifyAddress.setAddressId(fullUserDto.getAddressId());
       modifyAddress.setCity(fullUserDto.getCity());
       modifyAddress.setLine1(fullUserDto.getLine1());
@@ -106,13 +110,13 @@ public class AuthentificationManagerImpl extends AbstractManager
 
       this.getDaoFactory().getAddressDao().updateAddress(modifyAddress);
 
-      UserOptions modifyUserOptions = new UserOptions();
+      final UserOptions modifyUserOptions = new UserOptions();
       modifyUserOptions.setUserOptionsId(fullUserDto.getUserOptionsId());
       modifyUserOptions.setBeforeReminder(fullUserDto.getBeforeReminder());
 
       this.getDaoFactory().getUserOptionsDao().updateUserOptions(modifyUserOptions);
 
-      User modifyUser = new User();
+      final User modifyUser = new User();
       modifyUser.setUserId(fullUserDto.getUserId());
       modifyUser.setPassword(this.encodePassword(fullUserDto.getPassword()));
       modifyUser.setPhone(fullUserDto.getPhone());
@@ -125,7 +129,7 @@ public class AuthentificationManagerImpl extends AbstractManager
 
     } catch (NotFoundException exception) {
       LOG.error(exception.getMessage());
-      throw new FunctionalException(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
     }
 
     return true;
@@ -142,7 +146,7 @@ public class AuthentificationManagerImpl extends AbstractManager
           messages.getString("authentificationManager.userModification.fullUserDtoNull"));
     }
 
-    Address newAddress = new Address();
+    final Address newAddress = new Address();
     newAddress.setAddressId(fullUserDto.getAddressId());
     newAddress.setCity(fullUserDto.getCity());
     newAddress.setLine1(fullUserDto.getLine1());
@@ -164,14 +168,14 @@ public class AuthentificationManagerImpl extends AbstractManager
           new ConstraintViolationException(addressViolations));
     }
 
-    Integer addressId = this.getDaoFactory().getAddressDao().insertAddress(newAddress);
+    final Integer addressId = this.getDaoFactory().getAddressDao().insertAddress(newAddress);
     newAddress.setAddressId(addressId);
 
-
-    UserOptions newUserOptions = new UserOptions();
+    final UserOptions newUserOptions = new UserOptions();
     newUserOptions.setBeforeReminder(fullUserDto.getBeforeReminder());
 
-    final Set<ConstraintViolation<UserOptions>> userOptionsViolations = this.getConstraintValidator().validate(newUserOptions);
+    final Set<ConstraintViolation<UserOptions>> userOptionsViolations =
+        this.getConstraintValidator().validate(newUserOptions);
     if (!userOptionsViolations.isEmpty()) {
       if (LOG.isDebugEnabled()) {
         for (final ConstraintViolation<UserOptions> violation : userOptionsViolations) {
@@ -179,13 +183,16 @@ public class AuthentificationManagerImpl extends AbstractManager
         }
       }
       LOG.error(messages.getString("authentificationManager.addNewUser.userOptionsConstraints"));
-      throw new FunctionalException(messages.getString("authentificationManager.addNewUser.userOptionsConstraints"), new ConstraintViolationException(userOptionsViolations));
+      throw new FunctionalException(
+          messages.getString("authentificationManager.addNewUser.userOptionsConstraints"),
+          new ConstraintViolationException(userOptionsViolations));
     }
 
-    Integer userOptionsId = this.getDaoFactory().getUserOptionsDao().insertUserOptions(newUserOptions);
+    final Integer userOptionsId =
+        this.getDaoFactory().getUserOptionsDao().insertUserOptions(newUserOptions);
     newUserOptions.setUserOptionsId(userOptionsId);
 
-    User newUser = new User();
+    final User newUser = new User();
     newUser.setUserId(fullUserDto.getUserId());
     newUser.setPassword(this.encodePassword(fullUserDto.getPassword()));
     newUser.setPhone(fullUserDto.getPhone());
@@ -269,10 +276,10 @@ public class AuthentificationManagerImpl extends AbstractManager
    *
    * @param rawPassword The raw password
    * @param encodePassword the encrypted password
-   * @return true if the raw password and the encrypted password match, false otherwise.
+   * @return false if the raw password and the encrypted password match, true otherwise.
    */
-  private boolean checkPassword(final String rawPassword, final String encodePassword) {
+  private boolean NotCheckedPassword(final String rawPassword, final String encodePassword) {
 
-    return this.passwordEncoder.matches(rawPassword, encodePassword);
+    return !this.passwordEncoder.matches(rawPassword, encodePassword);
   }
 }

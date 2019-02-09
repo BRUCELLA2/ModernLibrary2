@@ -63,6 +63,13 @@ public class CurrentlyBorrowExpiredDto {
   @Email(message = "{user.email.format}")
   private String email;
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public CurrentlyBorrowExpiredDto() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
   // ===== Getters and Setters =====
 
   /**
@@ -247,11 +254,6 @@ public class CurrentlyBorrowExpiredDto {
   public void setLogin(final String login) {
     this.login = login;
   }
-
-  // ===== Constructor =====
-
-  /** Default Constructor */
-  public CurrentlyBorrowExpiredDto() {}
 
   // ===== Methods =====
 

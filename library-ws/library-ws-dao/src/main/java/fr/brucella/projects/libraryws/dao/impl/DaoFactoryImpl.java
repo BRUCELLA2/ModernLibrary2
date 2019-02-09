@@ -125,7 +125,7 @@ public class DaoFactoryImpl implements DaoFactory {
 
   /** {@inheritDoc} */
   @Override
-  public  UserOptionsDao getUserOptionsDao() {
+  public UserOptionsDao getUserOptionsDao() {
     return userOptionsDao;
   }
 

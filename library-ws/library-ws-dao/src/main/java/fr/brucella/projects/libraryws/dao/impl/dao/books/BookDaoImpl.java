@@ -43,7 +43,7 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
   /** Book DAO logger. */
   private static final Log LOG = LogFactory.getLog(BookDaoImpl.class);
 
-  /** Default Constructor */
+  /** Default Constructor. */
   public BookDaoImpl() {
     super();
   }
@@ -70,19 +70,19 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       throw new NotFoundException(messages.getString("bookDao.getBook.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public BookDetailsDto getBookDetails(Integer bookId)
+  public BookDetailsDto getBookDetails(final Integer bookId)
       throws NotFoundException, TechnicalException {
 
     sql =
@@ -92,7 +92,7 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
     parameterSourceBook.addValue("bookId", bookId);
 
     final RowMapper<BookDetailsDto> bookDetailsDtoRowMapper = new BookDetailsDtoRM();
-    BookDetailsDto bookDetails;
+    BookDetailsDto bookDetails = new BookDetailsDto();
 
     try {
       bookDetails =
@@ -107,13 +107,13 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       throw new NotFoundException(messages.getString("bookDao.getBookDetails.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
 
     // Get authors informations
@@ -135,13 +135,13 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       bookDetails.setAuthors(authorsList);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
 
     // Get the end date of borrow if quantity of book is = 0
@@ -154,25 +154,27 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       final RowMapper<BookBorrowed> bookBorrowedRowMapper = new BookBorrowedRM();
 
       try {
-        List<BookBorrowed> bookBorrowedList = getNamedJdbcTemplate().query(sql, parameterSourceBorrow, bookBorrowedRowMapper);
+        List<BookBorrowed> bookBorrowedList =
+            getNamedJdbcTemplate().query(sql, parameterSourceBorrow, bookBorrowedRowMapper);
         if (!bookBorrowedList.isEmpty()) {
           bookDetails.setEndBorrowDate(bookBorrowedList.get(0).getEndDate());
         }
       } catch (PermissionDeniedDataAccessException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("permissionDenied"), exception);
+        throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
       } catch (DataAccessResourceFailureException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+        throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
       } catch (DataAccessException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("dataAccess"), exception);
+        throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
       }
     }
 
     // Get the amount of reservation for this book if quantity of book is = 0
     if (bookDetails.getAmountAvailable() == 0) {
-      sql = "SELECT COUNT(*) from book_reservation WHERE book_id = :bookId AND active_reservation = true";
+      sql =
+          "SELECT COUNT(*) from book_reservation WHERE book_id = :bookId AND active_reservation = true";
 
       final MapSqlParameterSource parameterSourceCount = new MapSqlParameterSource();
       parameterSourceCount.addValue("bookId", bookId);
@@ -182,13 +184,13 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
         bookDetails.setNbActiveReservations(count);
       } catch (PermissionDeniedDataAccessException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("permissionDenied"), exception);
+        throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
       } catch (DataAccessResourceFailureException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+        throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
       } catch (DataAccessException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("dataAccess"), exception);
+        throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
       }
     }
 
@@ -216,13 +218,13 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
 
     for (BookDetailsDto bookDetails : bookDetailsDtoList) {
@@ -243,13 +245,13 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
         bookDetails.setAuthors(authorList);
       } catch (PermissionDeniedDataAccessException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("permissionDenied"), exception);
+        throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
       } catch (DataAccessResourceFailureException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+        throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
       } catch (DataAccessException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("dataAccess"), exception);
+        throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
       }
 
       // Get the end date of borrow if quantity of book is = 0
@@ -262,41 +264,44 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
         final RowMapper<BookBorrowed> bookBorrowedRowMapper = new BookBorrowedRM();
 
         try {
-          List<BookBorrowed> bookBorrowedList = getNamedJdbcTemplate().query(sql, parameterSourceBorrow, bookBorrowedRowMapper);
+          final List<BookBorrowed> bookBorrowedList =
+              getNamedJdbcTemplate().query(sql, parameterSourceBorrow, bookBorrowedRowMapper);
           if (!bookBorrowedList.isEmpty()) {
             bookDetails.setEndBorrowDate(bookBorrowedList.get(0).getEndDate());
           }
         } catch (PermissionDeniedDataAccessException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("permissionDenied"), exception);
+          throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
         } catch (DataAccessResourceFailureException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+          throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
         } catch (DataAccessException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("dataAccess"), exception);
+          throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
         }
       }
 
       // Get the amount of reservation for this book if quantity of book is = 0
       if (bookDetails.getAmountAvailable() == 0) {
-        sql = "SELECT COUNT(*) from book_reservation WHERE book_id = :bookId AND active_reservation = true";
+        sql =
+            "SELECT COUNT(*) from book_reservation WHERE book_id = :bookId AND active_reservation = true";
 
         final MapSqlParameterSource parameterSourceCount = new MapSqlParameterSource();
         parameterSourceCount.addValue("bookId", bookDetails.getBookId());
 
         try {
-          int count = getNamedJdbcTemplate().queryForObject(sql, parameterSourceCount, Integer.class);
+          int count =
+              getNamedJdbcTemplate().queryForObject(sql, parameterSourceCount, Integer.class);
           bookDetails.setNbActiveReservations(count);
         } catch (PermissionDeniedDataAccessException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("permissionDenied"), exception);
+          throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
         } catch (DataAccessResourceFailureException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+          throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
         } catch (DataAccessException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("dataAccess"), exception);
+          throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
         }
       }
     }
@@ -355,7 +360,7 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       }
 
       if (booksSearchClientCriteriaDto.getBookAvailable() != null
-          && booksSearchClientCriteriaDto.getBookAvailable() == true) {
+          && booksSearchClientCriteriaDto.getBookAvailable()) {
         sql = sql + " AND stock.amount_available > 0";
       }
     }
@@ -376,16 +381,16 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
 
-    for (BookDetailsDto bookDetails : bookDetailsDtoList) {
+    for (final BookDetailsDto bookDetails : bookDetailsDtoList) {
       sql =
           "SELECT * from author INNER JOIN book_authors ON author.author_id = book_authors.author_id WHERE book_authors.book_id = :book_id";
 
@@ -406,13 +411,13 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
         bookDetails.setAuthors(authorList);
       } catch (PermissionDeniedDataAccessException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("permissionDenied"), exception);
+        throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
       } catch (DataAccessResourceFailureException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+        throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
       } catch (DataAccessException exception) {
         LOG.error(exception.getMessage());
-        throw new TechnicalException(messages.getString("dataAccess"), exception);
+        throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
       }
 
       // Get the end date of borrow if quantity of book is = 0
@@ -425,41 +430,44 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
         final RowMapper<BookBorrowed> bookBorrowedRowMapper = new BookBorrowedRM();
 
         try {
-          List<BookBorrowed> bookBorrowedList = getNamedJdbcTemplate().query(sql, parameterSourceBorrow, bookBorrowedRowMapper);
+          final List<BookBorrowed> bookBorrowedList =
+              getNamedJdbcTemplate().query(sql, parameterSourceBorrow, bookBorrowedRowMapper);
           if (!bookBorrowedList.isEmpty()) {
             bookDetails.setEndBorrowDate(bookBorrowedList.get(0).getEndDate());
           }
         } catch (PermissionDeniedDataAccessException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("permissionDenied"), exception);
+          throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
         } catch (DataAccessResourceFailureException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+          throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
         } catch (DataAccessException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("dataAccess"), exception);
+          throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
         }
       }
 
       // Get the amount of reservation for this book if quantity of book is = 0
       if (bookDetails.getAmountAvailable() == 0) {
-        sql = "SELECT COUNT(*) from book_reservation WHERE book_id = :bookId AND active_reservation = true";
+        sql =
+            "SELECT COUNT(*) from book_reservation WHERE book_id = :bookId AND active_reservation = true";
 
         final MapSqlParameterSource parameterSourceCount = new MapSqlParameterSource();
         parameterSourceCount.addValue("bookId", bookDetails.getBookId());
 
         try {
-          int count = getNamedJdbcTemplate().queryForObject(sql, parameterSourceCount, Integer.class);
+          int count =
+              getNamedJdbcTemplate().queryForObject(sql, parameterSourceCount, Integer.class);
           bookDetails.setNbActiveReservations(count);
         } catch (PermissionDeniedDataAccessException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("permissionDenied"), exception);
+          throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
         } catch (DataAccessResourceFailureException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+          throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
         } catch (DataAccessException exception) {
           LOG.error(exception.getMessage());
-          throw new TechnicalException(messages.getString("dataAccess"), exception);
+          throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
         }
       }
     }
@@ -494,17 +502,17 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
           messages.getString("bookDao.updateBook.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("Book = " + book.toString());
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -538,17 +546,17 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
           messages.getString("bookDao.insertBook.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("Book = " + book.toString());
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -572,17 +580,17 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("bookId = " + bookId);
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 }

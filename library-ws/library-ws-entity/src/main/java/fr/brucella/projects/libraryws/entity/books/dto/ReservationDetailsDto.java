@@ -9,8 +9,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Represents a ReservationDetails Data Transfert Object. Includes all the informations about the book.
- * Includes some information about the book (title and first end date of borrow return.)
+ * Represents a ReservationDetails Data Transfert Object. Includes all the informations about the
+ * book. Includes some information about the book (title and first end date of borrow return.)
  *
  * @author BRUCELLA2
  */
@@ -26,6 +26,7 @@ public class ReservationDetailsDto extends BookReservation {
 
   // ===== Constructor =====
 
+  /** Default constructor. */
   public ReservationDetailsDto() {
     super();
   }
@@ -65,16 +66,18 @@ public class ReservationDetailsDto extends BookReservation {
    *
    * @param firstEndBorrowDate the end date of borrow.
    */
-  public void setFirstEndBorrowDate(LocalDate firstEndBorrowDate) {
+  public void setFirstEndBorrowDate(final LocalDate firstEndBorrowDate) {
     this.firstEndBorrowDate = firstEndBorrowDate;
   }
 
-
   // ===== Methods =====
 
-
+  /** {@inheritDoc} */
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("title", title).append("firstEndBorrowDate", firstEndBorrowDate).toString();
+    return new ToStringBuilder(this)
+        .append("title", title)
+        .append("firstEndBorrowDate", firstEndBorrowDate)
+        .toString();
   }
 }

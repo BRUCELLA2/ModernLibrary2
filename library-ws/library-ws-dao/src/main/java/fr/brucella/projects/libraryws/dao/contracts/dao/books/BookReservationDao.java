@@ -20,24 +20,29 @@ public interface BookReservationDao {
    * @param bookReservationId id of the book reservation.
    * @return the bookReservation with the id of the book reservation.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and the book reservation is not found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and the
+   *     book reservation is not found.
    */
-  BookReservation getBookReservation(final Integer bookReservationId) throws TechnicalException, NotFoundException;
+  BookReservation getBookReservation(final Integer bookReservationId)
+      throws TechnicalException, NotFoundException;
 
   /**
-   * Give the active bookReservation for the user with userId and the book with bookId from the datastore.
+   * Give the active bookReservation for the user with userId and the book with bookId from the
+   * datastore.
    *
    * @param bookId id of the book reservation.
    * @param userId id of the user reservation.
    * @return the active bookReservation for the user with userId and the book with bookId
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws NotFoundException - This exception is throws if there is no technical exception and the book reservation is not found.
+   * @throws NotFoundException - This exception is throws if there is no technical exception and the
+   *     book reservation is not found.
    */
-  BookReservation getBookReservation(final Integer bookId, final Integer userId) throws TechnicalException, NotFoundException;
+  BookReservation getBookReservation(final Integer bookId, final Integer userId)
+      throws TechnicalException, NotFoundException;
 
   /**
-   * Give the list of all reservations (active or not) from the datastore.
-   * ORDER BY date_reservation ASC.
+   * Give the list of all reservations (active or not) from the datastore. ORDER BY date_reservation
+   * ASC.
    *
    * @return the list of all reservations (active or not) from the datastore.
    * @throws TechnicalException - wraps technical exception caused during data access.
@@ -47,8 +52,7 @@ public interface BookReservationDao {
   List<BookReservation> getReservationsList() throws TechnicalException, NotFoundException;
 
   /**
-   * Give the list of active reservations from the datastore.
-   * ORDER BY date_reservation ASC.
+   * Give the list of active reservations from the datastore. ORDER BY date_reservation ASC.
    *
    * @return the list of active reservations from the datastore.
    * @throws TechnicalException - wraps technical exception caused during data access.
@@ -67,11 +71,12 @@ public interface BookReservationDao {
    * @throws NotFoundException - This exception is throws if there is no technical exception and no
    *     reservation is found.
    */
-  List<BookReservation> getActiveReservationListForBook(final Integer bookId) throws TechnicalException, NotFoundException;
+  List<BookReservation> getActiveReservationListForBook(final Integer bookId)
+      throws TechnicalException, NotFoundException;
 
   /**
-   * Give the list of active reservations without borrow in time (Afer sending email, user have a delay to borrow the book).
-   * Order by date_reservation_email_send ASC
+   * Give the list of active reservations without borrow in time (Afer sending email, user have a
+   * delay to borrow the book). Order by date_reservation_email_send ASC
    *
    * @param dateDepassed before this date, an active reservation is out of time.
    * @return the list of active reservations without borrow in time
@@ -79,11 +84,11 @@ public interface BookReservationDao {
    * @throws NotFoundException - This exception is throws if there is no technical exception and no
    *     reservation is found.
    */
-  List<BookReservation> getActiveReservationWithoutBorrowInTime(final LocalDate dateDepassed) throws TechnicalException, NotFoundException;
+  List<BookReservation> getActiveReservationWithoutBorrowInTime(final LocalDate dateDepassed)
+      throws TechnicalException, NotFoundException;
 
   /**
-   * Give the list of active reservations for the user.
-   * ORDER BY date_reservation ASC.
+   * Give the list of active reservations for the user. ORDER BY date_reservation ASC.
    *
    * @param userId id of the user.
    * @return A list of active ReservationDetailsDto for a specific user.
@@ -91,11 +96,11 @@ public interface BookReservationDao {
    * @throws NotFoundException - This exception is throws if there is no technical exception and no
    *     reservation is found.
    */
-  List<ReservationDetailsDto> getActiveReservationsListForUser(final Integer userId) throws TechnicalException, NotFoundException;
+  List<ReservationDetailsDto> getActiveReservationsListForUser(final Integer userId)
+      throws TechnicalException, NotFoundException;
 
   /**
-   * Give the list of inactive reservations for the user.
-   * ORDER BY date_reservation ASC.
+   * Give the list of inactive reservations for the user. ORDER BY date_reservation ASC.
    *
    * @param userId id of the user.
    * @return A list of inactive ReservationDetailsDto for a specific user.
@@ -103,7 +108,8 @@ public interface BookReservationDao {
    * @throws NotFoundException - This exception is throws if there is no technical exception and no
    *     reservation is found.
    */
-  List<ReservationDetailsDto> getInactiveReservationsListForUser(final Integer userId) throws TechnicalException, NotFoundException;
+  List<ReservationDetailsDto> getInactiveReservationsListForUser(final Integer userId)
+      throws TechnicalException, NotFoundException;
 
   /**
    * Update an existing bookReservation in the datastore.
@@ -113,7 +119,8 @@ public interface BookReservationDao {
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
    *     book reservation is not found.
    */
-  void updateBookReservation(final BookReservation bookReservation) throws TechnicalException, NotFoundException;
+  void updateBookReservation(final BookReservation bookReservation)
+      throws TechnicalException, NotFoundException;
 
   /**
    * Insert a new bookReservation in the datastore.
@@ -132,5 +139,6 @@ public interface BookReservationDao {
    * @throws NotFoundException - This exception is throws if there is no technical exception and the
    *     bookReservation is not found.
    */
-  void deleteBookReservation(final Integer bookReservationId) throws TechnicalException, NotFoundException;
+  void deleteBookReservation(final Integer bookReservationId)
+      throws TechnicalException, NotFoundException;
 }

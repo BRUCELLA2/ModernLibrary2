@@ -48,6 +48,13 @@ public class UserCurrentlyBorrowDto {
   @Size(min = 1, max = 150, message = "{book.title.size}")
   private String title;
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public UserCurrentlyBorrowDto() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
   // ===== Getters and Setters =====
 
   /**
@@ -177,11 +184,6 @@ public class UserCurrentlyBorrowDto {
   public void setTitle(final String title) {
     this.title = title;
   }
-
-  // ===== Constructor =====
-
-  /** Default Constructor */
-  public UserCurrentlyBorrowDto() {}
 
   // ===== Methods =====
 

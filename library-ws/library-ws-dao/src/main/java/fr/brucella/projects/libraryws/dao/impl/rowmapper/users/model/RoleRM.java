@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class RoleRM implements RowMapper<Role> {
 
   /** Default Constructor */
-  public RoleRM() {}
+  public RoleRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

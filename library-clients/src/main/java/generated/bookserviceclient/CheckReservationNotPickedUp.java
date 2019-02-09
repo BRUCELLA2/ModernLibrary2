@@ -1,16 +1,14 @@
-
 package generated.bookserviceclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Classe Java pour checkReservationNotPickedUp complex type.
- * 
+ * Classe Java pour checkReservationNotPickedUp complex type.
+ *
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * 
+ *
  * <pre>
  * &lt;complexType name="checkReservationNotPickedUp">
  *   &lt;complexContent>
@@ -21,12 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "checkReservationNotPickedUp")
-public class CheckReservationNotPickedUp {
-
-
-}
+public class CheckReservationNotPickedUp {}

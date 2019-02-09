@@ -50,6 +50,13 @@ public class Book {
   @NotNull(message = "{book.publisherId.null}")
   private Integer publisherId;
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public Book() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
   // ===== Getters and Setters =====
 
   /**
@@ -196,11 +203,6 @@ public class Book {
   public void setPublisherId(final Integer publisherId) {
     this.publisherId = publisherId;
   }
-
-  // ===== Constructor =====
-
-  /** Default Constructor */
-  public Book() {}
 
   // ===== Methods =====
 

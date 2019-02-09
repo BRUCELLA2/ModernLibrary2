@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class BorrowDtoRM implements RowMapper<BorrowDto> {
 
   /** Default Constructor */
-  public BorrowDtoRM() {}
+  public BorrowDtoRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

@@ -17,29 +17,34 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
-public class BorrowsListingAction extends ActionSupport implements SessionAware, ServletRequestAware {
+/**
+ * Borrows listing action.
+ *
+ * @author BRUCELLA2
+ */
+public class BorrowsListingAction extends ActionSupport
+    implements SessionAware, ServletRequestAware {
 
   // ----- Logger
-  /**
-   * Borrows Listing Action logger.
-   */
+  /** Borrows Listing Action logger. */
   private static final Log LOG = LogFactory.getLog(BorrowsListingAction.class);
 
-  /**
-   * the user's HTTP session attributes.
-   */
+  /** the user's HTTP session attributes. */
   private Map<String, Object> session;
 
-  /**
-   * The Http Servlet Request. Used to get session informations.
-   */
+  /** The Http Servlet Request. Used to get session informations. */
   private HttpServletRequest servletRequest;
 
   // ----- Output
-  /**
-   * A list of Borrow Dto.
-   */
+  /** A list of Borrow Dto. */
   private List<BorrowDto> borrowsList;
+
+  // ----- Constructors
+
+  /** Default constructor. */
+  public BorrowsListingAction() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   // ----- Getters and Setters
 
@@ -55,25 +60,19 @@ public class BorrowsListingAction extends ActionSupport implements SessionAware,
   /**
    * Set the list of Borrow Dto.
    *
-   * @param borrowsList
-   *     the list of Borrow Dto.
+   * @param borrowsList the list of Borrow Dto.
    */
-  public void setBorrowsList(List<BorrowDto> borrowsList) {
+  public void setBorrowsList(final List<BorrowDto> borrowsList) {
     this.borrowsList = borrowsList;
   }
 
-
-  /**
-   * Set the Http Servlet Request.
-   */
+  /** Set the Http Servlet Request. */
   @Override
   public void setServletRequest(final HttpServletRequest request) {
     this.servletRequest = request;
   }
 
-  /**
-   * Set the user's HTTP session attributes.
-   */
+  /** Set the user's HTTP session attributes. */
   @Override
   public void setSession(final Map<String, Object> session) {
     this.session = session;
@@ -81,13 +80,19 @@ public class BorrowsListingAction extends ActionSupport implements SessionAware,
 
   // ===== Methods =====
 
+  /**
+   * Action that provide currently borrows for the user.
+   *
+   * @return Action.SUCCESS or Action.ERROR if errors occurred.
+   */
   public String currentlyBorrows() {
 
-    BookService_Service bookservice = new BookService_Service();
-    BookService bookServicePort = bookservice.getBookServicePort();
+    final BookService_Service bookservice = new BookService_Service();
+    final BookService bookServicePort = bookservice.getBookServicePort();
 
     try {
-      FullUserDto fullUserDto = (FullUserDto) this.servletRequest.getSession().getAttribute("userLog");
+      final FullUserDto fullUserDto =
+          (FullUserDto) this.servletRequest.getSession().getAttribute("userLog");
       setBorrowsList(bookServicePort.currentlyBorrowForUser(fullUserDto.getUserId()));
     } catch (LibraryWsException exception) {
       LOG.error(exception.getMessage());
@@ -99,14 +104,19 @@ public class BorrowsListingAction extends ActionSupport implements SessionAware,
     return Action.SUCCESS;
   }
 
-
+  /**
+   * Action that provide history of borrows for the user.
+   *
+   * @return Action.SUCCESS or Action.ERROR if errors occurred.
+   */
   public String borrowsHistory() {
 
-    BookService_Service bookservice = new BookService_Service();
-    BookService bookServicePort = bookservice.getBookServicePort();
+    final BookService_Service bookservice = new BookService_Service();
+    final BookService bookServicePort = bookservice.getBookServicePort();
 
     try {
-      FullUserDto fullUserDto = (FullUserDto) this.servletRequest.getSession().getAttribute("userLog");
+      final FullUserDto fullUserDto =
+          (FullUserDto) this.servletRequest.getSession().getAttribute("userLog");
       setBorrowsList(bookServicePort.returnedBorrowsForUser(fullUserDto.getUserId()));
     } catch (LibraryWsException exception) {
       LOG.error(exception.getMessage());
@@ -118,20 +128,25 @@ public class BorrowsListingAction extends ActionSupport implements SessionAware,
     return Action.SUCCESS;
   }
 
-
   /*
-  @TICKET #2
-  Check if a date is before Now.
-  This method is called in the fix solution to the problem of borrowing after the end date of borrows.
- */
-  public String isBeforeToNow(BorrowDto borrowDto) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    LocalDate endDate = LocalDate.parse(borrowDto.getEndDate(), formatter);
+   @TICKET #2
+   Check if a date is before Now.
+   This method is called in the fix solution to the problem of borrowing after the end date of borrows.
+  */
+
+  /**
+   * Check if the date is before now.
+   *
+   * @param borrowDto borrowDto that contains the date to check.
+   * @return true if the date is before now or false is after or equals to now.
+   */
+  public String isBeforeToNow(final BorrowDto borrowDto) {
+    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    final LocalDate endDate = LocalDate.parse(borrowDto.getEndDate(), formatter);
     if (endDate.isBefore(LocalDate.now())) {
       return "true";
     } else {
       return "false";
     }
   }
-
 }

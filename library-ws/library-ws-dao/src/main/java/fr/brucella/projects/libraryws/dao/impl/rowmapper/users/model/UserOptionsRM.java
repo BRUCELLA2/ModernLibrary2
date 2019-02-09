@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class UserOptionsRM implements RowMapper<UserOptions> {
 
   /** Default Constructor */
-  public UserOptionsRM(){}
+  public UserOptionsRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

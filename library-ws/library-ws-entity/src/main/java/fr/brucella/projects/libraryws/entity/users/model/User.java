@@ -40,8 +40,16 @@ public class User {
   @NotNull(message = "{user.address.null}")
   private Integer addressId;
 
+  /** id of the userOptions. */
   @NotNull(message = "{user.options.null")
   private Integer userOptionsId;
+
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public User() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   // ===== Getters and Setters =====
 
@@ -171,11 +179,6 @@ public class User {
     this.userOptionsId = userOptionsId;
   }
 
-  // ===== Constructor =====
-
-  /** Default Constructor */
-  public User() {}
-
   // ===== Methods =====
 
   /**
@@ -185,8 +188,14 @@ public class User {
    */
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("userId", userId).append("login", login).append("password", password)
-        .append("email", email).append("phone", phone).append("addressId", addressId)
-        .append("userOptionsId", userOptionsId).toString();
+    return new ToStringBuilder(this)
+        .append("userId", userId)
+        .append("login", login)
+        .append("password", password)
+        .append("email", email)
+        .append("phone", phone)
+        .append("addressId", addressId)
+        .append("userOptionsId", userOptionsId)
+        .toString();
   }
 }

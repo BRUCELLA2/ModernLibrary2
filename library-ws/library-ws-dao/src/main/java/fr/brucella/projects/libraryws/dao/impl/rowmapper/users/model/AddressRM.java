@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class AddressRM implements RowMapper<Address> {
 
   /** Default Constructor. */
-  public AddressRM() {}
+  public AddressRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

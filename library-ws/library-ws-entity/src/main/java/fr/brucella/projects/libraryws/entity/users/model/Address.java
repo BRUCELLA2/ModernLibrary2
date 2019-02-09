@@ -37,6 +37,13 @@ public class Address {
   @Size(min = 5, max = 5, message = "{address.zipCode.size}")
   private String zipCode;
 
+  // ===== Constructors =====
+
+  /** Default Constructor */
+  public Address() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
   // ===== Getters and Setters =====
 
   /**
@@ -146,11 +153,6 @@ public class Address {
   public void setZipCode(final String zipCode) {
     this.zipCode = zipCode;
   }
-
-  // ===== Constructors =====
-
-  /** Default Constructor */
-  public Address() {}
 
   // ===== Methods =====
 

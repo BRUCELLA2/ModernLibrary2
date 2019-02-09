@@ -47,6 +47,13 @@ public class BookBorrowed {
   /** Date of the last reminder. Can be null. */
   private LocalDate lastReminder;
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public BookBorrowed() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
   // ===== Getters and Setters =====
 
   /**
@@ -213,11 +220,6 @@ public class BookBorrowed {
   public void setLastReminder(final LocalDate lastReminder) {
     this.lastReminder = lastReminder;
   }
-
-  // ===== Constructor =====
-
-  /** Default Constructor */
-  public BookBorrowed() {}
 
   // ===== Methods =====
 

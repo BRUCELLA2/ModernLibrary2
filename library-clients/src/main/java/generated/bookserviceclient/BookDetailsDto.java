@@ -1,4 +1,3 @@
-
 package generated.bookserviceclient;
 
 import java.util.ArrayList;
@@ -8,12 +7,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Classe Java pour bookDetailsDto complex type.
- * 
+ * Classe Java pour bookDetailsDto complex type.
+ *
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * 
+ *
  * <pre>
  * &lt;complexType name="bookDetailsDto">
  *   &lt;complexContent>
@@ -30,177 +28,139 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "bookDetailsDto", propOrder = {
-    "amountAvailable",
-    "authors",
-    "endBorrowDate",
-    "genreName",
-    "nbActiveReservations",
-    "publisherName"
-})
-public class BookDetailsDto
-    extends Book
-{
+@XmlType(
+    name = "bookDetailsDto",
+    propOrder = {
+      "amountAvailable",
+      "authors",
+      "endBorrowDate",
+      "genreName",
+      "nbActiveReservations",
+      "publisherName"
+    })
+public class BookDetailsDto extends Book {
 
-    protected Integer amountAvailable;
-    @XmlElement(nillable = true)
-    protected List<Author> authors;
-    protected String endBorrowDate;
-    protected String genreName;
-    protected Integer nbActiveReservations;
-    protected String publisherName;
+  protected Integer amountAvailable;
 
-    /**
-     * Obtient la valeur de la propriété amountAvailable.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getAmountAvailable() {
-        return amountAvailable;
+  @XmlElement(nillable = true)
+  protected List<Author> authors;
+
+  protected String endBorrowDate;
+  protected String genreName;
+  protected Integer nbActiveReservations;
+  protected String publisherName;
+
+  /**
+   * Obtient la valeur de la propriété amountAvailable.
+   *
+   * @return possible object is {@link Integer }
+   */
+  public Integer getAmountAvailable() {
+    return amountAvailable;
+  }
+
+  /**
+   * Définit la valeur de la propriété amountAvailable.
+   *
+   * @param value allowed object is {@link Integer }
+   */
+  public void setAmountAvailable(Integer value) {
+    this.amountAvailable = value;
+  }
+
+  /**
+   * Gets the value of the authors property.
+   *
+   * <p>This accessor method returns a reference to the live list, not a snapshot. Therefore any
+   * modification you make to the returned list will be present inside the JAXB object. This is why
+   * there is not a <CODE>set</CODE> method for the authors property.
+   *
+   * <p>For example, to add a new item, do as follows:
+   *
+   * <pre>
+   *    getAuthors().add(newItem);
+   * </pre>
+   *
+   * <p>Objects of the following type(s) are allowed in the list {@link Author }
+   */
+  public List<Author> getAuthors() {
+    if (authors == null) {
+      authors = new ArrayList<Author>();
     }
+    return this.authors;
+  }
 
-    /**
-     * Définit la valeur de la propriété amountAvailable.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setAmountAvailable(Integer value) {
-        this.amountAvailable = value;
-    }
+  /**
+   * Obtient la valeur de la propriété endBorrowDate.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getEndBorrowDate() {
+    return endBorrowDate;
+  }
 
-    /**
-     * Gets the value of the authors property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the authors property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAuthors().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Author }
-     * 
-     * 
-     */
-    public List<Author> getAuthors() {
-        if (authors == null) {
-            authors = new ArrayList<Author>();
-        }
-        return this.authors;
-    }
+  /**
+   * Définit la valeur de la propriété endBorrowDate.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setEndBorrowDate(String value) {
+    this.endBorrowDate = value;
+  }
 
-    /**
-     * Obtient la valeur de la propriété endBorrowDate.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getEndBorrowDate() {
-        return endBorrowDate;
-    }
+  /**
+   * Obtient la valeur de la propriété genreName.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getGenreName() {
+    return genreName;
+  }
 
-    /**
-     * Définit la valeur de la propriété endBorrowDate.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setEndBorrowDate(String value) {
-        this.endBorrowDate = value;
-    }
+  /**
+   * Définit la valeur de la propriété genreName.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setGenreName(String value) {
+    this.genreName = value;
+  }
 
-    /**
-     * Obtient la valeur de la propriété genreName.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getGenreName() {
-        return genreName;
-    }
+  /**
+   * Obtient la valeur de la propriété nbActiveReservations.
+   *
+   * @return possible object is {@link Integer }
+   */
+  public Integer getNbActiveReservations() {
+    return nbActiveReservations;
+  }
 
-    /**
-     * Définit la valeur de la propriété genreName.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setGenreName(String value) {
-        this.genreName = value;
-    }
+  /**
+   * Définit la valeur de la propriété nbActiveReservations.
+   *
+   * @param value allowed object is {@link Integer }
+   */
+  public void setNbActiveReservations(Integer value) {
+    this.nbActiveReservations = value;
+  }
 
-    /**
-     * Obtient la valeur de la propriété nbActiveReservations.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getNbActiveReservations() {
-        return nbActiveReservations;
-    }
+  /**
+   * Obtient la valeur de la propriété publisherName.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getPublisherName() {
+    return publisherName;
+  }
 
-    /**
-     * Définit la valeur de la propriété nbActiveReservations.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setNbActiveReservations(Integer value) {
-        this.nbActiveReservations = value;
-    }
-
-    /**
-     * Obtient la valeur de la propriété publisherName.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPublisherName() {
-        return publisherName;
-    }
-
-    /**
-     * Définit la valeur de la propriété publisherName.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPublisherName(String value) {
-        this.publisherName = value;
-    }
-
+  /**
+   * Définit la valeur de la propriété publisherName.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setPublisherName(String value) {
+    this.publisherName = value;
+  }
 }

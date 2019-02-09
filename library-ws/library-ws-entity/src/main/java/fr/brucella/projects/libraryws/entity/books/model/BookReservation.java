@@ -1,7 +1,6 @@
 package fr.brucella.projects.libraryws.entity.books.model;
 
 import fr.brucella.projects.libraryws.entity.LocalDateWithTimeAdapter;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -29,12 +28,12 @@ public class BookReservation {
   @NotNull(message = "{bookReservation.dateReservation.null}")
   private LocalDateTime dateReservation;
 
-  /** Date of the email send to the user. **/
+  /** Date of the email send to the user. */
   private LocalDateTime dateReservationEmailSend;
 
+  /** Indicate if the reservation is active or not. */
   @NotNull(message = "{bookReservation.activeReservation.null}")
   private Boolean activeReservation;
-
 
   // ===== Getters and Setters =====
 
@@ -52,7 +51,7 @@ public class BookReservation {
    *
    * @param bookReservationId the id of the book reservation.
    */
-  public void setBookReservationId(Integer bookReservationId) {
+  public void setBookReservationId(final Integer bookReservationId) {
     this.bookReservationId = bookReservationId;
   }
 
@@ -70,7 +69,7 @@ public class BookReservation {
    *
    * @param bookId the id of the book.
    */
-  public void setBookId(Integer bookId) {
+  public void setBookId(final Integer bookId) {
     this.bookId = bookId;
   }
 
@@ -88,7 +87,7 @@ public class BookReservation {
    *
    * @param userId the id of the user.
    */
-  public void setUserId(Integer userId) {
+  public void setUserId(final Integer userId) {
     this.userId = userId;
   }
 
@@ -107,7 +106,7 @@ public class BookReservation {
    *
    * @param dateReservation the date of the reservation.
    */
-  public void setDateReservation(LocalDateTime dateReservation) {
+  public void setDateReservation(final LocalDateTime dateReservation) {
     this.dateReservation = dateReservation;
   }
 
@@ -126,7 +125,7 @@ public class BookReservation {
    *
    * @param dateReservationEmailSend the date of the email send.
    */
-  public void setDateReservationEmailSend(LocalDateTime dateReservationEmailSend) {
+  public void setDateReservationEmailSend(final LocalDateTime dateReservationEmailSend) {
     this.dateReservationEmailSend = dateReservationEmailSend;
   }
 
@@ -144,7 +143,7 @@ public class BookReservation {
    *
    * @param activeReservation true if the reservation is active, false otherwise.
    */
-  public void setActiveReservation(Boolean activeReservation) {
+  public void setActiveReservation(final Boolean activeReservation) {
     this.activeReservation = activeReservation;
   }
 
@@ -152,13 +151,12 @@ public class BookReservation {
 
   /** Default Constructor. */
   public BookReservation() {
-
+    // This constructor is intentionally empty. Nothing special is needed here.
   }
-
 
   // ===== Methods =====
 
-
+  /** {@inheritDoc} */
   @Override
   public String toString() {
     return new ToStringBuilder(this)

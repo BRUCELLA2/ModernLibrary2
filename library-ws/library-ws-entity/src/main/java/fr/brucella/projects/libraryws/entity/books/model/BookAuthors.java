@@ -3,10 +3,7 @@ package fr.brucella.projects.libraryws.entity.books.model;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-/**
- *
- * @author BRUCELLA2
- */
+/** @author BRUCELLA2 */
 public class BookAuthors {
 
   /** id of the book. Can't be null. */

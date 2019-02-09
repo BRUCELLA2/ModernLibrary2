@@ -19,6 +19,13 @@ public class Genre {
   @Size(min = 1, max = 50, message = "{genre.name.size}")
   private String name;
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public Genre() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
   // ===== Getters and Setters =====
 
   /**
@@ -56,11 +63,6 @@ public class Genre {
   public void setName(final String name) {
     this.name = name;
   }
-
-  // ===== Constructor =====
-
-  /** Default Constructor */
-  public Genre() {}
 
   // ===== Methods =====
 

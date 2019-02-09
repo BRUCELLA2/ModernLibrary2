@@ -28,7 +28,9 @@ public class BookBorrowsCountDto {
   // ===== Constructor =====
 
   /** Defaut Constructor */
-  public BookBorrowsCountDto() {}
+  public BookBorrowsCountDto() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   // ===== Getters and Setters =====
 

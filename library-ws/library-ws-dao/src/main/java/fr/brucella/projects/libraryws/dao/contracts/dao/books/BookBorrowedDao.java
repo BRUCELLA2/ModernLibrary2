@@ -86,7 +86,9 @@ public interface BookBorrowedDao {
    * @throws NotFoundException - This exception is throws if there is no technical exception and no
    *     borrows is found.
    */
-  List<BorrowDto> getBorrowsAlmostExpiredForUser(final Integer userId, final Integer nbDaysBeforeReminder) throws TechnicalException, NotFoundException;
+  List<BorrowDto> getBorrowsAlmostExpiredForUser(
+      final Integer userId, final Integer nbDaysBeforeReminder)
+      throws TechnicalException, NotFoundException;
 
   /**
    * Give the list of borrows pas and present.

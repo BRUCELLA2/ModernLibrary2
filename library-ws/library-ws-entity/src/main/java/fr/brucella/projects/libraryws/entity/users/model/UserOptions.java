@@ -10,17 +10,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public class UserOptions {
 
-  /**
-   * Id of the UserOptions.
-   */
+  /** Id of the UserOptions. */
   private Integer userOptionsId;
 
-  /**
-   * The value of the beforeReminder option.
-   */
+  /** The value of the beforeReminder option. */
   @NotNull(message = "{UserOptions.beforeReminder.null")
   private Boolean beforeReminder;
-
 
   // ===== Getters and Setters =====
 
@@ -60,7 +55,6 @@ public class UserOptions {
     this.beforeReminder = beforeReminder;
   }
 
-
   // ===== Methods =====
 
   /**
@@ -70,7 +64,9 @@ public class UserOptions {
    */
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("userOptionsId", userOptionsId).append("beforeReminder", beforeReminder)
+    return new ToStringBuilder(this)
+        .append("userOptionsId", userOptionsId)
+        .append("beforeReminder", beforeReminder)
         .toString();
   }
 }

@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class BookBorrowedRM implements RowMapper<BookBorrowed> {
 
   /** Default Constructor */
-  public BookBorrowedRM() {}
+  public BookBorrowedRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

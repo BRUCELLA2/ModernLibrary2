@@ -3,10 +3,7 @@ package fr.brucella.projects.libraryws.entity.users.model;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-/**
- *
- * @author BRUCELLA2
- */
+/** @author BRUCELLA2 */
 public class UserRoles {
 
   /** Id of the user. Can't be null. */

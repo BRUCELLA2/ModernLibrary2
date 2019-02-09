@@ -132,30 +132,31 @@
                         <div class="invalid-feedback"><s:fielderror fieldName="userPassConf"/></div>
                     </div>
                 </div>
-<!--
-                <div class="form-group row">
-                    <div class="col-sm-6">
-                        <label class="form-check-label" for="beforeReminder">Activer l'option de rappel avant expiration des emprunts :
-                        <input type="checkbox" class="form-check-input" id="beforeReminder" value="false" name="beforeReminder">
-                        </label>
-                    </div>
-                </div>
--->
+                <!--
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label class="form-check-label" for="beforeReminder">Activer l'option de rappel avant expiration des emprunts :
+                                        <input type="checkbox" class="form-check-input" id="beforeReminder" value="false" name="beforeReminder">
+                                        </label>
+                                    </div>
+                                </div>
+                -->
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="beforeReminder" value="true" name="beforeReminder">
+                    <input type="checkbox" class="form-check-input" id="beforeReminder" value="true"
+                           name="beforeReminder">
                     <label class="form-check-label" for="beforeReminder">Rappel avant expiration des emprunts.</label>
                 </div>
 
-                </div>
-
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">S'enregistrer</button>
-                </div>
-
-            </form>
-
         </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">S'enregistrer</button>
+        </div>
+
+        </form>
+
     </div>
+</div>
 </div>
 
 

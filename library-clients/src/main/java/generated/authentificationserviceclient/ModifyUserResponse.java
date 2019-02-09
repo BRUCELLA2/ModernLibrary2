@@ -1,4 +1,3 @@
-
 package generated.authentificationserviceclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -6,12 +5,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Classe Java pour modifyUserResponse complex type.
- * 
+ * Classe Java pour modifyUserResponse complex type.
+ *
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * 
+ *
  * <pre>
  * &lt;complexType name="modifyUserResponse">
  *   &lt;complexContent>
@@ -23,40 +21,31 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "modifyUserResponse", propOrder = {
-    "_return"
-})
+@XmlType(
+    name = "modifyUserResponse",
+    propOrder = {"_return"})
 public class ModifyUserResponse {
 
-    @XmlElement(name = "return")
-    protected Boolean _return;
+  @XmlElement(name = "return")
+  protected Boolean _return;
 
-    /**
-     * Obtient la valeur de la propriété return.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isReturn() {
-        return _return;
-    }
+  /**
+   * Obtient la valeur de la propriété return.
+   *
+   * @return possible object is {@link Boolean }
+   */
+  public Boolean isReturn() {
+    return _return;
+  }
 
-    /**
-     * Définit la valeur de la propriété return.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setReturn(Boolean value) {
-        this._return = value;
-    }
-
+  /**
+   * Définit la valeur de la propriété return.
+   *
+   * @param value allowed object is {@link Boolean }
+   */
+  public void setReturn(Boolean value) {
+    this._return = value;
+  }
 }

@@ -34,7 +34,9 @@ public class PublisherDaoImpl extends AbstractDao implements PublisherDao {
   private static final Log LOG = LogFactory.getLog(PublisherDaoImpl.class);
 
   /** Default Constructor */
-  public PublisherDaoImpl() {}
+  public PublisherDaoImpl() {
+    super();
+  }
 
   /** {@inheritDoc} */
   @Override
@@ -60,17 +62,17 @@ public class PublisherDaoImpl extends AbstractDao implements PublisherDao {
           messages.getString("publisherDao.getPublisher.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug(("publisherId = " + publisherId));
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -102,17 +104,17 @@ public class PublisherDaoImpl extends AbstractDao implements PublisherDao {
           messages.getString("publisherDao.updatePublisher.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("Publisher = " + publisher.toString());
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -147,17 +149,17 @@ public class PublisherDaoImpl extends AbstractDao implements PublisherDao {
           messages.getString("publisherDao.insertPublisher.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("Publisher = " + publisher.toString());
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
@@ -182,17 +184,17 @@ public class PublisherDaoImpl extends AbstractDao implements PublisherDao {
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("publisherID = " + publisherId);
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 }

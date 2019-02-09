@@ -35,16 +35,17 @@ public interface BooksManagementManager {
   void reminderToUsers() throws TechnicalException;
 
   /**
-   * Get the list of reservation without borrow in the time allowed.
-   * Cancel the reservation in this list and send an email to the next user in the active reservation list for the book.
+   * Get the list of reservation without borrow in the time allowed. Cancel the reservation in this
+   * list and send an email to the next user in the active reservation list for the book. @Return
+   * the nb of error - 0 if they is no problem.
    *
-   * @Return the nb of error - 0 if they is no problem.
    * @throws TechnicalException
    */
   int reservationNotBorrowInTime() throws TechnicalException;
 
   /**
-   * Send a email few days before the end of the borrow. The number of days is set in config.properties.
+   * Send a email few days before the end of the borrow. The number of days is set in
+   * config.properties.
    *
    * @throws TechnicalException - wraps technical exception caused during data access.
    */
@@ -132,19 +133,23 @@ public interface BooksManagementManager {
    * @return the id of the BookReservation.
    * @throws TechnicalException - wraps technical exception caused during data access.
    * @throws FunctionalException - This exception is throw if the id of the user or the id of the
-   *     book are not valid or if the maximum number of reservations has been reached or that the user has already reserved the book..
+   *     book are not valid or if the maximum number of reservations has been reached or that the
+   *     user has already reserved the book..
    */
-  Integer bookReservation(final Integer bookId, final Integer userId) throws TechnicalException, FunctionalException;
+  Integer bookReservation(final Integer bookId, final Integer userId)
+      throws TechnicalException, FunctionalException;
 
   /**
-   * Cancel the reservation of the book with the bookReservation Id. Set activeReservation property to false.
+   * Cancel the reservation of the book with the bookReservation Id. Set activeReservation property
+   * to false.
    *
    * @param bookReservationId the bookReservation Id
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the id of the bookReservation is not valid. This
-   *     exception is throw if the bookReservation is not found.
+   * @throws FunctionalException - This exception is throw if the id of the bookReservation is not
+   *     valid. This exception is throw if the bookReservation is not found.
    */
-  void cancelReservation(final Integer bookReservationId) throws TechnicalException, FunctionalException;
+  void cancelReservation(final Integer bookReservationId)
+      throws TechnicalException, FunctionalException;
 
   /**
    * Return the list of active reservations for the user.
@@ -152,9 +157,11 @@ public interface BooksManagementManager {
    * @param userId id of the user.
    * @return the list of active reservations for the user.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the id of the user is not valid. List can be empty.
+   * @throws FunctionalException - This exception is throw if the id of the user is not valid. List
+   *     can be empty.
    */
-  List<ReservationDetailsDto> userReservationsList(final Integer userId) throws TechnicalException, FunctionalException;
+  List<ReservationDetailsDto> userReservationsList(final Integer userId)
+      throws TechnicalException, FunctionalException;
 
   /**
    * Return the list of active reservations for the book.
@@ -162,17 +169,20 @@ public interface BooksManagementManager {
    * @param bookId id of the book.
    * @return the list of active reservation for the book.
    * @throws TechnicalException - wraps technical exception caused during data access.
-   * @throws FunctionalException - This exception is throw if the id of the book is not valid. List can be empty.
+   * @throws FunctionalException - This exception is throw if the id of the book is not valid. List
+   *     can be empty.
    */
-  List<BookReservation> activeReservationsListForBook(final Integer bookId) throws TechnicalException, FunctionalException;
+  List<BookReservation> activeReservationsListForBook(final Integer bookId)
+      throws TechnicalException, FunctionalException;
 
   /**
-   * Send email to the first user of the reservation list to tell him book is available. Book reservation is updated with date of email sending.
+   * Send email to the first user of the reservation list to tell him book is available. Book
+   * reservation is updated with date of email sending.
    *
    * @param book Book reserved and available.
    * @throws TechnicalException - wraps technical exception.
-   * @throws FunctionalException - This exception is throw if the book is null or if the bookReservation is not found.
+   * @throws FunctionalException - This exception is throw if the book is null or if the
+   *     bookReservation is not found.
    */
   void sendMailBookAvailable(Book book) throws TechnicalException, FunctionalException;
-
 }

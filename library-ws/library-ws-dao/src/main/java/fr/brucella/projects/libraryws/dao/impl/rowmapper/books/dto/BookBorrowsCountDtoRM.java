@@ -13,8 +13,11 @@ import org.springframework.jdbc.core.RowMapper;
 public class BookBorrowsCountDtoRM implements RowMapper<BookBorrowsCountDto> {
 
   /** Default Constructor */
-  public BookBorrowsCountDtoRM() {}
+  public BookBorrowsCountDtoRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
+  /** {@inheritDoc} */
   @Override
   public BookBorrowsCountDto mapRow(final ResultSet resultSet, final int rowNum)
       throws SQLException {

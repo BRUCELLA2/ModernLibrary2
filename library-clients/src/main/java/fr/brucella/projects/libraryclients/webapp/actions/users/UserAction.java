@@ -14,80 +14,63 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
-
+/**
+ * User actions.
+ *
+ * @author BRUCELLA2
+ */
 public class UserAction extends ActionSupport implements SessionAware, ServletRequestAware {
 
   // ----- Logger
-  /**
-   * User Action logger
-   */
+  /** User Action logger */
   private static final Log LOG = LogFactory.getLog(UserAction.class);
 
   // ----- Input
-  /**
-   * Login of the user. Max size is 30 characters.
-   */
+  /** Login of the user. Max size is 30 characters. */
   private String userLogin;
 
-  /**
-   * Password of the user. Max size is 100 characters.
-   */
+  /** Password of the user. Max size is 100 characters. */
   private String userPass;
 
-  /**
-   * the user password confirmation. Max size is 100 characters.
-   */
+  /** the user password confirmation. Max size is 100 characters. */
   private String userPassConf;
 
-  /**
-   * Email of the user. Max size is 100 characters.
-   */
+  /** Email of the user. Max size is 100 characters. */
   private String userEmail;
 
-  /**
-   * Phone number of the user. Size need to be 10 characters.
-   */
+  /** Phone number of the user. Size need to be 10 characters. */
   private String userPhone;
 
-  /**
-   * City of the user. Max size is 100 characters.
-   */
+  /** City of the user. Max size is 100 characters. */
   private String userCity;
 
-  /**
-   * Line 1 of the address of the user. Max size is 200 characters.
-   */
+  /** Line 1 of the address of the user. Max size is 200 characters. */
   private String userLine1;
 
-  /**
-   * Line 2 of the address of the user. Max size is 200 characters.
-   */
+  /** Line 2 of the address of the user. Max size is 200 characters. */
   private String userLine2;
 
-  /**
-   * Line 3 of the address of the user. Max size is 200 characters.
-   */
+  /** Line 3 of the address of the user. Max size is 200 characters. */
   private String userLine3;
 
-  /**
-   * Zip code of the address of the user. Size is 5 characters.
-   */
+  /** Zip code of the address of the user. Size is 5 characters. */
   private String userZipCode;
 
-  /**
-   * String indicating if the option "before reminder" is active. "true" or "false".
-   */
+  /** String indicating if the option "before reminder" is active. "true" or "false". */
   private String beforeReminder;
 
-  /**
-   * the user's HTTP session attributes.
-   */
+  /** the user's HTTP session attributes. */
   private Map<String, Object> session;
 
-  /**
-   * The Http Servlet Request. Used to get session informations.
-   */
+  /** The Http Servlet Request. Used to get session informations. */
   private HttpServletRequest servletRequest;
+
+  // ----- Constructors
+
+  /** Default constructor. */
+  public UserAction() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   // ----- Getters and Setters
 
@@ -103,8 +86,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   /**
    * Set the login of the user. Max size is 30 characters.
    *
-   * @param userLogin
-   *     the login of the user.
+   * @param userLogin the login of the user.
    */
   public void setUserLogin(final String userLogin) {
     this.userLogin = userLogin;
@@ -122,8 +104,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   /**
    * Set the user password. Max size is 100 characters.
    *
-   * @param userPass
-   *     the password of the user.
+   * @param userPass the password of the user.
    */
   public void setUserPass(final String userPass) {
     this.userPass = userPass;
@@ -138,14 +119,12 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
     return userPassConf;
   }
 
-
   /**
    * Set the user password confirmation. Max size is 100 characters.
    *
-   * @param userPassConf
-   *     the user password confirmation. Max size is 100 characters.
+   * @param userPassConf the user password confirmation. Max size is 100 characters.
    */
-  public void setUserPassConf(String userPassConf) {
+  public void setUserPassConf(final String userPassConf) {
     this.userPassConf = userPassConf;
   }
 
@@ -161,8 +140,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   /**
    * Set the user email. Max size is 100 characters.
    *
-   * @param userEmail
-   *     the user email.
+   * @param userEmail the user email.
    */
   public void setUserEmail(final String userEmail) {
     this.userEmail = userEmail;
@@ -180,8 +158,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   /**
    * Set the phone number of the user. Size need to be 10 characters.
    *
-   * @param userPhone
-   *     the phone number of the user.
+   * @param userPhone the phone number of the user.
    */
   public void setUserPhone(final String userPhone) {
     this.userPhone = userPhone;
@@ -199,8 +176,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   /**
    * Set the city of the user. Max size is 100 characters.
    *
-   * @param userCity
-   *     the city of the user.
+   * @param userCity the city of the user.
    */
   public void setUserCity(final String userCity) {
     this.userCity = userCity;
@@ -218,8 +194,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   /**
    * Set the line 1 of the address of the user. Max size is 200 characters.
    *
-   * @param userLine1
-   *     the line 1 of the address of the user.
+   * @param userLine1 the line 1 of the address of the user.
    */
   public void setUserLine1(final String userLine1) {
     this.userLine1 = userLine1;
@@ -237,8 +212,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   /**
    * Set the line 2 of the address of the user. Max size is 200 characters.
    *
-   * @param userLine2
-   *     the line 2 of the address of the user. Max size is 200 characters.
+   * @param userLine2 the line 2 of the address of the user. Max size is 200 characters.
    */
   public void setUserLine2(final String userLine2) {
     this.userLine2 = userLine2;
@@ -256,8 +230,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   /**
    * Set the line 3 of the address of the user. Max size is 200 characters.
    *
-   * @param userLine3
-   *     the line 3 of the address of the user. Max size is 200 characters.
+   * @param userLine3 the line 3 of the address of the user. Max size is 200 characters.
    */
   public void setUserLine3(final String userLine3) {
     this.userLine3 = userLine3;
@@ -272,9 +245,7 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
     return userZipCode;
   }
 
-  /**
-   * Set the zip code of the address of the user. Size is 5 characters.
-   */
+  /** Set the zip code of the address of the user. Size is 5 characters. */
   public void setUserZipCode(final String userZipCode) {
     this.userZipCode = userZipCode;
   }
@@ -291,23 +262,20 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   /**
    * Indicate if the option "before reminder" is active. "true" or "false".
    *
-   * @param beforeReminder the string "true" if the option "before reminder" is active, "false" otherwise.
+   * @param beforeReminder the string "true" if the option "before reminder" is active, "false"
+   *     otherwise.
    */
   public void setBeforeReminder(final String beforeReminder) {
     this.beforeReminder = beforeReminder;
   }
 
-  /**
-   * Set the Http Servlet Request.
-   */
+  /** Set the Http Servlet Request. */
   @Override
   public void setServletRequest(final HttpServletRequest request) {
     this.servletRequest = request;
   }
 
-  /**
-   * Set the user's HTTP session attributes.
-   */
+  /** Set the user's HTTP session attributes. */
   @Override
   public void setSession(final Map<String, Object> session) {
     this.session = session;
@@ -318,8 +286,8 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
   /**
    * Log a user. After login, user is add to session.
    *
-   * @return ERROR if error occurred INPUT if the login, password are null or empty. if the login and *         password
-   * don't match. SUCCESS otherwise.
+   * @return ERROR if error occurred INPUT if the login, password are null or empty. if the login
+   *     and * password don't match. SUCCESS otherwise.
    */
   public String doLogin() {
 
@@ -339,15 +307,19 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
       return Action.INPUT;
     }
 
-    AuthentificationService_Service authentificationService = new AuthentificationService_Service();
-    AuthentificationService authentificationServicePort = authentificationService.getAuthentificationServicePort();
+    final AuthentificationService_Service authentificationService =
+        new AuthentificationService_Service();
+    final AuthentificationService authentificationServicePort =
+        authentificationService.getAuthentificationServicePort();
 
     try {
-      FullUserDto user = authentificationServicePort.login(userLogin, userPass);
+      final FullUserDto user = authentificationServicePort.login(userLogin, userPass);
       if (user == null) {
-        this.addFieldError("userLogin",
+        this.addFieldError(
+            "userLogin",
             "L'identifiant et/ou le mot de passe sont incorrects - La connexion n'a pu être réalisée");
-        this.addFieldError("userPass",
+        this.addFieldError(
+            "userPass",
             "L'identifiant et/ou le mot de passe sont incorrects - La connexion n'a pu être réalisée");
         return Action.INPUT;
       } else {
@@ -363,7 +335,6 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
     return Action.SUCCESS;
   }
 
-
   /**
    * Log out the user. Session is invalidate.
    *
@@ -371,21 +342,29 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
    */
   public String doLogout() {
     this.servletRequest.getSession().invalidate();
-    ;
     return Action.SUCCESS;
   }
 
   /**
    * Register a user. After registration, user is add to session.
    *
-   * @return ERROR if error occurred INPUT if the input information needed are empty or null if login is already used by
-   * another user. SUCCESS otherwise
+   * @return ERROR if error occurred INPUT if the input information needed are empty or null if
+   *     login is already used by another user. SUCCESS otherwise
    */
   public String doRegister() {
 
-    if (StringUtils
-        .isAllEmpty(this.userLogin, this.userCity, this.userEmail, this.userLine1, this.userLine2, this.userLine3,
-            this.userPass, this.userPassConf, this.userPhone, this.userZipCode, this.beforeReminder)) {
+    if (StringUtils.isAllEmpty(
+        this.userLogin,
+        this.userCity,
+        this.userEmail,
+        this.userLine1,
+        this.userLine2,
+        this.userLine3,
+        this.userPass,
+        this.userPassConf,
+        this.userPhone,
+        this.userZipCode,
+        this.beforeReminder)) {
       return Action.INPUT;
     }
 
@@ -422,14 +401,15 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
     }
 
     if (!StringUtils.equals(this.userPass, this.userPassConf)) {
-      this.addFieldError("userPassConf", "la confirmation du mot de passe ne correspond pas au mot de passe");
+      this.addFieldError(
+          "userPassConf", "la confirmation du mot de passe ne correspond pas au mot de passe");
     }
 
     if (this.hasFieldErrors()) {
       return Action.INPUT;
     }
 
-    FullUserDto fullUserDto = new FullUserDto();
+    final FullUserDto fullUserDto = new FullUserDto();
     fullUserDto.setCity(this.userCity);
     fullUserDto.setLine1(this.userLine1);
     fullUserDto.setLine2(this.userLine2);
@@ -445,11 +425,13 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
       fullUserDto.setBeforeReminder(false);
     }
 
-    AuthentificationService_Service authentificationService = new AuthentificationService_Service();
-    AuthentificationService authentificationServicePort = authentificationService.getAuthentificationServicePort();
+    final AuthentificationService_Service authentificationService =
+        new AuthentificationService_Service();
+    final AuthentificationService authentificationServicePort =
+        authentificationService.getAuthentificationServicePort();
 
     try {
-      Integer userId = authentificationServicePort.addUser(fullUserDto);
+      final Integer userId = authentificationServicePort.addUser(fullUserDto);
     } catch (LibraryWsException exception) {
       LOG.error(exception.getMessage());
       LOG.error(exception.getFaultInfo().getFaultString());
@@ -460,14 +442,27 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
     return Action.SUCCESS;
   }
 
-
+  /**
+   * Modify an user account.
+   *
+   * @return ERROR if error occurred INPUT if the input information needed are empty or null if
+   *     login is already used by another user. SUCCESS otherwise
+   */
   public String doModification() {
 
     FullUserDto fullUserDto = (FullUserDto) this.session.get("userLog");
 
-    if (StringUtils
-        .isAllEmpty(this.userCity, this.userEmail, this.userLine1, this.userLine2, this.userLine3, this.userPass,
-            this.userPassConf, this.userPhone, this.userZipCode, this.beforeReminder)) {
+    if (StringUtils.isAllEmpty(
+        this.userCity,
+        this.userEmail,
+        this.userLine1,
+        this.userLine2,
+        this.userLine3,
+        this.userPass,
+        this.userPassConf,
+        this.userPhone,
+        this.userZipCode,
+        this.beforeReminder)) {
 
       this.userCity = fullUserDto.getCity();
       this.userLine1 = fullUserDto.getLine1();
@@ -476,12 +471,11 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
       this.userZipCode = fullUserDto.getZipCode();
       this.userPhone = fullUserDto.getPhone();
       this.userEmail = fullUserDto.getEmail();
-      if(fullUserDto.isBeforeReminder()) {
+      if (fullUserDto.isBeforeReminder()) {
         this.beforeReminder = "true";
       } else {
         this.beforeReminder = "false";
       }
-
     }
 
     if (StringUtils.isEmpty(this.userPass)) {
@@ -513,7 +507,8 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
     }
 
     if (!StringUtils.equals(this.userPass, this.userPassConf)) {
-      this.addFieldError("userPassConf", "la confirmation du mot de passe ne correspond pas au mot de passe");
+      this.addFieldError(
+          "userPassConf", "la confirmation du mot de passe ne correspond pas au mot de passe");
     }
 
     if (this.hasFieldErrors()) {
@@ -528,15 +523,16 @@ public class UserAction extends ActionSupport implements SessionAware, ServletRe
     fullUserDto.setEmail(this.userEmail);
     fullUserDto.setPassword(this.userPass);
     fullUserDto.setPhone(this.userPhone);
-    LOG.error("**** before : " + this.beforeReminder);
     if (StringUtils.equals(this.beforeReminder, "true")) {
       fullUserDto.setBeforeReminder(true);
     } else {
       fullUserDto.setBeforeReminder(false);
     }
 
-    AuthentificationService_Service authentificationService = new AuthentificationService_Service();
-    AuthentificationService authentificationServicePort = authentificationService.getAuthentificationServicePort();
+    final AuthentificationService_Service authentificationService =
+        new AuthentificationService_Service();
+    final AuthentificationService authentificationServicePort =
+        authentificationService.getAuthentificationServicePort();
 
     try {
       authentificationServicePort.modifyUser(fullUserDto);

@@ -13,8 +13,11 @@ import org.springframework.jdbc.core.RowMapper;
 public class BookReservationRM implements RowMapper<BookReservation> {
 
   /** Default Constructor. */
-  public BookReservationRM() {}
+  public BookReservationRM() {
+    // This constructor is intentionally empty.
+  }
 
+  /** {@inheritDoc} */
   @Override
   public BookReservation mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 
@@ -23,15 +26,17 @@ public class BookReservationRM implements RowMapper<BookReservation> {
     bookReservation.setBookReservationId(resultSet.getInt("book_reservation_id"));
     bookReservation.setBookId(resultSet.getInt("book_id"));
     bookReservation.setUserId(resultSet.getInt("user_id"));
-    if (resultSet.getDate("date_reservation") != null) {
-      bookReservation.setDateReservation(resultSet.getTimestamp("date_reservation").toLocalDateTime());
-    } else {
+    if (resultSet.getDate("date_reservation") == null) {
       bookReservation.setDateReservation(null);
-    }
-    if (resultSet.getDate("date_reservation_email_send") != null) {
-      bookReservation.setDateReservationEmailSend(resultSet.getTimestamp("date_reservation_email_send").toLocalDateTime());
     } else {
+      bookReservation.setDateReservation(
+          resultSet.getTimestamp("date_reservation").toLocalDateTime());
+    }
+    if (resultSet.getDate("date_reservation_email_send") == null) {
       bookReservation.setDateReservationEmailSend(null);
+    } else {
+      bookReservation.setDateReservationEmailSend(
+          resultSet.getTimestamp("date_reservation_email_send").toLocalDateTime());
     }
     bookReservation.setActiveReservation(resultSet.getBoolean("active_reservation"));
 

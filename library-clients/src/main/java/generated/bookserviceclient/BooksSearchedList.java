@@ -1,16 +1,14 @@
-
 package generated.bookserviceclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Classe Java pour booksSearchedList complex type.
- * 
+ * Classe Java pour booksSearchedList complex type.
+ *
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * 
+ *
  * <pre>
  * &lt;complexType name="booksSearchedList">
  *   &lt;complexContent>
@@ -22,39 +20,30 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "booksSearchedList", propOrder = {
-    "arg0"
-})
+@XmlType(
+    name = "booksSearchedList",
+    propOrder = {"arg0"})
 public class BooksSearchedList {
 
-    protected BooksSearchClientCriteriaDto arg0;
+  protected BooksSearchClientCriteriaDto arg0;
 
-    /**
-     * Obtient la valeur de la propriété arg0.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BooksSearchClientCriteriaDto }
-     *     
-     */
-    public BooksSearchClientCriteriaDto getArg0() {
-        return arg0;
-    }
+  /**
+   * Obtient la valeur de la propriété arg0.
+   *
+   * @return possible object is {@link BooksSearchClientCriteriaDto }
+   */
+  public BooksSearchClientCriteriaDto getArg0() {
+    return arg0;
+  }
 
-    /**
-     * Définit la valeur de la propriété arg0.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BooksSearchClientCriteriaDto }
-     *     
-     */
-    public void setArg0(BooksSearchClientCriteriaDto value) {
-        this.arg0 = value;
-    }
-
+  /**
+   * Définit la valeur de la propriété arg0.
+   *
+   * @param value allowed object is {@link BooksSearchClientCriteriaDto }
+   */
+  public void setArg0(BooksSearchClientCriteriaDto value) {
+    this.arg0 = value;
+  }
 }

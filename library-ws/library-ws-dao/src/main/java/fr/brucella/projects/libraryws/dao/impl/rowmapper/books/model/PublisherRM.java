@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class PublisherRM implements RowMapper<Publisher> {
 
   /** Default Constructor. */
-  public PublisherRM() {}
+  public PublisherRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

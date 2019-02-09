@@ -36,7 +36,9 @@ public class BooksSearchClientCriteriaDto {
   // ===== Constructor =====
 
   /** Defaut Constructor */
-  public BooksSearchClientCriteriaDto() {}
+  public BooksSearchClientCriteriaDto() {
+    // This constructor is intentionally empty.
+  }
 
   // ===== Getters and Setters =====
 
@@ -144,12 +146,13 @@ public class BooksSearchClientCriteriaDto {
    *
    * @param bookAvailable true if the book need to be available, false otherwise.
    */
-  public void setBookAvailable(Boolean bookAvailable) {
+  public void setBookAvailable(final Boolean bookAvailable) {
     this.bookAvailable = bookAvailable;
   }
 
   // ===== Methods =====
 
+  /** {@inheritDoc} */
   @Override
   public String toString() {
     return new ToStringBuilder(this)

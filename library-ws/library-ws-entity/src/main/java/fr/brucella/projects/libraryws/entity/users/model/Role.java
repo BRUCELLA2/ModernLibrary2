@@ -19,6 +19,13 @@ public class Role {
   @Size(min = 1, max = 25, message = "{role.roleName.size}")
   private String roleName;
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public Role() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
   // ===== Getters and Setters =====
 
   /**
@@ -56,11 +63,6 @@ public class Role {
   public void setRoleName(final String roleName) {
     this.roleName = roleName;
   }
-
-  // ===== Constructor =====
-
-  /** Default Constructor */
-  public Role() {}
 
   // ===== Methods =====
 

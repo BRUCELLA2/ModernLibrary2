@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class StockRM implements RowMapper<Stock> {
 
   /** Default Constructor */
-  public StockRM() {}
+  public StockRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

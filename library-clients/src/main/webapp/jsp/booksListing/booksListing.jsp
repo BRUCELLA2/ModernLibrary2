@@ -130,11 +130,11 @@
                             </td>
                             <td><s:property value="genreName"/></td>
                             <td><s:property value="resume"/></td>
-                            <td><s:property value="amountAvailable" /></td>
-                            <td><s:property value="endBorrowDate" /></td>
-                            <td><s:property value="nbActiveReservations" /></td>
+                            <td><s:property value="amountAvailable"/></td>
+                            <td><s:property value="endBorrowDate"/></td>
+                            <td><s:property value="nbActiveReservations"/></td>
                             <td class="text-center">
-                                <s:set var="amount" value="amountAvailable" />
+                                <s:set var="amount" value="amountAvailable"/>
                                 <s:set var="checkReservationUser" value="%{checkReservedByUser(#books)}"/>
                                 <s:if test="#amount != 0">
                                     <b>Disponible</b>
@@ -143,10 +143,10 @@
                                     Déjà réserver !
                                 </s:elseif>
                                 <s:elseif test="#amount == 0">
-                                    <s:a class="btn btn-primary text-center" action="book_reservation">
-                                        <s:param name="bookId" value="bookId"/>
-                                        Réserver</s:a></td>
-                                </s:elseif>
+                                <s:a class="btn btn-primary text-center" action="book_reservation">
+                                    <s:param name="bookId" value="bookId"/>
+                                    Réserver</s:a></td>
+                            </s:elseif>
                             </td>
                         </tr>
                     </s:iterator>

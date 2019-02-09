@@ -18,6 +18,13 @@ public class BookStockDto extends Stock {
   @Size(min = 1, max = 150, message = "{book.title.size}")
   private String title;
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public BookStockDto() {
+    super();
+  }
+
   // ===== Getters and Setters =====
 
   /**
@@ -37,11 +44,6 @@ public class BookStockDto extends Stock {
   public void setTitle(final String title) {
     this.title = title;
   }
-
-  // ===== Constructor =====
-
-  /** Default Constructor */
-  public BookStockDto() {}
 
   // ===== Methods =====
 

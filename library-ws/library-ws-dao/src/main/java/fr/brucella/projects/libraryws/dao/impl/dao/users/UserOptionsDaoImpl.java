@@ -1,6 +1,5 @@
 package fr.brucella.projects.libraryws.dao.impl.dao.users;
 
-import fr.brucella.projects.libraryws.dao.contracts.dao.users.AddressDao;
 import fr.brucella.projects.libraryws.dao.contracts.dao.users.UserOptionsDao;
 import fr.brucella.projects.libraryws.dao.impl.dao.AbstractDao;
 import fr.brucella.projects.libraryws.dao.impl.rowmapper.users.model.UserOptionsRM;
@@ -37,13 +36,16 @@ public class UserOptionsDaoImpl extends AbstractDao implements UserOptionsDao {
   // ===== Constructor =====
 
   /** Default Constructor */
-  public UserOptionsDaoImpl() {}
+  public UserOptionsDaoImpl() {
+    super();
+  }
 
   // ===== Methods =====
 
   /** {@inheritDoc} */
   @Override
-  public UserOptions getUserOptions(final Integer userOptionsId) throws TechnicalException, NotFoundException {
+  public UserOptions getUserOptions(final Integer userOptionsId)
+      throws TechnicalException, NotFoundException {
 
     sql = "SELECT * FROM user_options WHERE user_options_id = :userOptionsId";
 
@@ -60,27 +62,31 @@ public class UserOptionsDaoImpl extends AbstractDao implements UserOptionsDao {
         LOG.debug("userOptionsId = " + userOptionsId);
       }
       LOG.error(exception.getMessage());
-      throw new NotFoundException(messages.getString("UserOptionsDao.getUserOptions.notFound"), exception);
+      throw new NotFoundException(
+          messages.getString("UserOptionsDao.getUserOptions.notFound"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
-      LOG.error((exception.getMessage()));
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      LOG.error(exception.getMessage());
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug(("userOptionsId = " + userOptionsId));
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
+  /** {@inheritDoc} */
   @Override
-  public void updateUserOptions(UserOptions userOptions) throws TechnicalException, NotFoundException {
+  public void updateUserOptions(final UserOptions userOptions)
+      throws TechnicalException, NotFoundException {
 
-    sql = "UPDATE user_options SET before_reminder = :beforeReminder WHERE user_options_id = :userOptionsId";
+    sql =
+        "UPDATE user_options SET before_reminder = :beforeReminder WHERE user_options_id = :userOptionsId";
 
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(userOptions);
 
@@ -91,7 +97,8 @@ public class UserOptionsDaoImpl extends AbstractDao implements UserOptionsDao {
           LOG.debug("SQL : " + sql);
           LOG.debug("userOptions = " + userOptions.toString());
         }
-        throw new NotFoundException(messages.getString("UserOptionsDao.updateUserOptions.notFound"));
+        throw new NotFoundException(
+            messages.getString("UserOptionsDao.updateUserOptions.notFound"));
       }
     } catch (DataIntegrityViolationException exception) {
       if (LOG.isDebugEnabled()) {
@@ -103,30 +110,32 @@ public class UserOptionsDaoImpl extends AbstractDao implements UserOptionsDao {
           messages.getString("UserOptionsDao.updateUserOptions.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("userOptions = " + userOptions.toString());
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public int insertUserOptions(UserOptions userOptions) throws TechnicalException {
-    sql = "INSERT INTO user_options (user_options_id, before_reminder) VALUES (DEFAULT, :beforeReminder)";
+  public int insertUserOptions(final UserOptions userOptions) throws TechnicalException {
+    sql =
+        "INSERT INTO user_options (user_options_id, before_reminder) VALUES (DEFAULT, :beforeReminder)";
 
     final KeyHolder keyHolder = new GeneratedKeyHolder();
     final SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(userOptions);
 
     try {
-      this.getNamedJdbcTemplate().update(sql, parameterSource, keyHolder, new String[] {"user_options_id"});
+      this.getNamedJdbcTemplate()
+          .update(sql, parameterSource, keyHolder, new String[] {"user_options_id"});
       return keyHolder.getKey().intValue();
     } catch (DuplicateKeyException exception) {
       if (LOG.isDebugEnabled()) {
@@ -146,23 +155,24 @@ public class UserOptionsDaoImpl extends AbstractDao implements UserOptionsDao {
           messages.getString("UserOptionsDao.insertUserOptions.integrityViolation"), exception);
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("userOptions = " + userOptions.toString());
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void deleteUserOptions(Integer userOptionsId) throws TechnicalException, NotFoundException {
+  public void deleteUserOptions(final Integer userOptionsId)
+      throws TechnicalException, NotFoundException {
 
     sql = "DELETE FROM user_options WHERE user_options_id = :userOptionsId";
 
@@ -176,21 +186,22 @@ public class UserOptionsDaoImpl extends AbstractDao implements UserOptionsDao {
           LOG.debug("SQL : " + sql);
           LOG.debug("userOptionsId = " + userOptionsId);
         }
-        throw new NotFoundException(messages.getString("UserOptionsDao.deleteUserOptions.notFound"));
+        throw new NotFoundException(
+            messages.getString("UserOptionsDao.deleteUserOptions.notFound"));
       }
     } catch (PermissionDeniedDataAccessException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("permissionDenied"), exception);
+      throw new TechnicalException(messages.getString(PERMISSION_DENIED), exception);
     } catch (DataAccessResourceFailureException exception) {
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccessResourceFailure"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS_RESOURCE_FAILURE), exception);
     } catch (DataAccessException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("SQL : " + sql);
         LOG.debug("userOptionsId = " + userOptionsId);
       }
       LOG.error(exception.getMessage());
-      throw new TechnicalException(messages.getString("dataAccess"), exception);
+      throw new TechnicalException(messages.getString(DATA_ACCESS), exception);
     }
   }
 }

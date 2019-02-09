@@ -42,19 +42,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class BooksManagementManagerImpl extends AbstractManager implements BooksManagementManager {
 
-  /** Books Borrowed Listing Manager logger */
+  /** Books Borrowed Listing Manager logger. */
   private static final Log LOG = LogFactory.getLog(BooksManagementManagerImpl.class);
 
   /** Number of days for a borrow or an extension of a borrow. */
   private static final Integer NB_DAYS_BORROW = Integer.parseInt(config.getString("nbDaysBorrow"));
 
-  /** Number of days to pick up a reservation */
-  private static final int NB_DAYS_RESERVATION = Integer.parseInt(config.getString("nbDaysReservation"));
+  /** Number of days to pick up a reservation. */
+  private static final int NB_DAYS_RESERVATION =
+      Integer.parseInt(config.getString("nbDaysReservation"));
 
   /** Number of days before the end of borrow for before reminder send. */
-  private static final Integer NB_DAYS_BEFORE_REMINDER = Integer.parseInt(config.getString("nbDaysBeforeReminder"));
+  private static final Integer NB_DAYS_BEFORE_REMINDER =
+      Integer.parseInt(config.getString("nbDaysBeforeReminder"));
 
-  /** Default Constructor */
+  /** Default Constructor. */
   public BooksManagementManagerImpl() {
     super();
   }
@@ -63,42 +65,44 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
   @Override
   public List<User> getUsersDeadlineExpired() throws TechnicalException {
 
+    List<User> usersList = new ArrayList<>();
     try {
-      return this.getDaoFactory().getUserDao().getUserWithBorrowsExpired();
+      usersList = this.getDaoFactory().getUserDao().getUserWithBorrowsExpired();
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      return new ArrayList<>();
     }
+    return usersList;
   }
 
   /** {@inheritDoc} */
   @Override
   public void reminderToUsers() throws TechnicalException {
 
-    List<User> users = new ArrayList<>();
+    List<User> users = getUsersDeadlineExpired();
 
-    try {
-      users = this.getDaoFactory().getUserDao().getUserWithBorrowsExpired();
-    } catch (NotFoundException exception) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug(exception.getMessage());
-      }
-    }
-
-    sendReminderMails(config.getString("mail.host"), Integer.valueOf(config.getString("mail.port")), config.getString("mail.username"), config.getString("mail.password"), users);
+    sendReminderMails(
+        config.getString("mail.host"),
+        Integer.valueOf(config.getString("mail.port")),
+        config.getString("mail.username"),
+        config.getString("mail.password"),
+        users);
   }
 
+  /** {@inheritDoc} */
   @Override
   public int reservationNotBorrowInTime() throws TechnicalException {
 
-    List<BookReservation> reservationsList= new ArrayList<>();
+    List<BookReservation> reservationsList = new ArrayList<>();
     LocalDate dateMax = LocalDate.now().minusDays(NB_DAYS_RESERVATION);
     int nbError = 0;
 
     try {
-      reservationsList = this.getDaoFactory().getBookReservationDao().getActiveReservationWithoutBorrowInTime(dateMax);
+      reservationsList =
+          this.getDaoFactory()
+              .getBookReservationDao()
+              .getActiveReservationWithoutBorrowInTime(dateMax);
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
@@ -134,47 +138,61 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       }
     }
 
-    sendBeforeReminderMails(config.getString("mail.host"), Integer.valueOf(config.getString("mail.port")), config.getString("mail.username"), config.getString("mail.password"), users);
+    sendBeforeReminderMails(
+        config.getString("mail.host"),
+        Integer.valueOf(config.getString("mail.port")),
+        config.getString("mail.username"),
+        config.getString("mail.password"),
+        users);
   }
 
   /** {@inheritDoc} */
   @Override
   public List<BookStockDto> getStocksList() throws TechnicalException {
 
+    List<BookStockDto> bookStockDtoList = new ArrayList<>();
+
     try {
-      return this.getDaoFactory().getStockDao().getBookStockList();
+      bookStockDtoList = this.getDaoFactory().getStockDao().getBookStockList();
     } catch (NotFoundException exception) {
       LOG.error(exception.getMessage());
     }
-    return new ArrayList<>();
+
+    return bookStockDtoList;
   }
 
   /** {@inheritDoc} */
   @Override
   public List<BorrowDto> getBorrowsHistory() throws TechnicalException {
 
+    List<BorrowDto> borrowDtoList = new ArrayList<>();
+
     try {
-      return this.getDaoFactory().getBookBorrowedDao().getAllBorrows();
+      borrowDtoList = this.getDaoFactory().getBookBorrowedDao().getAllBorrows();
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      return new ArrayList<>();
     }
+
+    return borrowDtoList;
   }
 
   /** {@inheritDoc} */
   @Override
   public List<BookBorrowsCountDto> getNbBorrowsByBooks() throws TechnicalException {
 
+    List<BookBorrowsCountDto> bookBorrowsCountDtoList = new ArrayList<>();
+
     try {
-      return this.getDaoFactory().getBookBorrowedDao().countBorrowsByBook();
+      bookBorrowsCountDtoList = this.getDaoFactory().getBookBorrowedDao().countBorrowsByBook();
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
       }
-      return new ArrayList<>();
     }
+
+    return bookBorrowsCountDtoList;
   }
 
   /** {@inheritDoc} */
@@ -203,12 +221,13 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     Integer bookBorrowingId;
     try {
       stock = this.getDaoFactory().getStockDao().getStockForBook(bookId);
-      if(stock.getAmount() < 1) {
+      if (stock.getAmount() < 1) {
         LOG.error(messages.getString("booksManagementManager.bookBorrowing.noEnoughStock"));
-        throw new FunctionalException(messages.getString("booksManagementManager.bookBorrowing.noEnoughStock"));
+        throw new FunctionalException(
+            messages.getString("booksManagementManager.bookBorrowing.noEnoughStock"));
       }
       newStock = stock;
-      newStock.setAmountAvailable(stock.getAmountAvailable()-1);
+      newStock.setAmountAvailable(stock.getAmountAvailable() - 1);
       this.getDaoFactory().getStockDao().updateStock(newStock);
       bookBorrowingId = this.getDaoFactory().getBookBorrowedDao().insertBookBorrowed(bookBorrowed);
     } catch (NotFoundException exception) {
@@ -221,7 +240,8 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     // Cancel the reservation if the user have reserved this book (and the reservation is active)
     BookReservation bookReservation = new BookReservation();
     try {
-      bookReservation = this.getDaoFactory().getBookReservationDao().getBookReservation(bookId, userId);
+      bookReservation =
+          this.getDaoFactory().getBookReservationDao().getBookReservation(bookId, userId);
     } catch (NotFoundException exception) {
       if (LOG.isDebugEnabled()) {
         LOG.debug(exception.getMessage());
@@ -268,9 +288,9 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
 
     /*
-      @TICKET #2
-      Check if the end date of the borrow is passed. If end date is passed, throw FunctionalException.
-     */
+     @TICKET #2
+     Check if the end date of the borrow is passed. If end date is passed, throw FunctionalException.
+    */
     if (bookBorrowed.getEndDate().isBefore(LocalDate.now())) {
       LOG.error(messages.getString("booksManagementManager.extendBorrow.endPassed"));
       throw new FunctionalException(
@@ -326,14 +346,15 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       this.getDaoFactory().getBookBorrowedDao().updateBookBorrowed(bookBorrowedUpdated);
     } catch (NotFoundException exception) {
       LOG.error(exception.getMessage());
-      throw new FunctionalException(exception.getMessage());
+      throw new FunctionalException(exception.getMessage(), exception);
     }
 
     try {
       Book book = this.getDaoFactory().getBookDao().getBook(bookBorrowed.getBookId());
       this.sendMailBookAvailable(book);
     } catch (Exception exception) {
-      // if a problem occurred with email sending, user get no message because he's not directly concerned by the problem.
+      // if a problem occurred with email sending, user get no message because he's not directly
+      // concerned by the problem.
       LOG.error(exception.getMessage());
     }
 
@@ -361,7 +382,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
 
   /** {@inheritDoc} */
   @Override
-  public Integer bookReservation(Integer bookId, Integer userId)
+  public Integer bookReservation(final Integer bookId, final Integer userId)
       throws TechnicalException, FunctionalException {
 
     if (bookId == null || userId == null) {
@@ -373,7 +394,8 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
 
     List<BookReservation> listActiveReservation;
     try {
-      listActiveReservation = getDaoFactory().getBookReservationDao().getActiveReservationListForBook(bookId);
+      listActiveReservation =
+          getDaoFactory().getBookReservationDao().getActiveReservationListForBook(bookId);
     } catch (NotFoundException exception) {
       listActiveReservation = new ArrayList<>();
     }
@@ -383,7 +405,8 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
 
       // Check if number of reservation is not 2 * the amount of book.
       if (listActiveReservation.size() > (2 * stock.getAmount())) {
-        throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.reservationfull"));
+        throw new FunctionalException(
+            messages.getString("booksManagementManager.bookReservation.reservationfull"));
       }
     } catch (NotFoundException exception) {
       LOG.error(exception.getMessage());
@@ -393,7 +416,8 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     // Check if the user have already make a reservation for this book
     for (BookReservation bookReservation : listActiveReservation) {
       if (bookReservation.getUserId().equals(userId)) {
-        throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.alreadyReserved"));
+        throw new FunctionalException(
+            messages.getString("booksManagementManager.bookReservation.alreadyReserved"));
       }
     }
 
@@ -407,7 +431,8 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
 
     for (BorrowDto borrow : listBookBorrowed) {
       if (borrow.getBookId().equals(bookId)) {
-        throw new FunctionalException(messages.getString("booksManagementManager.bookReservation.alreadyBorrow"));
+        throw new FunctionalException(
+            messages.getString("booksManagementManager.bookReservation.alreadyBorrow"));
       }
     }
 
@@ -419,12 +444,12 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     bookReservation.setDateReservation(LocalDateTime.now());
 
     return getDaoFactory().getBookReservationDao().insertBookReservation(bookReservation);
-
   }
 
   /** {@inheritDoc} */
   @Override
-  public void cancelReservation(Integer bookReservationId) throws TechnicalException, FunctionalException {
+  public void cancelReservation(final Integer bookReservationId)
+      throws TechnicalException, FunctionalException {
     if (bookReservationId == null) {
       LOG.error("bookReservationId = " + bookReservationId);
       throw new FunctionalException(
@@ -432,7 +457,8 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
 
     try {
-      BookReservation bookReservation = getDaoFactory().getBookReservationDao().getBookReservation(bookReservationId);
+      BookReservation bookReservation =
+          getDaoFactory().getBookReservationDao().getBookReservation(bookReservationId);
       bookReservation.setActiveReservation(false);
       getDaoFactory().getBookReservationDao().updateBookReservation(bookReservation);
     } catch (NotFoundException exception) {
@@ -441,11 +467,14 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
   }
 
+  /** {@inheritDoc} */
   @Override
-  public List<ReservationDetailsDto> userReservationsList(final Integer userId) throws TechnicalException, FunctionalException {
+  public List<ReservationDetailsDto> userReservationsList(final Integer userId)
+      throws TechnicalException, FunctionalException {
     if (userId == null) {
       LOG.error("userId = " + userId);
-      throw new FunctionalException(messages.getString("booksManagementManager.userReservationsList.userIdNull"));
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.userReservationsList.userIdNull"));
     }
 
     try {
@@ -456,11 +485,14 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     }
   }
 
+  /** {@inheritDoc} */
   @Override
-  public List<BookReservation> activeReservationsListForBook(Integer bookId) throws TechnicalException, FunctionalException {
+  public List<BookReservation> activeReservationsListForBook(final Integer bookId)
+      throws TechnicalException, FunctionalException {
     if (bookId == null) {
       LOG.error("bookId = " + bookId);
-      throw new FunctionalException(messages.getString("booksManagementManager.activeReservationsListForBook.bookIdNull"));
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.activeReservationsListForBook.bookIdNull"));
     }
 
     try {
@@ -473,15 +505,18 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
 
   /** {@inheritDoc} */
   @Override
-  public void sendMailBookAvailable(Book book) throws TechnicalException, FunctionalException {
+  public void sendMailBookAvailable(final Book book)
+      throws TechnicalException, FunctionalException {
 
-    if(book == null) {
+    if (book == null) {
       LOG.error("book null");
-      throw new FunctionalException(messages.getString("booksManagementManager.sendMailBookAvailable.bookNull"));
+      throw new FunctionalException(
+          messages.getString("booksManagementManager.sendMailBookAvailable.bookNull"));
     }
     List<BookReservation> listReservations;
     try {
-      listReservations = getDaoFactory().getBookReservationDao().getActiveReservationListForBook(book.getBookId());
+      listReservations =
+          getDaoFactory().getBookReservationDao().getActiveReservationListForBook(book.getBookId());
     } catch (NotFoundException exception) {
       LOG.debug("liste reservation vide");
       listReservations = new ArrayList<>();
@@ -494,20 +529,27 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
         user = getDaoFactory().getUserDao().getUser(bookReservation.getUserId());
       } catch (NotFoundException exception) {
         LOG.error(exception.getMessage());
-        throw new FunctionalException(messages.getString("booksManagementManager.sendMailBookAvailable.userNotFound"));
+        throw new FunctionalException(
+            messages.getString("booksManagementManager.sendMailBookAvailable.userNotFound"));
       }
 
-      mailBookAvailable(config.getString("mail.host"), Integer.valueOf(config.getString("mail.port")), config.getString("mail.username"), config.getString("mail.password"), user, book);
+      mailBookAvailable(
+          config.getString("mail.host"),
+          Integer.valueOf(config.getString("mail.port")),
+          config.getString("mail.username"),
+          config.getString("mail.password"),
+          user,
+          book);
       bookReservation.setDateReservationEmailSend(LocalDateTime.now());
 
       try {
         getDaoFactory().getBookReservationDao().updateBookReservation(bookReservation);
       } catch (NotFoundException exception) {
         LOG.error(exception.getMessage());
-        throw new FunctionalException(messages.getString("booksManagementManager.sendMailBookAvailable.reservationNotFound"));
+        throw new FunctionalException(
+            messages.getString("booksManagementManager.sendMailBookAvailable.reservationNotFound"));
       }
     }
-
   }
 
   /**
@@ -518,13 +560,17 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
    * @param username username for smtp authentication.
    * @param password password for smtp authentication.
    * @param users list of User to send the reminder mails.
-   * @throws TechnicalException
+   * @throws TechnicalException This exception is throw if there is a technical problem.
    */
   private void sendReminderMails(
-      String host, Integer port, String username, String password, List<User> users)
+      final String host,
+      final Integer port,
+      final String username,
+      final String password,
+      final List<User> users)
       throws TechnicalException {
 
-    Properties prop = new Properties();
+    final Properties prop = new Properties();
     prop.put("mail.smtp.auth", true);
     prop.put("mail.smtp.starttls.enable", "true");
     prop.put("mail.smtp.host", host);
@@ -552,7 +598,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
         message.setSubject(messages.getString("booksManagementManager.sendReminderMails.object"));
 
-        String msg = messages.getString("booksManagementManager.sendReminderMails.mail");
+        final String msg = messages.getString("booksManagementManager.sendReminderMails.mail");
 
         LOG.error("Message : " + msg);
 
@@ -581,11 +627,18 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
    * @param password password for smtp authentication.
    * @param user User to send the mail.
    * @param book Book reserved and available.
-   * @throws TechnicalException
+   * @throws TechnicalException This exception is throw if there is a technical problem.
    */
-  private void mailBookAvailable(String host, Integer port, String username, String password, User user, Book book) throws TechnicalException {
+  private void mailBookAvailable(
+      final String host,
+      final Integer port,
+      final String username,
+      final String password,
+      final User user,
+      final Book book)
+      throws TechnicalException {
 
-    Properties prop = new Properties();
+    final Properties prop = new Properties();
     prop.put("mail.smtp.auth", true);
     prop.put("mail.smtp.starttls.enable", "true");
     prop.put("mail.smtp.host", host);
@@ -595,7 +648,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
     LOG.error(prop.stringPropertyNames());
     LOG.error("Prop text :" + prop.toString());
 
-    Session session =
+    final Session session =
         Session.getInstance(
             prop,
             new Authenticator() {
@@ -625,10 +678,10 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
       message.setContent(multipart);
 
       Transport.send(message);
-  } catch (Exception exception) {
-    LOG.error("Email error : " + exception.getMessage());
-    throw new TechnicalException(exception.getMessage(), exception);
-  }
+    } catch (Exception exception) {
+      LOG.error("Email error : " + exception.getMessage());
+      throw new TechnicalException(exception.getMessage(), exception);
+    }
   }
 
   /**
@@ -639,9 +692,11 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
    * @param username username for smtp authentication.
    * @param password password for smtp authentication.
    * @param users list of User to send the reminder mails.
-   * @throws TechnicalException
+   * @throws TechnicalException This exception is throw if there is a technical problem.
    */
-  private void sendBeforeReminderMails(String host, Integer port, String username, String password, List<User> users) throws TechnicalException {
+  private void sendBeforeReminderMails(
+      String host, Integer port, String username, String password, List<User> users)
+      throws TechnicalException {
 
     Properties prop = new Properties();
     prop.put("mail.smtp.auth", true);
@@ -657,23 +712,28 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
         Session.getInstance(
             prop,
             new Authenticator() {
+              /** {@inheritDoc} */
               @Override
               protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
               }
             });
     session.setDebug(true);
-    for (User user : users) {
+    for (final User user : users) {
       try {
 
         // Get list of title and end date of borrow for each book borrowed
-        List<BorrowDto>  borrowDtoList = this.getDaoFactory().getBookBorrowedDao().getBorrowsAlmostExpiredForUser(user.getUserId(), NB_DAYS_BEFORE_REMINDER);
+        List<BorrowDto> borrowDtoList =
+            this.getDaoFactory()
+                .getBookBorrowedDao()
+                .getBorrowsAlmostExpiredForUser(user.getUserId(), NB_DAYS_BEFORE_REMINDER);
 
         // Message creation
-        Message message = new MimeMessage(session);
+        final Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(config.getString("mail.sender")));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
-        message.setSubject(messages.getString("booksManagementManager.sendBeforeReminderMails.object"));
+        message.setSubject(
+            messages.getString("booksManagementManager.sendBeforeReminderMails.object"));
 
         StringBuilder msg = new StringBuilder();
         msg.append(messages.getString("booksManagementManager.sendBeforeReminderMails.mail"));
@@ -693,7 +753,7 @@ public class BooksManagementManagerImpl extends AbstractManager implements Books
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
         mimeBodyPart.setContent(msg.toString(), "text/html");
 
-        Multipart multipart = new MimeMultipart();
+        final Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(mimeBodyPart);
 
         message.setContent(multipart);

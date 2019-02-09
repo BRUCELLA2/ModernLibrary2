@@ -1,4 +1,3 @@
-
 package generated.bookserviceclient;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -6,12 +5,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Classe Java pour makeReservationResponse complex type.
- * 
+ * Classe Java pour makeReservationResponse complex type.
+ *
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
- * 
+ *
  * <pre>
  * &lt;complexType name="makeReservationResponse">
  *   &lt;complexContent>
@@ -23,40 +21,31 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "makeReservationResponse", propOrder = {
-    "_return"
-})
+@XmlType(
+    name = "makeReservationResponse",
+    propOrder = {"_return"})
 public class MakeReservationResponse {
 
-    @XmlElement(name = "return")
-    protected Integer _return;
+  @XmlElement(name = "return")
+  protected Integer _return;
 
-    /**
-     * Obtient la valeur de la propriété return.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getReturn() {
-        return _return;
-    }
+  /**
+   * Obtient la valeur de la propriété return.
+   *
+   * @return possible object is {@link Integer }
+   */
+  public Integer getReturn() {
+    return _return;
+  }
 
-    /**
-     * Définit la valeur de la propriété return.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setReturn(Integer value) {
-        this._return = value;
-    }
-
+  /**
+   * Définit la valeur de la propriété return.
+   *
+   * @param value allowed object is {@link Integer }
+   */
+  public void setReturn(Integer value) {
+    this._return = value;
+  }
 }

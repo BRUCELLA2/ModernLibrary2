@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class UserRM implements RowMapper<User> {
 
   /** Default Constructor */
-  public UserRM() {}
+  public UserRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

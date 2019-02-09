@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class CurrentlyBorrowExpiredDtoRM implements RowMapper<CurrentlyBorrowExpiredDto> {
 
   /** Default Constructor */
-  public CurrentlyBorrowExpiredDtoRM() {}
+  public CurrentlyBorrowExpiredDtoRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

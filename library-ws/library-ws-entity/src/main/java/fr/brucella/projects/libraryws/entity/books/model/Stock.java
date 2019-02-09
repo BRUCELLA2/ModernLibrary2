@@ -21,6 +21,13 @@ public class Stock {
   @NotNull(message = "{stock.amount.null}")
   private Integer amount;
 
+  // ===== Constructor =====
+
+  /** Default Constructor */
+  public Stock() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
+
   // ===== Getters and Setters =====
 
   /**
@@ -94,11 +101,6 @@ public class Stock {
   public void setAmount(final Integer amount) {
     this.amount = amount;
   }
-
-  // ===== Constructor =====
-
-  /** Default Constructor */
-  public Stock() {}
 
   // ===== Methods =====
 

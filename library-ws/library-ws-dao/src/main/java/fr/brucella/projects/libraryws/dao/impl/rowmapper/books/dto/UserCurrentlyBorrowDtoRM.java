@@ -13,7 +13,9 @@ import org.springframework.jdbc.core.RowMapper;
 public class UserCurrentlyBorrowDtoRM implements RowMapper<UserCurrentlyBorrowDto> {
 
   /** Default Constructor */
-  public UserCurrentlyBorrowDtoRM() {}
+  public UserCurrentlyBorrowDtoRM() {
+    // This constructor is intentionally empty. Nothing special is needed here.
+  }
 
   /** {@inheritDoc} */
   @Override

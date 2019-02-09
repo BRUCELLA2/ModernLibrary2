@@ -42,6 +42,11 @@ public class AuthentificationService {
   /** The Manager Factory Manager Factory allow to get and set business managers. */
   @Autowired private ManagerFactory managerFactory;
 
+  /** Default constructor. */
+  public AuthentificationService() {
+    // This constructor is intentionally empty.
+  }
+
   // ===== WebMethods ===== //
 
   /**
@@ -121,7 +126,7 @@ public class AuthentificationService {
    *     is throw if the fullUserDto are not valid (null or with invalid data)
    */
   @WebMethod
-  public Integer addUser(FullUserDto fullUserDto) throws LibraryWsException {
+  public Integer addUser(final FullUserDto fullUserDto) throws LibraryWsException {
 
     if (fullUserDto == null) {
       LOG.error("fullUserDto null");
