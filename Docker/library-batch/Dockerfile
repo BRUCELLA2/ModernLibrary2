@@ -6,6 +6,7 @@ MAINTAINER BRUCELLA2@ModernLibrary
 ADD crontab /etc/cron.d/reminder-cron
 ADD borrowExpired.xml opt/scripts/borrowExpired.xml
 ADD reminderBeforeExpiration.xml opt/scripts/reminderBeforeExpiration.xml
+ADD checkReservation.xml opt/scripts/checkReservation.xml
 
 
 # Give execution rights on the cron job

@@ -1,0 +1,464 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://services.libraryws.projects.brucella.fr/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="AdministrationService" targetNamespace="http://services.libraryws.projects.brucella.fr/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.libraryws.projects.brucella.fr/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://services.libraryws.projects.brucella.fr/">
+  <xs:element name="addAuthor" type="tns:addAuthor"/>
+  <xs:element name="addAuthorResponse" type="tns:addAuthorResponse"/>
+  <xs:element name="addBook" type="tns:addBook"/>
+  <xs:element name="addBookResponse" type="tns:addBookResponse"/>
+  <xs:element name="addGenre" type="tns:addGenre"/>
+  <xs:element name="addGenreResponse" type="tns:addGenreResponse"/>
+  <xs:element name="addPublisher" type="tns:addPublisher"/>
+  <xs:element name="addPublisherResponse" type="tns:addPublisherResponse"/>
+  <xs:element name="addRole" type="tns:addRole"/>
+  <xs:element name="addRoleResponse" type="tns:addRoleResponse"/>
+  <xs:element name="modifyAuthor" type="tns:modifyAuthor"/>
+  <xs:element name="modifyAuthorResponse" type="tns:modifyAuthorResponse"/>
+  <xs:element name="modifyBook" type="tns:modifyBook"/>
+  <xs:element name="modifyBookResponse" type="tns:modifyBookResponse"/>
+  <xs:element name="modifyGenre" type="tns:modifyGenre"/>
+  <xs:element name="modifyGenreResponse" type="tns:modifyGenreResponse"/>
+  <xs:element name="modifyPublisher" type="tns:modifyPublisher"/>
+  <xs:element name="modifyPublisherResponse" type="tns:modifyPublisherResponse"/>
+  <xs:element name="modifyRole" type="tns:modifyRole"/>
+  <xs:element name="modifyRoleResponse" type="tns:modifyRoleResponse"/>
+  <xs:complexType name="modifyPublisher">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:publisher"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="publisher">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="publisherId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyPublisherResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="libraryWsFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="faultCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="faultString" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addRole">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:role"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="role">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="roleId" type="xs:int"/>
+      <xs:element minOccurs="0" name="roleName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addRoleResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addGenre">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:genre"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="genre">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="genreId" type="xs:int"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addGenreResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyAuthor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:author"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="author">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authorId" type="xs:int"/>
+      <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+      <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyAuthorResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyBook">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:book"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="book">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="bookId" type="xs:int"/>
+      <xs:element minOccurs="0" name="ean13" type="xs:string"/>
+      <xs:element minOccurs="0" name="genreId" type="xs:int"/>
+      <xs:element minOccurs="0" name="isbn13" type="xs:string"/>
+      <xs:element minOccurs="0" name="publisherId" type="xs:int"/>
+      <xs:element minOccurs="0" name="publishingDate" type="xs:string"/>
+      <xs:element minOccurs="0" name="resume" type="xs:string"/>
+      <xs:element minOccurs="0" name="title" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyBookResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addAuthor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:author"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addAuthorResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addBook">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:book"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addBookResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyGenre">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:genre"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyGenreResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addPublisher">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:publisher"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addPublisherResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyRole">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:role"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyRoleResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LibraryWsException" nillable="true" type="tns:libraryWsFault"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="modifyPublisher">
+    <wsdl:part element="tns:modifyPublisher" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyAuthor">
+    <wsdl:part element="tns:modifyAuthor" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyBook">
+    <wsdl:part element="tns:modifyBook" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addAuthor">
+    <wsdl:part element="tns:addAuthor" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addRoleResponse">
+    <wsdl:part element="tns:addRoleResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addBook">
+    <wsdl:part element="tns:addBook" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addAuthorResponse">
+    <wsdl:part element="tns:addAuthorResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addBookResponse">
+    <wsdl:part element="tns:addBookResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyAuthorResponse">
+    <wsdl:part element="tns:modifyAuthorResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyBookResponse">
+    <wsdl:part element="tns:modifyBookResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="LibraryWsException">
+    <wsdl:part element="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyRole">
+    <wsdl:part element="tns:modifyRole" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addRole">
+    <wsdl:part element="tns:addRole" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addGenre">
+    <wsdl:part element="tns:addGenre" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addPublisherResponse">
+    <wsdl:part element="tns:addPublisherResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyGenreResponse">
+    <wsdl:part element="tns:modifyGenreResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyPublisherResponse">
+    <wsdl:part element="tns:modifyPublisherResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyGenre">
+    <wsdl:part element="tns:modifyGenre" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addPublisher">
+    <wsdl:part element="tns:addPublisher" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyRoleResponse">
+    <wsdl:part element="tns:modifyRoleResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addGenreResponse">
+    <wsdl:part element="tns:addGenreResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AdministrationService">
+    <wsdl:operation name="modifyPublisher">
+      <wsdl:input message="tns:modifyPublisher" name="modifyPublisher">
+    </wsdl:input>
+      <wsdl:output message="tns:modifyPublisherResponse" name="modifyPublisherResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addRole">
+      <wsdl:input message="tns:addRole" name="addRole">
+    </wsdl:input>
+      <wsdl:output message="tns:addRoleResponse" name="addRoleResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addGenre">
+      <wsdl:input message="tns:addGenre" name="addGenre">
+    </wsdl:input>
+      <wsdl:output message="tns:addGenreResponse" name="addGenreResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyAuthor">
+      <wsdl:input message="tns:modifyAuthor" name="modifyAuthor">
+    </wsdl:input>
+      <wsdl:output message="tns:modifyAuthorResponse" name="modifyAuthorResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyBook">
+      <wsdl:input message="tns:modifyBook" name="modifyBook">
+    </wsdl:input>
+      <wsdl:output message="tns:modifyBookResponse" name="modifyBookResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addAuthor">
+      <wsdl:input message="tns:addAuthor" name="addAuthor">
+    </wsdl:input>
+      <wsdl:output message="tns:addAuthorResponse" name="addAuthorResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addBook">
+      <wsdl:input message="tns:addBook" name="addBook">
+    </wsdl:input>
+      <wsdl:output message="tns:addBookResponse" name="addBookResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyGenre">
+      <wsdl:input message="tns:modifyGenre" name="modifyGenre">
+    </wsdl:input>
+      <wsdl:output message="tns:modifyGenreResponse" name="modifyGenreResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addPublisher">
+      <wsdl:input message="tns:addPublisher" name="addPublisher">
+    </wsdl:input>
+      <wsdl:output message="tns:addPublisherResponse" name="addPublisherResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyRole">
+      <wsdl:input message="tns:modifyRole" name="modifyRole">
+    </wsdl:input>
+      <wsdl:output message="tns:modifyRoleResponse" name="modifyRoleResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AdministrationServiceSoapBinding" type="tns:AdministrationService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="modifyPublisher">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="modifyPublisher">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="modifyPublisherResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addRole">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addRole">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addRoleResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addGenre">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addGenre">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addGenreResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyAuthor">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="modifyAuthor">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="modifyAuthorResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyBook">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="modifyBook">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="modifyBookResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addAuthor">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addAuthor">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addAuthorResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addBook">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addBook">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addBookResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyGenre">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="modifyGenre">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="modifyGenreResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addPublisher">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addPublisher">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addPublisherResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyRole">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="modifyRole">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="modifyRoleResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AdministrationService">
+    <wsdl:port binding="tns:AdministrationServiceSoapBinding" name="AdministrationServicePort">
+      <soap:address location="http://0.0.0.0:8080/library-ws-services/services/administrationService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

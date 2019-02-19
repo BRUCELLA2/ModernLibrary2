@@ -1,0 +1,261 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://services.libraryws.projects.brucella.fr/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="AuthentificationService" targetNamespace="http://services.libraryws.projects.brucella.fr/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.libraryws.projects.brucella.fr/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://services.libraryws.projects.brucella.fr/">
+  <xs:element name="addRoleToUser" type="tns:addRoleToUser"/>
+  <xs:element name="addRoleToUserResponse" type="tns:addRoleToUserResponse"/>
+  <xs:element name="addUser" type="tns:addUser"/>
+  <xs:element name="addUserResponse" type="tns:addUserResponse"/>
+  <xs:element name="login" type="tns:login"/>
+  <xs:element name="loginAvailable" type="tns:loginAvailable"/>
+  <xs:element name="loginAvailableResponse" type="tns:loginAvailableResponse"/>
+  <xs:element name="loginResponse" type="tns:loginResponse"/>
+  <xs:element name="modifyUser" type="tns:modifyUser"/>
+  <xs:element name="modifyUserResponse" type="tns:modifyUserResponse"/>
+  <xs:complexType name="login">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="loginResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:fullUserDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="fullUserDto">
+    <xs:complexContent>
+      <xs:extension base="tns:user">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="beforeReminder" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="city" type="xs:string"/>
+          <xs:element minOccurs="0" name="line1" type="xs:string"/>
+          <xs:element minOccurs="0" name="line2" type="xs:string"/>
+          <xs:element minOccurs="0" name="line3" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="roles" nillable="true" type="tns:role"/>
+          <xs:element minOccurs="0" name="zipCode" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="addressId" type="xs:int"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="login" type="xs:string"/>
+      <xs:element minOccurs="0" name="password" type="xs:string"/>
+      <xs:element minOccurs="0" name="phone" type="xs:string"/>
+      <xs:element minOccurs="0" name="userId" type="xs:int"/>
+      <xs:element minOccurs="0" name="userOptionsId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="role">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="roleId" type="xs:int"/>
+      <xs:element minOccurs="0" name="roleName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="libraryWsFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="faultCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="faultString" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:fullUserDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addRoleToUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addRoleToUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:fullUserDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="loginAvailable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="loginAvailableResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LibraryWsException" nillable="true" type="tns:libraryWsFault"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="login">
+    <wsdl:part element="tns:login" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addUserResponse">
+    <wsdl:part element="tns:addUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addRoleToUser">
+    <wsdl:part element="tns:addRoleToUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginAvailable">
+    <wsdl:part element="tns:loginAvailable" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginAvailableResponse">
+    <wsdl:part element="tns:loginAvailableResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addUser">
+    <wsdl:part element="tns:addUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addRoleToUserResponse">
+    <wsdl:part element="tns:addRoleToUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyUserResponse">
+    <wsdl:part element="tns:modifyUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="LibraryWsException">
+    <wsdl:part element="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyUser">
+    <wsdl:part element="tns:modifyUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part element="tns:loginResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AuthentificationService">
+    <wsdl:operation name="login">
+      <wsdl:input message="tns:login" name="login">
+    </wsdl:input>
+      <wsdl:output message="tns:loginResponse" name="loginResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addUser">
+      <wsdl:input message="tns:addUser" name="addUser">
+    </wsdl:input>
+      <wsdl:output message="tns:addUserResponse" name="addUserResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addRoleToUser">
+      <wsdl:input message="tns:addRoleToUser" name="addRoleToUser">
+    </wsdl:input>
+      <wsdl:output message="tns:addRoleToUserResponse" name="addRoleToUserResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyUser">
+      <wsdl:input message="tns:modifyUser" name="modifyUser">
+    </wsdl:input>
+      <wsdl:output message="tns:modifyUserResponse" name="modifyUserResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="loginAvailable">
+      <wsdl:input message="tns:loginAvailable" name="loginAvailable">
+    </wsdl:input>
+      <wsdl:output message="tns:loginAvailableResponse" name="loginAvailableResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AuthentificationServiceSoapBinding" type="tns:AuthentificationService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="login">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="login">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="loginResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addRoleToUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addRoleToUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addRoleToUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="modifyUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="modifyUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="loginAvailable">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="loginAvailable">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="loginAvailableResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AuthentificationService">
+    <wsdl:port binding="tns:AuthentificationServiceSoapBinding" name="AuthentificationServicePort">
+      <soap:address location="http://0.0.0.0:8080/library-ws-services/services/authentificationService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

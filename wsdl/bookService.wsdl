@@ -1,0 +1,1065 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://services.libraryws.projects.brucella.fr/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="BookService" targetNamespace="http://services.libraryws.projects.brucella.fr/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.libraryws.projects.brucella.fr/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://services.libraryws.projects.brucella.fr/">
+  <xs:element name="allBooks" type="tns:allBooks"/>
+  <xs:element name="allBooksResponse" type="tns:allBooksResponse"/>
+  <xs:element name="availableBooksList" type="tns:availableBooksList"/>
+  <xs:element name="availableBooksListResponse" type="tns:availableBooksListResponse"/>
+  <xs:element name="bookBorrow" type="tns:bookBorrow"/>
+  <xs:element name="bookBorrowResponse" type="tns:bookBorrowResponse"/>
+  <xs:element name="bookDetails" type="tns:bookDetails"/>
+  <xs:element name="bookDetailsResponse" type="tns:bookDetailsResponse"/>
+  <xs:element name="bookReservations" type="tns:bookReservations"/>
+  <xs:element name="bookReservationsResponse" type="tns:bookReservationsResponse"/>
+  <xs:element name="bookStocksList" type="tns:bookStocksList"/>
+  <xs:element name="bookStocksListResponse" type="tns:bookStocksListResponse"/>
+  <xs:element name="booksSearchedList" type="tns:booksSearchedList"/>
+  <xs:element name="booksSearchedListResponse" type="tns:booksSearchedListResponse"/>
+  <xs:element name="borrowingHistoryList" type="tns:borrowingHistoryList"/>
+  <xs:element name="borrowingHistoryListResponse" type="tns:borrowingHistoryListResponse"/>
+  <xs:element name="borrowingReturn" type="tns:borrowingReturn"/>
+  <xs:element name="borrowingReturnResponse" type="tns:borrowingReturnResponse"/>
+  <xs:element name="cancelAreservation" type="tns:cancelAreservation"/>
+  <xs:element name="cancelAreservationResponse" type="tns:cancelAreservationResponse"/>
+  <xs:element name="checkReservationNotPickedUp" type="tns:checkReservationNotPickedUp"/>
+  <xs:element name="checkReservationNotPickedUpResponse" type="tns:checkReservationNotPickedUpResponse"/>
+  <xs:element name="currentlyBooksBorrowedList" type="tns:currentlyBooksBorrowedList"/>
+  <xs:element name="currentlyBooksBorrowedListResponse" type="tns:currentlyBooksBorrowedListResponse"/>
+  <xs:element name="currentlyBorrowForUser" type="tns:currentlyBorrowForUser"/>
+  <xs:element name="currentlyBorrowForUserResponse" type="tns:currentlyBorrowForUserResponse"/>
+  <xs:element name="currentlyDeadLineExpiredForUser" type="tns:currentlyDeadLineExpiredForUser"/>
+  <xs:element name="currentlyDeadLineExpiredForUserResponse" type="tns:currentlyDeadLineExpiredForUserResponse"/>
+  <xs:element name="currentlyDeadlineExpired" type="tns:currentlyDeadlineExpired"/>
+  <xs:element name="currentlyDeadlineExpiredResponse" type="tns:currentlyDeadlineExpiredResponse"/>
+  <xs:element name="currentlyDeadlineExpiredUsers" type="tns:currentlyDeadlineExpiredUsers"/>
+  <xs:element name="currentlyDeadlineExpiredUsersResponse" type="tns:currentlyDeadlineExpiredUsersResponse"/>
+  <xs:element name="extendBorrowing" type="tns:extendBorrowing"/>
+  <xs:element name="extendBorrowingResponse" type="tns:extendBorrowingResponse"/>
+  <xs:element name="makeReservation" type="tns:makeReservation"/>
+  <xs:element name="makeReservationResponse" type="tns:makeReservationResponse"/>
+  <xs:element name="nbBorrowingByBooks" type="tns:nbBorrowingByBooks"/>
+  <xs:element name="nbBorrowingByBooksResponse" type="tns:nbBorrowingByBooksResponse"/>
+  <xs:element name="returnedBorrowsForUser" type="tns:returnedBorrowsForUser"/>
+  <xs:element name="returnedBorrowsForUserResponse" type="tns:returnedBorrowsForUserResponse"/>
+  <xs:element name="sendReminderBeforeExpirationToUsers" type="tns:sendReminderBeforeExpirationToUsers"/>
+  <xs:element name="sendReminderBeforeExpirationToUsersResponse" type="tns:sendReminderBeforeExpirationToUsersResponse"/>
+  <xs:element name="sendReminderToUsers" type="tns:sendReminderToUsers"/>
+  <xs:element name="sendReminderToUsersResponse" type="tns:sendReminderToUsersResponse"/>
+  <xs:element name="userReservations" type="tns:userReservations"/>
+  <xs:element name="userReservationsResponse" type="tns:userReservationsResponse"/>
+  <xs:complexType name="borrowingReturn">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="borrowingReturnResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="libraryWsFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="faultCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="faultString" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="extendBorrowing">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="extendBorrowingResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="nbBorrowingByBooks">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="nbBorrowingByBooksResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bookBorrowsCountDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bookBorrowsCountDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="bookId" type="xs:int"/>
+      <xs:element minOccurs="0" name="nbBorrows" type="xs:int"/>
+      <xs:element minOccurs="0" name="title" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="borrowingHistoryList">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="borrowingHistoryListResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:borrowDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="borrowDto">
+    <xs:complexContent>
+      <xs:extension base="tns:bookBorrowed">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="login" type="xs:string"/>
+          <xs:element minOccurs="0" name="title" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="bookBorrowed">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="bookBorrowedId" type="xs:int"/>
+      <xs:element minOccurs="0" name="bookId" type="xs:int"/>
+      <xs:element minOccurs="0" name="borrowDate" type="xs:string"/>
+      <xs:element minOccurs="0" name="endDate" type="xs:string"/>
+      <xs:element minOccurs="0" name="extension" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="lastReminder" type="xs:string"/>
+      <xs:element minOccurs="0" name="nbReminder" type="xs:int"/>
+      <xs:element minOccurs="0" name="returned" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="userId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bookStocksList">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="bookStocksListResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bookStockDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bookStockDto">
+    <xs:complexContent>
+      <xs:extension base="tns:stock">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="title" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="stock">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="amount" type="xs:int"/>
+      <xs:element minOccurs="0" name="amountAvailable" type="xs:int"/>
+      <xs:element minOccurs="0" name="bookId" type="xs:int"/>
+      <xs:element minOccurs="0" name="stockId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bookDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bookDetailsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:bookDetailsDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bookDetailsDto">
+    <xs:complexContent>
+      <xs:extension base="tns:book">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="amountAvailable" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="authors" nillable="true" type="tns:author"/>
+          <xs:element minOccurs="0" name="endBorrowDate" type="xs:string"/>
+          <xs:element minOccurs="0" name="genreName" type="xs:string"/>
+          <xs:element minOccurs="0" name="nbActiveReservations" type="xs:int"/>
+          <xs:element minOccurs="0" name="publisherName" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="book">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="bookId" type="xs:int"/>
+      <xs:element minOccurs="0" name="ean13" type="xs:string"/>
+      <xs:element minOccurs="0" name="genreId" type="xs:int"/>
+      <xs:element minOccurs="0" name="isbn13" type="xs:string"/>
+      <xs:element minOccurs="0" name="publisherId" type="xs:int"/>
+      <xs:element minOccurs="0" name="publishingDate" type="xs:string"/>
+      <xs:element minOccurs="0" name="resume" type="xs:string"/>
+      <xs:element minOccurs="0" name="title" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="author">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authorId" type="xs:int"/>
+      <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+      <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bookBorrow">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bookBorrowResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sendReminderBeforeExpirationToUsers">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="sendReminderBeforeExpirationToUsersResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="checkReservationNotPickedUp">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="checkReservationNotPickedUpResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="currentlyDeadlineExpiredUsers">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="currentlyDeadlineExpiredUsersResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:user"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="addressId" type="xs:int"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="login" type="xs:string"/>
+      <xs:element minOccurs="0" name="password" type="xs:string"/>
+      <xs:element minOccurs="0" name="phone" type="xs:string"/>
+      <xs:element minOccurs="0" name="userId" type="xs:int"/>
+      <xs:element minOccurs="0" name="userOptionsId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sendReminderToUsers">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="sendReminderToUsersResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="currentlyBorrowForUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="currentlyBorrowForUserResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:borrowDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="userReservations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="userReservationsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:reservationDetailsDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="reservationDetailsDto">
+    <xs:complexContent>
+      <xs:extension base="tns:bookReservation">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="firstEndBorrowDate" type="xs:string"/>
+          <xs:element minOccurs="0" name="title" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="bookReservation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="activeReservation" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="bookId" type="xs:int"/>
+      <xs:element minOccurs="0" name="bookReservationId" type="xs:int"/>
+      <xs:element minOccurs="0" name="dateReservation" type="xs:string"/>
+      <xs:element minOccurs="0" name="dateReservationEmailSend" type="xs:string"/>
+      <xs:element minOccurs="0" name="userId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="currentlyBooksBorrowedList">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="currentlyBooksBorrowedListResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:borrowDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelAreservation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelAreservationResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="allBooks">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="allBooksResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bookDetailsDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="returnedBorrowsForUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="returnedBorrowsForUserResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:borrowDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="booksSearchedList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:booksSearchClientCriteriaDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="booksSearchClientCriteriaDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="authorLastName" type="xs:string"/>
+      <xs:element minOccurs="0" name="bookAvailable" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="ean13" type="xs:string"/>
+      <xs:element minOccurs="0" name="genreName" type="xs:string"/>
+      <xs:element minOccurs="0" name="publisherName" type="xs:string"/>
+      <xs:element minOccurs="0" name="title" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="booksSearchedListResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bookDetailsDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="currentlyDeadLineExpiredForUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="currentlyDeadLineExpiredForUserResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:userCurrentlyBorrowDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="userCurrentlyBorrowDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="bookBorrowedId" type="xs:int"/>
+      <xs:element minOccurs="0" name="bookId" type="xs:int"/>
+      <xs:element minOccurs="0" name="borrowDate" type="xs:string"/>
+      <xs:element minOccurs="0" name="endDate" type="xs:string"/>
+      <xs:element minOccurs="0" name="extension" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="title" type="xs:string"/>
+      <xs:element minOccurs="0" name="userId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bookReservations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bookReservationsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bookReservation"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="currentlyDeadlineExpired">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="currentlyDeadlineExpiredResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:currentlyBorrowExpiredDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="currentlyBorrowExpiredDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="bookBorrowedId" type="xs:int"/>
+      <xs:element minOccurs="0" name="bookId" type="xs:int"/>
+      <xs:element minOccurs="0" name="borrowDate" type="xs:string"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="endDate" type="xs:string"/>
+      <xs:element minOccurs="0" name="lastReminder" type="xs:string"/>
+      <xs:element minOccurs="0" name="login" type="xs:string"/>
+      <xs:element minOccurs="0" name="nbReminder" type="xs:int"/>
+      <xs:element minOccurs="0" name="title" type="xs:string"/>
+      <xs:element minOccurs="0" name="userId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="makeReservation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="makeReservationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="availableBooksList">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="availableBooksListResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bookDetailsDto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LibraryWsException" nillable="true" type="tns:libraryWsFault"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="userReservationsResponse">
+    <wsdl:part element="tns:userReservationsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="nbBorrowingByBooks">
+    <wsdl:part element="tns:nbBorrowingByBooks" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkReservationNotPickedUpResponse">
+    <wsdl:part element="tns:checkReservationNotPickedUpResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="currentlyDeadLineExpiredForUserResponse">
+    <wsdl:part element="tns:currentlyDeadLineExpiredForUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="returnedBorrowsForUserResponse">
+    <wsdl:part element="tns:returnedBorrowsForUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bookDetails">
+    <wsdl:part element="tns:bookDetails" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bookBorrow">
+    <wsdl:part element="tns:bookBorrow" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="availableBooksListResponse">
+    <wsdl:part element="tns:availableBooksListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sendReminderBeforeExpirationToUsers">
+    <wsdl:part element="tns:sendReminderBeforeExpirationToUsers" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkReservationNotPickedUp">
+    <wsdl:part element="tns:checkReservationNotPickedUp" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="LibraryWsException">
+    <wsdl:part element="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="userReservations">
+    <wsdl:part element="tns:userReservations" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="currentlyBooksBorrowedList">
+    <wsdl:part element="tns:currentlyBooksBorrowedList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelAreservation">
+    <wsdl:part element="tns:cancelAreservation" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="currentlyDeadlineExpiredUsersResponse">
+    <wsdl:part element="tns:currentlyDeadlineExpiredUsersResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="returnedBorrowsForUser">
+    <wsdl:part element="tns:returnedBorrowsForUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sendReminderToUsersResponse">
+    <wsdl:part element="tns:sendReminderToUsersResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="booksSearchedList">
+    <wsdl:part element="tns:booksSearchedList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bookStocksListResponse">
+    <wsdl:part element="tns:bookStocksListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bookReservations">
+    <wsdl:part element="tns:bookReservations" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="makeReservation">
+    <wsdl:part element="tns:makeReservation" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="availableBooksList">
+    <wsdl:part element="tns:availableBooksList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="extendBorrowingResponse">
+    <wsdl:part element="tns:extendBorrowingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sendReminderBeforeExpirationToUsersResponse">
+    <wsdl:part element="tns:sendReminderBeforeExpirationToUsersResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="currentlyBorrowForUserResponse">
+    <wsdl:part element="tns:currentlyBorrowForUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="currentlyBooksBorrowedListResponse">
+    <wsdl:part element="tns:currentlyBooksBorrowedListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="borrowingReturn">
+    <wsdl:part element="tns:borrowingReturn" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="extendBorrowing">
+    <wsdl:part element="tns:extendBorrowing" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="nbBorrowingByBooksResponse">
+    <wsdl:part element="tns:nbBorrowingByBooksResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="borrowingHistoryList">
+    <wsdl:part element="tns:borrowingHistoryList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelAreservationResponse">
+    <wsdl:part element="tns:cancelAreservationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="allBooksResponse">
+    <wsdl:part element="tns:allBooksResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="booksSearchedListResponse">
+    <wsdl:part element="tns:booksSearchedListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bookStocksList">
+    <wsdl:part element="tns:bookStocksList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="currentlyDeadlineExpiredResponse">
+    <wsdl:part element="tns:currentlyDeadlineExpiredResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="currentlyDeadlineExpiredUsers">
+    <wsdl:part element="tns:currentlyDeadlineExpiredUsers" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sendReminderToUsers">
+    <wsdl:part element="tns:sendReminderToUsers" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bookBorrowResponse">
+    <wsdl:part element="tns:bookBorrowResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="currentlyBorrowForUser">
+    <wsdl:part element="tns:currentlyBorrowForUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="allBooks">
+    <wsdl:part element="tns:allBooks" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="makeReservationResponse">
+    <wsdl:part element="tns:makeReservationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="borrowingHistoryListResponse">
+    <wsdl:part element="tns:borrowingHistoryListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="borrowingReturnResponse">
+    <wsdl:part element="tns:borrowingReturnResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="currentlyDeadLineExpiredForUser">
+    <wsdl:part element="tns:currentlyDeadLineExpiredForUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bookReservationsResponse">
+    <wsdl:part element="tns:bookReservationsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="currentlyDeadlineExpired">
+    <wsdl:part element="tns:currentlyDeadlineExpired" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="bookDetailsResponse">
+    <wsdl:part element="tns:bookDetailsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="BookService">
+    <wsdl:operation name="borrowingReturn">
+      <wsdl:input message="tns:borrowingReturn" name="borrowingReturn">
+    </wsdl:input>
+      <wsdl:output message="tns:borrowingReturnResponse" name="borrowingReturnResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="extendBorrowing">
+      <wsdl:input message="tns:extendBorrowing" name="extendBorrowing">
+    </wsdl:input>
+      <wsdl:output message="tns:extendBorrowingResponse" name="extendBorrowingResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="nbBorrowingByBooks">
+      <wsdl:input message="tns:nbBorrowingByBooks" name="nbBorrowingByBooks">
+    </wsdl:input>
+      <wsdl:output message="tns:nbBorrowingByBooksResponse" name="nbBorrowingByBooksResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="borrowingHistoryList">
+      <wsdl:input message="tns:borrowingHistoryList" name="borrowingHistoryList">
+    </wsdl:input>
+      <wsdl:output message="tns:borrowingHistoryListResponse" name="borrowingHistoryListResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="bookStocksList">
+      <wsdl:input message="tns:bookStocksList" name="bookStocksList">
+    </wsdl:input>
+      <wsdl:output message="tns:bookStocksListResponse" name="bookStocksListResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="bookDetails">
+      <wsdl:input message="tns:bookDetails" name="bookDetails">
+    </wsdl:input>
+      <wsdl:output message="tns:bookDetailsResponse" name="bookDetailsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="bookBorrow">
+      <wsdl:input message="tns:bookBorrow" name="bookBorrow">
+    </wsdl:input>
+      <wsdl:output message="tns:bookBorrowResponse" name="bookBorrowResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendReminderBeforeExpirationToUsers">
+      <wsdl:input message="tns:sendReminderBeforeExpirationToUsers" name="sendReminderBeforeExpirationToUsers">
+    </wsdl:input>
+      <wsdl:output message="tns:sendReminderBeforeExpirationToUsersResponse" name="sendReminderBeforeExpirationToUsersResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkReservationNotPickedUp">
+      <wsdl:input message="tns:checkReservationNotPickedUp" name="checkReservationNotPickedUp">
+    </wsdl:input>
+      <wsdl:output message="tns:checkReservationNotPickedUpResponse" name="checkReservationNotPickedUpResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="currentlyDeadlineExpiredUsers">
+      <wsdl:input message="tns:currentlyDeadlineExpiredUsers" name="currentlyDeadlineExpiredUsers">
+    </wsdl:input>
+      <wsdl:output message="tns:currentlyDeadlineExpiredUsersResponse" name="currentlyDeadlineExpiredUsersResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendReminderToUsers">
+      <wsdl:input message="tns:sendReminderToUsers" name="sendReminderToUsers">
+    </wsdl:input>
+      <wsdl:output message="tns:sendReminderToUsersResponse" name="sendReminderToUsersResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="currentlyBorrowForUser">
+      <wsdl:input message="tns:currentlyBorrowForUser" name="currentlyBorrowForUser">
+    </wsdl:input>
+      <wsdl:output message="tns:currentlyBorrowForUserResponse" name="currentlyBorrowForUserResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="userReservations">
+      <wsdl:input message="tns:userReservations" name="userReservations">
+    </wsdl:input>
+      <wsdl:output message="tns:userReservationsResponse" name="userReservationsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="currentlyBooksBorrowedList">
+      <wsdl:input message="tns:currentlyBooksBorrowedList" name="currentlyBooksBorrowedList">
+    </wsdl:input>
+      <wsdl:output message="tns:currentlyBooksBorrowedListResponse" name="currentlyBooksBorrowedListResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="cancelAreservation">
+      <wsdl:input message="tns:cancelAreservation" name="cancelAreservation">
+    </wsdl:input>
+      <wsdl:output message="tns:cancelAreservationResponse" name="cancelAreservationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="allBooks">
+      <wsdl:input message="tns:allBooks" name="allBooks">
+    </wsdl:input>
+      <wsdl:output message="tns:allBooksResponse" name="allBooksResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="returnedBorrowsForUser">
+      <wsdl:input message="tns:returnedBorrowsForUser" name="returnedBorrowsForUser">
+    </wsdl:input>
+      <wsdl:output message="tns:returnedBorrowsForUserResponse" name="returnedBorrowsForUserResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="booksSearchedList">
+      <wsdl:input message="tns:booksSearchedList" name="booksSearchedList">
+    </wsdl:input>
+      <wsdl:output message="tns:booksSearchedListResponse" name="booksSearchedListResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="currentlyDeadLineExpiredForUser">
+      <wsdl:input message="tns:currentlyDeadLineExpiredForUser" name="currentlyDeadLineExpiredForUser">
+    </wsdl:input>
+      <wsdl:output message="tns:currentlyDeadLineExpiredForUserResponse" name="currentlyDeadLineExpiredForUserResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="bookReservations">
+      <wsdl:input message="tns:bookReservations" name="bookReservations">
+    </wsdl:input>
+      <wsdl:output message="tns:bookReservationsResponse" name="bookReservationsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="currentlyDeadlineExpired">
+      <wsdl:input message="tns:currentlyDeadlineExpired" name="currentlyDeadlineExpired">
+    </wsdl:input>
+      <wsdl:output message="tns:currentlyDeadlineExpiredResponse" name="currentlyDeadlineExpiredResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="makeReservation">
+      <wsdl:input message="tns:makeReservation" name="makeReservation">
+    </wsdl:input>
+      <wsdl:output message="tns:makeReservationResponse" name="makeReservationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="availableBooksList">
+      <wsdl:input message="tns:availableBooksList" name="availableBooksList">
+    </wsdl:input>
+      <wsdl:output message="tns:availableBooksListResponse" name="availableBooksListResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LibraryWsException" name="LibraryWsException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BookServiceSoapBinding" type="tns:BookService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="borrowingReturn">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="borrowingReturn">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="borrowingReturnResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="extendBorrowing">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="extendBorrowing">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="extendBorrowingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="nbBorrowingByBooks">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="nbBorrowingByBooks">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="nbBorrowingByBooksResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="borrowingHistoryList">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="borrowingHistoryList">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="borrowingHistoryListResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="bookStocksList">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="bookStocksList">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="bookStocksListResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="bookDetails">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="bookDetails">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="bookDetailsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="bookBorrow">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="bookBorrow">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="bookBorrowResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendReminderBeforeExpirationToUsers">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sendReminderBeforeExpirationToUsers">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sendReminderBeforeExpirationToUsersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkReservationNotPickedUp">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="checkReservationNotPickedUp">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="checkReservationNotPickedUpResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="currentlyDeadlineExpiredUsers">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="currentlyDeadlineExpiredUsers">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="currentlyDeadlineExpiredUsersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendReminderToUsers">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sendReminderToUsers">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sendReminderToUsersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="currentlyBorrowForUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="currentlyBorrowForUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="currentlyBorrowForUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="userReservations">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="userReservations">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="userReservationsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="currentlyBooksBorrowedList">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="currentlyBooksBorrowedList">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="currentlyBooksBorrowedListResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="cancelAreservation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cancelAreservation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelAreservationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="allBooks">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="allBooks">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="allBooksResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="returnedBorrowsForUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="returnedBorrowsForUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="returnedBorrowsForUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="booksSearchedList">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="booksSearchedList">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="booksSearchedListResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="currentlyDeadLineExpiredForUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="currentlyDeadLineExpiredForUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="currentlyDeadLineExpiredForUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="bookReservations">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="bookReservations">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="bookReservationsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="currentlyDeadlineExpired">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="currentlyDeadlineExpired">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="currentlyDeadlineExpiredResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="makeReservation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="makeReservation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="makeReservationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="availableBooksList">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="availableBooksList">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="availableBooksListResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LibraryWsException">
+        <soap:fault name="LibraryWsException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BookService">
+    <wsdl:port binding="tns:BookServiceSoapBinding" name="BookServicePort">
+      <soap:address location="http://0.0.0.0:8080/library-ws-services/services/bookService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

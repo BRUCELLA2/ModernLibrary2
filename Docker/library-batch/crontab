@@ -1,3 +1,4 @@
 * 7 * * * root curl -v -H "Content-Type: text/xml; charset=utf-8" -H "SOAPAction:"  -d @/opt/scripts/borrowExpired.xml -X POST http://modernlibrary-web-service:8080/library-ws-services/services/bookService
 * 7 * * * root curl -v -H "Content-Type: text/xml; charset=utf-8" -H "SOAPAction:"  -d @/opt/scripts/reminderBeforeExpiration.xml -X POST http://modernlibrary-web-service:8080/library-ws-services/services/bookService
+0 * * * * root curl -v -H "Content-Type: text/xml; charset=utf-8" -H "SOAPAction:"  -d @/opt/scripts/checkReservation.xml -X POST http://modernlibrary-web-service:8080/library-ws-services/services/bookService
 # Don't remove the empty line at the end of this file. It is required to run the cron job
